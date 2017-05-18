@@ -1,8 +1,8 @@
 #' Print object of type transformation
 #' 
 #' @param trans an object of type transformation with the estimates
-#' @keywords internal
-
+#' #@keywords internal
+#' @export
 
 print.transformation <- function(trans, ...){
   cat(trans$family, "Transformation")

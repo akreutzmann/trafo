@@ -3,7 +3,8 @@
 #' Computes objects to be shown in the summary function for objects of type \code{transformation}
 #' @param x an object of type \code{transformation}
 #' @return out an object of class \code{summary.transformation}
-#' @keywords internal
+#' #@keywords internal
+#' @export
 summary.transformation <- function(x, ...) {
   yt <- summary(x$modelt)$residuals
   n <- length(yt)
