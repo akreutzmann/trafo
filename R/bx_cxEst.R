@@ -22,7 +22,7 @@ bcxEst <- function(y, x , lambdarange = c(-2, 2), tr = FALSE, ...) {
   
   # here include wrapper
   
-  
+
   # Here starts ML Method
   lglike <- function(lambda, ...) {
       if (abs(lambda) != 0) {
@@ -35,7 +35,10 @@ bcxEst <- function(y, x , lambdarange = c(-2, 2), tr = FALSE, ...) {
     zt <- yt/exp((lambda - 1)*mean(log(y)))
       llike <- -n/2 * log((sum(qr.resid(qr, zt)^2))/n)
       llike
-} 
+  } 
+  
+  
+
   res <-suppressWarnings( optimize(f = function(lambda) lglike(lambda), lambdarange, tol = 0.0001, maximum = TRUE) )
   lambdaoptim <-  res$maximum
   logoptim <-res$objective
@@ -45,7 +48,7 @@ bcxEst <- function(y, x , lambdarange = c(-2, 2), tr = FALSE, ...) {
   lambdavector <- sort(lambdavector)
   logvector <- sapply(lambdavector, lglike)
   
-  # here ends ML method
+
   
   
   
@@ -70,5 +73,12 @@ bcxEst <- function(y, x , lambdarange = c(-2, 2), tr = FALSE, ...) {
   ans
 }
 
+
+generic_opt <- function(lambda, y, x, method){
+  
+  yt <- box_cox(y = y, lambda = lambda, shift = 0)
+  
+  lm(formula = yt ~ qr)
+}
 
 
