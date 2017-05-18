@@ -4,10 +4,11 @@
 \name{transforma}
 \alias{transforma}
 \alias{transforma-package}
-\title{transforma: A Package for estimation, comparison and selection of transformations}
+\title{transforma: A Package for compute optimal parameters for different families of transformations}
 \description{
-Estimation, selection and comparison of several families of transformations. The families of transformations included in the package are the BoxCox transformation, the Manly transformation, the YeoJohnson transformation, the modulus transformation, the BickelDocksum transformation and the dual transformation. The package includes a function to compare these transformations and a function that helps to select one between them.  The first version of the new package employs the maximum likelihood approach to estimate the transformation parameter, and proposes the use of Akaikes Information Criterion AIC, the coefficient of determination R.Squared, Skewness, and Kurtosis as methods to compare different families of transformations.
+The transforma package uses the maximum likelihood approach to compute
 }
 \section{The transforma functions are}{
-\code{\link{bc_cx}}, \code{\link{bickeldoksum}}, \code{\link{dual}}, \code{\link{manly}}, \code{\link{modulus}}, \code{\link{yeojohnson}}, \code{\link{compareTransformation}}, \code{\link{selectTransformation}} and \code{\link{plot.transformation}}
+
 }
+

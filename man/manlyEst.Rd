@@ -4,7 +4,7 @@
 \alias{manlyEst}
 \title{Manly Estimation}
 \usage{
-manlyEst(y, x, lambdarange = c(-2, 2), tr = FALSE, ...)
+manlyEst(y, x, lambdarange = c(-0.5, 0.5), tr = FALSE, ...)
 }
 \arguments{
 \item{y}{vector of response variables}
@@ -34,3 +34,4 @@ modelt An object of type \code{lm} employing the transformed vector \code{yt} as
 Manly Estimation
 }
 \keyword{internal}
+

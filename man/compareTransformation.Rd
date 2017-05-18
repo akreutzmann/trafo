@@ -2,23 +2,23 @@
 % Please edit documentation in R/compareTransformation.R
 \name{compareTransformation}
 \alias{compareTransformation}
-\title{Compare Transformations}
+\title{Compares Transformations}
 \usage{
 compareTransformation(object, ...)
 }
 \arguments{
-\item{object}{formula or fitted model; see below.}
+\item{object}{a data.frame, matrix, formula or fitted model; see below.}
 
 \item{data}{an optional data frame, list or environment as in lm.}
 
-\item{lambda.dual}{a value to be used by the function \code{dual}. Only neccesary for positive data - default 0.5}
-
 \item{plotit}{a logical value. If equal FALSE plots comparing transformations are not shown - default TRUE.}
 
+\item{XY}{a data.frame or a matrix, whose first column is the dependent variable and the rest of the columns are the independent variables.}
 }
 \value{
 A data frame comparing families of transformations. If plotit ==  TRUE, plots comparing transformations are shown as well.
 }
 \description{
-Compares families of transformations in the sense of AIC, R.Squared, Skewness or Kurtosis; For positive y compares between Box-Cox, Dual and Manly transformations; For all values of y it compares between Yeo-Johnson, Manly, Modulus and Bickel-Doksum.
+Compares families of transformations with respect to  sense of AIC, R.Squared, Skewness or Kurtosis; For positive y compares between Box-Cox, Dual and Manly transformations; For all values of y it compares between Yeo-Johnson, Manly, Modulus and Bickel-Doksum.
 }
+

@@ -18,3 +18,4 @@ an object of class \code{transformation}; see bcxEst()
 Box-Cox estimation
 }
 \keyword{internal}
+

@@ -4,7 +4,7 @@
 \alias{bickeldoksumEst}
 \title{The lambda and the profile likelihood for the Bickel-Docksum Transformation}
 \usage{
-bickeldoksumEst(y, predictors, lambdarange = c(0, 2), tr = FALSE, ...)
+bickeldoksumEst(y, x, lambdarange = c(0.05, 2), tr = FALSE, ...)
 }
 \arguments{
 \item{y}{vector of response variables}
@@ -18,6 +18,8 @@ An object of class \code{transformation} with the following arguments
 
 llike The value of \code{profile log-likelihood} at its maximum
 
+lambdahat The value of lambda for which the log-likelihood is maximized
+
 logvector The profile log-likelihood evaluated at \code{lambdavector}
 
 lambdavector A sequence with optional values for \code{lambda}
@@ -26,9 +28,12 @@ family Employed family of transformations
 
 yt Vector of the transformed response variable \code{y}
 
+zt Vector of the (normalized) transformed response variable \code{y}
+
 modelt An object of type \code{lm} employing the transformed vector \code{yt} as the response variable
 }
 \description{
 The lambda and the profile likelihood for the Bickel-Docksum Transformation
 }
 \keyword{internal}
+

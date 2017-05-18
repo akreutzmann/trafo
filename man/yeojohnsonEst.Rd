@@ -36,3 +36,4 @@ modelt An object of type \code{lm} employing the transformed vector \code{yt} as
 Yeo-Johnson Estimation
 }
 \keyword{internal}
+

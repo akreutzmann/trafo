@@ -7,30 +7,30 @@
 dual(object, ...)
 }
 \arguments{
-\item{object}{formula or fitted model; see below.}
+\item{object}{a data.frame, matrix, formula or fitted model; see below.}
 
 \item{data}{an optional data frame, list or environment as in lm.}
 
+\item{XY}{a data.frame or a matrix, whose first column is the dependent variable and the rest of the columns are the independent variables.}
 
-\item{lambda.dual}{a value to be used as the parameter of the dual transformation - default 0.5.}
+\item{l}{lambdarange range for the estimation parameter lambda - default c(0, 2)}
 }
 \value{
 An object of class \code{transformation} with the following arguments
 
-lambda.user Value for \code{lambda} introduced by the user
+llike The value of profile log-likelihood at its maximum
+
+logvector The profile log-likelihood evaluated at \code{lambdavector}
+
+lambdavector A sequence with optional values for \code{lambda}
 
 family Employed family of transformations
 
 yt Vector of the transformed response variable \code{y}
 
-zt Vector of the (normalized) transformed response variable \code{y}
-
-modelt An object of type \code{lm} employing the transformed vector \code{zt} as the response variable
-}
-
-\references{
-Yang, Z. 2004 A modified family of power transformations. \emph{Research Collection School Of Economics}
+modelt An object of type \code{lm} employing the transformed vector \code{yt} as the response variable
 }
 \description{
-Transformed a response variable for a given \code{lambda} using the Dual transformation. Only accepts positive values for the dependent variable.
+Estimates the transformation parameter for the Dual transformation employing the profile log-likehood. Only accepts positive values for the dependent variable.
 }
+

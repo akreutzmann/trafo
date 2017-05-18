@@ -4,16 +4,16 @@
 \alias{dualEst}
 \title{Dual Estimation}
 \usage{
-dualEst(y, x, lambdarange = c(0, 2), tr = FALSE, ...)
+dualEst(y, x, lambda.dual = 0.5, tr = FALSE, ...)
 }
 \arguments{
 \item{y}{vector of response variables}
 
 \item{x}{matrix of regressors}
 
-\item{lambdarange}{range for the estimation parameter expr(lambda)- c(0,2)}
-
 \item{tr}{logical value. if tr = TRUE warning messages for the likelihood functions are suppressed - default FALSE}
+
+\item{lambdarange}{range for the estimation parameter expr(lambda)- c(0,2)}
 }
 \value{
 An object of class \code{transformation} with the following arguments
@@ -34,3 +34,4 @@ modelt An object of type \code{lm} employing the transformed vector \code{yt} as
 Dual Estimation
 }
 \keyword{internal}
+

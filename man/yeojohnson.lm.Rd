@@ -7,9 +7,9 @@
 \method{yeojohnson}{lm}(object, ...)
 }
 \arguments{
-\item{\dots}{additional arguments to be passed to the estimation function; see yeojohnsonEst()}
-
 \item{lm}{object of type lm with the model to transform}
+
+\item{\dots}{additional arguments to be passed to the estimation function; see yeojohnsonEst()}
 }
 \value{
 an object of class \code{transformation}; see yeojohnsonEst()
@@ -18,3 +18,4 @@ an object of class \code{transformation}; see yeojohnsonEst()
 Yeo-Johnson estimation
 }
 \keyword{internal}
+

@@ -7,9 +7,11 @@
 modulus(object, ...)
 }
 \arguments{
-\item{object}{ formula or fitted model; see below.}
+\item{object}{a data.frame, matrix, formula or fitted model; see below.}
 
 \item{data}{an optional data frame, list or environment as in lm.}
+
+\item{XY}{a data.frame or a matrix, whose first column is the dependent variable and the rest of the columns are the independent variables.}
 
 \item{lambdarange}{range for the estimation parameter lambda - default c(-2, 2)}
 }
@@ -17,8 +19,6 @@ modulus(object, ...)
 An object of class \code{transformation} with the following arguments.
 
 llike The value of profile log-likelihood at its maximum.
-
-lambdahat The value of lambda for which the log-likelihood is maximized
 
 logvector The profile log-likelihood evaluated at \code{lambdavector}.
 
@@ -28,15 +28,10 @@ family Employed family of transformations.
 
 yt Vector of the transformed response variable \code{y}.
 
-zt Vector of the (normalized) transformed response variable \code{y}
-
-modelt An object of type \code{lm} employing the transformed vector \code{zt} as the response variable.
+modelt An object of type \code{lm} employing the transformed vector \code{yt} as the response variable.
 }
 \description{
 Estimates the transformation parameter for the Modulus transformation employing the profile log-likehood.
 }
-\references{
-John J. A., and Draper, N. R. . 1980 An Alternative Family of Transformations. \emph{Journal of the Royal Statistical Society}, \bold{29(2)}, 190--197.
-}
-
 \keyword{modulus}
+

@@ -7,9 +7,10 @@
 \method{print}{transformation}(trans, ...)
 }
 \arguments{
-\item{trans}{an object of type transformation with the estimates}
+\item{trans}{an object of type transformation with the estimates
+#@keywords internal}
 }
 \description{
 Print object of type transformation
 }
-\keyword{internal}
+

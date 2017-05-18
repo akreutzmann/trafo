@@ -18,3 +18,4 @@ an object of class \code{transformation}; see docompareTransformation()
 Compares families of transformations with respect to  sense of AIC, R.Squared, Skewness or Kurtosis; For positive y compares between Box-Cox, Dual and Manly transformations; For all values of y it compares between Yeo-Johnson, Manly, Modulus and Bickel-Doksum
 }
 \keyword{internal}
+

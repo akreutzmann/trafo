@@ -4,14 +4,17 @@
 \alias{plot.transformation}
 \title{Plot Transformation}
 \usage{
-plot.transformation(ans)
+\method{plot}{transformation}(ans, ...)
 }
 \arguments{
+\item{an}{object of type \code{transformation}}
 
-
-\item{ans}{object of type \code{transformation}}
+\item{\dots}{additional arguments to be passed to the estimation function; see bcxEst()}
 }
-
+\value{
+an object of class \code{transformation}; see bcxEst()
+}
 \description{
 Plots object of type \code{transformation}. Four plots are shown: a plot of the profile loglikelihood vs lambda; a qq plot; a histogram of the residuals vs fitted values of the transformed model
 }
+

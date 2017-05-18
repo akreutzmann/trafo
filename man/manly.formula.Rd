@@ -20,3 +20,4 @@ an object of class \code{transformation}; see manlyEst()
 Manly estimation
 }
 \keyword{internal}
+

@@ -4,7 +4,7 @@
 \alias{docompareTransformation}
 \title{Selects Transformation}
 \usage{
-docompareTransformation(data, plotit = TRUE, ...)
+docompareTransformation(data, lambda.dual = 0.5, plotit = TRUE, ...)
 }
 \arguments{
 \item{data}{a data.frame or a matrix, whose first column is the dependent variable and the rest of the columns are the independent variables.}
@@ -30,3 +30,4 @@ modelt An object of type \code{lm} employing the transformed vector \code{yt} as
 Chooses the 'best' transformation in the sense of AIC, R.Squared, Skewness or Kurtosis; For positive \code{y} compares between Box-Cox, Dual and Manly transformations; For all values of y it compares between Yeo-Johnson, Manly, Modulus and Bickel-Doksum
 }
 \keyword{internal}
+

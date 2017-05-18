@@ -16,3 +16,4 @@ out an object of class \code{summary.transformation}
 Computes objects to be shown in the summary function for objects of type \code{transformation}
 }
 \keyword{internal}
+

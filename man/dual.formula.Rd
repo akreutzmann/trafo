@@ -20,3 +20,4 @@ an object of class \code{transformation}; see dualEst()
 Dual estimation
 }
 \keyword{internal}
+

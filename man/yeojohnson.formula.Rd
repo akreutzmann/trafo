@@ -20,3 +20,4 @@ an object of class \code{transformation}; see yeohjohnsonEst()
 Yeo-Johnson estimation
 }
 \keyword{internal}
+

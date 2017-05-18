@@ -7,11 +7,13 @@
 selectTransformation(object, ...)
 }
 \arguments{
-\item{object}{formula or fitted model; see below.}
+\item{object}{a data.frame, matrix, formula or fitted model; see below.}
 
 \item{data}{an optional data frame, list or environment as in lm.}
 
-\item{criterion}{a character string to select the desired criterion to be used to select a family of transformation whose parameter is estimated using the likelihood approach. The available options are (i) Akaike's information criterion "AIC"; (ii) R.Squared "R2"; (iii) Skewness "SK"; (iv) Kurtosis "KT". - default "AIC"}
+\item{XY}{a data.frame or a matrix, whose first column is the dependent variable and the rest of the columns are the independent variables.}
+
+\item{criterion}{a character string to select the desired criterion to be used to select a family of transformation whose parameter is estimated using the likelihood approach. The available options ara (i) Akaike's information criterion "AIC"; (ii) R.Squared "R2"; (iii) Skewness "SK"; (iv) Kurtosis "KT". - default "AIC"}
 
 \item{usefamily}{a character string to select the transformation family. Six different transformation families for the dependent variable can be chosen. For positive response variable the available options are (i) "Box-Cox" or "BC" ; (ii) "Dual" or "D" ("log"); (iii) "Manly" or "Ma". For negative response variables (i) "Yeo-Johhson" or "YJ"; (ii) "Modulus" or "Mod"; (iii) "Bickel-Doksum" or "BD"; (iv) "Manly" or "Ma" - Default NULL.}
 }
@@ -22,19 +24,18 @@ llike The value of profile log-likelihood at its maximum
 
 logvector The profile log-likelihood evaluated at \code{lambdavector}
 
-lambdahat The value of lambda for which the log-likelihood is maximized
+lambdavector Employed family of transformations
 
-lambdavector A sequence with optional values for \code{lambda}
+A sequence with optional values for \code{lambda}
 
 family Employed family of transformations
 
 yt Vector of the transformed response variable \code{y}
 
-zt Vector of the (normalized) transformed response variable \code{y}
-
-modelt An object of type \code{lm} employing the transformed vector \code{zt} as the response variable
+modelt An object of type \code{lm} employing the transformed vector \code{yt} as the response variable
 }
 \description{
-Chooses the 'best' transformation in the sense of AIC, R.Squared, Skewness or Kurtosis; For positive \code{y} compares between Box-Cox, Dual Modulus and Manly transformations; For all values of y it compares between Yeo-Johnson, Manly, Modulus and Bickel-Doksum.
+Chooses the 'best' transformation in the sense of AIC, R.Squared, Skewness or Kurtosis; For positive \code{y} compares between Box-Cox, Dual and Manly transformations; For all values of y it compares between Yeo-Johnson, Manly, Modulus and Bickel-Doksum.
 }
 \keyword{selecTransformation}
+
