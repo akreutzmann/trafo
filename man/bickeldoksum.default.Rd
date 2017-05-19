@@ -18,4 +18,3 @@ an object of class \code{transformation}; see bickeldoksumEst()
 Bickel-Doksum estimation
 }
 \keyword{internal}
-

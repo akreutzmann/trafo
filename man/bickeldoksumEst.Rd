@@ -36,4 +36,3 @@ modelt An object of type \code{lm} employing the transformed vector \code{yt} as
 The lambda and the profile likelihood for the Bickel-Docksum Transformation
 }
 \keyword{internal}
-

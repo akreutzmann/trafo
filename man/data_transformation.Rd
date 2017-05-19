@@ -57,4 +57,3 @@ random=~1|provlab)
 \seealso{
 \code{\link{optimal_parameter}}, \code{\link[nlme]{lme}}
 }
-

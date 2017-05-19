@@ -34,4 +34,3 @@ modelt An object of type \code{lm} employing the transformed vector \code{yt} as
 Modulus Estimation
 }
 \keyword{internal}
-

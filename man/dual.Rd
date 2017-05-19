@@ -33,4 +33,3 @@ modelt An object of type \code{lm} employing the transformed vector \code{yt} as
 \description{
 Estimates the transformation parameter for the Dual transformation employing the profile log-likehood. Only accepts positive values for the dependent variable.
 }
-

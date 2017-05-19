@@ -34,4 +34,3 @@ modelt An object of type \code{lm} employing the transformed vector \code{yt} as
 Estimates the transformation parameter for the Manly transformation employing the profile log-likehood.
 }
 \keyword{Manly}
-

@@ -18,4 +18,3 @@ an object of class \code{transformation}; see modulusEst()
 Modulus estimation
 }
 \keyword{internal}
-

@@ -34,4 +34,3 @@ modelt An object of type \code{lm} employing the transformed vector \code{yt} as
 Estimates the transformation parameter for the Bickel-Doksum transformation employing the profile log-likehood. Only accepts positive values for the dependent variable.
 }
 \keyword{Bickel-Doksum}
-

@@ -58,4 +58,3 @@ data("incomedata")
 opt_par <- optimal_parameter(generic_opt, income~educ1, incomedata,
 "provlab", "box.cox", "reml")
 }
-

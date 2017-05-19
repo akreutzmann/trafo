@@ -13,4 +13,3 @@
 prints objects to be shown in the summary function for objects of type \code{transformation}
 }
 \keyword{internal}
-

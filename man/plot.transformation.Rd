@@ -7,9 +7,9 @@
 \method{plot}{transformation}(ans, ...)
 }
 \arguments{
-\item{an}{object of type \code{transformation}}
-
 \item{\dots}{additional arguments to be passed to the estimation function; see bcxEst()}
+
+\item{an}{object of type \code{transformation}}
 }
 \value{
 an object of class \code{transformation}; see bcxEst()
@@ -17,4 +17,3 @@ an object of class \code{transformation}; see bcxEst()
 \description{
 Plots object of type \code{transformation}. Four plots are shown: a plot of the profile loglikelihood vs lambda; a qq plot; a histogram of the residuals vs fitted values of the transformed model
 }
-

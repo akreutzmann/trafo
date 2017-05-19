@@ -105,7 +105,7 @@ optimal_parameter <- function(generic_opt,
 #' types for the dependent variable can be chosen (i) no transformation ("no");
 #' (ii) log transformation ("log"); (iii) Box-Cox transformation ("box.cox").
 #' @param method a character string. In order to determine the optimal parameter
-#' for a Box-Cox transformation six different estimation methods can be chosen
+#' for the transformation six different estimation methods can be chosen
 #' (i) restricted Maximum-Likelihood ("reml"); (ii) pooled skewness
 #' minimization ("p.skew"); (iii) skewness minimization ("skew");
 #' (iv) minimization of Kolmogorov-Smirnoff divergence  ("div.ks");

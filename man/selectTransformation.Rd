@@ -38,4 +38,3 @@ modelt An object of type \code{lm} employing the transformed vector \code{yt} as
 Chooses the 'best' transformation in the sense of AIC, R.Squared, Skewness or Kurtosis; For positive \code{y} compares between Box-Cox, Dual and Manly transformations; For all values of y it compares between Yeo-Johnson, Manly, Modulus and Bickel-Doksum.
 }
 \keyword{selecTransformation}
-

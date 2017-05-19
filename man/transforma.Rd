@@ -9,6 +9,6 @@
 The transforma package uses the maximum likelihood approach to compute
 }
 \section{The transforma functions are}{
-
+NA
 }
 

@@ -7,9 +7,9 @@
 \method{manly}{lm}(object, ...)
 }
 \arguments{
-\item{lm}{object of type lm with the model to transform}
-
 \item{\dots}{additional arguments to be passed to the estimation function; see manlyEst()}
+
+\item{lm}{object of type lm with the model to transform}
 }
 \value{
 an object of class \code{transformation}; see manlyEst()
@@ -18,4 +18,3 @@ an object of class \code{transformation}; see manlyEst()
 Manly estimation
 }
 \keyword{internal}
-

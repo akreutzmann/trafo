@@ -21,4 +21,3 @@ A data frame comparing families of transformations. If plotit ==  TRUE, plots co
 \description{
 Compares families of transformations with respect to  sense of AIC, R.Squared, Skewness or Kurtosis; For positive y compares between Box-Cox, Dual and Manly transformations; For all values of y it compares between Yeo-Johnson, Manly, Modulus and Bickel-Doksum.
 }
-

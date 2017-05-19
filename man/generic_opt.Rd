@@ -27,7 +27,7 @@ types for the dependent variable can be chosen (i) no transformation ("no");
 (ii) log transformation ("log"); (iii) Box-Cox transformation ("box.cox").}
 
 \item{method}{a character string. In order to determine the optimal parameter
-for a Box-Cox transformation six different estimation methods can be chosen
+for the transformation six different estimation methods can be chosen
 (i) restricted Maximum-Likelihood ("reml"); (ii) pooled skewness
 minimization ("p.skew"); (iii) skewness minimization ("skew");
 (iv) minimization of Kolmogorov-Smirnoff divergence  ("div.ks");
@@ -50,4 +50,3 @@ lambda that is neccessary to conduct Box-Cox transformations.
 log_likelihood <- generic_opt(0.0589, income~educ1, incomedata, "provlab",
 "box.cox", "reml")
 }
-
