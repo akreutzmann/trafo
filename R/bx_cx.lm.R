@@ -14,5 +14,7 @@ bx_cx.lm <- function(object, ...) {
     stop("Matrix of covariates X must not be empty")
   if (any(y <= 0)) 
    stop("response variable y must be positive")
-  bcxEst(y, x, ...)
+  #bcxEst(y, x, ...)
+  
+  bx_cxEst_lm(y, x, ...)
 }

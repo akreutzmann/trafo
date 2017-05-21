@@ -1,4 +1,4 @@
-#' Wrapper function for estimation methods - linear models
+#' Wrapper function for estimation methods - linear mixed models
 #' 
 #' @param lambda transformation parameter
 #' @param y vector of response variables
@@ -17,12 +17,19 @@
 #' @keywords internal
 
 
-estim_lm <- function(lambda, y, x, method){
+estim_lme <- function(lambda, formula, data, rand_eff, method){
   
   # Get residuals for all methods but ML
   yt <- box_cox(y = y, lambda = lambda, shift = 0)$y
-  model_ML <- lm(formula = yt ~ x)
-  res <- residuals(model_ML, level=0, type = "pearson")
+  data[paste(formula[2])] <- yt
+  tdata <- data
+  model_REML <- lme(fixed = formula, 
+                    data = tdata,
+                    random = as.formula(paste0("~ 1 | as.factor(", rand_eff, ")")),
+                    method = "REML", 
+                    keep.data = FALSE, 
+                    na.action = na.omit)
+  res <- residuals(model_REML, level=0, type = "pearson")
   
   # Find the optimal lambda depending on method
   optimization <- if (method == "ml") {
@@ -39,3 +46,4 @@ estim_lm <- function(lambda, y, x, method){
   
   return(optimization)
 }
+
