@@ -1,24 +1,3 @@
-# Log transformation -----------------------------------------------------------
-
-# Transformation: log
-log_transform <- function(y, shift = 0) {
-  min <- min(y)
-  if (min <= 0) {
-    shift <- abs(min) + 1
-    y <- y + shift
-  }
-  y <- log(y)
-  return(list(y = y, shift = shift))
-} # End log_transform
-
-
-# Back transformation: log
-log_transform_back <- function(y, shift = 0) {
-  y <- exp(y) - shift
-  return(y = y)
-} # End log_transfom_back
-
-
 # Box Cox ----------------------------------------------------------------------
 
 # Transformation: Box Cox
