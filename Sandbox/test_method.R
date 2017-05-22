@@ -8,6 +8,14 @@ data("eusilcP")
 
 
 
+lily_bc <- bx_cx(modelVienna, method = "ml")
+
+box_cox <- box_cox(eusilcA_Vienna$eqIncome, lambda = 0.4690185)
+
+all.equal(box_cox$y, as.numeric(lily_bc$yt))
+
+(box_cox$y - as.numeric(lily_bc$yt))/box_cox$y
+
 bx_cx(modelVienna, method = "ml")
 bx_cx(modelVienna, method = "skew", lambdarange = c(0.4,0.5))
 bx_cx(modelVienna, method = "div.ks")
