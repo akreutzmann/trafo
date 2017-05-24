@@ -4,7 +4,7 @@
 \alias{bx_cx.lm}
 \title{Box-Cox lm}
 \usage{
-\method{bx_cx}{lm}(object, ...)
+\method{bx_cx}{lm}(object, method, lambdarange = c(-2, 2), ...)
 }
 \arguments{
 \item{object}{of type lm with the model to transform}

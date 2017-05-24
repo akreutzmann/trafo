@@ -4,7 +4,7 @@
 \alias{bx_cxEst_lm}
 \title{Box Cox Estimation - lm}
 \usage{
-bx_cxEst_lm(y, x, method = "ml", lambdarange = c(-2, 2), tr = FALSE, ...)
+bx_cxEst_lm(y, x, method, lambdarange, tr = FALSE, ...)
 }
 \arguments{
 \item{y}{vector of response variables}

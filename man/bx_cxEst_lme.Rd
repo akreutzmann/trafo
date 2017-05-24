@@ -4,17 +4,17 @@
 \alias{bx_cxEst_lme}
 \title{Box Cox Estimation - lme}
 \usage{
-bx_cxEst_lme(formula, data, rand_eff, method = "ml", lambdarange = c(-2, 2),
-  tr = FALSE, ...)
+bx_cxEst_lme(y, x, formula, data, rand_eff, method = method,
+  lambdarange = lambdarange, tr = FALSE, ...)
 }
 \arguments{
-\item{lambdarange}{range for the estimation parameter expr(lambda) - default c(-2, 2)}
-
-\item{tr}{logical value. if tr = TRUE warning messages for the likelihood functions are suppressed - default FALSE}
+\item{y}{vector of response variables}
 
 \item{x}{matrix of regressors}
 
-\item{y}{vector of response variables}
+\item{lambdarange}{range for the estimation parameter expr(lambda) - default c(-2, 2)}
+
+\item{tr}{logical value. if tr = TRUE warning messages for the likelihood functions are suppressed - default FALSE}
 }
 \value{
 An object of class \code{transformation} with the following arguments

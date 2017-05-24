@@ -4,10 +4,12 @@
 \alias{estim_lme}
 \title{Wrapper function for estimation methods - linear mixed models}
 \usage{
-estim_lme(lambda, formula, data, rand_eff, method)
+estim_lme(lambda, y, formula, data, rand_eff, method)
 }
 \arguments{
 \item{lambda}{transformation parameter}
+
+\item{y}{vector of response variables}
 
 \item{method}{a character string. In order to determine the optimal parameter
 for the transformation five different estimation methods can be chosen
@@ -17,8 +19,6 @@ for the transformation five different estimation methods can be chosen
 minimization of Kullback Leibner divergence  ("div.kl"). In case of no and
 log transformation "NA" can be selected since no optimization is neccessary
 for these two transformation types.}
-
-\item{y}{vector of response variables}
 
 \item{x}{matrix of regressors}
 }
