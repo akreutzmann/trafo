@@ -13,13 +13,12 @@
 #' @return yt Vector of the transformed response variable \code{y}
 #' @return modelt An object of type \code{lm} employing the transformed vector \code{yt} as the response variable
 #' @keywords internal
-bx_cxEst_lm <- function(y, x , method="ml", lambdarange = c(-2, 2), tr = FALSE, ...) {
+bx_cxEst_lm <- function(y, x , method, lambdarange, tr = FALSE, ...) {
   k <- ncol(x)
   # get the result of the optimation
   res <- suppressWarnings(optimize(f = estim_lm, y = y, x = x, method = method, 
-                                   interval = lambdarange, tol = 0.0001, 
-                                   maximum = TRUE) )
-  lambdaoptim <-  res$maximum
+                                   interval = lambdarange, tol = 0.0001))
+  lambdaoptim <-  res$minimum
   logoptim <- res$objective
   lambdavector <- seq(lambdarange[1], lambdarange[2], 0.01)
   l <- length(lambdavector)
@@ -64,17 +63,19 @@ bx_cxEst_lm <- function(y, x , method="ml", lambdarange = c(-2, 2), tr = FALSE, 
 #' @return yt Vector of the transformed response variable \code{y}
 #' @return modelt An object of type \code{lm} employing the transformed vector \code{yt} as the response variable
 #' @keywords internal
-bx_cxEst_lme <- function(formula, data, rand_eff, method="ml", lambdarange = c(-2, 2), tr = FALSE, ...) {
+bx_cxEst_lme <- function( y, x, formula, data, rand_eff, method = method, lambdarange = lambdarange, tr = FALSE, ...) {
+  #x <- model.matrix(formula, data = data)
   k <- ncol(x)
   # get the result of the optimation
   res <- suppressWarnings(optimize(f = estim_lme, 
+                                   y = y,
+                                   #x = x,
                                    formula = formula,
                                    data = data,
                                    rand_eff = rand_eff,
                                    method = method, 
-                                   interval = lambdarange, tol = 0.0001, 
-                                   maximum = TRUE) )
-  lambdaoptim <-  res$maximum
+                                   interval = lambdarange, tol = 0.0001))
+  lambdaoptim <-  res$minimum
   logoptim <- res$objective
   lambdavector <- seq(lambdarange[1], lambdarange[2], 0.01)
   l <- length(lambdavector)

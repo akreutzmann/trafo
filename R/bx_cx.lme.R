@@ -6,14 +6,14 @@
 #' @return an object of class \code{transformation}; see bcxEst()
 #' @keywords internal
 #' @export
-bx_cx.lme <- function(object, ...) {
+bx_cx.lme <- function(object, method, lambdarange = c(-2,2), ...) {
   formula <- formula(object)
   rand_eff <- names(object$coefficients$random)
   data <- object$data
-  #x <- model.matrix(formula, data = object$data)
+  x <- model.matrix(formula, data = object$data)
   #x <- cbind(object$data[paste(formula[3][[1]][[2]])], 
   #               object$data[paste(formula[3][[1]][[3]])])
-  #y <- as.matrix(object$data[paste(formula[2])])
+  y <- as.matrix(object$data[paste(formula[2])])
   #if (is.null(y <- model.response(model_frame))) 
   #  stop("Dependent variable y must not be empty")
   #if (is.null(x <- model.matrix(attr(model_frame, "terms"), data = model_frame))) 
@@ -21,5 +21,5 @@ bx_cx.lme <- function(object, ...) {
   #if (any(y <= 0)) 
   #  stop("response variable y must be positive")
   #bcxEst(y, x, ...)
-  bx_cxEst_lme(formula = formula, rand_eff = rand_eff, data = data,  ...)
+  bx_cxEst_lme(y, x, formula, rand_eff = rand_eff, data = data, method, lambdarange,  ...)
 }

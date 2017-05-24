@@ -13,7 +13,7 @@ ML <- function(y, x, lambda){
   n <- length(y)
   yt <- rep(NA, n)
   
-  lglike(lambda = lambda, y = y, qr = qr, n = n)
+  lglike <- -lglike(lambda = lambda, y = y, qr = qr, n = n)
 }
 
 # Log-likelihood function for ML method
@@ -31,6 +31,45 @@ lglike <- function(lambda, y, qr, n, ...) {
 }
 
 # Only for linear mixed models -------------------------------------------------
+
+
+# Restricted maximum likelihood 
+reml <- function(y = y,
+                 formula = formula, 
+                 data = data,
+                 rand_eff = rand_eff
+                 ) {
+  
+  yt <- box_cox_std(y = y, lambda = lambda)
+  data[paste(formula[2])] <- yt
+  tdata <- data
+  model_REML <- lme(fixed     = formula,
+                    data      = tdata,
+                    random    = as.formula(paste0("~ 1 | as.factor(", rand_eff, ")")),
+                    method    = "REML",
+                    keep.data = FALSE, 
+                    na.action = na.omit)
+  
+  log_likelihood <- -logLik(model_REML)
+  
+  return(log_likelihood)
+}
+
+
+# Pooled skewness by Rojas-Perilla
+pooled_skewness_min <- function(model, res) {
+  skew_resid <- skewness(res)
+  random_effect <- as.matrix(random.effects(model))[,1]
+  skew_random_effect <- skewness(random_effect)
+  sigmae2est <- model_est$sigma^2
+  sigmau2est <- as.numeric(VarCorr(model_est)[1,1])
+  w <- sigmae2est / (sigmae2est + sigmau2est)
+  
+  pooled_skew <- w * abs(skew_resid) + (1 - w) * abs(skew_random_effect)
+  
+  return(pooled_skew)
+}
+
 
 # For linear and linear mixed models -------------------------------------------
 

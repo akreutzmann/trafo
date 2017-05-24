@@ -17,9 +17,10 @@
 #' @keywords internal
 
 
-estim_lme <- function(lambda, formula, data, rand_eff, method){
+estim_lme <- function(lambda, y, formula, data, rand_eff, method){
   
   # Get residuals for all methods but ML
+  #y <- as.matrix(data[paste(formula[2])])
   yt <- box_cox(y = y, lambda = lambda, shift = 0)$y
   data[paste(formula[2])] <- yt
   tdata <- data
@@ -31,9 +32,16 @@ estim_lme <- function(lambda, formula, data, rand_eff, method){
                     na.action = na.omit)
   res <- residuals(model_REML, level=0, type = "pearson")
   
+  browser()
+  
   # Find the optimal lambda depending on method
-  optimization <- if (method == "ml") {
-    ML(y, x, lambda)
+  optimization <- if (method == "reml") {
+    reml(y = y,
+         formula = formula, 
+         data = data,
+         rand_eff = rand_eff)
+  } else if (method == "pskew") {
+    pooled_skewness_min(model = model_REML, res = res)  
   } else if (method == "skew") {
     skewness_min(res = res)
   } else if (method == "div.ks") {

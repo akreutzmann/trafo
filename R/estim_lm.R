@@ -18,9 +18,9 @@
 
 
 estim_lm <- function(lambda, y, x, method){
-  
+
   # Get residuals for all methods but ML
-  yt <- box_cox(y = y, lambda = lambda, shift = 0)$y
+  yt <- as.matrix(box_cox(y = y, lambda = lambda, shift = 0)$y)
   model_ML <- lm(formula = yt ~ - 1 + x)
   res <- residuals(model_ML, level=0, type = "pearson")
   
