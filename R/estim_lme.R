@@ -32,12 +32,11 @@ estim_lme <- function(lambda, y, formula, data, rand_eff, method){
                     na.action = na.omit)
   res <- residuals(model_REML, level=0, type = "pearson")
   
-  browser()
-  
   # Find the optimal lambda depending on method
   optimization <- if (method == "reml") {
-    reml(y = y,
+    restricted_ML(y = y,
          formula = formula, 
+         lambda = lambda,
          data = data,
          rand_eff = rand_eff)
   } else if (method == "pskew") {

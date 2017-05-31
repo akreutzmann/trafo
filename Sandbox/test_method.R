@@ -50,6 +50,7 @@ modelAustria <- lme(eqIncome ~ pb220a + py050n,
 
 bx_cx(modelAustria, method = "reml")
 bx_cx(modelAustria, method = "skew")
+bx_cx(modelAustria, method = "pskew")
 bx_cx(modelAustria, method = "div.kl")
 bx_cx(modelAustria, method = "div.cvm")
 bx_cx(modelAustria, method = "div.ks")

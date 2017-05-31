@@ -34,8 +34,9 @@ lglike <- function(lambda, y, qr, n, ...) {
 
 
 # Restricted maximum likelihood 
-reml <- function(y = y,
+restricted_ML <- function(y = y,
                  formula = formula, 
+                 lambda,
                  data = data,
                  rand_eff = rand_eff
                  ) {

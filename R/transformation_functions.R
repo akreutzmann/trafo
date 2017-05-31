@@ -185,10 +185,10 @@ box_cox <- function(y, lambda = lambda, shift = 0) {
 
 # Standardized transformation: Box Cox
 
-geometric.mean <- function(x) { #for RMLE in the parameter estimation
-
-  exp(fast_mean(log(x)))
-}
+#geometric.mean <- function(x) { #for RMLE in the parameter estimation#
+#
+#  exp(fast_mean(log(x)))
+#}
 
 box_cox_std <- function(y, lambda) {
   min <- min(y)
