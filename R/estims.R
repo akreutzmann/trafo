@@ -41,6 +41,7 @@ restricted_ML <- function(y = y,
                  rand_eff = rand_eff
                  ) {
   
+  # Wrapper for other transformations
   yt <- box_cox_std(y = y, lambda = lambda)
   data[paste(formula[2])] <- yt
   tdata <- data
