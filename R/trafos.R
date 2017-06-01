@@ -1,6 +1,8 @@
 # Box Cox ----------------------------------------------------------------------
 
-# Transformation: Box Cox
+
+#  Transformation: Box Cox
+
 box_cox <- function(y, lambda = lambda, shift = 0) {
   with_shift <- function(y, shift) {
     min <- min(y)

@@ -7,14 +7,17 @@ library(simFrame)
 data("eusilcP")
 
 
-
+# only lilys if bcxEst(y, x, ...) in bx_cx.lm
 lily_bc <- bx_cx(modelVienna, method = "ml")
 
-box_cox <- box_cox(eusilcA_Vienna$eqIncome, lambda = 0.4690185)
+source("./R/trafos.R")
 
-box_cox <- box_cox(eusilcA_Vienna$eqIncome, lambda = -2)
 
-box_cox <- box_cox(eusilcA_Vienna$eqIncome, lambda = -0.472136)
+boxCox <- box_cox(eusilcA_Vienna$eqIncome, lambda = 0.4690185)
+
+boxCox <- box_cox(eusilcA_Vienna$eqIncome, lambda = -2)
+
+boxCox <- box_cox(eusilcA_Vienna$eqIncome, lambda = -0.472136)
 
 all.equal(box_cox$y, as.numeric(lily_bc$yt))
 

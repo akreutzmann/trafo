@@ -20,7 +20,7 @@
 estim_lme <- function(lambda, y, formula, data, rand_eff, method){
   
   # Get residuals for all methods but ML
-  #y <- as.matrix(data[paste(formula[2])])
+  # y <- as.matrix(data[paste(formula[2])])
   yt <- box_cox(y = y, lambda = lambda, shift = 0)$y
   data[paste(formula[2])] <- yt
   tdata <- data

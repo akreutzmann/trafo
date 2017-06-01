@@ -80,6 +80,7 @@ pooled_skewness_min <- function(model, res) {
 #' @param res residuals from a linear model with response variable yt and 
 #' explanatory variables x
 #' @return absolute value of the skewness of the residuals
+#' @import moments
 #' @keywords internal
 
 skewness_min <- function(res = res) {
@@ -136,6 +137,7 @@ divergence_min_CvM <- function(res = res) {
 #' @param res residuals from a linear model with response variable yt and 
 #' explanatory variables x
 #' @return median of Kullback-Leibler divergence
+#' @import FNN
 #' @keywords internal
 
 divergence_min_KL <- function(res = res) {
