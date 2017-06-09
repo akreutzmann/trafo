@@ -1,12 +1,12 @@
-#' Box-Cox lme
+#' Modulus lme
 #'
-#' Box-Cox estimation 
+#' Modulus estimation 
 #' @param object of type lme with the model to transform
-#' @param \dots additional arguments to be passed to the estimation function; see bcxEst()
-#' @return an object of class \code{transformation}; see bcxEst()
+#' @param \dots additional arguments to be passed to the estimation function; see modulusEst()
+#' @return an object of class \code{transformation}; see modulusEst()
 #' @keywords internal
 #' @export
-bx_cx.lme <- function(object, method, lambdarange = c(-2,2), ...) {
+modulus.lme <- function(object, method, lambdarange = c(-2,2), ...) {
   formula <- formula(object)
   rand_eff <- names(object$coefficients$random)
   data <- object$data
@@ -21,5 +21,5 @@ bx_cx.lme <- function(object, method, lambdarange = c(-2,2), ...) {
   #if (any(y <= 0)) 
   #  stop("response variable y must be positive")
   #bcxEst(y, x, ...)
-  est_lme(y, x, formula, rand_eff = rand_eff, data = data, transfor = t_bx_cx,  method, lambdarange,  ...)
+  est_lme(y, x, formula, rand_eff = rand_eff, data = data, method, lambdarange,  ...)
 }

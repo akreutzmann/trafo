@@ -37,7 +37,7 @@ est_lm <- function(y, x , method, lambdarange, tr = FALSE, ...) {
     yt <- log(y) 
   
   # ??? Ist dies spezifisch für ML?? Und wenn nicht, dann wie können wir dies 
-  # übertragen auf lme?
+  # übertragen auf lme? Answer: estos son los datos transformados estandarizados
   zt <- yt/exp((lambdaoptim - 1)*mean(log(y)))
   suppressWarnings(modelt <- lm(zt ~ ., data.frame(zt, x[, 2:k] )))
   
