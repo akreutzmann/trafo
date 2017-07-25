@@ -29,16 +29,20 @@ est_lm <- function(y, x , method, lambdarange, tr = FALSE, ...) {
   # !!! add other methods:wrapper for method
   logvector <- sapply(lambdavector, ML, y = y, x = x)
   
-  
   # Here Box cox function aufrufen bzw. wrapper für trafo
-  if (abs(lambdaoptim) > 0.05)  
-    yt <- (y^lambdaoptim - 1)/lambdaoptim
-  else 
-    yt <- log(y) 
+  # Gerade aus kommentiert
+  #if (abs(lambdaoptim) > 0.05)  
+  #  yt <- (y^lambdaoptim - 1)/lambdaoptim
+  #else 
+  #  yt <- log(y) 
+  
+  zt <- box_cox(y = y, lambda = lambdaoptim, shift = 0)$y
+  
+  
   
   # ??? Ist dies spezifisch für ML?? Und wenn nicht, dann wie können wir dies 
   # übertragen auf lme? Answer: estos son los datos transformados estandarizados
-  zt <- yt/exp((lambdaoptim - 1)*mean(log(y)))
+  #zt <- yt/exp((lambdaoptim - 1)*mean(log(y)))
   suppressWarnings(modelt <- lm(zt ~ ., data.frame(zt, x[, 2:k] )))
   
   ans <- list()
