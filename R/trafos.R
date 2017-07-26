@@ -84,6 +84,15 @@ modul <- function(y, lambda = lambda) {
   return(y = yt) 
 }
 
+# Standardized transformation: Modulus
+
+modul_std <- function(y, lambda) {
+  u <- abs(y) + 1L
+  yt <- modul(y, lambda)
+  zt <- yt/exp(mean(sign(y)*(lambda - 1L)*log(u)))
+  return(y = zt)
+}
+
 # Back transformation: Modulus
 modul_back <- function(y, lambda = lambda) {
  
@@ -104,6 +113,17 @@ Bick_dok <-  function(y, lambda = lambda) {
   }
   return(y = yt)
 }
+
+# Standardized transformation: Bick-Doksum
+
+Bick_dok_std <- function(y, lambda) {
+  u <- abs(y) + 1L
+  yt <- Bick_dok(y, lambda)
+  zt <- yt/exp(mean(sign(y)*(lambda-1)*log(u)))
+  return(y = zt)
+}
+
+
 
 # Back transformation: Bick-Doksum
 Bick_dok_back <- function(y, lambda = lambda) {
@@ -153,7 +173,7 @@ Dual_back <- function(y, lambda = lambda) {
 # Transformation: Yeo-Johnson
 Yeo_john <-  function(y, lambda = lambda) {
   n <- length(y)
-  u <- abs(y + 1L) 
+  u <- abs(y) + 1L 
   yt <- rep(NA, n)
   negativos <- which(y < 0)
   positivos <- which(y >= 0)
@@ -168,7 +188,7 @@ Yeo_john <-  function(y, lambda = lambda) {
     yt
   }
   yt[positivos] <- bx(lambda, u[positivos])
-  yt[negativos] <- -bx(lambda = lambda-2L, u[negativos])
+  yt[negativos] <- -bx(lambda = 2L - lambda, u[negativos])
   return(y = yt)
 }
 
