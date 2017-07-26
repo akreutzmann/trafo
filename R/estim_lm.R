@@ -20,7 +20,8 @@
 estim_lm <- function(lambda, y, x, method){
 
   # Get residuals for all methods but ML
-  # Wrapper for transformations
+  # Wrapper for transformations, this means that we need a new argument
+  # trafo in the function
   yt <- as.matrix(box_cox(y = y, lambda = lambda, shift = 0)$y)
   model_ML <- lm(formula = yt ~ - 1 + x)
   res <- residuals(model_ML, level=0, type = "pearson")

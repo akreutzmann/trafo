@@ -25,6 +25,7 @@ lglike <- function(lambda, y, qr, n, ...) {
   else {
     yt <- log(y) 
   }
+  # Wrapper with standardized tranformations
   zt <- yt/exp((lambda - 1)*mean(log(y)))
   llike <- -n/2 * log((sum(qr.resid(qr, zt)^2))/n)
   llike
@@ -41,7 +42,7 @@ restricted_ML <- function(y = y,
                  rand_eff = rand_eff
                  ) {
   
-  # Wrapper for other transformations
+  # Wrapper for other standardized transformations
   yt <- box_cox_std(y = y, lambda = lambda)
   data[paste(formula[2])] <- yt
   tdata <- data

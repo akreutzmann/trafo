@@ -15,7 +15,9 @@
 #' @keywords internal
 est_lm <- function(y, x , method, lambdarange, tr = FALSE, ...) {
   k <- ncol(x)
-  # get the result of the optimation
+  # get the result of the optimization
+  # when you have the wrappers for the transformation in ML this function needs 
+  # a transformation argument
   res <- suppressWarnings(optimize(f = estim_lm, y = y, x = x, method = method, 
                                    interval = lambdarange, tol = 0.0001))
   lambdaoptim <-  res$minimum
@@ -26,23 +28,14 @@ est_lm <- function(y, x , method, lambdarange, tr = FALSE, ...) {
   lambdavector <- sort(lambdavector)
   
   
-  # !!! add other methods:wrapper for method
+  # wrapper for other estimation methods, here you must be careful of the log-
+  # likelihood is negative or positive, we needed the negative log likelihood for
+  # the estimation but I guess that we need the positive values now, so whenever
+  # the estimation method is ML we probably need -logvector 
   logvector <- sapply(lambdavector, ML, y = y, x = x)
   
-  # Here Box cox function aufrufen bzw. wrapper für trafo
-  # Gerade aus kommentiert
-  #if (abs(lambdaoptim) > 0.05)  
-  #  yt <- (y^lambdaoptim - 1)/lambdaoptim
-  #else 
-  #  yt <- log(y) 
-  
-  zt <- box_cox_std(y = y, lambda = lambdaoptim)
-  
-  
-  
-  # ??? Ist dies spezifisch für ML?? Und wenn nicht, dann wie können wir dies 
-  # übertragen auf lme? Answer: estos son los datos transformados estandarizados
-  #zt <- yt/exp((lambdaoptim - 1)*mean(log(y)))
+  # Here wrapper for transformations
+  zt <- box_cox(y = y, lambda = lambdaoptim)$y
   suppressWarnings(modelt <- lm(zt ~ ., data.frame(zt, x[, 2:k] )))
   
   ans <- list()
@@ -83,7 +76,10 @@ est_lm <- function(y, x , method, lambdarange, tr = FALSE, ...) {
 est_lme <- function( y, x, formula, data, rand_eff, method = method, lambdarange = lambdarange, tr = FALSE, ...) {
   #x <- model.matrix(formula, data = data)
   k <- ncol(x)
-  # get the result of the optimation
+ 
+  # get the result of the optimization
+  # when you have the wrappers for the transformation in restricted_ML this 
+  # function needs a transformation argument
   res <- suppressWarnings(optimize(f = estim_lme, 
                                    y = y,
                                    #x = x,
@@ -99,19 +95,15 @@ est_lme <- function( y, x, formula, data, rand_eff, method = method, lambdarange
   lambdavector[l + 1]  <- lambdaoptim
   lambdavector <- sort(lambdavector)
   
-  # Wrapper für methods
+  # wrapper for other estimation methods, here you must be careful of the log-
+  # likelihood is negative or positive, we needed the negative log likelihood for
+  # the estimation but I guess that we need the positive values now, so whenever
+  # the estimation method is restricted_ML we probably need -logvector 
   #logvector <- sapply(lambdavector, ML, y = y, x = x)
   
-  
-  # Take Box Coox or rather wrapper für trafo
-  if (abs(lambdaoptim) > 0.05)  
-    yt <- (y^lambdaoptim - 1)/lambdaoptim
-  else 
-    yt <- log(y) 
-  
-  # ??? 
-  zt <- yt/exp((lambdaoptim - 1)*mean(log(y)))
-  #suppressWarnings(modelt <- lm(zt ~ ., data.frame(zt, x[, 2:k] )))
+  # Here wrapper for transformations
+  zt <- box_cox(y = y, lambda = lambdaoptim)$y
+  suppressWarnings(modelt <- lm(zt ~ ., data.frame(zt, x[, 2:k] )))
   
   ans <- list()
   # Check names
