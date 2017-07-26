@@ -124,7 +124,6 @@ Bick_dok_std <- function(y, lambda) {
 }
 
 
-
 # Back transformation: Bick-Doksum
 Bick_dok_back <- function(y, lambda = lambda) {
   
@@ -141,6 +140,19 @@ Manly <-  function(y, lambda = lambda) {
     yt <- (exp(y*lambda) - 1L)/lambda
   }
   return(y = yt)
+}
+
+# Standardized transformation: Manly
+
+Manly_std <- function(y, lambda) {
+  lambda_absolute <- abs(lambda)
+  yt <- Manly(y, lambda)
+  if (lambda_absolute <= 1e-12) {  #case lambda=0
+    zt <-  yt
+  } else {
+    zt <- yt/exp((mean(lambda*y)))
+  }
+  return(y = zt)
 }
 
 # Back transformation: Manly
@@ -161,6 +173,14 @@ Dual <-  function(y, lambda = lambda) {
     stop("lambda can not be negative for the dual transformation")
   }
   return(y = yt)
+}
+
+# Standardized transformation: dual
+
+Dual_std <- function(y, lambda) {
+  yt <- Dual(y, lambda)
+  zt <- yt/exp((mean(log((y^(lambda-1) + y^(-lambda-1))/2))))
+  return(y = zt)
 }
 
 # Back transformation: dual
@@ -191,6 +211,16 @@ Yeo_john <-  function(y, lambda = lambda) {
   yt[negativos] <- -bx(lambda = 2L - lambda, u[negativos])
   return(y = yt)
 }
+
+# Standardized transformation: Yeo-Johnson
+
+Yeo_john_std <- function(y, lambda) {
+  u <- abs(y) + 1L
+  yt <- Yeo_john(y, lambda)
+  zt <- yt/exp(mean(sign(y)*(lambda-1)*log(u)))
+  return(y = zt)
+}
+
 
 # Back transformation: Yeo-Johnson
 Yeo_john_back <- function(y, lambda = lambda) {
