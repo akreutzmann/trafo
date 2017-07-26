@@ -90,7 +90,10 @@ modul_std <- function(y, lambda) {
   u <- abs(y) + 1L
   yt <- modul(y, lambda)
   zt <- yt/exp(mean(sign(y)*(lambda - 1L)*log(u)))
-  return(y = zt)
+  
+  y <- zt
+  
+  return(y)
 }
 
 # Back transformation: Modulus
@@ -120,7 +123,8 @@ Bick_dok_std <- function(y, lambda) {
   u <- abs(y) + 1L
   yt <- Bick_dok(y, lambda)
   zt <- yt/exp(mean(sign(y)*(lambda-1)*log(u)))
-  return(y = zt)
+  y <- zt
+  return(y)
 }
 
 
@@ -152,7 +156,8 @@ Manly_std <- function(y, lambda) {
   } else {
     zt <- yt/exp((mean(lambda*y)))
   }
-  return(y = zt)
+  y <- zt
+  return(y)
 }
 
 # Back transformation: Manly
@@ -180,7 +185,10 @@ Dual <-  function(y, lambda = lambda) {
 Dual_std <- function(y, lambda) {
   yt <- Dual(y, lambda)
   zt <- yt/exp((mean(log((y^(lambda-1) + y^(-lambda-1))/2))))
-  return(y = zt)
+  
+  y <- zt
+  
+  return(y)
 }
 
 # Back transformation: dual
@@ -218,7 +226,10 @@ Yeo_john_std <- function(y, lambda) {
   u <- abs(y) + 1L
   yt <- Yeo_john(y, lambda)
   zt <- yt/exp(mean(sign(y)*(lambda-1)*log(u)))
-  return(y = zt)
+  
+  y <- zt
+  
+  return(y)
 }
 
 
