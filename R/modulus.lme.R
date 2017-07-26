@@ -21,5 +21,5 @@ modulus.lme <- function(object, method, lambdarange = c(-2,2), ...) {
   #if (any(y <= 0)) 
   #  stop("response variable y must be positive")
   #bcxEst(y, x, ...)
-  est_lme(y, x, formula, rand_eff = rand_eff, data = data, method, lambdarange,  ...)
+  est_lme(y, x, formula, rand_eff = rand_eff, data = data, method = method, lambdarange,  ...)
 }

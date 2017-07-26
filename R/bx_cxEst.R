@@ -36,7 +36,7 @@ est_lm <- function(y, x , method, lambdarange, tr = FALSE, ...) {
   #else 
   #  yt <- log(y) 
   
-  zt <- box_cox(y = y, lambda = lambdaoptim, shift = 0)$y
+  zt <- box_cox_std(y = y, lambda = lambdaoptim)
   
   
   
