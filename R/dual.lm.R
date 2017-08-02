@@ -6,13 +6,12 @@
 #' @return an object of class \code{transformation}; see dualEst()
 #' @keywords internal
 #' @export
-dual.lm <- function(object,...) {
+dual.lm <- function(object, method, lambdarange = c(0, 2), ...) {
   model_frame <- object$model 
   if (is.null(y <- model.response(model_frame))) 
     stop("Dependent variable y must not be empty")
   if (is.null(x <- model.matrix(attr(model_frame, "terms"), data = model_frame))) 
     stop("Matrix of covariates X must not be empty")
-  if (any(y <= 0)) 
-    stop("response variable y must be positive")
-  dualEst(y, x, ...)
+  # dualEst(y, x, ...)
+  est_lm(y = y, x = x, transfor = "t_dl", method = method, lambdarange = lambdarange, ...)
 }

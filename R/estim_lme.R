@@ -17,12 +17,25 @@
 #' @keywords internal
 
 
-estim_lme <- function(lambda, y, formula, data, rand_eff, method){
+estim_lme <- function(lambda, y, formula, data, rand_eff, method, transfor){
   
   # Get residuals for all methods but ML
   # Wrapper for transformations, this means that we need a new argument
   # trafo in the function
-  yt <- box_cox(y = y, lambda = lambda, shift = 0)$y
+  yt <- if(transfor == "t_bx_cx") {
+    box_cox(y = y, lambda = lambda, shift = 0)$y
+  } else if (transfor == "t_mdls") {
+    modul(y = y, lambda = lambda)
+  } else if (transfor == "t_bck_dk") {
+    Bick_dok(y = y, lambda = lambda)
+  } else if (transfor == "t_mnl") {
+    Manly(y = y, lambda = lambda)
+  } else if (transfor == "t_dl") {
+    Dual(y = y, lambda = lambda)
+  } else if (transfor == "t_y_jhnsn") {
+    Yeo_john(y = y, lambda = lambda)
+  }
+  # yt <- box_cox(y = y, lambda = lambda, shift = 0)$y
   data[paste(formula[2])] <- yt
   tdata <- data
   model_REML <- lme(fixed = formula, 
@@ -39,7 +52,8 @@ estim_lme <- function(lambda, y, formula, data, rand_eff, method){
          formula = formula, 
          lambda = lambda,
          data = data,
-         rand_eff = rand_eff)
+         rand_eff = rand_eff,
+         transfor = transfor)
   } else if (method == "pskew") {
     pooled_skewness_min(model = model_REML, res = res)  
   } else if (method == "skew") {

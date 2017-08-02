@@ -8,25 +8,42 @@
 #' @return log-likelihood
 #' @keywords internal
 
-ML <- function(y, x, lambda){
+ML <- function(y, x, lambda, transfor){
   qr <- qr(x)
   n <- length(y)
   yt <- rep(NA, n)
   
-  lglike <- -lglike(lambda = lambda, y = y, qr = qr, n = n)
+  lglike <- -lglike(lambda = lambda, y = y, qr = qr, n = n, transfor = transfor)
 }
 
 # Log-likelihood function for ML method
-lglike <- function(lambda, y, qr, n, ...) {
-  if (abs(lambda) != 0) {
-    yt <- (y^lambda - 1)/lambda
-    
-  }
-  else {
-    yt <- log(y) 
-  }
-  # Wrapper with standardized tranformations
-  zt <- yt/exp((lambda - 1)*mean(log(y)))
+lglike <- function(lambda, y, qr, n, transfor, ...) {
+  
+  # if (abs(lambda) != 0) {
+  #   yt <- (y^lambda - 1)/lambda
+  #   
+  # }
+  # else {
+  #   yt <- log(y) 
+  # }
+  
+  # Wrapper with standardized tranformations (Done!)
+  zt <- if(transfor == "t_bx_cx") {
+    box_cox_std(y = y, lambda = lambda)
+  } else if (transfor == "t_mdls") {
+    modul_std(y = y, lambda = lambda)
+  } else if (transfor == "t_bck_dk") {
+    Bick_dok_std(y = y, lambda = lambda)
+  } else if (transfor == "t_mnl") {
+    Manly_std(y = y, lambda = lambda)
+  } else if (transfor == "t_dl") {
+    Dual_std(y = y, lambda = lambda)
+  } else if (transfor == "t_y_jhnsn") {
+    Yeo_john_std(y = y, lambda = lambda)
+  } 
+  
+  # zt <- yt/exp((lambda - 1)*mean(log(y)))
+  
   llike <- -n/2 * log((sum(qr.resid(qr, zt)^2))/n)
   llike
 }
@@ -39,11 +56,26 @@ restricted_ML <- function(y = y,
                  formula = formula, 
                  lambda,
                  data = data,
-                 rand_eff = rand_eff
-                 ) {
+                 rand_eff = rand_eff,
+                 transfor) {
   
-  # Wrapper for other standardized transformations
-  yt <- box_cox_std(y = y, lambda = lambda)
+  # Wrapper for other standardized transformations (Done!)
+  yt <- if(transfor == "t_bx_cx") {
+    box_cox_std(y = y, lambda = lambda)
+  } else if (transfor == "t_mdls") {
+    modul_std(y = y, lambda = lambda)
+  } else if (transfor == "t_bck_dk") {
+    Bick_dok_std(y = y, lambda = lambda)
+  } else if (transfor == "t_mnl") {
+    Manly_std(y = y, lambda = lambda)
+  } else if (transfor == "t_dl") {
+    Dual_std(y = y, lambda = lambda)
+  } else if (transfor == "t_y_jhnsn") {
+    Yeo_john_std(y = y, lambda = lambda)
+  } 
+  
+  # yt <- box_cox_std(y = y, lambda = lambda)
+  
   data[paste(formula[2])] <- yt
   tdata <- data
   model_REML <- lme(fixed     = formula,

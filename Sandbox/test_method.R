@@ -25,12 +25,48 @@ all.equal(box_cox$y, as.numeric(lily_bc$yt))
 
 
 
+devtools::load_all(".")
 bx_cx(modelVienna, method = "ml")
+
+# library(skewness) # need to load this lilbrary before
 bx_cx(modelVienna, method = "skew")
+
 bx_cx(modelVienna, method = "div.ks")
 bx_cx(modelVienna, method = "div.cvm")
+
+# library(FNN) # need to load this lilbrary before
 bx_cx(modelVienna, method = "div.kl")
 
+
+modulus(modelVienna, method = "ml")
+modulus(modelVienna, method = "skew")
+modulus(modelVienna, method = "div.ks")
+modulus(modelVienna, method = "div.cvm")
+modulus(modelVienna, method = "div.kl")
+
+bickeldoksum(modelVienna, method = "ml")
+bickeldoksum(modelVienna, method = "skew")
+bickeldoksum(modelVienna, method = "div.ks")
+bickeldoksum(modelVienna, method = "div.cvm")
+bickeldoksum(modelVienna, method = "div.kl")
+
+manly(modelVienna, method = "ml")
+manly(modelVienna, method = "skew")
+manly(modelVienna, method = "div.ks")
+manly(modelVienna, method = "div.cvm")
+manly(modelVienna, method = "div.kl")
+
+dual(modelVienna, method = "ml")
+dual(modelVienna, method = "skew")
+dual(modelVienna, method = "div.ks")
+dual(modelVienna, method = "div.cvm")
+dual(modelVienna, method = "div.kl")
+
+yeojohnson(modelVienna, method = "ml")
+yeojohnson(modelVienna, method = "skew")
+yeojohnson(modelVienna, method = "div.ks")
+yeojohnson(modelVienna, method = "div.cvm")
+yeojohnson(modelVienna, method = "div.kl")
 
 # lme --------------------------------------------------------------------------
 
@@ -54,6 +90,41 @@ modelAustria <- lme(eqIncome ~ pb220a + py050n,
 bx_cx(modelAustria, method = "reml")
 bx_cx(modelAustria, method = "skew")
 bx_cx(modelAustria, method = "pskew")
-bx_cx(modelAustria, method = "div.kl")
-bx_cx(modelAustria, method = "div.cvm")
 bx_cx(modelAustria, method = "div.ks")
+bx_cx(modelAustria, method = "div.cvm")
+bx_cx(modelAustria, method = "div.kl")
+
+modulus(modelAustria, method = "reml")
+modulus(modelAustria, method = "skew")
+modulus(modelAustria, method = "pskew")
+modulus(modelAustria, method = "div.ks")
+modulus(modelAustria, method = "div.cvm")
+modulus(modelAustria, method = "div.kl")
+
+bickeldoksum(modelAustria, method = "reml")
+bickeldoksum(modelAustria, method = "skew")
+bickeldoksum(modelAustria, method = "pskew")
+bickeldoksum(modelAustria, method = "div.ks")
+bickeldoksum(modelAustria, method = "div.cvm")
+bickeldoksum(modelAustria, method = "div.kl")
+
+manly(modelAustria, method = "reml")
+manly(modelAustria, method = "skew")
+manly(modelAustria, method = "pskew")
+manly(modelAustria, method = "div.ks")
+manly(modelAustria, method = "div.cvm")
+manly(modelAustria, method = "div.kl")
+
+dual(modelAustria, method = "reml")
+dual(modelAustria, method = "skew")
+dual(modelAustria, method = "pskew")
+dual(modelAustria, method = "div.ks")
+dual(modelAustria, method = "div.cvm")
+dual(modelAustria, method = "div.kl")
+
+yeojohnson(modelAustria, method = "reml")
+yeojohnson(modelAustria, method = "skew")
+yeojohnson(modelAustria, method = "pskew")
+yeojohnson(modelAustria, method = "div.ks")
+yeojohnson(modelAustria, method = "div.cvm")
+yeojohnson(modelAustria, method = "div.kl")

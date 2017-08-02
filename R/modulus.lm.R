@@ -6,11 +6,12 @@
 #' @return an object of class \code{transformation}; see modulusEst()
 #' @keywords internal
 #' @export
-modulus.lm <- function(object, ...) {
+modulus.lm <- function(object, method, lambdarange = c(-2, 2), ...) {
   model_frame <- object$model 
   if (is.null(y <- model.response(model_frame))) 
     stop("Dependent variable y must not be empty")
   if (is.null(x <- model.matrix(attr(model_frame, "terms"), data = model_frame))) 
     stop("Matrix of covariates X must not be empty")
-  modulusEst(y, x, ...)
+  # modulusEst(y, x, ...)
+  est_lm(y = y, x = x, transfor = "t_mdls", method = method, lambdarange = lambdarange, ...)  
 }

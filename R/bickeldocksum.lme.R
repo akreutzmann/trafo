@@ -1,12 +1,12 @@
-#' Modulus lme
+#' Bickel-Docksum lme
 #'
-#' Modulus estimation 
+#' Bickel-Docksum estimation 
 #' @param object of type lme with the model to transform
-#' @param \dots additional arguments to be passed to the estimation function; see modulusEst()
-#' @return an object of class \code{transformation}; see modulusEst()
+#' @param \dots additional arguments to be passed to the estimation function; see bickeldocksumEst()
+#' @return an object of class \code{transformation}; see bickeldocksumEst()
 #' @keywords internal
 #' @export
-modulus.lme <- function(object, method, lambdarange = c(-2,2), ...) {
+bickeldoksum.lme <- function(object, method, lambdarange = c(1e-11, 2), ...) {
   formula <- formula(object)
   rand_eff <- names(object$coefficients$random)
   data <- object$data
@@ -20,6 +20,6 @@ modulus.lme <- function(object, method, lambdarange = c(-2,2), ...) {
   #  stop("Matrix of covariates X must not be empty")
   #if (any(y <= 0)) 
   #  stop("response variable y must be positive")
-  #bcxEst(y, x, ...)
-  est_lme(y, x, formula, rand_eff = rand_eff, data = data, transfor = "t_mdls",  method, lambdarange,  ...)
+  # bickeldoksumEst(y, x, ...)
+  est_lme(y = y, x = x, transfor = "t_bck_dk", method = method, lambdarange = lambdarange, ...)
 }
