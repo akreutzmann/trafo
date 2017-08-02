@@ -13,11 +13,11 @@
 #' @return yt Vector of the transformed response variable \code{y}
 #' @return modelt An object of type \code{lm} employing the transformed vector \code{yt} as the response variable
 #' @keywords internal
-est_lm2 <- function(y, x , method, lambdarange, tr = FALSE, transfor, ...) {
+est_lm <- function(y, x , method, lambdarange, tr = FALSE, ...) {
   k <- ncol(x)
   # get the result of the optimation
-  res <- suppressWarnings(optimize(f = estim_lm, y = y, x = x, method = method,
-                                   transfor = transfor, interval = lambdarange, tol = 0.0001))
+  res <- suppressWarnings(optimize(f = estim_lm, y = y, x = x, method = method, 
+                                   interval = lambdarange, tol = 0.0001))
   lambdaoptim <-  res$minimum
   logoptim <- res$objective
   lambdavector <- seq(lambdarange[1], lambdarange[2], 0.01)
@@ -27,7 +27,7 @@ est_lm2 <- function(y, x , method, lambdarange, tr = FALSE, transfor, ...) {
   
   
   # !!! add other methods:wrapper for method
-  logvector <- sapply(lambdavector, ML, y = y, x = x, transfor = transfor)
+  logvector <- sapply(lambdavector, ML, y = y, x = x)
   
   # Here Box cox function aufrufen bzw. wrapper für trafo
   # Gerade aus kommentiert
@@ -36,54 +36,14 @@ est_lm2 <- function(y, x , method, lambdarange, tr = FALSE, transfor, ...) {
   #else 
   #  yt <- log(y) 
   
-  zt <- if(transfor == "t_bx_cx") {
-    box_cox_std(y = y, lambda = lambdaoptim)
-  } else if (transfor == "t_mdls") {
-    modul_std(y = y, lambda = lambdaoptim)
-  } else if (transfor == "t_bck_dk") {
-    Bick_dok_std(y = y, lambda = lambdaoptim)
-  } else if (transfor == "t_mnl") {
-    Manly_std(y = y, lambda = lambdaoptim)
-  } else if (transfor == "t_dl") {
-    Dual_std(y = y, lambda = lambdaoptim)
-  } else if (transfor == "t_y_jhnsn") {
-    Yeo_john_std(y = y, lambda = lambdaoptim)
-  }
+  zt <- box_cox_std(y = y, lambda = lambdaoptim)
   
-  # zt <- box_cox_std(y = y, lambda = lambdaoptim)
-
+  
+  
   # ??? Ist dies spezifisch für ML?? Und wenn nicht, dann wie können wir dies 
   # übertragen auf lme? Answer: estos son los datos transformados estandarizados
   #zt <- yt/exp((lambdaoptim - 1)*mean(log(y)))
   suppressWarnings(modelt <- lm(zt ~ ., data.frame(zt, x[, 2:k] )))
-  
-  yt <- if(transfor == "t_bx_cx") {
-    box_cox(y = y, lambda = lambdaoptim)
-  } else if (transfor == "t_mdls") {
-    modul(y = y, lambda = lambdaoptim)
-  } else if (transfor == "t_bck_dk") {
-    Bick_dok(y = y, lambda = lambdaoptim)
-  } else if (transfor == "t_mnl") {
-    Manly(y = y, lambda = lambdaoptim)
-  } else if (transfor == "t_dl") {
-    Dual(y = y, lambda = lambdaoptim)
-  } else if (transfor == "t_y_jhnsn") {
-    Yeo_john(y = y, lambda = lambdaoptim)
-  }
-  
-  family <- if(transfor == "t_bx_cx") {
-    "Box-Cox"
-  } else if (transfor == "t_mdls") {
-    "Modulus"
-  } else if (transfor == "t_bck_dk") {
-    "Bickel-Doksum"
-  } else if (transfor == "t_mnl") {
-    "Manly"
-  } else if (transfor == "t_dl") {
-    "Dual"
-  } else if (transfor == "t_y_jhnsn") {
-    "Yeo-Johnson"
-  }
   
   ans <- list()
   
@@ -94,7 +54,7 @@ est_lm2 <- function(y, x , method, lambdarange, tr = FALSE, transfor, ...) {
   ans$lambdahat <- lambdaoptim
   ans$logvector <- logvector
   ans$lambdavector <- lambdavector
-  ans$family <- family
+  ans$family <- "Box-Cox"
   ans$yt <- yt
   ans$zt <- zt
   ans$modelt <- modelt
@@ -120,7 +80,7 @@ est_lm2 <- function(y, x , method, lambdarange, tr = FALSE, transfor, ...) {
 #' @return yt Vector of the transformed response variable \code{y}
 #' @return modelt An object of type \code{lm} employing the transformed vector \code{yt} as the response variable
 #' @keywords internal
-est_lme2 <- function( y, x, formula, data, rand_eff, method = method, lambdarange = lambdarange, tr = FALSE, ...) {
+est_lme <- function( y, x, formula, data, rand_eff, method = method, lambdarange = lambdarange, tr = FALSE, ...) {
   #x <- model.matrix(formula, data = data)
   k <- ncol(x)
   # get the result of the optimation
@@ -160,20 +120,7 @@ est_lme2 <- function( y, x, formula, data, rand_eff, method = method, lambdarang
   ans$lambdahat <- lambdaoptim
   #ans$logvector <- logvector
   ans$lambdavector <- lambdavector
-  
-  ans$family <- if(transfor == "t_bx_cx") {
-    "Box-Cox"
-  } else if (transfor == "t_mdls") {
-    "Modulus"
-  } else if (transfor == "t_bck_dk") {
-    "Bickel-Doksum"
-  } else if (transfor == "t_mnl") {
-    "Manly"
-  } else if (transfor == "t_dl") {
-    "Dual"
-  } else if (transfor == "t_y_jhnsn") {
-    "Yeo-Johnson"
-  }
+  ans$family <- "Box-Cox"
   ans$yt <- yt
   ans$zt <- zt
   #ans$modelt <- modelt

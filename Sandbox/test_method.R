@@ -25,10 +25,16 @@ all.equal(box_cox$y, as.numeric(lily_bc$yt))
 
 
 
+devtools::load_all(".")
 bx_cx(modelVienna, method = "ml")
+
+# library(skewness) # need to load this lilbrary before
 bx_cx(modelVienna, method = "skew")
+
 bx_cx(modelVienna, method = "div.ks")
 bx_cx(modelVienna, method = "div.cvm")
+
+# library(FNN) # need to load this lilbrary before
 bx_cx(modelVienna, method = "div.kl")
 
 
@@ -54,6 +60,8 @@ modelAustria <- lme(eqIncome ~ pb220a + py050n,
 bx_cx(modelAustria, method = "reml")
 bx_cx(modelAustria, method = "skew")
 bx_cx(modelAustria, method = "pskew")
-bx_cx(modelAustria, method = "div.kl")
-bx_cx(modelAustria, method = "div.cvm")
 bx_cx(modelAustria, method = "div.ks")
+bx_cx(modelAustria, method = "div.cvm")
+bx_cx(modelAustria, method = "div.kl")
+
+
