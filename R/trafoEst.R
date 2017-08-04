@@ -49,7 +49,7 @@ est_lm <- function(y, x , method, lambdarange, tr = FALSE, transfor, ...) {
   } else if (transfor == "t_y_jhnsn") {
     Yeo_john(y = y, lambda = lambdaoptim)
   }
-   
+  
   zt <- if(transfor == "t_bx_cx") {
     box_cox_std(y = y, lambda = lambdaoptim)
   } else if (transfor == "t_mdls") {
@@ -158,7 +158,7 @@ est_lme <- function( y, x, formula, data, rand_eff, method = method, lambdarange
   } else if (method == "div.kl") {
     1
   }
-
+  
   # Take Box Coox or rather wrapper für trafo
   # if (abs(lambdaoptim) > 0.05)  
   #   yt <- (y^lambdaoptim - 1)/lambdaoptim

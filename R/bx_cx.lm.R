@@ -17,4 +17,5 @@ bx_cx.lm <- function(object, method, lambdarange = c(-2, 2), ...) {
   #bcxEst(y, x, ...)
   
   est_lm(y = y, x = x, transfor = "t_bx_cx", method = method, lambdarange = lambdarange, ...)
+
 }
