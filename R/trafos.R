@@ -98,7 +98,15 @@ modul_std <- function(y, lambda) {
 
 # Back transformation: Modulus
 modul_back <- function(y, lambda = lambda) {
- 
+  lambda_absolute <- abs(lambda)
+  if(lambda_absolute <= 1e-12)
+  {
+    y <- sign(y) * (exp(abs(y)) - 1)
+  }
+  else
+  {
+    y <- sign(y) * ((abs(y)*lambda + 1)^(1/lambda) - 1) - 1
+  }
 }
 
 
@@ -193,7 +201,15 @@ Dual_std <- function(y, lambda) {
 
 # Back transformation: dual
 Dual_back <- function(y, lambda = lambda) {
-  
+  lambda_absolute <- abs(lambda)
+  if(abs(l)<= 1e-12)
+  {
+    y <- exp(y)
+  }
+  else
+  {
+    y <- (lambda * y + sqrt(lambda^2 * y^2 + 1))^(1/lambda)
+  }
 }
 
 # The Yeo-Johnson transformation ----------------------------------------------------------------------
