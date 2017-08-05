@@ -1,7 +1,8 @@
 # lm ---------------------------------------------------------------------------
 data("eusilcA_Vienna")
-modelVienna <- lm(eusilcA_Vienna$eqIncome ~ eusilcA_Vienna$eqsize +
-                    eusilcA_Vienna$cash)
+modelVienna <- lm(eqIncome ~ eqsize + gender + cash + unempl_ben + age_ben +
+                  rent + cap_inv + tax_adj + dis_ben + sick_ben + surv_ben + 
+                  fam_allow + house_allow, data = eusilcA_Vienna)
 
 library(simFrame)
 data("eusilcP")
@@ -26,7 +27,16 @@ all.equal(box_cox$y, as.numeric(lily_bc$yt))
 
 
 devtools::load_all(".")
-bx_cx(modelVienna, method = "ml")
+bc_ML <- bx_cx(modelVienna, method = "ml")
+  
+  
+class(bc_ML)
+
+summary(bc_ML)
+plot(bc_ML)
+
+compareTransformation(modelVienna, lamda.dual = 0.45)
+
 
 # library(skewness) # need to load this lilbrary before
 bx_cx(modelVienna, method = "skew")
@@ -51,10 +61,11 @@ bickeldoksum(modelVienna, method = "div.cvm")
 bickeldoksum(modelVienna, method = "div.kl")
 
 manly(modelVienna, method = "ml")
-manly(modelVienna, method = "skew")
-manly(modelVienna, method = "div.ks")
-manly(modelVienna, method = "div.cvm")
-manly(modelVienna, method = "div.kl")
+manly(modelVienna, method = "ml", lambdarange = c(-0.05, 0.005))
+manly(modelVienna, method = "skew", lambdarange = c(-0.05, 0.005))
+manly(modelVienna, method = "div.ks", lambdarange = c(-0.05, 0.005))
+manly(modelVienna, method = "div.cvm", lambdarange = c(-0.05, 0.005))
+manly(modelVienna, method = "div.kl", lambdarange = c(-0.05, 0.005))
 
 dual(modelVienna, method = "ml")
 dual(modelVienna, method = "skew")
@@ -62,11 +73,15 @@ dual(modelVienna, method = "div.ks")
 dual(modelVienna, method = "div.cvm")
 dual(modelVienna, method = "div.kl")
 
+
+class(modelVienna)
+
 yeojohnson(modelVienna, method = "ml")
 yeojohnson(modelVienna, method = "skew")
 yeojohnson(modelVienna, method = "div.ks")
 yeojohnson(modelVienna, method = "div.cvm")
 yeojohnson(modelVienna, method = "div.kl")
+
 
 # lme --------------------------------------------------------------------------
 
@@ -108,12 +123,12 @@ bickeldoksum(modelAustria, method = "div.ks")
 bickeldoksum(modelAustria, method = "div.cvm")
 bickeldoksum(modelAustria, method = "div.kl")
 
-manly(modelAustria, method = "reml")
-manly(modelAustria, method = "skew")
-manly(modelAustria, method = "pskew")
-manly(modelAustria, method = "div.ks")
-manly(modelAustria, method = "div.cvm")
-manly(modelAustria, method = "div.kl")
+manly(modelAustria, method = "reml", lambdarange = c(-0.05, 0.005))
+manly(modelAustria, method = "skew", lambdarange = c(-0.05, 0.005))
+manly(modelAustria, method = "pskew", lambdarange = c(-0.05, 0.005))
+manly(modelAustria, method = "div.ks", lambdarange = c(-0.05, 0.005))
+manly(modelAustria, method = "div.cvm", lambdarange = c(-0.05, 0.005))
+manly(modelAustria, method = "div.kl", lambdarange = c(-0.05, 0.005))
 
 dual(modelAustria, method = "reml")
 dual(modelAustria, method = "skew")

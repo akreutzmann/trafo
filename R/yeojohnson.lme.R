@@ -6,7 +6,7 @@
 #' @return an object of class \code{transformation}; see yeojohnsonEst()
 #' @keywords internal
 #' @export
-yeojohnson.lm <- function(object, method, lambdarange = c(-2, 2), ...) {
+yeojohnson.lme <- function(object, method, lambdarange = c(-2, 2), ...) {
   formula <- formula(object)
   rand_eff <- names(object$coefficients$random)
   data <- object$data

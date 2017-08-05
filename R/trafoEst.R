@@ -19,14 +19,29 @@ est_lm <- function(y, x , method, lambdarange, tr = FALSE, transfor, ...) {
   # get the result of the optimization
   # when you have the wrappers for the transformation in ML this function needs 
   # a transformation argument
+  
+
   res <- suppressWarnings(optimize(f = estim_lm, y = y, x = x, method = method,
-                                   transfor = transfor, interval = lambdarange, tol = 0.0001))
+                                   transfor = transfor, interval = lambdarange, 
+                                   tol = 0.0001))
+  
+  if(is.infinite(res$objective) & tr !=TRUE) {
+    stop("For some lambda in the interval, the likelihood does not converge.
+         Choose another lambdarange.")
+  }
+    
   lambdaoptim <-  res$minimum
   logoptim <- res$objective
   lambdavector <- seq(lambdarange[1], lambdarange[2], 0.01)
   l <- length(lambdavector)
   lambdavector[l + 1]  <- lambdaoptim
   lambdavector <- sort(lambdavector)
+  
+  ans <- list()
+  
+  # here only llike considered but we have different functions that are optimized
+  # change name! 
+  #
   
   # not done yet!
   # wrapper for other estimation methods, here you must be careful of the log-
@@ -35,9 +50,9 @@ est_lm <- function(y, x , method, lambdarange, tr = FALSE, transfor, ...) {
   # the estimation method is ML we probably need -logvector 
   
   logvector <- sapply(lambdavector, ML, y = y, x = x, transfor = transfor)
-  
+
   yt <- if(transfor == "t_bx_cx") {
-    box_cox(y = y, lambda = lambdaoptim)
+    box_cox(y = y, lambda = lambdaoptim)$y
   } else if (transfor == "t_mdls") {
     modul(y = y, lambda = lambdaoptim)
   } else if (transfor == "t_bck_dk") {
@@ -50,23 +65,29 @@ est_lm <- function(y, x , method, lambdarange, tr = FALSE, transfor, ...) {
     Yeo_john(y = y, lambda = lambdaoptim)
   }
   
-  zt <- if(transfor == "t_bx_cx") {
-    box_cox_std(y = y, lambda = lambdaoptim)
-  } else if (transfor == "t_mdls") {
-    modul_std(y = y, lambda = lambdaoptim)
-  } else if (transfor == "t_bck_dk") {
-    Bick_dok_std(y = y, lambda = lambdaoptim)
-  } else if (transfor == "t_mnl") {
-    Manly_std(y = y, lambda = lambdaoptim)
-  } else if (transfor == "t_dl") {
-    Dual_std(y = y, lambda = lambdaoptim)
-  } else if (transfor == "t_y_jhnsn") {
-    Yeo_john_std(y = y, lambda = lambdaoptim)
-  }
+  # zt <- if(transfor == "t_bx_cx") {
+  #   box_cox_std(y = y, lambda = lambdaoptim)
+  # } else if (transfor == "t_mdls") {
+  #   modul_std(y = y, lambda = lambdaoptim)
+  # } else if (transfor == "t_bck_dk") {
+  #   Bick_dok_std(y = y, lambda = lambdaoptim)
+  # } else if (transfor == "t_mnl") {
+  #   Manly_std(y = y, lambda = lambdaoptim)
+  # } else if (transfor == "t_dl") {
+  #   Dual_std(y = y, lambda = lambdaoptim)
+  # } else if (transfor == "t_y_jhnsn") {
+  #   Yeo_john_std(y = y, lambda = lambdaoptim)
+  # }
+  
   # Here wrapper for transformations
   # zt <- box_cox(y = y, lambda = lambdaoptim)$y # warum nicht standardizierte Daten?
   # zt <- box_cox_std(y = y, lambda = lambdaoptim)
-  suppressWarnings(modelt <- lm(zt ~ ., data.frame(zt, x[, 2:k] )))
+  if(is.infinite(logoptim) | is.na(logoptim)) {
+    modelt <- NULL 
+  } else {
+    suppressWarnings(modelt <- lm(yt ~ ., data.frame(yt, x[, 2:k] )))
+  } 
+  
   
   family <- if(transfor == "t_bx_cx") {
     "Box-Cox"
@@ -82,18 +103,13 @@ est_lm <- function(y, x , method, lambdarange, tr = FALSE, transfor, ...) {
     "Yeo-Johnson"
   }
   
-  ans <- list()
-  
-  # here only llike considered but we have different functions that are optimized
-  # change name! 
-  if(is.infinite(ans$llike <- logoptim ) & tr !=TRUE) 
-    stop(("log-likelihood is infinite or not defined for components y and x"))
+  ans$llike <- res$objective
   ans$lambdahat <- lambdaoptim
   ans$logvector <- logvector
   ans$lambdavector <- lambdavector
   ans$family <- family
   ans$yt <- yt
-  ans$zt <- zt
+  #ans$zt <- zt
   ans$modelt <- modelt
   ans$method <- method
   # Do we want to change to class trafo??!!

@@ -19,40 +19,54 @@
 
 estim_lm <- function(lambda, y, x, method, transfor){
 
-  # Get residuals for all methods but ML
+    # Get residuals for all methods but ML
   # Wrapper for transformations, this means that we need a new argument
   # trafo in the function
-  
-  yt <- if(transfor == "t_bx_cx") {
-    as.matrix(box_cox(y = y, lambda = lambda, shift = 0)$y)
-  } else if (transfor == "t_mdls") {
-    as.matrix(modul(y = y, lambda = lambda))
-  } else if (transfor == "t_bck_dk") {
-    as.matrix(Bick_dok(y = y, lambda = lambda))
-  } else if (transfor == "t_mnl") {
-    as.matrix(Manly(y = y, lambda = lambda))
-  } else if (transfor == "t_dl") {
-    as.matrix(Dual(y = y, lambda = lambda))
-  } else if (transfor == "t_y_jhnsn") {
-    as.matrix(Yeo_john(y = y, lambda = lambda))
-  }
-  # yt <- as.matrix(box_cox(y = y, lambda = lambda, shift = 0)$y)
-  
-  model_ML <- lm(formula = yt ~ - 1 + x)
-  res <- residuals(model_ML, level=0, type = "pearson")
   
   # Find the optimal lambda depending on method
   optimization <- if (method == "ml") {
     ML(y, x, lambda, transfor)
-  } else if (method == "skew") {
-    skewness_min(res = res)
-  } else if (method == "div.ks") {
-    divergence_min_KS(res = res)
-  } else if (method == "div.cvm") {
-    divergence_min_CvM(res = res)
-  } else if (method == "div.kl") {
-    divergence_min_KL(res = res)
+  } else if (method != "ml") {
+    
+    yt <- if(transfor == "t_bx_cx") {
+      as.matrix(box_cox(y = y, lambda = lambda, shift = 0)$y)
+    } else if (transfor == "t_mdls") {
+      as.matrix(modul(y = y, lambda = lambda))
+    } else if (transfor == "t_bck_dk") {
+      as.matrix(Bick_dok(y = y, lambda = lambda))
+    } else if (transfor == "t_mnl") {
+      as.matrix(Manly(y = y, lambda = lambda))
+    } else if (transfor == "t_dl") {
+      as.matrix(Dual(y = y, lambda = lambda))
+    } else if (transfor == "t_y_jhnsn") {
+      as.matrix(Yeo_john(y = y, lambda = lambda))
+    }
+    # yt <- as.matrix(box_cox(y = y, lambda = lambda, shift = 0)$y)
+    
+    model_ML <- NULL
+    try(model_ML <- lm(formula = yt ~ - 1 + x), silent = TRUE)
+    
+    if(is.null(model_ML)){
+      stop("For some lambda in the interval, the likelihood does not converge.
+         Choose another lambdarange.")
+    } else {
+      model_ML <- model_ML
+    }
+    res <- residuals(model_ML, level = 0, type = "pearson")
+    
+    
+    optimization <- if (method == "skew") {
+      skewness_min(res = res)
+    } else if (method == "div.ks") {
+      divergence_min_KS(res = res)
+    } else if (method == "div.cvm") {
+      divergence_min_CvM(res = res)
+    } else if (method == "div.kl") {
+      divergence_min_KL(res = res)
+    }
+    
   }
+  
   
   return(optimization)
 }

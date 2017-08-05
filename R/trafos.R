@@ -160,7 +160,7 @@ Manly_std <- function(y, lambda) {
   lambda_absolute <- abs(lambda)
   yt <- Manly(y, lambda)
   if (lambda_absolute <= 1e-12) {  #case lambda=0
-    zt <-  yt
+    zt <-  y
   } else {
     zt <- yt/exp((mean(lambda*y)))
   }

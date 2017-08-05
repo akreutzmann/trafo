@@ -26,9 +26,10 @@ lglike <- function(lambda, y, qr, n, transfor, ...) {
   # else {
   #   yt <- log(y) 
   # }
+
   
   # Wrapper with standardized tranformations (Done!)
-  zt <- if(transfor == "t_bx_cx") {
+  zt <- if (transfor == "t_bx_cx") {
     box_cox_std(y = y, lambda = lambda)
   } else if (transfor == "t_mdls") {
     modul_std(y = y, lambda = lambda)
@@ -44,7 +45,12 @@ lglike <- function(lambda, y, qr, n, transfor, ...) {
   
   # zt <- yt/exp((lambda - 1)*mean(log(y)))
   
-  llike <- -n/2 * log((sum(qr.resid(qr, zt)^2))/n)
+  if (any(is.nan(abs(zt))) | any(is.infinite(zt))) {
+    llike <- -Inf
+  } else {
+    llike <- -n/2 * log((sum(qr.resid(qr, zt)^2))/n)
+  }
+  
   llike
 }
 
