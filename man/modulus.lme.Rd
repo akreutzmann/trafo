@@ -4,7 +4,8 @@
 \alias{modulus.lme}
 \title{Modulus lme}
 \usage{
-\method{modulus}{lme}(object, method, lambdarange = c(-2, 2), ...)
+\method{modulus}{lme}(object, method, lambdarange = c(-2, 2), tol = 1e-04,
+  ...)
 }
 \arguments{
 \item{object}{of type lme with the model to transform}

@@ -4,7 +4,8 @@
 \alias{yeojohnson.lm}
 \title{Yeo-Johnson lm}
 \usage{
-\method{yeojohnson}{lm}(object, ...)
+\method{yeojohnson}{lm}(object, method, lambdarange = c(-2, 2), tol = 1e-04,
+  ...)
 }
 \arguments{
 \item{\dots}{additional arguments to be passed to the estimation function; see yeojohnsonEst()}

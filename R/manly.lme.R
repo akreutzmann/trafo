@@ -6,7 +6,8 @@
 #' @return an object of class \code{transformation}; see manlyEst()
 #' @keywords internal
 #' @export
-manly.lme <- function(object, method, lambdarange = c(-2, 2), ...) {
+manly.lme <- function(object, method, lambdarange = c(-2, 2), tol = 0.0001, 
+                      ...) {
   formula <- formula(object)
   rand_eff <- names(object$coefficients$random)
   data <- object$data
@@ -21,5 +22,6 @@ manly.lme <- function(object, method, lambdarange = c(-2, 2), ...) {
   #if (any(y <= 0)) 
   #  stop("response variable y must be positive")
   # manlyEst(y, x, ...)
-  est_lme(y, x, formula, rand_eff = rand_eff, data = data, transfor = "t_mnl",  method, lambdarange,  ...)
+  est_lme(y, x, formula, rand_eff = rand_eff, data = data, transfor = "t_mnl",  
+          method, lambdarange, tol = tol, ...)
 }

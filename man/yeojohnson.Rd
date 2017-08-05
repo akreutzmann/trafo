@@ -33,3 +33,4 @@ modelt An object of type \code{lm} employing the transformed vector \code{yt} as
 \description{
 Estimates the transformation parameter for the Yeo-Johnson transformation employing the profile log-likehood.
 }
+\keyword{Yeo-Johnson}

@@ -6,7 +6,9 @@
 #' @return an object of class \code{transformation}; see dualEst()
 #' @keywords internal
 #' @export
-dual.lme <- function(object, method, lambdarange = c(0, 2), ...) {
+dual.lme <- function(object, method, lambdarange = c(0, 2), tol = 0.0001,
+                     ...) {
+  
   formula <- formula(object)
   rand_eff <- names(object$coefficients$random)
   data <- object$data
@@ -21,5 +23,6 @@ dual.lme <- function(object, method, lambdarange = c(0, 2), ...) {
   #if (any(y <= 0)) 
   #  stop("response variable y must be positive")
   # dualEst(y, x, ...)
-  est_lme(y, x, formula, rand_eff = rand_eff, data = data, transfor = "t_dl",  method, lambdarange,  ...)
+  est_lme(y, x, formula, rand_eff = rand_eff, data = data, transfor = "t_dl",  
+          method, lambdarange, tol = tol, ...)
 }

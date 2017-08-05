@@ -4,7 +4,7 @@
 \alias{estim_lme}
 \title{Wrapper function for estimation methods - linear mixed models}
 \usage{
-estim_lme(lambda, y, formula, data, rand_eff, method)
+estim_lme(lambda, y, formula, data, rand_eff, method, transfor)
 }
 \arguments{
 \item{lambda}{transformation parameter}

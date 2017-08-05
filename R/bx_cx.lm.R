@@ -6,7 +6,7 @@
 #' @return an object of class \code{transformation}; see bcxEst()
 #' @keywords internal
 #' @export
-bx_cx.lm <- function(object, method, lambdarange = c(-2, 2), ...) {
+bx_cx.lm <- function(object, method, lambdarange = c(-2, 2), tol = 0.0001,  ...) {
   model_frame <- object$model 
   if (is.null(y <- model.response(model_frame))) 
     stop("Dependent variable y must not be empty")
@@ -16,6 +16,7 @@ bx_cx.lm <- function(object, method, lambdarange = c(-2, 2), ...) {
    stop("response variable y must be positive")
   #bcxEst(y, x, ...)
   
-  est_lm(y = y, x = x, transfor = "t_bx_cx", method = method, lambdarange = lambdarange, ...)
+  est_lm(y = y, x = x, transfor = "t_bx_cx", method = method, 
+         lambdarange = lambdarange, tol = tol, ...)
 
 }

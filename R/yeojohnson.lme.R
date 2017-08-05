@@ -6,7 +6,8 @@
 #' @return an object of class \code{transformation}; see yeojohnsonEst()
 #' @keywords internal
 #' @export
-yeojohnson.lme <- function(object, method, lambdarange = c(-2, 2), ...) {
+yeojohnson.lme <- function(object, method, lambdarange = c(-2, 2), tol = 0.0001,
+                           ...) {
   formula <- formula(object)
   rand_eff <- names(object$coefficients$random)
   data <- object$data
@@ -21,5 +22,6 @@ yeojohnson.lme <- function(object, method, lambdarange = c(-2, 2), ...) {
   #if (any(y <= 0)) 
   #  stop("response variable y must be positive")
   # yeojohnsonEst(y,x, ...)
-  est_lme(y, x, formula, rand_eff = rand_eff, data = data, transfor = "t_y_jhnsn",  method, lambdarange,  ...)
+  est_lme(y, x, formula, rand_eff = rand_eff, data = data, transfor = "t_y_jhnsn",  
+          method, lambdarange, tol = tol, ...)
 }

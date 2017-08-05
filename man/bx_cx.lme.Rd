@@ -4,7 +4,8 @@
 \alias{bx_cx.lme}
 \title{Box-Cox lme}
 \usage{
-\method{bx_cx}{lme}(object, method, lambdarange = c(-2, 2), ...)
+\method{bx_cx}{lme}(object, method, lambdarange = c(-2, 2), tol = 1e-04,
+  ...)
 }
 \arguments{
 \item{object}{of type lme with the model to transform}

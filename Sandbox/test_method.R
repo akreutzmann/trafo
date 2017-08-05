@@ -97,6 +97,8 @@ modelAustria <- lme(eusilc$eqIncome ~ eusilc$pb220a + eusilc$py050n,
                     random = ~ 1 | eusilc$db040, 
                     na.action = na.omit)
 
+which(eusilc$eqIncome == 0)
+eusilc$eqIncome <- eusilc$eqIncome + 1
 
 modelAustria <- lme(eqIncome ~ pb220a + py050n, 
                     random = ~ 1 | db040, data = eusilc, 
@@ -116,6 +118,8 @@ modulus(modelAustria, method = "div.ks")
 modulus(modelAustria, method = "div.cvm")
 modulus(modelAustria, method = "div.kl")
 
+class(modelAustria)
+
 bickeldoksum(modelAustria, method = "reml")
 bickeldoksum(modelAustria, method = "skew")
 bickeldoksum(modelAustria, method = "pskew")
@@ -123,12 +127,15 @@ bickeldoksum(modelAustria, method = "div.ks")
 bickeldoksum(modelAustria, method = "div.cvm")
 bickeldoksum(modelAustria, method = "div.kl")
 
-manly(modelAustria, method = "reml", lambdarange = c(-0.05, 0.005))
+
+manly(modelAustria, method = "reml")
+manly(modelAustria, method = "reml", lambdarange = c(-0.000005, 0.00005))
 manly(modelAustria, method = "skew", lambdarange = c(-0.05, 0.005))
 manly(modelAustria, method = "pskew", lambdarange = c(-0.05, 0.005))
 manly(modelAustria, method = "div.ks", lambdarange = c(-0.05, 0.005))
 manly(modelAustria, method = "div.cvm", lambdarange = c(-0.05, 0.005))
 manly(modelAustria, method = "div.kl", lambdarange = c(-0.05, 0.005))
+
 
 dual(modelAustria, method = "reml")
 dual(modelAustria, method = "skew")

@@ -4,7 +4,7 @@
 \alias{estim_lm}
 \title{Wrapper function for estimation methods - linear models}
 \usage{
-estim_lm(lambda, y, x, method)
+estim_lm(lambda, y, x, method, transfor)
 }
 \arguments{
 \item{lambda}{transformation parameter}

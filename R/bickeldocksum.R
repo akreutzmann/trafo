@@ -14,5 +14,5 @@
 #' @return modelt An object of type \code{lm} employing the transformed vector \code{yt} as the response variable.
 #' @keywords Bickel-Doksum
 #' @export
-bickeldoksum <- function(object, lambda = seq(0.05, 2, 0.05),...) UseMethod("bickeldoksum")
+bickeldoksum <- function(object,...) UseMethod("bickeldoksum")
 

@@ -4,7 +4,7 @@
 \alias{bickeldoksum}
 \title{Bickel-Doksum Transformation}
 \usage{
-bickeldoksum(object, lambda = seq(0.05, 2, 0.05), ...)
+bickeldoksum(object, ...)
 }
 \arguments{
 \item{object}{a data.frame, matrix, formula or fitted model; see below.}

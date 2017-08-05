@@ -6,7 +6,8 @@
 #' @return an object of class \code{transformation}; see bickeldocksumEst()
 #' @keywords internal
 #' @export
-bickeldoksum.lme <- function(object, method, lambdarange = c(1e-11, 2), ...) {
+bickeldoksum.lme <- function(object, method, lambdarange = c(1e-11, 2), 
+                             tol = 0.0001, ...) {
   formula <- formula(object)
   rand_eff <- names(object$coefficients$random)
   data <- object$data
@@ -21,5 +22,6 @@ bickeldoksum.lme <- function(object, method, lambdarange = c(1e-11, 2), ...) {
   #if (any(y <= 0)) 
   #  stop("response variable y must be positive")
   # bickeldoksumEst(y, x, ...)
-  est_lme(y = y, x = x, transfor = "t_bck_dk", method = method, lambdarange = lambdarange, ...)
+  est_lme(y, x, formula, rand_eff = rand_eff, data = data, 
+          transfor = "t_bck_dk",  method, lambdarange,  tol = tol, ...)
 }

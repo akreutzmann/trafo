@@ -2,9 +2,9 @@
 % Please edit documentation in R/manly.lm.R
 \name{manly.lm}
 \alias{manly.lm}
-\title{Manly lm}
+\title{Manly lme}
 \usage{
-\method{manly}{lm}(object, ...)
+\method{manly}{lm}(object, method, lambdarange = c(-2, 2), tol = 1e-04, ...)
 }
 \arguments{
 \item{\dots}{additional arguments to be passed to the estimation function; see manlyEst()}

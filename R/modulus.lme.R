@@ -6,7 +6,8 @@
 #' @return an object of class \code{transformation}; see modulusEst()
 #' @keywords internal
 #' @export
-modulus.lme <- function(object, method, lambdarange = c(-2,2), ...) {
+modulus.lme <- function(object, method, lambdarange = c(-2,2), tol = 0.0001, 
+                        ...) {
   formula <- formula(object)
   rand_eff <- names(object$coefficients$random)
   data <- object$data
@@ -21,5 +22,6 @@ modulus.lme <- function(object, method, lambdarange = c(-2,2), ...) {
   #if (any(y <= 0)) 
   #  stop("response variable y must be positive")
   #bcxEst(y, x, ...)
-  est_lme(y, x, formula, rand_eff = rand_eff, data = data, transfor = "t_mdls",  method, lambdarange,  ...)
+  est_lme(y, x, formula, rand_eff = rand_eff, data = data, transfor = "t_mdls",  
+          method, lambdarange, tol = tol, ...)
 }

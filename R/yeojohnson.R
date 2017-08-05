@@ -12,6 +12,7 @@
 #' @return family Employed family of transformations.
 #' @return yt Vector of the transformed response variable \code{y}.
 #' @return modelt An object of type \code{lm} employing the transformed vector \code{yt} as the response variable.
+#' @keywords Yeo-Johnson
 #' @export
 yeojohnson <- function(object,...) UseMethod("yeojohnson")
 

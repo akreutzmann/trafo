@@ -80,16 +80,24 @@ restricted_ML <- function(y = y,
     Yeo_john_std(y = y, lambda = lambda)
   } 
   
-  # yt <- box_cox_std(y = y, lambda = lambda)
-  
+
   data[paste(formula[2])] <- yt
   tdata <- data
-  model_REML <- lme(fixed     = formula,
-                    data      = tdata,
-                    random    = as.formula(paste0("~ 1 | as.factor(", rand_eff, ")")),
-                    method    = "REML",
-                    keep.data = FALSE, 
-                    na.action = na.omit)
+
+  
+  model_REML <- NULL
+  try(model_REML <- lme(fixed     = formula,
+                        data      = tdata,
+                        random    = as.formula(paste0("~ 1 | as.factor(", rand_eff, ")")),
+                        method    = "REML",
+                        keep.data = FALSE, 
+                        na.action = na.omit), silent=TRUE)
+  if(is.null(model_REML)){
+    stop("For some lambda in the lambdarange, the likelihood does not converge.
+         Choose another lambdarange.")
+  } else {
+    model_REML <- model_REML
+  }
   
   log_likelihood <- -logLik(model_REML)
   

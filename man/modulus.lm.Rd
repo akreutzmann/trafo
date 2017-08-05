@@ -4,7 +4,8 @@
 \alias{modulus.lm}
 \title{Modulus lm}
 \usage{
-\method{modulus}{lm}(object, ...)
+\method{modulus}{lm}(object, method, lambdarange = c(-2, 2), tol = 1e-04,
+  ...)
 }
 \arguments{
 \item{object}{of type lm with the model to transform}
