@@ -43,7 +43,9 @@ compareTransformation(modelVienna, lamda.dual = 0.45)
 
 
 # library(skewness) # need to load this lilbrary before
-bx_cx(modelVienna, method = "skew")
+bx_cx_skew <- bx_cx(modelVienna, method = "skew")
+
+summary(bx_cx_skew)
 
 bx_cx(modelVienna, method = "div.ks")
 bx_cx(modelVienna, method = "div.cvm")
@@ -54,6 +56,8 @@ bx_cx(modelVienna, method = "div.kl")
 
 modulus(modelVienna, method = "ml")
 modulus_skew <- modulus(modelVienna, method = "skew")
+summary(modulus_skew)
+
 modulus(modelVienna, method = "div.ks")
 modulus(modelVienna, method = "div.cvm")
 modulus(modelVienna, method = "div.kl")
@@ -109,7 +113,11 @@ modelAustria <- lme(eqIncome ~ pb220a + py050n,
                     na.action = na.omit)
 
 bxcx_reml <- bx_cx(modelAustria, method = "reml")
-bx_cx(modelAustria, method = "skew")
+summary(bxcx_reml)
+
+bxcx_skew <- bx_cx(modelAustria, method = "skew")
+summary(bxcx_skew)
+
 bx_cx(modelAustria, method = "pskew")
 bx_cx(modelAustria, method = "div.ks")
 bx_cx(modelAustria, method = "div.cvm")

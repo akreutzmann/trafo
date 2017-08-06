@@ -4,12 +4,12 @@
 \alias{plot.transformation}
 \title{Plot Transformation}
 \usage{
-\method{plot}{transformation}(ans, ...)
+\method{plot}{transformation}(x, ...)
 }
 \arguments{
-\item{\dots}{additional arguments to be passed to the estimation function; see bcxEst()}
+\item{x}{an object of type \code{transformation}}
 
-\item{an}{object of type \code{transformation}}
+\item{\dots}{additional arguments to be passed to the estimation function; see bcxEst()}
 }
 \value{
 an object of class \code{transformation}; see bcxEst()

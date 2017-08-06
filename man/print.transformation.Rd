@@ -4,10 +4,10 @@
 \alias{print.transformation}
 \title{Print object of type transformation}
 \usage{
-\method{print}{transformation}(trans, ...)
+\method{print}{transformation}(x, ...)
 }
 \arguments{
-\item{trans}{an object of type transformation with the estimates
+\item{x}{an object of type transformation
 #@keywords internal}
 }
 \description{

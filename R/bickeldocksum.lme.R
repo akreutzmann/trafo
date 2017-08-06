@@ -1,9 +1,23 @@
-#' Bickel-Docksum lme
+#' Bickel-Doksum transformation for linear and linear mixed models
 #'
-#' Bickel-Docksum estimation 
-#' @param object of type lme with the model to transform
-#' @param \dots additional arguments to be passed to the estimation function; see bickeldocksumEst()
-#' @return an object of class \code{transformation}; see bickeldocksumEst()
+#' Depending on the class of the first object, this function estimates the 
+#' optimal transformation parameter for the Bickel-Doksum transformation for 
+#' the model given to the function.
+#'
+#' @param object an object of type lm or lme with the model to transform
+#' @param method a character string. Different estimation methods can be used 
+#' for the estimation of the optimal transformation parameter. 
+#' (i) Maximum likelihood approaches: for linear models maximum likelihood ("ML")
+#' and for linear mixed models restricted maximum likelihood ("reml"); 
+#' (ii) Skewness minimizations: for linear models only skewness minimization 
+#' ("skew") and for linear mixed models also pooled skewness minimization; 
+#' (iii) Divergence minimization by Kolmogorov-Smirnoff ("div.ks"), 
+#' by Cramer-von-Mises ("div.cm") or by Kullback-Leibler ("div.kl") for both 
+#' model types. 
+#' @param lambdarange a numeric vector with two elements defining an interval 
+#' that is used for the estimation of the optimal transformation parameter. 
+#' Defaults to \code{c(1e-11, 2)} for the Bickel-Doksum transformation.
+#' @return an object of class \code{transformation}
 #' @keywords internal
 #' @export
 bickeldoksum.lme <- function(object, method, lambdarange = c(1e-11, 2), 

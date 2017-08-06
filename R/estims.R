@@ -184,7 +184,7 @@ divergence_min_CvM <- function(res = res) {
 #' @param res residuals from a linear model with response variable yt and 
 #' explanatory variables x
 #' @return median of Kullback-Leibler divergence
-#' @import FNN
+#' @importFrom FNN KL.divergence
 #' @keywords internal
 
 divergence_min_KL <- function(res = res) {

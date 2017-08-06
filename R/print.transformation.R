@@ -1,19 +1,19 @@
 #' Print object of type transformation
 #' 
-#' @param trans an object of type transformation with the estimates
+#' @param x an object of type transformation
 #' #@keywords internal
 #' @export
 
-print.transformation <- function(trans, ...){
-cat(trans$family, "Transformation \n")
-cat("\nlambdahat: ", trans$lambdahat)
-if (trans$method == "ml" | trans$method == "reml") {
-cat("\nloglike: ",-trans$optmeas,"\n") 
-} else if (trans$method == "skew" | trans$method == "pskew" ) {
-cat("\nskewness: ",trans$optmeas,"\n")
-} else if (trans$method == "div.ks" | trans$method == "div.cvm" | 
-           trans$method == "div.kl") {
-cat("\ndivergence: ",trans$optmeas,"\n")
+print.transformation <- function(x, ...){
+cat(x$family, "Transformation \n")
+cat("\nlambdahat: ", x$lambdahat)
+if (x$method == "ml" | x$method == "reml") {
+cat("\nloglike: ",-x$optmeas,"\n") 
+} else if (x$method == "skew" | x$method == "pskew" ) {
+cat("\nskewness: ",x$optmeas,"\n")
+} else if (x$method == "div.ks" | x$method == "div.cvm" | 
+           x$method == "div.kl") {
+cat("\ndivergence: ",x$optmeas,"\n")
 }  
- invisible(trans)
+ invisible(x)
 }

@@ -4,13 +4,13 @@ Version: 0.0.0.9000
 Authors@R: person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
 Description: Estimation, selection and comparison of several families of
     transformations. The families of transformations included in the package are the
-    BoxCox transformation, the Manly transformation, the YeoJohnson transformation,
-    the modulus transformation, the BickelDocksum transformation and the dual
+    Box-Cox transformation, the Manly transformation, the Yeo-Johnson transformation,
+    the Modulus transformation, the Bickel-Docksum transformation and the dual
     transformation. The package includes a function to compare these transformations
-    and a function that helps to select one between them. The first version
-    of the new package employs the maximum likelihood approach to estimate the
+    and a function that helps to select one between them. The package employs 
+    the maximum likelihood approach, skewness and divergence minimization to estimate the
     transformation parameter, and proposes the use of Akaikes Information Criterion
-    AIC, the coefficient of determination R.Squared, Skewness, and Kurtosis as
+    (AIC), the coefficient of determination R.Squared, Skewness, and Kurtosis as
     methods to compare different families of transformations.
 Depends:
     R (>= 3.2.4)
@@ -18,3 +18,6 @@ License: GPL-2
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1
+Imports: nlme,
+    FNN,
+    moments

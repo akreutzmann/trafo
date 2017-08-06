@@ -5,6 +5,7 @@
 #' @param data an optional data frame, list or environment as in lm.
 #' @param XY a data.frame or a matrix, whose first column is the dependent variable and the rest of the columns are the independent variables.
 #' @param  lambdarange range for the estimation parameter lambda - default c(0, 2)
+#' @param \dots other arguments
 #' @return An object of class \code{transformation} with the following arguments.
 #' @return llike The value of the profile log-likelihood at its maximum.
 #' @return logvector The profile log-likelihood evaluated at \code{lambdavector}.

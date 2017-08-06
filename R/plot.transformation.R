@@ -1,23 +1,25 @@
 #' Plot Transformation
 #'
 #' Plots object of type \code{transformation}. Four plots are shown: a plot of the profile loglikelihood vs lambda; a qq plot; a histogram of the residuals vs fitted values of the transformed model 
-#' @param an object of type \code{transformation}
+#' @param x an object of type \code{transformation}
 #' @param \dots additional arguments to be passed to the estimation function; see bcxEst()
 #' @return an object of class \code{transformation}; see bcxEst()
 #' @export
-plot.transformation <- function(ans, ...) {
-  logvector  <- as.vector(ans$logvector)
-  lambdavector <- ans$lambdavector
-  lambdaoptim <- ans$lambdahat
-  logoptim <- ans$llike
+
+plot.transformation <- function(x, ...) {
+  
+  logvector  <- as.vector(x$logvector)
+  lambdavector <- x$lambdavector
+  lambdaoptim <- x$lambdahat
+  logoptim <- x$llike
   lim <- logoptim - qchisq(0.95, 1)/2
   m <- length(logvector)
   index <- range((1L:m)[logvector > lim])
   cinf <- lambdavector[index[1]]
   csup <- lambdavector[index[2]]
   vline <- c(cinf, lambdaoptim, csup)
-  rt <-  ans$modelt$residuals
-  fittedt <- ans$model$fitted.values
+  rt <-  x$modelt$residuals
+  fittedt <- x$model$fitted.values
   data1 <- data.frame(logvector = logvector,  lambdavector= lambdavector) 
   data2 <- data.frame(residuals = rt) 
   data3 <- data.frame(residualst = rt, fittedt = fittedt)

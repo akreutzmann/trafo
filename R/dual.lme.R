@@ -1,13 +1,26 @@
-#' Dual lme
+#' Dual transformation for linear and linear mixed models
 #'
-#' Dual estimation 
-#' @param object of type lme with the model to transform
-#' @param \dots additional arguments to be passed to the estimation function; see dualEst()
-#' @return an object of class \code{transformation}; see dualEst()
+#' Depending on the class of the first object, this function estimates the 
+#' optimal transformation parameter for the Dual transformation for 
+#' the model given to the function.
+#'
+#' @param object an object of type lm or lme with the model to transform
+#' @param method a character string. Different estimation methods can be used 
+#' for the estimation of the optimal transformation parameter. 
+#' (i) Maximum likelihood approaches: for linear models maximum likelihood ("ML")
+#' and for linear mixed models restricted maximum likelihood ("reml"); 
+#' (ii) Skewness minimizations: for linear models only skewness minimization 
+#' ("skew") and for linear mixed models also pooled skewness minimization; 
+#' (iii) Divergence minimization by Kolmogorov-Smirnoff ("div.ks"), 
+#' by Cramer-von-Mises ("div.cm") or by Kullback-Leibler ("div.kl") for both 
+#' model types. 
+#' @param lambdarange a numeric vector with two elements defining an interval 
+#' that is used for the estimation of the optimal transformation parameter. 
+#' Defaults to \code{c(0, 2)} for the Dual transformation.
+#' @return an object of class \code{transformation}
 #' @keywords internal
 #' @export
-dual.lme <- function(object, method, lambdarange = c(0, 2), tol = 0.0001,
-                     ...) {
+dual.lme <- function(object, method, lambdarange = c(0, 2)) {
   
   formula <- formula(object)
   rand_eff <- names(object$coefficients$random)
@@ -24,7 +37,7 @@ dual.lme <- function(object, method, lambdarange = c(0, 2), tol = 0.0001,
   #  stop("response variable y must be positive")
   # dualEst(y, x, ...)
   est_dual <- est_lme(y, x, formula, rand_eff = rand_eff, data = data, transfor = "t_dl",  
-          method, lambdarange, tol = tol, ...)
+          method, lambdarange, tol = 0.0001, ...)
   est_dual$model <- object
   est_dual
 }

@@ -2,20 +2,33 @@
 % Please edit documentation in R/yeojohnson.lme.R
 \name{yeojohnson.lme}
 \alias{yeojohnson.lme}
-\title{Yeo-Johnson lme}
+\title{Yeo-Johnson transformation for linear and linear mixed models}
 \usage{
-\method{yeojohnson}{lme}(object, method, lambdarange = c(-2, 2),
-  tol = 1e-04, ...)
+\method{yeojohnson}{lme}(object, method, lambdarange = c(-2, 2))
 }
 \arguments{
-\item{object}{of type lme with the model to transform}
+\item{object}{an object of type lm or lme with the model to transform}
 
-\item{\dots}{additional arguments to be passed to the estimation function; see yeojohnsonEst()}
+\item{method}{a character string. Different estimation methods can be used 
+for the estimation of the optimal transformation parameter. 
+(i) Maximum likelihood approaches: for linear models maximum likelihood ("ML")
+and for linear mixed models restricted maximum likelihood ("reml"); 
+(ii) Skewness minimizations: for linear models only skewness minimization 
+("skew") and for linear mixed models also pooled skewness minimization; 
+(iii) Divergence minimization by Kolmogorov-Smirnoff ("div.ks"), 
+by Cramer-von-Mises ("div.cm") or by Kullback-Leibler ("div.kl") for both 
+model types.}
+
+\item{lambdarange}{a numeric vector with two elements defining an interval 
+that is used for the estimation of the optimal transformation parameter. 
+Defaults to \code{c(-2, 2)} for the Yeo-Johnson transformation.}
 }
 \value{
-an object of class \code{transformation}; see yeojohnsonEst()
+an object of class \code{transformation}
 }
 \description{
-Yeo-Johnson estimation
+Depending on the class of the first object, this function estimates the 
+optimal transformation parameter for the Yeo-Johnson transformation for the model 
+given to the function.
 }
 \keyword{internal}
