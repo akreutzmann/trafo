@@ -9,28 +9,34 @@
 
 plot.transformation <- function(x, ...) {
   
-  browser()
-  
   logvector  <- as.vector(x$logvector)
   lambdavector <- x$lambdavector
   lambdaoptim <- x$lambdahat
-  logoptim <- x$llike
+  logoptim <- x$optmeas
   lim <- logoptim + qchisq(0.95, 1)/2
   m <- length(logvector)
-  index <- range((1L:m)[logvector > lim])
+  index <- range((1L:m)[logvector < lim])
   cinf <- lambdavector[index[1]]
   csup <- lambdavector[index[2]]
   vline <- c(cinf, lambdaoptim, csup)
   rt <-  x$modelt$residuals
   fittedt <- x$model$fitted.values
-  data1 <- data.frame(logvector = logvector,  lambdavector= lambdavector) 
+  if(x$method == "ml" | x$method == "reml") {
+    data1 <- data.frame(logvector = -logvector,  lambdavector= lambdavector)  
+    logoptim <- -logoptim
+  } else {
+    data1 <- data.frame(logvector = logvector,  lambdavector= lambdavector)  
+  }
   data2 <- data.frame(residuals = rt) 
   data3 <- data.frame(residualst = rt, fittedt = fittedt)
   cat("Press [enter] to continue or type in [q] to quit" )
   line <- readline()
   if(substr(line, 1, 1) != "q" & substr(line, 1, 1) != "Q") {
     print(ggplot(data1, aes(x=lambdavector,
-             y=logvector))+ geom_line()+ geom_vline(xintercept = vline,linetype="dashed") + geom_abline(intercept = logoptim, color="red", linetype="dashed") + xlab(expression(lambda)) + ylab("Profile log-likelihood"))
+             y=logvector))+ geom_line()+ 
+            geom_vline(xintercept = vline,linetype="dashed") + 
+            geom_abline(intercept = logoptim, color="red", linetype="dashed") + 
+            xlab(expression(lambda)) + ylab("Profile log-likelihood"))
 
  cat("Press [enter] to continue or type in [q] to quit" ) 
     line <- readline()

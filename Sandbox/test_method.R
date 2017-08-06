@@ -22,32 +22,40 @@ bx_cx_skew <- bx_cx(modelVienna, method = "skew")
 
 print(bx_cx_skew)
 summary(bx_cx_skew)
+plot(bx_cx_skew)
 
 bx_cx_divks <- bx_cx(modelVienna, method = "div.ks")
 
 print(bx_cx_divks)
 summary(bx_cx_divks)
+plot(bx_cx_divks)
+
 
 bx_cx_divcvm <- bx_cx(modelVienna, method = "div.cvm")
 
 print(bx_cx_divcvm)
 summary(bx_cx_divcvm)
+plot(bx_cx_divcvm)
 
 bx_cx_divkl <- bx_cx(modelVienna, method = "div.kl")
 
 print(bx_cx_divkl)
 summary(bx_cx_divkl)
+plot(bx_cx_divkl)
+
 
 # Modulus ----------------------------------------------------------------------
 modulus_ml <- modulus(modelVienna, method = "ml")
 
 print(modulus_ml)
 summary(modulus_ml)
+plot(modulus_ml)
 
 modulus_skew <- modulus(modelVienna, method = "skew")
 
 print(modulus_skew)
 summary(modulus_skew)
+plot(modulus_skew)
 
 modulus_divks <- modulus(modelVienna, method = "div.ks")
 
@@ -186,11 +194,15 @@ modelAustria <- lme(eqIncome ~ pb220a + py050n,
                     random = ~ 1 | db040, data = eusilc, 
                     na.action = na.omit)
 
+plot(modelAustria)
+
 # Box-Cox ----------------------------------------------------------------------
 bxcx_reml <- bx_cx(modelAustria, method = "reml")
 
 print(bxcx_reml)
 summary(bxcx_reml)
+plot(bxcx_reml)
+
 
 bxcx_skew <- bx_cx(modelAustria, method = "skew")
 
