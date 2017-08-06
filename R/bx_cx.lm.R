@@ -16,7 +16,8 @@ bx_cx.lm <- function(object, method, lambdarange = c(-2, 2), tol = 0.0001,  ...)
    stop("response variable y must be positive")
   #bcxEst(y, x, ...)
   
-  est_lm(y = y, x = x, transfor = "t_bx_cx", method = method, 
-         lambdarange = lambdarange, tol = tol, ...)
-
+  est_bc_cx <- est_lm(y = y, x = x, transfor = "t_bx_cx", method = method, 
+                      lambdarange = lambdarange, tol = tol, ...)
+  est_bc_cx$model <- object
+  est_bc_cx
 }

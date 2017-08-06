@@ -5,17 +5,29 @@
 #' @return out an object of class \code{summary.transformation}
 #' #@keywords internal
 #' @export
-summary.transformation <- function(x, ...) {
-  yt <- summary(x$modelt)$residuals
-  n <- length(yt)
-  out <- x
+summary.transformation <- function(object, ...) {
+  #yt <- summary(x$modelt)$residuals
+  
+  # Residuals for the transformed and non transformed model
+  residt <- residuals(object$modelt, level=0, type="pearson")
+  resid <- residuals(object$model, level=0, type="pearson")
+  
+  # Sample size/length of residual vector
+  nt <- length(residt)
+  n <- length(resid)
+  
+  #out <- x
+  
   logvector  <- as.vector(x$logvector)
-  lambdavector <- x$lambdavector
-  lambdaoptim <- x$lambdaoptim
-  logoptim <- x$llike
+  lambdavector <- object$lambdavector
+  lambdaoptim <- object$lambdahat
+  
+  logoptim <- object$optmeas
   lim <- logoptim - qchisq(0.95, 1)/2
-  m <- length(logvector)
-  index <- range((1L:m)[logvector > lim])
+
+  
+  m <- length(lambdavector)
+  index <- range((1L:m)[lambdavector > lim])
   out$cinf <- lambdavector[index[1]]
   out$csup <- lambdavector[index[2]]
   if (n < 5000) {

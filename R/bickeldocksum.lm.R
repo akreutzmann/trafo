@@ -14,6 +14,8 @@ bickeldoksum.lm <- function(object, method, lambdarange = c(1e-11, 2),
   if (is.null(x <- model.matrix(attr(model_frame, "terms"), data = model_frame))) 
     stop("Matrix of covariates X must not be empty")
   # bickeldoksumEst(y, x, ...)
-  est_lm(y = y, x = x, transfor = "t_bck_dk", method = method, 
+  est_bickeldoksum <- est_lm(y = y, x = x, transfor = "t_bck_dk", method = method, 
          lambdarange = lambdarange, tol = tol, ...)
+  est_bickeldoksum$model <- object
+  est_bickeldoksum
 }

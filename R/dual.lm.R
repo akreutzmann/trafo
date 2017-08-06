@@ -14,6 +14,8 @@ dual.lm <- function(object, method, lambdarange = c(0, 2), tol = 0.0001,
   if (is.null(x <- model.matrix(attr(model_frame, "terms"), data = model_frame))) 
     stop("Matrix of covariates X must not be empty")
   # dualEst(y, x, ...)
-  est_lm(y = y, x = x, transfor = "t_dl", method = method, 
+  est_dual <- est_lm(y = y, x = x, transfor = "t_dl", method = method, 
          lambdarange = lambdarange, tol = tol, ...)
+  est_dual$model <- object
+  est_dual
 }

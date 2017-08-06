@@ -22,6 +22,9 @@ bickeldoksum.lme <- function(object, method, lambdarange = c(1e-11, 2),
   #if (any(y <= 0)) 
   #  stop("response variable y must be positive")
   # bickeldoksumEst(y, x, ...)
-  est_lme(y, x, formula, rand_eff = rand_eff, data = data, 
+  est_bickeldoksum <- est_lme(y, x, formula, rand_eff = rand_eff, data = data, 
           transfor = "t_bck_dk",  method, lambdarange,  tol = tol, ...)
+  est_bickeldoksum$model <- object
+  est_bickeldoksum
+  
 }

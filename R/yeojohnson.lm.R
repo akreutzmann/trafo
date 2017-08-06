@@ -15,6 +15,8 @@ yeojohnson.lm <- function(object, method, lambdarange = c(-2, 2), tol = 0.0001,
   if (is.null(x <- model.matrix(attr(model_frame, "terms"), data = model_frame))) 
     stop("Matrix of covariates X must not be empty")
   # yeojohnsonEst(y,x, ...)
-  est_lm(y = y, x = x, transfor = "t_y_jhnsn", method = method, 
+  est_yeojohnson <- st_lm(y = y, x = x, transfor = "t_y_jhnsn", method = method, 
          lambdarange = lambdarange, tol = tol, ...)
+  est_yeojohnson$model <- object
+  est_yeojohnson
 }

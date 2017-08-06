@@ -22,6 +22,9 @@ yeojohnson.lme <- function(object, method, lambdarange = c(-2, 2), tol = 0.0001,
   #if (any(y <= 0)) 
   #  stop("response variable y must be positive")
   # yeojohnsonEst(y,x, ...)
-  est_lme(y, x, formula, rand_eff = rand_eff, data = data, transfor = "t_y_jhnsn",  
-          method, lambdarange, tol = tol, ...)
+  est_yeojohnson <- est_lme(y, x, formula, rand_eff = rand_eff, data = data, 
+                            transfor = "t_y_jhnsn", method, lambdarange, 
+                            tol = tol, ...)
+  est_yeojohnson$model <- object
+  est_yeojohnson
 }

@@ -14,6 +14,8 @@ modulus.lm <- function(object, method, lambdarange = c(-2, 2), tol = 0.0001,
   if (is.null(x <- model.matrix(attr(model_frame, "terms"), data = model_frame))) 
     stop("Matrix of covariates X must not be empty")
   # modulusEst(y, x, ...)
-  est_lm(y = y, x = x, transfor = "t_mdls", method = method, 
+  est_modulus <- est_lm(y = y, x = x, transfor = "t_mdls", method = method, 
          lambdarange = lambdarange, tol = tol, ...)  
+  est_modulus$model <- object
+  est_modulus
 }

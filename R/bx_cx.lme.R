@@ -22,6 +22,8 @@ bx_cx.lme <- function(object, method, lambdarange = c(-2,2), tol = 0.0001,
   #if (any(y <= 0)) 
   #  stop("response variable y must be positive")
   #bcxEst(y, x, ...)
-  est_lme(y, x, formula, rand_eff = rand_eff, data = data, transfor = "t_bx_cx", 
+  est_bc_cx <- est_lme(y, x, formula, rand_eff = rand_eff, data = data, transfor = "t_bx_cx", 
           method, lambdarange,  tol = tol, ...)
+  est_bc_cx$model <- object
+  est_bc_cx
 }

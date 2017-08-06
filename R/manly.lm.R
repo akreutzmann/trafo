@@ -14,6 +14,8 @@ manly.lm <- function(object, method, lambdarange = c(-2, 2), tol = 0.0001,
   if (is.null(x <- model.matrix(attr(model_frame, "terms"), data = model_frame))) 
     stop("Matrix of covariates X must not be empty")
   #manlyEst(y, x, ...)
-  est_lm(y = y, x = x, transfor = "t_mnl", method = method, 
+  est_manly <- est_lm(y = y, x = x, transfor = "t_mnl", method = method, 
          lambdarange = lambdarange, tol = tol, ...)
+  est_manly$model <- object
+  est_manly
 }

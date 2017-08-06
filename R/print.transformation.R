@@ -8,7 +8,7 @@ print.transformation <- function(trans, ...){
 cat(trans$family, "Transformation \n")
 cat("\nlambdahat: ", trans$lambdahat)
 if (trans$method == "ml" | trans$method == "reml") {
-cat("\nloglike: ",trans$optmeas,"\n") 
+cat("\nloglike: ",-trans$optmeas,"\n") 
 } else if (trans$method == "skew" | trans$method == "pskew" ) {
 cat("\nskewness: ",trans$optmeas,"\n")
 } else if (trans$method == "div.ks" | trans$method == "div.cvm" | 

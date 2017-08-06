@@ -29,6 +29,10 @@ all.equal(box_cox$y, as.numeric(lily_bc$yt))
 devtools::load_all(".")
 bc_ML <- bx_cx(modelVienna, method = "ml")
   
+print(bc_ML)
+
+bc_ML$model
+bc_ML$modelt
   
 class(bc_ML)
 
@@ -49,7 +53,7 @@ bx_cx(modelVienna, method = "div.kl")
 
 
 modulus(modelVienna, method = "ml")
-modulus(modelVienna, method = "skew")
+modulus_skew <- modulus(modelVienna, method = "skew")
 modulus(modelVienna, method = "div.ks")
 modulus(modelVienna, method = "div.cvm")
 modulus(modelVienna, method = "div.kl")
@@ -104,7 +108,7 @@ modelAustria <- lme(eqIncome ~ pb220a + py050n,
                     random = ~ 1 | db040, data = eusilc, 
                     na.action = na.omit)
 
-bx_cx(modelAustria, method = "reml")
+bxcx_reml <- bx_cx(modelAustria, method = "reml")
 bx_cx(modelAustria, method = "skew")
 bx_cx(modelAustria, method = "pskew")
 bx_cx(modelAustria, method = "div.ks")

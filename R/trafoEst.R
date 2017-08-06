@@ -30,13 +30,17 @@ est_lm <- function(y, x , method, lambdarange, tr = FALSE, transfor, tol = tol,
     stop("For some lambda in the interval, the likelihood does not converge.
          Choose another lambdarange.")
   }
-    
+  
+
   lambdaoptim <-  res$minimum
   logoptim <- res$objective
-  lambdavector <- seq(lambdarange[1], lambdarange[2], 0.01)
+  lambdavector <- seq(lambdarange[1], lambdarange[2], 0.025)
   l <- length(lambdavector)
   lambdavector[l + 1]  <- lambdaoptim
   lambdavector <- sort(lambdavector)
+  logvector <- sapply(lambdavector, estim_lm, y = y, x = x, transfor = transfor,
+                      method = method)
+  
   
   ans <- list()
   
@@ -50,8 +54,11 @@ est_lm <- function(y, x , method, lambdarange, tr = FALSE, transfor, tol = tol,
   # the estimation but I guess that we need the positive values now, so whenever
   # the estimation method is ML we probably need -logvector 
   
-  #logvector <- sapply(lambdavector, ML, y = y, x = x, transfor = transfor)
-
+  
+  
+  
+  
+  
   # yt <- if(transfor == "t_bx_cx") {
   #   box_cox(y = y, lambda = lambdaoptim)$y
   # } else if (transfor == "t_mdls") {
@@ -126,11 +133,11 @@ est_lm <- function(y, x , method, lambdarange, tr = FALSE, transfor, tol = tol,
   # } else if (transfor == "t_y_jhnsn") {
   #   "Yeo-Johnson"
   # }
+  ans$lambdarange <- lambdarange
   ans$optmeas <- res$objective
   ans$lambdahat <- lambdaoptim
-  #ans$logvector <- logvector
+  ans$logvector <- logvector
   ans$lambdavector <- lambdavector
-  #ans$family <- family
   ans$yt <- yt
   ans$zt <- zt
   ans$modelt <- modelt
@@ -187,6 +194,13 @@ est_lme <- function(y, x, formula, data, rand_eff, method = method,
   l <- length(lambdavector)
   lambdavector[l + 1]  <- lambdaoptim
   lambdavector <- sort(lambdavector)
+  
+  logvector <- sapply(lambdavector, estim_lme, y = y,
+                      formula = formula,
+                      data = data,
+                      rand_eff = rand_eff,
+                      method = method,
+                      transfor = transfor)
   
   # wrapper for other estimation methods, here you must be careful of the log-
   # likelihood is negative or positive, we needed the negative log likelihood for
@@ -287,10 +301,9 @@ est_lme <- function(y, x, formula, data, rand_eff, method = method,
   
   # Check names
   ans$lambdahat <- lambdaoptim
-  #ans$logvector <- logvector
+  ans$logvector <- logvector
   ans$lambdavector <- lambdavector
   ans$optmeas <- res$objective
-  #ans$family <- family
   ans$yt <- yt
   ans$zt <- zt
   ans$modelt <- modelt
