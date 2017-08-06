@@ -17,10 +17,11 @@
 #' @param lambdarange a numeric vector with two elements defining an interval 
 #' that is used for the estimation of the optimal transformation parameter. 
 #' Defaults to \code{c(-2, 2)} for the Manly transformation.
+#' @param ... other parameters that can be passed to the function.
 #' @return an object of class \code{transformation}
 #' @keywords internal
 #' @export
-manly.lme <- function(object, method, lambdarange = c(-2, 2)) {
+manly.lme <- function(object, method, lambdarange = c(-2, 2), ...) {
   formula <- formula(object)
   rand_eff <- names(object$coefficients$random)
   data <- object$data
@@ -35,8 +36,8 @@ manly.lme <- function(object, method, lambdarange = c(-2, 2)) {
   #if (any(y <= 0)) 
   #  stop("response variable y must be positive")
   # manlyEst(y, x, ...)
-  est_lme(y, x, formula, rand_eff = rand_eff, data = data, transfor = "t_mnl",  
-          method, lambdarange, tol = 0.0001, ...)
+  est_manly <- est_lme(y, x, formula, rand_eff = rand_eff, data = data, transfor = "t_mnl",  
+          method, lambdarange, tol = 0.0001)
   est_manly$model <- object
   est_manly
 }

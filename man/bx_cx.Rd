@@ -9,11 +9,7 @@ bx_cx(object, ...)
 \arguments{
 \item{object}{a data.frame, matrix, formula or fitted model; see below.}
 
-\item{data}{an optional data frame, list or environment as in lm.}
-
-\item{XY}{a data.frame or a matrix, whose first column is the dependent variable and the rest of the columns are the independent variables.}
-
-\item{lambdarange}{range for the estimation parameter lambda - c(-2,2)}
+\item{...}{other parameters that can be passed to the function.}
 }
 \value{
 An object of class \code{transformation} with the following arguments

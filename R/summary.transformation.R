@@ -1,9 +1,13 @@
 #' Summary transformations
 #'
-#' Computes objects to be shown in the summary function for objects of type \code{transformation}
+#' Information about the transformed data and model and components of an 
+#' transformation object are extracted. The returned object is suitable for 
+#' printing with the print.summary.transformation method.
+#' 
 #' @param x an object of type \code{transformation}
-#' @return out an object of class \code{summary.transformation}
-#' #@keywords internal
+#' @param ... additional arguments that are not used in this method
+#' @return an object of class \code{summary.transformation}
+#' @keywords internal
 #' @export
 summary.transformation <- function(object, ...) {
   #yt <- summary(x$modelt)$residuals
@@ -59,8 +63,8 @@ summary.transformation <- function(object, ...) {
   #                    Shapiro_p = c(shapiro_pvalue, shapiro_pvaluet),
   #                    row.names = c("Untransformed", "Transformed")
   
-  out$R2 <- summary(x$model)$r.squared
-  out$R2t <- summary(x$modelt)$r.squared
+  out$R2 <- summary(object$model)$r.squared
+  out$R2t <- summary(object$modelt)$r.squared
   
   
   if(class(object$model) == "lme") {

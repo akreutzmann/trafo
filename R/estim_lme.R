@@ -79,10 +79,6 @@ estim_lme <- function(lambda, y, formula, data, rand_eff, method, transfor){
   
     
   }
-    
-    
-    
-
   
   return(optimization)
 }

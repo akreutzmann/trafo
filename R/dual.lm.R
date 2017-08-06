@@ -17,10 +17,11 @@
 #' @param lambdarange a numeric vector with two elements defining an interval 
 #' that is used for the estimation of the optimal transformation parameter. 
 #' Defaults to \code{c(0, 2)} for the Dual transformation.
+#' @param ... other parameters that can be passed to the function.
 #' @return an object of class \code{transformation}
 #' @keywords internal
 #' @export
-dual.lm <- function(object, method, lambdarange = c(0, 2)) {
+dual.lm <- function(object, method, lambdarange = c(0, 2), ...) {
   model_frame <- object$model 
   if (is.null(y <- model.response(model_frame))) 
     stop("Dependent variable y must not be empty")
@@ -28,7 +29,7 @@ dual.lm <- function(object, method, lambdarange = c(0, 2)) {
     stop("Matrix of covariates X must not be empty")
   # dualEst(y, x, ...)
   est_dual <- est_lm(y = y, x = x, transfor = "t_dl", method = method, 
-         lambdarange = lambdarange, tol = 0.0001, ...)
+         lambdarange = lambdarange, tol = 0.0001)
   est_dual$model <- object
   est_dual
 }

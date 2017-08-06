@@ -202,7 +202,7 @@ Dual_std <- function(y, lambda) {
 # Back transformation: dual
 Dual_back <- function(y, lambda = lambda) {
   lambda_absolute <- abs(lambda)
-  if(abs(l)<= 1e-12)
+  if(lambda_absolute <= 1e-12)
   {
     y <- exp(y)
   }

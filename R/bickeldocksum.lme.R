@@ -17,11 +17,11 @@
 #' @param lambdarange a numeric vector with two elements defining an interval 
 #' that is used for the estimation of the optimal transformation parameter. 
 #' Defaults to \code{c(1e-11, 2)} for the Bickel-Doksum transformation.
+#' @param ... other parameters that can be passed to the function.
 #' @return an object of class \code{transformation}
 #' @keywords internal
 #' @export
-bickeldoksum.lme <- function(object, method, lambdarange = c(1e-11, 2), 
-                             tol = 0.0001, ...) {
+bickeldoksum.lme <- function(object, method, lambdarange = c(1e-11, 2), ...) {
   formula <- formula(object)
   rand_eff <- names(object$coefficients$random)
   data <- object$data
@@ -37,7 +37,7 @@ bickeldoksum.lme <- function(object, method, lambdarange = c(1e-11, 2),
   #  stop("response variable y must be positive")
   # bickeldoksumEst(y, x, ...)
   est_bickeldoksum <- est_lme(y, x, formula, rand_eff = rand_eff, data = data, 
-          transfor = "t_bck_dk",  method, lambdarange,  tol = tol, ...)
+          transfor = "t_bck_dk",  method, lambdarange,  tol = 0.0001)
   est_bickeldoksum$model <- object
   est_bickeldoksum
   

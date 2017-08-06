@@ -7,12 +7,16 @@
 \method{summary}{transformation}(object, ...)
 }
 \arguments{
+\item{...}{additional arguments that are not used in this method}
+
 \item{x}{an object of type \code{transformation}}
 }
 \value{
-out an object of class \code{summary.transformation}
-#@keywords internal
+an object of class \code{summary.transformation}
 }
 \description{
-Computes objects to be shown in the summary function for objects of type \code{transformation}
+Information about the transformed data and model and components of an 
+transformation object are extracted. The returned object is suitable for 
+printing with the print.summary.transformation method.
 }
+\keyword{internal}

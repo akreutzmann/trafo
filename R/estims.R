@@ -110,8 +110,8 @@ pooled_skewness_min <- function(model, res) {
   skew_resid <- skewness(res)
   random_effect <- as.matrix(random.effects(model))[,1]
   skew_random_effect <- skewness(random_effect)
-  sigmae2est <- model_est$sigma^2
-  sigmau2est <- as.numeric(VarCorr(model_est)[1,1])
+  sigmae2est <- model$sigma^2
+  sigmau2est <- as.numeric(VarCorr(model)[1,1])
   w <- sigmae2est / (sigmae2est + sigmau2est)
   
   pooled_skew <- w * abs(skew_resid) + (1 - w) * abs(skew_random_effect)

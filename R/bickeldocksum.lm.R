@@ -17,10 +17,11 @@
 #' @param lambdarange a numeric vector with two elements defining an interval 
 #' that is used for the estimation of the optimal transformation parameter. 
 #' Defaults to \code{c(1e-11, 2)} for the Bickel-Doksum transformation.
+#' @param ... other parameters that can be passed to the function.
 #' @return an object of class \code{transformation}
 #' @keywords internal
 #' @export
-bickeldoksum.lm <- function(object, method, lambdarange = c(1e-11, 2)) {
+bickeldoksum.lm <- function(object, method, lambdarange = c(1e-11, 2), ...) {
   model_frame <- object$model 
   if (is.null(y <- model.response(model_frame))) 
     stop("Dependent variable y must not be empty")
@@ -28,7 +29,7 @@ bickeldoksum.lm <- function(object, method, lambdarange = c(1e-11, 2)) {
     stop("Matrix of covariates X must not be empty")
   # bickeldoksumEst(y, x, ...)
   est_bickeldoksum <- est_lm(y = y, x = x, transfor = "t_bck_dk", method = method, 
-         lambdarange = lambdarange, tol = 0.0001, ...)
+         lambdarange = lambdarange, tol = 0.0001)
   est_bickeldoksum$model <- object
   est_bickeldoksum
 }

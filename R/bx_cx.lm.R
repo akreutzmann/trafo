@@ -17,13 +17,14 @@
 #' @param lambdarange a numeric vector with two elements defining an interval 
 #' that is used for the estimation of the optimal transformation parameter. 
 #' Defaults to \code{c(-2, 2)} for the Box-Cox transformation.
+#' @param ... other parameters that can be passed to the function.
 #' @return an object of class \code{transformation}
 #' @keywords internal
 #' @importFrom stats aggregate as.formula dnorm ecdf family lm logLik median 
 #' model.frame model.matrix model.response na.omit optimize qchisq qnorm 
 #' quantile residuals rstandard sd shapiro.test
 #' @export
-bx_cx.lm <- function(object, method, lambdarange = c(-2, 2)) {
+bx_cx.lm <- function(object, method, lambdarange = c(-2, 2), ...) {
   model_frame <- object$model 
   if (is.null(y <- model.response(model_frame))) 
     stop("Dependent variable y must not be empty")
@@ -34,7 +35,7 @@ bx_cx.lm <- function(object, method, lambdarange = c(-2, 2)) {
   #bcxEst(y, x, ...)
   
   est_bc_cx <- est_lm(y = y, x = x, transfor = "t_bx_cx", method = method, 
-                      lambdarange = lambdarange, tol = 0.0001, ...)
+                      lambdarange = lambdarange, tol = 0.0001)
   est_bc_cx$model <- object
   est_bc_cx
 }

@@ -17,10 +17,11 @@
 #' @param lambdarange a numeric vector with two elements defining an interval 
 #' that is used for the estimation of the optimal transformation parameter. 
 #' Defaults to \code{c(-2, 2)} for the Manly transformation.
+#' @param ... other parameters that can be passed to the function.
 #' @return an object of class \code{transformation}
 #' @keywords internal
 #' @export
-manly.lm <- function(object, method, lambdarange = c(-2, 2)) {
+manly.lm <- function(object, method, lambdarange = c(-2, 2), ...) {
   model_frame <- object$model 
   if (is.null(y <- model.response(model_frame))) 
     stop("Dependent variable y must not be empty")
@@ -28,7 +29,7 @@ manly.lm <- function(object, method, lambdarange = c(-2, 2)) {
     stop("Matrix of covariates X must not be empty")
   #manlyEst(y, x, ...)
   est_manly <- est_lm(y = y, x = x, transfor = "t_mnl", method = method, 
-         lambdarange = lambdarange, tol = 0.0001, ...)
+                      lambdarange = lambdarange, tol = 0.0001)
   est_manly$model <- object
   est_manly
 }

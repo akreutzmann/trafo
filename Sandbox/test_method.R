@@ -3,107 +3,181 @@ data("eusilcA_Vienna")
 modelVienna <- lm(eqIncome ~ eqsize + gender + cash + unempl_ben + age_ben +
                   rent + cap_inv + tax_adj + dis_ben + sick_ben + surv_ben + 
                   fam_allow + house_allow, data = eusilcA_Vienna)
-
-library(simFrame)
-data("eusilcP")
+plot(modelVienna)
 
 
-# only lilys if bcxEst(y, x, ...) in bx_cx.lm
-lily_bc <- bx_cx(modelVienna, method = "ml")
+# Test if all transformations work with estimation of lambda
 
-source("./R/trafos.R")
-
-
-boxCox <- box_cox(eusilcA_Vienna$eqIncome, lambda = 0.4690185)
-
-boxCox <- box_cox(eusilcA_Vienna$eqIncome, lambda = -2)
-
-boxCox <- box_cox(eusilcA_Vienna$eqIncome, lambda = -0.472136)
-
-all.equal(box_cox$y, as.numeric(lily_bc$yt))
-
-(box_cox$y - as.numeric(lily_bc$yt))/box_cox$y
-
-
-
-devtools::load_all(".")
+# Box-Cox ----------------------------------------------------------------------
 bc_ML <- bx_cx(modelVienna, method = "ml")
   
 print(bc_ML)
-
-bc_ML$model
-bc_ML$modelt
-  
-class(bc_ML)
-
 summary(bc_ML)
 plot(bc_ML)
 
-compareTransformation(modelVienna, lamda.dual = 0.45)
 
 
 # library(skewness) # need to load this lilbrary before
 bx_cx_skew <- bx_cx(modelVienna, method = "skew")
 
+print(bx_cx_skew)
 summary(bx_cx_skew)
 
-bx_cx(modelVienna, method = "div.ks")
-bx_cx(modelVienna, method = "div.cvm")
+bx_cx_divks <- bx_cx(modelVienna, method = "div.ks")
 
-# library(FNN) # need to load this lilbrary before
-bx_cx(modelVienna, method = "div.kl")
+print(bx_cx_divks)
+summary(bx_cx_divks)
 
+bx_cx_divcvm <- bx_cx(modelVienna, method = "div.cvm")
 
-modulus(modelVienna, method = "ml")
+print(bx_cx_divcvm)
+summary(bx_cx_divcvm)
+
+bx_cx_divkl <- bx_cx(modelVienna, method = "div.kl")
+
+print(bx_cx_divkl)
+summary(bx_cx_divkl)
+
+# Modulus ----------------------------------------------------------------------
+modulus_ml <- modulus(modelVienna, method = "ml")
+
+print(modulus_ml)
+summary(modulus_ml)
+
 modulus_skew <- modulus(modelVienna, method = "skew")
+
+print(modulus_skew)
 summary(modulus_skew)
 
-modulus(modelVienna, method = "div.ks")
-modulus(modelVienna, method = "div.cvm")
-modulus(modelVienna, method = "div.kl")
+modulus_divks <- modulus(modelVienna, method = "div.ks")
 
-bickeldoksum(modelVienna, method = "ml")
-bickeldoksum(modelVienna, method = "skew")
-bickeldoksum(modelVienna, method = "div.ks")
-bickeldoksum(modelVienna, method = "div.cvm")
-bickeldoksum(modelVienna, method = "div.kl")
+print(modulus_divks)
+summary(modulus_divks)
 
-manly(modelVienna, method = "ml")
-manly(modelVienna, method = "ml", lambdarange = c(-0.05, 0.005))
-manly(modelVienna, method = "skew", lambdarange = c(-0.05, 0.005))
-manly(modelVienna, method = "div.ks", lambdarange = c(-0.05, 0.005))
-manly(modelVienna, method = "div.cvm", lambdarange = c(-0.05, 0.005))
-manly(modelVienna, method = "div.kl", lambdarange = c(-0.05, 0.005))
+modulus_divcvm <- modulus(modelVienna, method = "div.cvm")
 
-dual(modelVienna, method = "ml")
-dual(modelVienna, method = "skew")
-dual(modelVienna, method = "div.ks")
-dual(modelVienna, method = "div.cvm")
-dual(modelVienna, method = "div.kl")
+print(modulus_divcvm)
+summary(modulus_divcvm)
+
+modulus_divkl <- modulus(modelVienna, method = "div.kl")
+
+print(modulus_divkl)
+summary(modulus_divkl)
 
 
-class(modelVienna)
+# Bickel-Doksum ----------------------------------------------------------------
+bd_ml <- bickeldoksum(modelVienna, method = "ml")
 
-yeojohnson(modelVienna, method = "ml")
-yeojohnson(modelVienna, method = "skew")
-yeojohnson(modelVienna, method = "div.ks")
-yeojohnson(modelVienna, method = "div.cvm")
-yeojohnson(modelVienna, method = "div.kl")
+print(bd_ml)
+summary(bd_ml)
+
+bd_skew <- bickeldoksum(modelVienna, method = "skew")
+
+print(bd_skew)
+summary(bd_skew)
+
+bd_divks <- bickeldoksum(modelVienna, method = "div.ks")
+
+print(bd_divks)
+summary(bd_divks)
+
+bd_divcvm <- bickeldoksum(modelVienna, method = "div.cvm")
+
+print(bd_divcvm)
+summary(bd_divcvm)
+
+bd_divkl <- bickeldoksum(modelVienna, method = "div.kl")
+
+print(bd_divkl)
+summary(bd_divkl)
+
+
+# Manly ------------------------------------------------------------------------
+manly_ml <- manly(modelVienna, method = "ml", lambdarange = c(-0.05, 0.005))
+
+print(manly_ml)
+summary(manly_ml)
+
+manly_skew <- manly(modelVienna, method = "skew", lambdarange = c(-0.05, 0.005))
+
+print(manly_skew)
+summary(manly_skew)
+
+manly_divks <- manly(modelVienna, method = "div.ks", lambdarange = c(-0.05, 0.005))
+
+print(manly_divks)
+summary(manly_divks)
+
+manly_divcvm <- manly(modelVienna, method = "div.cvm", lambdarange = c(-0.05, 0.005))
+
+print(manly_divcvm)
+summary(manly_divcvm)
+
+manly_divkl <- manly(modelVienna, method = "div.kl", lambdarange = c(-0.05, 0.005))
+
+print(manly_divkl)
+summary(manly_divkl)
+
+
+# Dual -------------------------------------------------------------------------
+
+dual_ml <- dual(modelVienna, method = "ml")
+
+print(dual_ml)
+summary(dual_ml)
+
+dual_skew <- dual(modelVienna, method = "skew")
+
+print(dual_skew)
+summary(dual_skew)
+
+dual_divks <- dual(modelVienna, method = "div.ks")
+
+print(dual_divks)
+summary(dual_divks)
+
+dual_divcvm <- dual(modelVienna, method = "div.cvm")
+
+print(dual_divcvm)
+summary(dual_divcvm)
+
+dual_divkl <- dual(modelVienna, method = "div.kl")
+
+print(dual_divkl)
+summary(dual_divkl)
+
+# Yeo-Johnson ------------------------------------------------------------------
+yeojohnson_ml <- yeojohnson(modelVienna, method = "ml")
+
+print(yeojohnson_ml)
+summary(yeojohnson_ml)
+
+yeojohnson_skew <- yeojohnson(modelVienna, method = "skew")
+
+print(yeojohnson_skew)
+summary(yeojohnson_skew)
+
+yeojohnson_divks <- yeojohnson(modelVienna, method = "div.ks")
+
+print(yeojohnson_divks)
+summary(yeojohnson_divks)
+
+yeojohnson_divcvm <- yeojohnson(modelVienna, method = "div.cvm")
+
+print(yeojohnson_divcvm)
+summary(yeojohnson_divcvm)
+
+yeojohnson_divkl <- yeojohnson(modelVienna, method = "div.kl")
+
+print(yeojohnson_divkl)
+summary(yeojohnson_divkl)
 
 
 # lme --------------------------------------------------------------------------
 
 library(laeken)
 data(eusilc)
-
-
 library(nlme)
-modelAustria <- lme(eqIncome ~ pb220a + py050n, random = ~ 1 | db040, data = eusilc, 
-                    na.action = na.omit)
-
-modelAustria <- lme(eusilc$eqIncome ~ eusilc$pb220a + eusilc$py050n, 
-                    random = ~ 1 | eusilc$db040, 
-                    na.action = na.omit)
 
 which(eusilc$eqIncome == 0)
 eusilc$eqIncome <- eusilc$eqIncome + 1
@@ -112,53 +186,196 @@ modelAustria <- lme(eqIncome ~ pb220a + py050n,
                     random = ~ 1 | db040, data = eusilc, 
                     na.action = na.omit)
 
+# Box-Cox ----------------------------------------------------------------------
 bxcx_reml <- bx_cx(modelAustria, method = "reml")
+
+print(bxcx_reml)
 summary(bxcx_reml)
 
 bxcx_skew <- bx_cx(modelAustria, method = "skew")
+
+print(bxcx_skew)
 summary(bxcx_skew)
 
-bx_cx(modelAustria, method = "pskew")
-bx_cx(modelAustria, method = "div.ks")
-bx_cx(modelAustria, method = "div.cvm")
-bx_cx(modelAustria, method = "div.kl")
+bxcx_pskew <- bx_cx(modelAustria, method = "pskew")
 
-modulus(modelAustria, method = "reml")
-modulus(modelAustria, method = "skew")
-modulus(modelAustria, method = "pskew")
-modulus(modelAustria, method = "div.ks")
-modulus(modelAustria, method = "div.cvm")
-modulus(modelAustria, method = "div.kl")
+print(bxcx_pskew)
+summary(bxcx_pskew)
 
-class(modelAustria)
+bxcx_divks <- bx_cx(modelAustria, method = "div.ks")
 
-bickeldoksum(modelAustria, method = "reml")
-bickeldoksum(modelAustria, method = "skew")
-bickeldoksum(modelAustria, method = "pskew")
-bickeldoksum(modelAustria, method = "div.ks")
-bickeldoksum(modelAustria, method = "div.cvm")
-bickeldoksum(modelAustria, method = "div.kl")
+print(bxcx_divks)
+summary(bxcx_divks)
 
+bxcx_divcvm <- bx_cx(modelAustria, method = "div.cvm")
 
-manly(modelAustria, method = "reml")
-manly(modelAustria, method = "reml", lambdarange = c(-0.000005, 0.00005))
-manly(modelAustria, method = "skew", lambdarange = c(-0.05, 0.005))
-manly(modelAustria, method = "pskew", lambdarange = c(-0.05, 0.005))
-manly(modelAustria, method = "div.ks", lambdarange = c(-0.05, 0.005))
-manly(modelAustria, method = "div.cvm", lambdarange = c(-0.05, 0.005))
-manly(modelAustria, method = "div.kl", lambdarange = c(-0.05, 0.005))
+print(bxcx_divcvm)
+summary(bxcx_divcvm)
+
+bxcx_divkl <- bx_cx(modelAustria, method = "div.kl")
+
+print(bxcx_divkl)
+summary(bxcx_divkl)
 
 
-dual(modelAustria, method = "reml")
-dual(modelAustria, method = "skew")
-dual(modelAustria, method = "pskew")
-dual(modelAustria, method = "div.ks")
-dual(modelAustria, method = "div.cvm")
-dual(modelAustria, method = "div.kl")
+# Modulus ----------------------------------------------------------------------
 
-yeojohnson(modelAustria, method = "reml")
-yeojohnson(modelAustria, method = "skew")
-yeojohnson(modelAustria, method = "pskew")
-yeojohnson(modelAustria, method = "div.ks")
-yeojohnson(modelAustria, method = "div.cvm")
-yeojohnson(modelAustria, method = "div.kl")
+modulus_reml <- modulus(modelAustria, method = "reml")
+
+print(modulus_reml)
+summary(modulus_reml)
+
+modulus_skew <- modulus(modelAustria, method = "skew")
+
+print(modulus_skew)
+summary(modulus_skew)
+
+modulus_pskew <- modulus(modelAustria, method = "pskew")
+
+print(modulus_pskew)
+summary(modulus_pskew)
+
+modulus_divks <- modulus(modelAustria, method = "div.ks")
+
+print(modulus_divks)
+summary(modulus_divks)
+
+modulus_divcvm <- modulus(modelAustria, method = "div.cvm")
+
+print(modulus_divcvm)
+summary(modulus_divcvm)
+
+modulus_divkl <- modulus(modelAustria, method = "div.kl")
+
+print(modulus_divkl)
+summary(modulus_divkl)
+
+# Bickel-Doksum ----------------------------------------------------------------
+
+bickeldoksum_reml <- bickeldoksum(modelAustria, method = "reml")
+
+print(bickeldoksum_reml)
+summary(bickeldoksum_reml)
+
+bickeldoksum_skew <- bickeldoksum(modelAustria, method = "skew")
+
+print(bickeldoksum_skew)
+summary(bickeldoksum_skew)
+
+bickeldoksum_pskew <- bickeldoksum(modelAustria, method = "pskew")
+
+print(bickeldoksum_pskew)
+summary(bickeldoksum_pskew)
+
+bickeldoksum_divks <- bickeldoksum(modelAustria, method = "div.ks")
+
+print(bickeldoksum_divks)
+summary(bickeldoksum_divks)
+
+bickeldoksum_divcvm <- bickeldoksum(modelAustria, method = "div.cvm")
+
+print(bickeldoksum_divcvm)
+summary(bickeldoksum_divcvm)
+
+bickeldoksum_divkl <- bickeldoksum(modelAustria, method = "div.kl")
+
+print(bickeldoksum_divkl)
+summary(bickeldoksum_divkl)
+
+# Manly ------------------------------------------------------------------------
+
+manly_reml <- manly(modelAustria, method = "reml", lambdarange = c(-0.000005, 0.00005))
+
+print(manly_reml)
+summary(manly_reml)
+
+manly_skew <- manly(modelAustria, method = "skew", lambdarange = c(-0.05, 0.005))
+
+print(manly_skew)
+summary(manly_skew)
+
+manly_pskew <- manly(modelAustria, method = "pskew", lambdarange = c(-0.05, 0.005))
+
+print(manly_pskew)
+summary(manly_pskew)
+
+manly_divks <- manly(modelAustria, method = "div.ks", lambdarange = c(-0.05, 0.005))
+
+print(manly_divks)
+summary(manly_divks)
+
+manly_divcvm <- manly(modelAustria, method = "div.cvm", lambdarange = c(-0.05, 0.005))
+
+print(manly_divcvm)
+summary(manly_divcvm)
+
+manly_divkl <- manly(modelAustria, method = "div.kl", lambdarange = c(-0.05, 0.005))
+
+print(manly_divkl)
+summary(manly_divkl)
+
+
+# Dual -------------------------------------------------------------------------
+
+dual_reml <- dual(modelAustria, method = "reml")
+
+print(dual_reml)
+summary(dual_reml)
+
+dual_skew <- dual(modelAustria, method = "skew")
+
+print(dual_skew)
+summary(dual_skew)
+
+dual_pskew <- dual(modelAustria, method = "pskew")
+
+print(dual_pskew)
+summary(dual_pskew)
+
+dual_divks <- dual(modelAustria, method = "div.ks")
+
+print(dual_divks)
+summary(dual_divks)
+
+dual_divcvm <- dual(modelAustria, method = "div.cvm")
+
+print(dual_divcvm)
+summary(dual_divcvm)
+
+dual_divkl <- dual(modelAustria, method = "div.kl")
+
+print(dual_divkl)
+summary(dual_divkl)
+
+
+# Yeo-Johnson ------------------------------------------------------------------
+
+yeojohnson_reml <- yeojohnson(modelAustria, method = "reml")
+
+print(yeojohnson_reml)
+summary(yeojohnson_reml)
+
+yeojohnson_skew <- yeojohnson(modelAustria, method = "skew")
+
+print(yeojohnson_skew)
+summary(yeojohnson_skew)
+
+yeojohnson_pskew <- yeojohnson(modelAustria, method = "pskew")
+
+print(yeojohnson_pskew)
+summary(yeojohnson_pskew)
+
+yeojohnson_divks <- yeojohnson(modelAustria, method = "div.ks")
+
+print(yeojohnson_divks)
+summary(yeojohnson_divks)
+
+yeojohnson_divcvm <- yeojohnson(modelAustria, method = "div.cvm")
+
+print(yeojohnson_divcvm)
+summary(yeojohnson_divcvm)
+
+yeojohnson_divkl <- yeojohnson(modelAustria, method = "div.kl")
+
+print(yeojohnson_divkl)
+summary(yeojohnson_divkl)

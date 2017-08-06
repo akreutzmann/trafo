@@ -4,15 +4,18 @@
 #' @param x an object of type \code{transformation}
 #' @param \dots additional arguments to be passed to the estimation function; see bcxEst()
 #' @return an object of class \code{transformation}; see bcxEst()
+#' @import ggplot2
 #' @export
 
 plot.transformation <- function(x, ...) {
+  
+  browser()
   
   logvector  <- as.vector(x$logvector)
   lambdavector <- x$lambdavector
   lambdaoptim <- x$lambdahat
   logoptim <- x$llike
-  lim <- logoptim - qchisq(0.95, 1)/2
+  lim <- logoptim + qchisq(0.95, 1)/2
   m <- length(logvector)
   index <- range((1L:m)[logvector > lim])
   cinf <- lambdavector[index[1]]

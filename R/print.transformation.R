@@ -1,6 +1,7 @@
 #' Print object of type transformation
 #' 
 #' @param x an object of type transformation
+#' @param ... other parameters that can be passed to the function.
 #' #@keywords internal
 #' @export
 

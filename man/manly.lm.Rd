@@ -4,7 +4,7 @@
 \alias{manly.lm}
 \title{Manly transformation for linear and linear mixed models}
 \usage{
-\method{manly}{lm}(object, method, lambdarange = c(-2, 2))
+\method{manly}{lm}(object, method, lambdarange = c(-2, 2), ...)
 }
 \arguments{
 \item{object}{an object of type lm or lme with the model to transform}
@@ -22,6 +22,8 @@ model types.}
 \item{lambdarange}{a numeric vector with two elements defining an interval 
 that is used for the estimation of the optimal transformation parameter. 
 Defaults to \code{c(-2, 2)} for the Manly transformation.}
+
+\item{...}{other parameters that can be passed to the function.}
 }
 \value{
 an object of class \code{transformation}

@@ -9,13 +9,7 @@ selectTransformation(object, ...)
 \arguments{
 \item{object}{a data.frame, matrix, formula or fitted model; see below.}
 
-\item{data}{an optional data frame, list or environment as in lm.}
-
-\item{XY}{a data.frame or a matrix, whose first column is the dependent variable and the rest of the columns are the independent variables.}
-
-\item{criterion}{a character string to select the desired criterion to be used to select a family of transformation whose parameter is estimated using the likelihood approach. The available options ara (i) Akaike's information criterion "AIC"; (ii) R.Squared "R2"; (iii) Skewness "SK"; (iv) Kurtosis "KT". - default "AIC"}
-
-\item{usefamily}{a character string to select the transformation family. Six different transformation families for the dependent variable can be chosen. For positive response variable the available options are (i) "Box-Cox" or "BC" ; (ii) "Dual" or "D" ("log"); (iii) "Manly" or "Ma". For negative response variables (i) "Yeo-Johhson" or "YJ"; (ii) "Modulus" or "Mod"; (iii) "Bickel-Doksum" or "BD"; (iv) "Manly" or "Ma" - Default NULL.}
+\item{...}{other parameters that can be passed to the function.}
 }
 \value{
 An object of class \code{transformation} with the following arguments

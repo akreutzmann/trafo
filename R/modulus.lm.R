@@ -17,10 +17,11 @@
 #' @param lambdarange a numeric vector with two elements defining an interval 
 #' that is used for the estimation of the optimal transformation parameter. 
 #' Defaults to \code{c(-2, 2)} for the Modulus transformation.
+#' @param ... other parameters that can be passed to the function.
 #' @return an object of class \code{transformation}
 #' @keywords internal
 #' @export
-modulus.lm <- function(object, method, lambdarange = c(-2, 2)) {
+modulus.lm <- function(object, method, lambdarange = c(-2, 2), ...) {
   model_frame <- object$model 
   if (is.null(y <- model.response(model_frame))) 
     stop("Dependent variable y must not be empty")
@@ -28,7 +29,7 @@ modulus.lm <- function(object, method, lambdarange = c(-2, 2)) {
     stop("Matrix of covariates X must not be empty")
   # modulusEst(y, x, ...)
   est_modulus <- est_lm(y = y, x = x, transfor = "t_mdls", method = method, 
-         lambdarange = lambdarange, tol = 0.0001, ...)  
+         lambdarange = lambdarange, tol = 0.0001)  
   est_modulus$model <- object
   est_modulus
 }

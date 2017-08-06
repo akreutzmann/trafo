@@ -17,10 +17,11 @@
 #' @param lambdarange a numeric vector with two elements defining an interval 
 #' that is used for the estimation of the optimal transformation parameter. 
 #' Defaults to \code{c(-2, 2)} for the Box-Cox transformation.
+#' @param ... other parameters that can be passed to the function.
 #' @return an object of class \code{transformation}
 #' @keywords internal
 #' @export
-bx_cx.lme <- function(object, method, lambdarange = c(-2,2)) {
+bx_cx.lme <- function(object, method, lambdarange = c(-2,2), ...) {
   formula <- formula(object)
   rand_eff <- names(object$coefficients$random)
   data <- object$data
@@ -36,7 +37,7 @@ bx_cx.lme <- function(object, method, lambdarange = c(-2,2)) {
   #  stop("response variable y must be positive")
   #bcxEst(y, x, ...)
   est_bc_cx <- est_lme(y, x, formula, rand_eff = rand_eff, data = data, 
-                       transfor = "t_bx_cx", method, lambdarange,  tol = 0.0001, ...)
+                       transfor = "t_bx_cx", method, lambdarange,  tol = 0.0001)
   est_bc_cx$model <- object
   est_bc_cx
 }

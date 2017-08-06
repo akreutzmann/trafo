@@ -17,11 +17,11 @@
 #' @param lambdarange a numeric vector with two elements defining an interval 
 #' that is used for the estimation of the optimal transformation parameter. 
 #' Defaults to \code{c(-2, 2)} for the Modulus transformation.
+#' @param ... other parameters that can be passed to the function.
 #' @return an object of class \code{transformation}
 #' @keywords internal
 #' @export
-modulus.lme <- function(object, method, lambdarange = c(-2,2), tol = 0.0001, 
-                        ...) {
+modulus.lme <- function(object, method, lambdarange = c(-2,2), ...) {
   formula <- formula(object)
   rand_eff <- names(object$coefficients$random)
   data <- object$data
@@ -36,8 +36,9 @@ modulus.lme <- function(object, method, lambdarange = c(-2,2), tol = 0.0001,
   #if (any(y <= 0)) 
   #  stop("response variable y must be positive")
   #bcxEst(y, x, ...)
-  est_modulus <- est_lme(y, x, formula, rand_eff = rand_eff, data = data, transfor = "t_mdls",  
-          method, lambdarange, tol = tol, ...)
+  est_modulus <- est_lme(y, x, formula, rand_eff = rand_eff, data = data, 
+                         transfor = "t_mdls", method, lambdarange, 
+                         tol = 0.0001, ...)
   est_modulus$model <- object
   est_modulus
 }

@@ -9,11 +9,7 @@ compareTransformation(object, ...)
 \arguments{
 \item{object}{a data.frame, matrix, formula or fitted model; see below.}
 
-\item{data}{an optional data frame, list or environment as in lm.}
-
-\item{plotit}{a logical value. If equal FALSE plots comparing transformations are not shown - default TRUE.}
-
-\item{XY}{a data.frame or a matrix, whose first column is the dependent variable and the rest of the columns are the independent variables.}
+\item{...}{other parameters that can be passed to the function.}
 }
 \value{
 A data frame comparing families of transformations. If plotit ==  TRUE, plots comparing transformations are shown as well.

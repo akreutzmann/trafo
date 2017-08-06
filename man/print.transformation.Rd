@@ -7,7 +7,9 @@
 \method{print}{transformation}(x, ...)
 }
 \arguments{
-\item{x}{an object of type transformation
+\item{x}{an object of type transformation}
+
+\item{...}{other parameters that can be passed to the function.
 #@keywords internal}
 }
 \description{

@@ -4,7 +4,7 @@
 \alias{dual.lme}
 \title{Dual transformation for linear and linear mixed models}
 \usage{
-\method{dual}{lme}(object, method, lambdarange = c(0, 2))
+\method{dual}{lme}(object, method, lambdarange = c(0, 2), ...)
 }
 \arguments{
 \item{object}{an object of type lm or lme with the model to transform}
@@ -22,6 +22,8 @@ model types.}
 \item{lambdarange}{a numeric vector with two elements defining an interval 
 that is used for the estimation of the optimal transformation parameter. 
 Defaults to \code{c(0, 2)} for the Dual transformation.}
+
+\item{...}{other parameters that can be passed to the function.}
 }
 \value{
 an object of class \code{transformation}

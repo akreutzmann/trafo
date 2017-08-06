@@ -17,10 +17,11 @@
 #' @param lambdarange a numeric vector with two elements defining an interval 
 #' that is used for the estimation of the optimal transformation parameter. 
 #' Defaults to \code{c(0, 2)} for the Dual transformation.
+#' @param ... other parameters that can be passed to the function.
 #' @return an object of class \code{transformation}
 #' @keywords internal
 #' @export
-dual.lme <- function(object, method, lambdarange = c(0, 2)) {
+dual.lme <- function(object, method, lambdarange = c(0, 2), ...) {
   
   formula <- formula(object)
   rand_eff <- names(object$coefficients$random)
@@ -37,7 +38,7 @@ dual.lme <- function(object, method, lambdarange = c(0, 2)) {
   #  stop("response variable y must be positive")
   # dualEst(y, x, ...)
   est_dual <- est_lme(y, x, formula, rand_eff = rand_eff, data = data, transfor = "t_dl",  
-          method, lambdarange, tol = 0.0001, ...)
+          method, lambdarange, tol = 0.0001)
   est_dual$model <- object
   est_dual
 }

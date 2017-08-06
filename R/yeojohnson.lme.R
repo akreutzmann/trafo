@@ -17,13 +17,14 @@
 #' @param lambdarange a numeric vector with two elements defining an interval 
 #' that is used for the estimation of the optimal transformation parameter. 
 #' Defaults to \code{c(-2, 2)} for the Yeo-Johnson transformation.
+#' @param ... other parameters that can be passed to the function.
 #' @return an object of class \code{transformation}
 #' @keywords internal
 #' @importFrom stats aggregate as.formula dnorm ecdf family lm logLik median 
 #' model.frame model.matrix model.response na.omit optimize qchisq qnorm 
 #' quantile residuals rstandard sd shapiro.test
 #' @export
-yeojohnson.lme <- function(object, method, lambdarange = c(-2, 2)) {
+yeojohnson.lme <- function(object, method, lambdarange = c(-2, 2), ...) {
   formula <- formula(object)
   rand_eff <- names(object$coefficients$random)
   data <- object$data
@@ -40,7 +41,7 @@ yeojohnson.lme <- function(object, method, lambdarange = c(-2, 2)) {
   # yeojohnsonEst(y,x, ...)
   est_yeojohnson <- est_lme(y, x, formula, rand_eff = rand_eff, data = data, 
                             transfor = "t_y_jhnsn", method, lambdarange, 
-                            tol = 0.0001, ...)
+                            tol = 0.0001)
   est_yeojohnson$model <- object
   est_yeojohnson
 }

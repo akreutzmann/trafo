@@ -17,13 +17,14 @@
 #' @param lambdarange a numeric vector with two elements defining an interval 
 #' that is used for the estimation of the optimal transformation parameter. 
 #' Defaults to \code{c(-2, 2)} for the Yeo-Johnson transformation.
+#' @param ... other parameters that can be passed to the function.
 #' @return an object of class \code{transformation}
 #' @keywords internal
 #' @importFrom stats aggregate as.formula dnorm ecdf family lm logLik median 
 #' model.frame model.matrix model.response na.omit optimize qchisq qnorm 
 #' quantile residuals rstandard sd shapiro.test
 #' @export
-yeojohnson.lm <- function(object, method, lambdarange = c(-2, 2)) {
+yeojohnson.lm <- function(object, method, lambdarange = c(-2, 2), ...) {
   
   model_frame <- object$model 
   if (is.null(y <- model.response(model_frame))) 
@@ -31,8 +32,8 @@ yeojohnson.lm <- function(object, method, lambdarange = c(-2, 2)) {
   if (is.null(x <- model.matrix(attr(model_frame, "terms"), data = model_frame))) 
     stop("Matrix of covariates X must not be empty")
   # yeojohnsonEst(y,x, ...)
-  est_yeojohnson <- st_lm(y = y, x = x, transfor = "t_y_jhnsn", method = method, 
-         lambdarange = lambdarange, tol = 0.0001, ...)
+  est_yeojohnson <- est_lm(y = y, x = x, transfor = "t_y_jhnsn", method = method, 
+         lambdarange = lambdarange, tol = 0.0001)
   est_yeojohnson$model <- object
   est_yeojohnson
 }
