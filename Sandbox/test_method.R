@@ -103,6 +103,8 @@ summary(bd_divkl)
 # Manly ------------------------------------------------------------------------
 manly_ml <- manly(modelVienna, method = "ml", lambdarange = c(-0.05, 0.005))
 
+manly(modelVienna, method = "ml")
+
 print(manly_ml)
 summary(manly_ml)
 
@@ -194,7 +196,8 @@ modelAustria <- lme(eqIncome ~ pb220a + py050n,
                     random = ~ 1 | db040, data = eusilc, 
                     na.action = na.omit)
 
-plot(modelAustria)
+plot(modelAustria, db040 ~ resid(.))
+plot(modelAustria, eqIncome ~ fitted(.) | db040)
 
 # Box-Cox ----------------------------------------------------------------------
 bxcx_reml <- bx_cx(modelAustria, method = "reml")

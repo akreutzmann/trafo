@@ -2,7 +2,7 @@
 % Please edit documentation in R/trafoEst.R
 \name{est_lm}
 \alias{est_lm}
-\title{Box Cox Estimation - lm}
+\title{Estimation of optimal transformation parameter - lm}
 \usage{
 est_lm(y, x, method, lambdarange, tr = FALSE, transfor, tol = tol, ...)
 }
@@ -33,6 +33,6 @@ yt Vector of the transformed response variable \code{y}
 modelt An object of type \code{lm} employing the transformed vector \code{yt} as the response variable
 }
 \description{
-Box Cox Estimation - lm
+Estimation of optimal transformation parameter - lm
 }
 \keyword{internal}
