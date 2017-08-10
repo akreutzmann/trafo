@@ -4,7 +4,7 @@
 \alias{est_lm}
 \title{Estimation of optimal transformation parameter - lm}
 \usage{
-est_lm(y, x, method, lambdarange, tr = FALSE, transfor, ...)
+est_lm(y, x, method, lambdarange, transfor, ...)
 }
 \arguments{
 \item{y}{vector of response variables}
@@ -12,8 +12,6 @@ est_lm(y, x, method, lambdarange, tr = FALSE, transfor, ...)
 \item{x}{matrix of regressors}
 
 \item{lambdarange}{range for the estimation parameter expr(lambda) - default c(-2, 2)}
-
-\item{tr}{logical value. if tr = TRUE warning messages for the likelihood functions are suppressed - default FALSE}
 }
 \value{
 An object of class \code{transformation} with the following arguments

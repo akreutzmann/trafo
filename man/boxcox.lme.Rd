@@ -4,10 +4,14 @@
 \alias{boxcox.lme}
 \title{Box-Cox transformation for linear and linear mixed models}
 \usage{
-\method{boxcox}{lme}(object, method, lambdarange = c(-2, 2), ...)
+\method{boxcox}{lme}(object, lambda, method, lambdarange = c(-2, 2),
+  plotit = TRUE, ...)
 }
 \arguments{
 \item{object}{an object of type lm or lme with the model to transform}
+
+\item{lambda}{either a character named "estim" if the optimal lambda should
+be estimated or a numeric value determining a given lambda.}
 
 \item{method}{a character string. Different estimation methods can be used 
 for the estimation of the optimal transformation parameter. 
@@ -23,10 +27,13 @@ model types.}
 that is used for the estimation of the optimal transformation parameter. 
 Defaults to \code{c(-2, 2)} for the Box-Cox transformation.}
 
+\item{plotit}{logical. If TRUE, a plot that illustrates the optimal 
+transformation parameter is returned.}
+
 \item{...}{other parameters that can be passed to the function.}
 }
 \value{
-an object of class \code{transformation}
+an object of class \code{trafo}
 }
 \description{
 Depending on the class of the first object, this function estimates the 

@@ -200,7 +200,7 @@ plot(modelAustria, db040 ~ resid(.))
 plot(modelAustria, eqIncome ~ fitted(.) | db040)
 
 # Box-Cox ----------------------------------------------------------------------
-bxcx_reml <- bx_cx(modelAustria, method = "reml")
+bxcx_reml <- boxcox(modelAustria, lambda = "estim", method = "reml")
 
 print(bxcx_reml)
 summary(bxcx_reml)
@@ -267,7 +267,7 @@ summary(modulus_divkl)
 
 # Bickel-Doksum ----------------------------------------------------------------
 
-bickeldoksum_reml <- bickeldoksum(modelAustria, method = "reml")
+bickeldoksum_reml <- bickeldoksum(modelAustria, lambda = 0.35, method = "reml")
 
 print(bickeldoksum_reml)
 summary(bickeldoksum_reml)
@@ -299,12 +299,12 @@ summary(bickeldoksum_divkl)
 
 # Manly ------------------------------------------------------------------------
 
-manly_reml <- manly(modelAustria, method = "reml", lambdarange = c(-0.000005, 0.00005))
+manly_reml <- manly(modelAustria, lambda = "estim", method = "reml", lambdarange = c(-0.000005, 0.00005))
 
 print(manly_reml)
 summary(manly_reml)
 
-manly_skew <- manly(modelAustria, method = "skew", lambdarange = c(-0.05, 0.005))
+manly_skew <- manly(modelAustria, lambda = "estim", method = "skew", lambdarange = c(-0.05, 0.005))
 
 print(manly_skew)
 summary(manly_skew)
@@ -332,12 +332,12 @@ summary(manly_divkl)
 
 # Dual -------------------------------------------------------------------------
 
-dual_reml <- dual(modelAustria, method = "reml")
+dual_reml <- dual(modelAustria, lambda = "estim",  method = "reml")
 
 print(dual_reml)
 summary(dual_reml)
 
-dual_skew <- dual(modelAustria, method = "skew")
+dual_skew <- dual(modelAustria, lambda = "estim", method = "skew")
 
 print(dual_skew)
 summary(dual_skew)

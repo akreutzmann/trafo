@@ -1,7 +1,7 @@
-#' Fits transformed linear models
+#' Fits transformed linear mixed models
 #'
-#' Function \code{trans_lm} fits linear models with transformed dependent 
-#' variables. The return are two lm objects where the first is the transformed
+#' Function \code{trans_lm} fits linear mixed models with transformed dependent 
+#' variables. The return are two lme objects where the first is the transformed
 #' and the second the untransformed linear model. 
 #'
 #' @param object an object of type lm or lme with the model to transform
@@ -23,9 +23,10 @@
 #' @importFrom stats aggregate as.formula dnorm ecdf family lm logLik median 
 #' model.frame model.matrix model.response na.omit optimize qchisq qnorm 
 #' quantile residuals rstandard sd shapiro.test
+#' @import nlme
 #' @export
 
-trafo_lm <- function(object, trafo, lambda = "estim", method, 
+trafo_lme <- function(object, trafo, lambda = "estim", method, 
                      lambdarange, plotit = TRUE, std = FALSE){
   
   if (trafo == "log") {
@@ -52,31 +53,41 @@ trafo_lm <- function(object, trafo, lambda = "estim", method,
   } 
   
   # Get original lm object
-  orig_lm <- object 
+  orig_lme <- object 
   
   # Get transformed lm object
   if (std == FALSE) {
-    model_frame <- object$model 
-    x <- model.matrix(attr(model_frame, "terms"), data = model_frame)
-    k <- ncol(x)
-    suppressWarnings(modelt <- lm(yt ~ ., data.frame(yt = trans_mod$yt, x[, 2:k])))
+    formula <- formula(object)
+    tdata <- object$data
+    tdata[paste(formula[2])] <- trans_mod$yt
+    rand_eff <- names(object$coefficients$random)
+    suppressWarnings(modelt <- lme(formula = formula, data = tdata,
+                                   random = as.formula(paste0("~ 1 | as.factor(", rand_eff, ")")),
+                                   method = "REML",
+                                   keep.data = FALSE,
+                                   na.action = na.omit))
   } else if (std == TRUE) {
-    model_frame <- object$model 
-    x <- model.matrix(attr(model_frame, "terms"), data = model_frame)
-    k <- ncol(x)
-    suppressWarnings(modelt <- lm(zt ~ ., data.frame(zt = trans_mod$zt, x[, 2:k])))
+    formula <- formula(object)
+    tdata <- object$data
+    tdata[paste(formula[2])] <- trans_mod$zt
+    rand_eff <- names(object$coefficients$random)
+    suppressWarnings(modelt <- lme(formula = formula, data = tdata,
+                                   random = as.formula(paste0("~ 1 | as.factor(", rand_eff, ")")),
+                                   method = "REML",
+                                   keep.data = FALSE,
+                                   na.action = na.omit))
   }
   
-  trafo_lm <- modelt
+  trafo_lme <- modelt
   
   # Return new class
-  trafo_out <- list(orig_lm = orig_lm,
-                    trafo_lm = trafo_lm, 
+  trafo_out <- list(orig_lme = orig_lme,
+                    trafo_lme = trafo_lme, 
                     trafo = trafo, 
                     method = method, 
                     lambdahat = trans_mod$lambdahat)
   
-  class(trafo_out) <- trafo_lm
+  class(trafo_out) <- trafo_lme
   
   return(trafo_out)
 }

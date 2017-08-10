@@ -4,10 +4,14 @@
 \alias{dual.lme}
 \title{Dual transformation for linear and linear mixed models}
 \usage{
-\method{dual}{lme}(object, method, lambdarange = c(0, 2), ...)
+\method{dual}{lme}(object, lambda, method, lambdarange = c(0, 2),
+  plotit = TRUE, ...)
 }
 \arguments{
 \item{object}{an object of type lm or lme with the model to transform}
+
+\item{lambda}{either a character named "estim" if the optimal lambda should
+be estimated or a numeric value determining a given lambda.}
 
 \item{method}{a character string. Different estimation methods can be used 
 for the estimation of the optimal transformation parameter. 
@@ -22,6 +26,9 @@ model types.}
 \item{lambdarange}{a numeric vector with two elements defining an interval 
 that is used for the estimation of the optimal transformation parameter. 
 Defaults to \code{c(0, 2)} for the Dual transformation.}
+
+\item{plotit}{logical. If TRUE, a plot that illustrates the optimal 
+transformation parameter is returned.}
 
 \item{...}{other parameters that can be passed to the function.}
 }

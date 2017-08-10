@@ -4,7 +4,8 @@
 \alias{trafo_lm}
 \title{Fits transformed linear models}
 \usage{
-trafo_lm(object, trafo, method, lambdarange, plotit = TRUE, std = FALSE)
+trafo_lm(object, trafo, lambda = "estim", method, lambdarange,
+  plotit = TRUE, std = FALSE)
 }
 \arguments{
 \item{object}{an object of type lm or lme with the model to transform}
