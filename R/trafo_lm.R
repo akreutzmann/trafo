@@ -52,7 +52,7 @@ trafo_lm <- function(object, trafo, lambda = "estim", method,
   } 
   
   # Get original lm object
-  orig_lm <- object 
+  orig_mod <- object 
   
   # Get transformed lm object
   if (std == FALSE) {
@@ -67,16 +67,16 @@ trafo_lm <- function(object, trafo, lambda = "estim", method,
     suppressWarnings(modelt <- lm(zt ~ ., data.frame(zt = trans_mod$zt, x[, 2:k])))
   }
   
-  trafo_lm <- modelt
+  trafo_mod <- modelt
   
   # Return new class
-  trafo_out <- list(orig_lm = orig_lm,
-                    trafo_lm = trafo_lm, 
+  trafo_out <- list(orig_mod = orig_mod,
+                    trafo_mod = trafo_mod, 
                     trafo = trafo, 
                     method = method, 
                     lambdahat = trans_mod$lambdahat)
   
-  class(trafo_out) <- trafo_lm
+  class(trafo_out) <- "trafo_mod"
   
   return(trafo_out)
 }

@@ -1,7 +1,14 @@
-#trafo_lm <- trafo_lm(object = modelVienna, trafo = "box.cox", 
-#         method = "ml", lambdarange = c(-2,2), plotit = TRUE, 
-#                     std = FALSE)
+trafo_lm <- trafo_lm(object = modelVienna, trafo = "box.cox", #
+                     method = "ml", lambdarange = c(-2,2), plotit = TRUE, 
+                     std = FALSE)
 
+
+trafo_lme <- trafo_lme(object = modelAustria, trafo = "bickeldoksum", 
+                     method = "ml", lambdarange = c(-2,2), plotit = FALSE, 
+                     std = FALSE)
+
+
+summary(trafo_lm)
 
 summary_trafolm <- function(object, ...) {
   

@@ -200,7 +200,7 @@ plot(modelAustria, db040 ~ resid(.))
 plot(modelAustria, eqIncome ~ fitted(.) | db040)
 
 # Box-Cox ----------------------------------------------------------------------
-bxcx_reml <- boxcox(modelAustria, lambda = "estim", method = "reml")
+bxcx_reml <- boxcox(modelAustria, lambda = "estim", method = "reml", plotit = FALSE)
 
 print(bxcx_reml)
 summary(bxcx_reml)
@@ -235,7 +235,7 @@ summary(bxcx_divkl)
 
 # Modulus ----------------------------------------------------------------------
 
-modulus_reml <- modulus(modelAustria, method = "reml")
+modulus_reml <- modulus(modelAustria, lambda = "estim", method = "reml", plotit = FALSE)
 
 print(modulus_reml)
 summary(modulus_reml)
