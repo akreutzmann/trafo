@@ -365,7 +365,7 @@ summary(dual_divkl)
 
 # Yeo-Johnson ------------------------------------------------------------------
 
-yeojohnson_reml <- yeojohnson(modelAustria, method = "reml")
+yeojohnson_reml <- yeojohnson(modelAustria, lambda = 0.35,  method = "reml")
 
 print(yeojohnson_reml)
 summary(yeojohnson_reml)
