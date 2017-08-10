@@ -13,7 +13,7 @@
 #' @return yt Vector of the transformed response variable \code{y}
 #' @return modelt An object of type \code{lm} employing the transformed vector \code{yt} as the response variable
 #' @keywords internal
-est_lm_new <- function(y, x , method, lambdarange, tr = FALSE, transfor,
+est_lm_old <- function(y, x , method, lambdarange, tr = FALSE, transfor, tol = tol,
                    ...) {
   
   # Number of explanatory variables
@@ -22,7 +22,7 @@ est_lm_new <- function(y, x , method, lambdarange, tr = FALSE, transfor,
   # Get the optimal lambda via optimization on lambdarange
   res <- suppressWarnings(optimize(f = estim_lm, y = y, x = x, method = method,
                                    transfor = transfor, interval = lambdarange, 
-                                   tol = 0.0001))
+                                   tol = tol))
   
   if(is.infinite(res$objective) & tr !=TRUE) {
     stop("For some lambda in the interval, the likelihood does not converge.
@@ -31,15 +31,69 @@ est_lm_new <- function(y, x , method, lambdarange, tr = FALSE, transfor,
   
   # Optimal lambda and corresponding measure: likelihood, skewness or divergence
   lambdaoptim <-  res$minimum
-  measoptim <- res$objective
+  logoptim <- res$objective
   
-  return(list(lambdaoptim = lambdaoptim, 
-              measoptim = measoptim))
-}  
+  
+  
+  lambdavector <- seq(lambdarange[1], lambdarange[2], 0.025)
+  l <- length(lambdavector)
+  lambdavector[l + 1]  <- lambdaoptim
+  lambdavector <- sort(lambdavector)
+  logvector <- sapply(lambdavector, estim_lm, y = y, x = x, transfor = transfor,
+                      method = method)
+  
+  
+  ans <- list()
+  
+  
+  if(transfor == "t_bx_cx") {
+    yt <- box_cox(y = y, lambda = lambdaoptim)$y
+    zt <- box_cox_std(y = y, lambda = lambdaoptim)
+    ans$family <- "Box-Cox"
+  } else if (transfor == "t_mdls") {
+    yt <- modul(y = y, lambda = lambdaoptim)
+    zt <- modul_std(y = y, lambda = lambdaoptim)
+    ans$family <- "Modulus"
+  } else if (transfor == "t_bck_dk") {
+    yt <- Bick_dok(y = y, lambda = lambdaoptim)
+    zt <- Bick_dok_std(y = y, lambda = lambdaoptim)
+    ans$family <- "Bickel-Doksum"
+  } else if (transfor == "t_mnl") {
+    yt <- Manly(y = y, lambda = lambdaoptim)
+    zt <- Manly_std(y = y, lambda = lambdaoptim)
+    ans$family <- "Manly"
+  } else if (transfor == "t_dl") {
+    yt <- Dual(y = y, lambda = lambdaoptim)
+    zt <- Dual_std(y = y, lambda = lambdaoptim)
+    ans$family <- "Dual"
+  } else if (transfor == "t_y_jhnsn") {
+    yt <- Yeo_john(y = y, lambda = lambdaoptim)
+    zt <- Yeo_john_std(y = y, lambda = lambdaoptim)
+    ans$family <- "Yeo-Johnson"
+  }
+  
+ 
+  suppressWarnings(modelt <- lm(yt ~ ., data.frame(yt, x[, 2:k])))
+ 
+  
   
 
+  ans$lambdarange <- lambdarange
+  ans$optmeas <- res$objective
+  ans$lambdahat <- lambdaoptim
+  ans$logvector <- logvector
+  ans$lambdavector <- lambdavector
+  ans$yt <- yt
+  ans$zt <- zt
+  ans$modelt <- modelt
+  ans$method <- method
+  # Do we want to change to class trafo??!!
+  class(ans) <- "transformation"
+  ans
+}
 
-#' Box Cox Estimation - lme
+
+#' Estimation of optimal transformation parameter - lme
 #' 
 #' @param x matrix of regressors
 #' @param y vector of response variables
@@ -54,7 +108,7 @@ est_lm_new <- function(y, x , method, lambdarange, tr = FALSE, transfor,
 #' @return yt Vector of the transformed response variable \code{y}
 #' @return modelt An object of type \code{lm} employing the transformed vector \code{yt} as the response variable
 #' @keywords internal
-est_lme <- function(y, x, formula, data, rand_eff, method = method, 
+est_lme_old <- function(y, x, formula, data, rand_eff, method = method, 
                     lambdarange = lambdarange, tr = FALSE, transfor, tol = tol, 
                     ...) {
   #x <- model.matrix(formula, data = data)

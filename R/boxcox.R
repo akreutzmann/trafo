@@ -15,5 +15,5 @@
 #' @return modelt An object of type \code{lm} employing the transformed vector \code{yt} as the response variable
 #' @keywords boxcox
 #' @export
-bx_cx <- function(object,...) UseMethod("bx_cx")
+boxcox <- function(object,...) UseMethod("boxcox")
 

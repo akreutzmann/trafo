@@ -20,22 +20,24 @@
 #' @param ... other parameters that can be passed to the function.
 #' @return an object of class \code{transformation}
 #' @keywords internal
-#' @importFrom stats aggregate as.formula dnorm ecdf family lm logLik median 
-#' model.frame model.matrix model.response na.omit optimize qchisq qnorm 
-#' quantile residuals rstandard sd shapiro.test
 #' @export
-bx_cx.lm <- function(object, method, lambdarange = c(-2, 2), ...) {
-  model_frame <- object$model 
-  if (is.null(y <- model.response(model_frame))) 
-    stop("Dependent variable y must not be empty")
-  if (is.null(x <- model.matrix(attr(model_frame, "terms"), data = model_frame))) 
-    stop("Matrix of covariates X must not be empty")
-  if (any(y <= 0)) 
-   stop("response variable y must be positive")
+boxcox.lme <- function(object, method, lambdarange = c(-2,2), ...) {
+  formula <- formula(object)
+  rand_eff <- names(object$coefficients$random)
+  data <- object$data
+  x <- model.matrix(formula, data = object$data)
+  #x <- cbind(object$data[paste(formula[3][[1]][[2]])], 
+  #               object$data[paste(formula[3][[1]][[3]])])
+  y <- as.matrix(object$data[paste(formula[2])])
+  #if (is.null(y <- model.response(model_frame))) 
+  #  stop("Dependent variable y must not be empty")
+  #if (is.null(x <- model.matrix(attr(model_frame, "terms"), data = model_frame))) 
+  #  stop("Matrix of covariates X must not be empty")
+  #if (any(y <= 0)) 
+  #  stop("response variable y must be positive")
   #bcxEst(y, x, ...)
-  
-  est_bc_cx <- est_lm(y = y, x = x, transfor = "t_bx_cx", method = method, 
-                      lambdarange = lambdarange, tol = 0.0001)
+  est_bc_cx <- est_lme(y, x, formula, rand_eff = rand_eff, data = data, 
+                       transfor = "t_bx_cx", method, lambdarange,  tol = 0.0001)
   est_bc_cx$model <- object
   est_bc_cx
 }
