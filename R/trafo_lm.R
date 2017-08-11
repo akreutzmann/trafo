@@ -28,6 +28,7 @@
 trafo_lm <- function(object, trafo, lambda = "estim", method, 
                      lambdarange, plotit = TRUE, std = FALSE){
   
+  
   if (trafo == "log") {
     trans_mod <- boxcox(object = object, lambda = 0, method = method, 
                        lambdarange = lambdarange, plotit = plotit)
@@ -54,20 +55,9 @@ trafo_lm <- function(object, trafo, lambda = "estim", method,
   # Get original lm object
   orig_mod <- object 
   
-  # Get transformed lm object
-  if (std == FALSE) {
-    model_frame <- object$model 
-    x <- model.matrix(attr(model_frame, "terms"), data = model_frame)
-    k <- ncol(x)
-    suppressWarnings(modelt <- lm(yt ~ ., data.frame(yt = trans_mod$yt, x[, 2:k])))
-  } else if (std == TRUE) {
-    model_frame <- object$model 
-    x <- model.matrix(attr(model_frame, "terms"), data = model_frame)
-    k <- ncol(x)
-    suppressWarnings(modelt <- lm(zt ~ ., data.frame(zt = trans_mod$zt, x[, 2:k])))
-  }
   
-  trafo_mod <- modelt
+  # Get transformed lm object
+  trafo_mod <- get_modelt(object = object, trans_mod = trans_mod, std = std)
   
   # Return new class
   trafo_out <- list(orig_mod = orig_mod,

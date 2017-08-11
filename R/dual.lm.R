@@ -63,11 +63,12 @@ dual.lm <- function(object, lambda, method, lambdarange = c(0, 2),
     plot_meas <- plot_trafolm(lambdarange = lambdarange, lambdaoptim = lambdaoptim, 
                               measoptim = measoptim, y = y, x = x, 
                               transfor = transfor, method = method)
+    
+    # Get plot measures
+    ans$lambdavector <- plot_meas$lambdavector
+    ans$measvector <- plot_meas$measvector
   }
-  
-  # Get plot measures
-  ans$lambdavector <- plot_meas$lambdavector
-  ans$measvector <- plot_meas$measvector
+
   
   # Get vector of transformed and standardized transformed variable
   ans$yt <- Dual(y = y, lambda = lambdaoptim)

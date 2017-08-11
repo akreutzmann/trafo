@@ -12,6 +12,7 @@
 
 summary.trafo_mod <- function(object, ...) {
   
+  
   trafo <- object$trafo
   method <- object$method
   lambdahat <- object$lambdahat
@@ -24,8 +25,9 @@ summary.trafo_mod <- function(object, ...) {
     
     # Summary of transformed model
     trafo_sum <- summary(object$trafo_mod) 
-    trafo_sum$coefficients <- as.matrix(trafo_sum$coefficients[, 1])
+    trafo_sum$coefficients <- matrix(trafo_sum$coefficients[, 1])
     colnames(trafo_sum$coefficients) <- c("Estimate")
+    rownames(trafo_sum$coefficients) <- rownames(orig_sum$coefficients)
   } else if (inherits(object$orig_mod, "lme")) {
     # Summary of original model
     orig_sum <- summary(object$orig_mod)
@@ -64,7 +66,9 @@ print.summary.trafo_mod <- function(x, ...) {
   
   cat("Applied transformation \n")
   cat("Transformation: ",x$trafo," \n")
-  cat("Estimation method: ", x$method, " \n")
+  if (x$trafo != "log") {
+    cat("Estimation method: ", x$method, " \n")
+  }
   cat("Optimal Parameter: ", x$lambdahat, " \n")
   cat("\n")
   cat("Summary of transformed model \n")

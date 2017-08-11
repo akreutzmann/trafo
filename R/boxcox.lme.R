@@ -63,11 +63,13 @@ boxcox.lme <- function(object, lambda, method, lambdarange = c(-2,2),
                                measoptim = measoptim, y = y, formula = formula, 
                                data = data, rand_eff = rand_eff, transfor = transfor, 
                                method = method)
+    
+    # Get plot measures
+    ans$lambdavector <- plot_meas$lambdavector
+    ans$measvector <- plot_meas$measvector
   }
   
-  # Get plot measures
-  ans$lambdavector <- plot_meas$lambdavector
-  ans$measvector <- plot_meas$measvector
+  
   
   # Get vector of transformed and standardized transformed variable
   ans$yt <- box_cox(y = y, lambda = lambdaoptim)$y
