@@ -1,57 +1,21 @@
-trafo_lm <- trafo_lm(object = modelVienna, trafo = "box.cox", #
+trafo_lm <- trafo_lm(object = modelVienna, trafo = "log", 
                      method = "ml", lambdarange = c(-2,2), plotit = TRUE, 
                      std = FALSE)
+summary(trafo_lm)
+plot(trafo_lm)
 
 
-trafo_lme <- trafo_lme(object = modelAustria, trafo = "bickeldoksum", 
-                     method = "ml", lambdarange = c(-2,2), plotit = FALSE, 
+trafo_lme <- trafo_lme(object = modelAustria, trafo = "box.cox", 
+                     method = "reml", lambdarange = c(-2,2), plotit = FALSE, 
                      std = FALSE)
 
-
-summary(trafo_lm)
-
-summary_trafolm <- function(object, ...) {
-  
-  trafo <- object$trafo
-  method <- object$method
-  lambdahat <- object$lambdahat
-  
-  # Summary of original model
-  orig_sum <- summary(object$orig_lm)
-  
-  
-  # Summary of transformed model
-  trafo_sum <- summary(object$trafo_lm) 
-  trafo_sum$coefficients <- as.matrix(trafo_sum$coefficients[, 1])
-  colnames(trafo_sum$coefficients) <- c("Estimate")
-  
-  return(list(trafo = trafo, 
-              method = method, 
-              lambdahat = lambdahat, 
-              orig_sum = orig_sum, 
-              trafo_sum = trafo_sum))
-}
+summary(trafo_lme)
 
 
 
-print_summary_trafolm <- function(x, ...) {
-  
-  cat("Information about applied transformation \n")
-  cat("Transformation: ",x$trafo," \n")
-  cat("Estimation method: ", x$method, " \n")
-  cat("Optimal Parameter: ", x$lambdahat, " \n")
-  
-  cat("Summary of transformed model \n")
-  print(x$trafo_sum)
-  cat("Note that the standard errors are missing due to the lack of methods 
-      for correct standard errors in transformed models. \n")
-  
-  cat("Summary of original model \n")
-  print(x$orig_sum)
-  
-  invisible(x)
-  
-}
+
+
+
 
 #sum_trafo <- summary_trafolm(trafo_lm)
 

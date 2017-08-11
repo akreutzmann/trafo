@@ -31,6 +31,7 @@
 yeojohnson.lm <- function(object, lambda, method, lambdarange = c(-2, 2),
                           plotit = TRUE, ...) {
   
+  transfor <- "t_y_jhnsn"
   
   # Get model variables: dependent variable y and explanatory variables x
   model_frame <- object$model 
@@ -46,7 +47,7 @@ yeojohnson.lm <- function(object, lambda, method, lambdarange = c(-2, 2),
   
   # Get the optimal transformation parameter
   if (lambda == "estim") {
-    bx_cxOptim <- est_lm(y = y, x = x, transfor = "t_y_jhnsn", method = method, 
+    bx_cxOptim <- est_lm(y = y, x = x, transfor = transfor, method = method, 
                          lambdarange = lambdarange) 
     
     lambdaoptim <- bx_cxOptim$lambdaoptim
@@ -55,56 +56,20 @@ yeojohnson.lm <- function(object, lambda, method, lambdarange = c(-2, 2),
   } else if (is.numeric(lambda)) {
     lambdaoptim <- lambda
     measoptim <- estim_lm(lambda = lambdaoptim, y = y, x = x, 
-                          transfor = "t_y_jhnsn", method = method)
+                          transfor = transfor, method = method)
   }
   
   # Plot the curve of the measure with line at the optimal transformation 
   # parameter
   if (plotit == TRUE) {
-    lambdavector <- seq(lambdarange[1], lambdarange[2], 0.025)
-    l <- length(lambdavector)
-    lambdavector[l + 1]  <- lambdaoptim
-    lambdavector <- sort(lambdavector)
-    measvector <- sapply(lambdavector, estim_lm, y = y, x = x, transfor = "t_y_jhnsn",
-                         method = method)
-    
-    #lim <- measoptim + qchisq(0.95, 1)/2
-    #m <- length(measvector)
-    #index <- range((1L:m)[measvector < lim])
-    #cinf <- lambdavector[index[1]]
-    #csup <- lambdavector[index[2]]
-    #vline <- c(cinf, lambdaoptim, csup)
-    vline <- lambdaoptim
-    
-    if (method == "ml" | method == "reml") {
-      measvector <- -measvector
-      data1 <- data.frame(measvector = measvector,  lambdavector = lambdavector)  
-      measoptim <- -measoptim
-      y_lab <- "Profile log-likelihood"
-      
-      
-    } else if (method == "skew" | method == "pskew") {
-      data1 <- data.frame(measvector = measvector,  lambdavector = lambdavector)
-      y_lab <- "Skewness"
-    } else if (method == "div.ks" | method == "div.cvm" | method == "div.kl") {
-      data1 <- data.frame(measvector = measvector,  lambdavector = lambdavector)
-      y_lab <- "Divergence"
-    }
-    
-    plot <- ggplot(data1, aes(x = lambdavector,
-                              y = measvector)) + geom_line() + 
-      geom_vline(xintercept = vline, linetype = "dashed") + 
-      geom_hline(yintercept = measoptim, color = "red", linetype = "dashed") + 
-      xlab(expression(lambda)) + ylab(y_lab)
-    
-    print(plot)
-    
-    
-    # Save plot measures
-    ans$plot
-    ans$measvector
-    ans$lambdavector
+    plot_meas <- plot_trafolm(lambdarange = lambdarange, lambdaoptim = lambdaoptim, 
+                              measoptim = measoptim, y = y, x = x, 
+                              transfor = transfor, method = method)
   }
+  
+  # Get plot measures
+  ans$lambdavector <- plot_meas$lambdavector
+  ans$measvector <- plot_meas$measvector
   
   
   # Get vector of transformed and standardized transformed variable

@@ -29,6 +29,8 @@ bickeldoksum.lme <- function(object, lambda, method, lambdarange = c(1e-11, 2),
                              plotit = TRUE, ...) {
   
   
+  transfor <- "t_bck_dk"
+  
   # Get model variables: dependent variable y and explanatory variables x
   formula <- formula(object)
   rand_eff <- names(object$coefficients$random)
@@ -44,7 +46,7 @@ bickeldoksum.lme <- function(object, lambda, method, lambdarange = c(1e-11, 2),
   if (lambda == "estim") {
     bickeldoksumOptim <- est_lme(y = y, x = x, formula = formula, data = data, 
                                  rand_eff = rand_eff, method = method, 
-                                 lambdarange = lambdarange, transfor = "t_bck_dk") 
+                                 lambdarange = lambdarange, transfor = transfor) 
     
     lambdaoptim <- bickeldoksumOptim$lambdaoptim
     measoptim <- bickeldoksumOptim$measoptim
@@ -53,50 +55,21 @@ bickeldoksum.lme <- function(object, lambda, method, lambdarange = c(1e-11, 2),
     lambdaoptim <- lambda
     measoptim <- estim_lme(lambda = lambda, y = y, formula = formula, 
                            data = data, rand_eff = rand_eff, method = method, 
-                           transfor =  "t_bck_dk")
+                           transfor = transfor)
   }
   
   # Plot the curve of the measure with line at the optimal transformation 
   # parameter
   if (plotit == TRUE) {
-    lambdavector <- seq(lambdarange[1], lambdarange[2], 0.025)
-    l <- length(lambdavector)
-    lambdavector[l + 1]  <- lambdaoptim
-    lambdavector <- sort(lambdavector)
-    measvector <- sapply(lambdavector, estim_lme, y = y, formula = formula, 
-                         data = data, rand_eff = rand_eff, method = method, 
-                         transfor =  "t_bck_dk")
-    vline <- lambdaoptim
-    
-    if (method == "ml" | method == "reml") {
-      measvector <- -measvector
-      data1 <- data.frame(measvector = measvector,  lambdavector = lambdavector)  
-      measoptim <- -measoptim
-      y_lab <- "Profile log-likelihood"
-      
-      
-    } else if (method == "skew" | method == "pskew") {
-      data1 <- data.frame(measvector = measvector,  lambdavector = lambdavector)
-      y_lab <- "Skewness"
-    } else if (method == "div.ks" | method == "div.cvm" | method == "div.kl") {
-      data1 <- data.frame(measvector = measvector,  lambdavector = lambdavector)
-      y_lab <- "Divergence"
-    }
-    
-    plot <- ggplot(data1, aes(x = lambdavector,
-                              y = measvector)) + geom_line() + 
-      geom_vline(xintercept = vline, linetype = "dashed") + 
-      geom_hline(yintercept = measoptim, color = "red", linetype = "dashed") + 
-      xlab(expression(lambda)) + ylab(y_lab)
-    
-    print(plot)
-    
-    
-    # Save plot measures
-    ans$plot
-    ans$measvector
-    ans$lambdavector
+    plot_meas <- plot_trafolme(lambdarange = lambdarange, lambdaoptim = lambdaoptim,
+                              measoptim = measoptim, y = y, formula = formula, 
+                              data = data, rand_eff = rand_eff, transfor = transfor, 
+                              method = method)
   }
+  
+  # Get plot measures
+  ans$lambdavector <- plot_meas$lambdavector
+  ans$measvector <- plot_meas$measvector
   
   # Get vector of transformed and standardized transformed variable
   ans$yt <- Bick_dok(y = y, lambda = lambdaoptim)

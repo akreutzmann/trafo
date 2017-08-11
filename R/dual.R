@@ -12,7 +12,8 @@
 #' @return lambdavector A sequence with optional values for \code{lambda}
 #' @return family Employed family of transformations
 #' @return yt Vector of the transformed response variable \code{y}
-#' @return modelt An object of type \code{lm} employing the transformed vector \code{yt} as the response variable
+#' @return modelt An object of type \code{lm} employing the transformed vector 
+#' \code{yt} as the response variable
 #' @export
 dual <- function(object, ...) UseMethod("dual")
 

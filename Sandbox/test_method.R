@@ -18,7 +18,7 @@ plot(bc_ML)
 
 
 # library(skewness) # need to load this lilbrary before
-bx_cx_skew <- boxcox(modelVienna, lambda = "estim", method = "skew")
+bx_cx_skew <- boxcox(modelVienna, lambda = 0.2, method = "skew")
 
 print(bx_cx_skew)
 summary(bx_cx_skew)
@@ -74,7 +74,7 @@ summary(modulus_divkl)
 
 
 # Bickel-Doksum ----------------------------------------------------------------
-bd_ml <- bickeldoksum(modelVienna, lambda = "estim", method = "ml")
+bd_ml <- bickeldoksum(object = modelVienna, lambda = "estim", method = "ml")
 
 print(bd_ml)
 summary(bd_ml)
@@ -200,7 +200,7 @@ plot(modelAustria, db040 ~ resid(.))
 plot(modelAustria, eqIncome ~ fitted(.) | db040)
 
 # Box-Cox ----------------------------------------------------------------------
-bxcx_reml <- boxcox(modelAustria, lambda = "estim", method = "reml", plotit = FALSE)
+bxcx_reml <- boxcox(modelAustria, lambda = "estim", method = "reml", plotit = TRUE)
 
 print(bxcx_reml)
 summary(bxcx_reml)
@@ -212,7 +212,7 @@ bxcx_skew <- bx_cx(modelAustria, method = "skew")
 print(bxcx_skew)
 summary(bxcx_skew)
 
-bxcx_pskew <- bx_cx(modelAustria, method = "pskew")
+bxcx_pskew <- boxcox(modelAustria, lambda = "estim", method = "pskew")
 
 print(bxcx_pskew)
 summary(bxcx_pskew)
@@ -267,17 +267,17 @@ summary(modulus_divkl)
 
 # Bickel-Doksum ----------------------------------------------------------------
 
-bickeldoksum_reml <- bickeldoksum(modelAustria, lambda = 0.35, method = "reml")
+bickeldoksum_reml <- bickeldoksum(modelAustria, lambda = "estim", method = "reml")
 
 print(bickeldoksum_reml)
 summary(bickeldoksum_reml)
 
-bickeldoksum_skew <- bickeldoksum(modelAustria, method = "skew")
+bickeldoksum_skew <- bickeldoksum(modelAustria, lambda = "estim", method = "skew")
 
 print(bickeldoksum_skew)
 summary(bickeldoksum_skew)
 
-bickeldoksum_pskew <- bickeldoksum(modelAustria, method = "pskew")
+bickeldoksum_pskew <- bickeldoksum(modelAustria, lambda = "estim", method = "pskew")
 
 print(bickeldoksum_pskew)
 summary(bickeldoksum_pskew)
@@ -390,7 +390,7 @@ yeojohnson_divcvm <- yeojohnson(modelAustria, method = "div.cvm")
 print(yeojohnson_divcvm)
 summary(yeojohnson_divcvm)
 
-yeojohnson_divkl <- yeojohnson(modelAustria, method = "div.kl")
+yeojohnson_divkl <- yeojohnson(modelAustria, lambda = "estim",  method = "div.kl")
 
 print(yeojohnson_divkl)
 summary(yeojohnson_divkl)

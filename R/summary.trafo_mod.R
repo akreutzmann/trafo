@@ -17,7 +17,7 @@ summary.trafo_mod <- function(object, ...) {
   lambdahat <- object$lambdahat
   
   
-  if (class(object$orig_mod) == "lm") {
+  if (inherits(object$orig_mod, "lm")) {
     # Summary of original model
     orig_sum <- summary(object$orig_mod)
     
@@ -26,15 +26,15 @@ summary.trafo_mod <- function(object, ...) {
     trafo_sum <- summary(object$trafo_mod) 
     trafo_sum$coefficients <- as.matrix(trafo_sum$coefficients[, 1])
     colnames(trafo_sum$coefficients) <- c("Estimate")
-  } else if (class(object$orig_mod) == "lme") {
+  } else if (inherits(object$orig_mod, "lme")) {
     # Summary of original model
     orig_sum <- summary(object$orig_mod)
     
     
     # Summary of transformed model
     trafo_sum <- summary(object$trafo_mod) 
-    trafo_sum$coefficients <- as.matrix(trafo_sum$coefficients[, 1])
-    colnames(trafo_sum$coefficients) <- c("Estimate")
+    trafo_sum$tTable <- as.matrix(trafo_sum$tTable[, c(1, 5)])
+    colnames(trafo_sum$tTable) <- c("Value", "p-value")
     
   }
   
@@ -61,6 +61,7 @@ summary.trafo_mod <- function(object, ...) {
 
 print.summary.trafo_mod <- function(x, ...) {
   
+  
   cat("Applied transformation \n")
   cat("Transformation: ",x$trafo," \n")
   cat("Estimation method: ", x$method, " \n")
@@ -68,12 +69,13 @@ print.summary.trafo_mod <- function(x, ...) {
   cat("\n")
   cat("Summary of transformed model \n")
   print(x$trafo_sum)
+  cat("\n")
   cat("Note that the standard errors are missing due to the lack of methods 
       for correct standard errors in transformed models. \n")
   cat("\n")
-  cat("Press [enter] to continue or type in [q] to quit" )
+  cat("Press [enter] to compare with untransformed model or type in [q] to quit" )
   line <- readline()
-  if(substr(line, 1, 1) != "q" & substr(line, 1, 1) != "Q") {
+  if (substr(line, 1, 1) != "q" & substr(line, 1, 1) != "Q") {
     cat("Summary of original model \n")
     print(x$orig_sum) 
   }

@@ -1,4 +1,4 @@
-plot.lm_ad <- function (x, which = c(1L:3L, 5L), caption = list("Residuals vs Fitted", 
+plot.lm <- function (x, which = c(1L:3L, 5L), caption = list("Residuals vs Fitted", 
                                                   "Normal Q-Q", "Scale-Location", "Cook's distance", "Residuals vs Leverage", 
                                                   expression("Cook's dist vs Leverage  " * h[ii]/(1 - h[ii]))), 
           panel = if (add.smooth) panel.smooth else points, sub.caption = NULL, 
@@ -7,6 +7,8 @@ plot.lm_ad <- function (x, which = c(1L:3L, 5L), caption = list("Residuals vs Fi
           qqline = TRUE, cook.levels = c(0.5, 1), add.smooth = getOption("add.smooth"), 
           label.pos = c(4, 2), cex.caption = 1, cex.oma.main = 1.25) 
 {
+  
+  
   dropInf <- function(x, h) {
     if (any(isInf <- h >= 1)) {
       warning(gettextf("not plotting observations with leverage one:\n  %s", 

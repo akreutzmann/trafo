@@ -29,6 +29,8 @@
 trafo_lme <- function(object, trafo, lambda = "estim", method, 
                      lambdarange, plotit = TRUE, std = FALSE){
   
+  
+  
   if (trafo == "log") {
     trans_mod <- boxcox(object = object, lambda = 0, method = method, 
                        lambdarange = lambdarange, plotit = plotit)
@@ -61,7 +63,7 @@ trafo_lme <- function(object, trafo, lambda = "estim", method,
     tdata <- object$data
     tdata[paste(formula[2])] <- trans_mod$yt
     rand_eff <- names(object$coefficients$random)
-    suppressWarnings(modelt <- lme(formula = formula, data = tdata,
+    suppressWarnings(modelt <- lme(fixed = formula, data = tdata,
                                    random = as.formula(paste0("~ 1 | as.factor(", rand_eff, ")")),
                                    method = "REML",
                                    keep.data = FALSE,
@@ -71,7 +73,7 @@ trafo_lme <- function(object, trafo, lambda = "estim", method,
     tdata <- object$data
     tdata[paste(formula[2])] <- trans_mod$zt
     rand_eff <- names(object$coefficients$random)
-    suppressWarnings(modelt <- lme(formula = formula, data = tdata,
+    suppressWarnings(modelt <- lme(fixed = formula, data = tdata,
                                    random = as.formula(paste0("~ 1 | as.factor(", rand_eff, ")")),
                                    method = "REML",
                                    keep.data = FALSE,

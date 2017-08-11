@@ -24,7 +24,8 @@ family Employed family of transformations
 
 yt Vector of the transformed response variable \code{y}
 
-modelt An object of type \code{lm} employing the transformed vector \code{yt} as the response variable
+modelt An object of type \code{lm} employing the transformed vector 
+\code{yt} as the response variable
 }
 \description{
 Estimates the transformation parameter for the Dual transformation employing the profile log-likehood. Only accepts positive values for the dependent variable.
