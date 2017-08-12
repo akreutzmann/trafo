@@ -7,26 +7,21 @@
 dual(object, ...)
 }
 \arguments{
-\item{object}{a data.frame, matrix, formula or fitted model; see below.}
+\item{object}{an object of type lm or lme.}
 
 \item{...}{other parameters that can be passed to the function.}
 }
 \value{
-An object of class \code{transformation} with the following arguments
-
-llike The value of profile log-likelihood at its maximum
-
-logvector The profile log-likelihood evaluated at \code{lambdavector}
-
-lambdavector A sequence with optional values for \code{lambda}
-
-family Employed family of transformations
-
-yt Vector of the transformed response variable \code{y}
-
-modelt An object of type \code{lm} employing the transformed vector 
-\code{yt} as the response variable
+The return depends on the class of its argument. The 
+documentation of particular methods gives detailed information about the 
+return of that method.
 }
 \description{
-Estimates the transformation parameter for the Dual transformation employing the profile log-likehood. Only accepts positive values for the dependent variable.
+Transforms the dependent variable of a regression model using the Dual
+transformation. The regression model can be a linear or a linear mixed model 
+with one random intercept.
 }
+\seealso{
+\code{\link{dual.lm}},  \code{\link{dual.lme}}
+}
+\keyword{Dual}

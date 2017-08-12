@@ -9,6 +9,7 @@ plot(modelVienna)
 # Test if all transformations work with estimation of lambda
 
 # Box-Cox ----------------------------------------------------------------------
+
 bc_ML <- boxcox(modelVienna, lambda = "estim", method = "ml")
   
 print(bc_ML)
@@ -74,7 +75,8 @@ summary(modulus_divkl)
 
 
 # Bickel-Doksum ----------------------------------------------------------------
-bd_ml <- bickeldoksum(object = modelVienna, lambda = "estim", method = "ml")
+bd_ml <- bickeldoksum(object = modelVienna, lambda = "estim", method = "ml",
+                      plotit = FALSE)
 
 print(bd_ml)
 summary(bd_ml)

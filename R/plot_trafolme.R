@@ -31,6 +31,10 @@ plot_trafolme <- function(lambdarange, lambdaoptim, measoptim,
   #  geom_hline(yintercept = measoptim, color = "red", linetype = "dashed") + 
   #  xlab(expression(lambda)) + ylab(y_lab)
   
+  plot <- NULL
+  abline <- NULL
+  dev.flush <- NULL
+  
   dev.hold()
   plot(data1$lambdavector, data1$measvector, type = "l", lwd = 1.5,
       xlab = expression(lambda), ylab = y_lab) 

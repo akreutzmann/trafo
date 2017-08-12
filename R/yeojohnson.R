@@ -1,18 +1,15 @@
-#' Yeo-Johnson
+#' Yeo-Johnson Transformation
 #'
-#' Estimates the transformation parameter for the Yeo-Johnson transformation employing the profile log-likehood.
-#' @param object a data.frame, matrix, formula or fitted model; see below.
-# #' @param data an optional data frame, list or environment as in lm.
-# #' @param XY a data.frame or a matrix, whose first column is the dependent variable and the rest of the columns are the independent variables.
-# #' @param  lambdarange range for the estimation parameter lambda - default c(-2, 2)
+#' Transforms the dependent variable of a regression model using the Yeo-Johnson
+#' transformation. The regression model can be a linear or a linear mixed model 
+#' with one random intercept. 
+#' 
+#' @param object an object of type lm or lme. 
 #' @param ... other parameters that can be passed to the function.
-#' @return An object of class \code{transformation} with the following arguments.
-#' @return llike The value of profile log-likelihood at its maximum.
-#' @return logvector The profile log-likelihood evaluated at \code{lambdavector}.
-#' @return lambdavector A sequence with optional values for \code{lambda}.
-#' @return family Employed family of transformations.
-#' @return yt Vector of the transformed response variable \code{y}.
-#' @return modelt An object of type \code{lm} employing the transformed vector \code{yt} as the response variable.
+#' @return The return depends on the class of its argument. The 
+#' documentation of particular methods gives detailed information about the 
+#' return of that method.
+#' @seealso  \code{\link{yeojohnson.lm}},  \code{\link{yeojohnson.lme}}
 #' @keywords Yeo-Johnson
 #' @export
 yeojohnson <- function(object,...) UseMethod("yeojohnson")

@@ -7,26 +7,21 @@
 modulus(object, ...)
 }
 \arguments{
-\item{object}{a data.frame, matrix, formula or fitted model; see below.}
+\item{object}{an object of type lm or lme.}
 
 \item{...}{other parameters that can be passed to the function.}
 }
 \value{
-An object of class \code{transformation} with the following arguments.
-
-llike The value of profile log-likelihood at its maximum.
-
-logvector The profile log-likelihood evaluated at \code{lambdavector}.
-
-lambdavector A sequence with optional values for \code{lambda}.
-
-family Employed family of transformations.
-
-yt Vector of the transformed response variable \code{y}.
-
-modelt An object of type \code{lm} employing the transformed vector \code{yt} as the response variable.
+The return depends on the class of its argument. The 
+documentation of particular methods gives detailed information about the 
+return of that method.
 }
 \description{
-Estimates the transformation parameter for the Modulus transformation employing the profile log-likehood.
+Transforms the dependent variable of a regression model using the Modulus
+transformation. The regression model can be a linear or a linear mixed model 
+with one random intercept.
 }
-\keyword{modulus}
+\seealso{
+\code{\link{modulus.lm}},  \code{\link{modulus.lme}}
+}
+\keyword{Modulus}

@@ -1,6 +1,6 @@
 trafo_lm <- trafo_lm(object = modelVienna, trafo = "box.cox", 
                      method = "ml", lambdarange = c(0,2), plotit = TRUE, 
-                     std = FALSE)
+                     std = TRUE)
 
 print(trafo_lm)
 summary(trafo_lm)

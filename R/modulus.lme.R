@@ -66,6 +66,9 @@ modulus.lme <- function(object, lambda, method, lambdarange = c(-2,2),
     # Get plot measures
     ans$lambdavector <- plot_meas$lambdavector
     ans$measvector <- plot_meas$measvector
+  } else if (plotit == FALSE) {
+    ans$lambdavector <- NULL
+    ans$measvector <- NULL
   }
 
   
@@ -80,7 +83,10 @@ modulus.lme <- function(object, lambda, method, lambdarange = c(-2,2),
   ans$lambdahat <- lambdaoptim
   ans$measoptim <- measoptim
   
-  # Do we want to change to class trafo??!!
+  # Get transformed model
+  ans$modelt <- get_modelt(object = object, trans_mod = ans, std = FALSE)
+  
+  # New class trafo
   class(ans) <- "trafo"
   ans
 }

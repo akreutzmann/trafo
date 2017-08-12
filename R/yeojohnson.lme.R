@@ -71,6 +71,9 @@ yeojohnson.lme <- function(object, lambda, method, lambdarange = c(-2, 2),
     # Get plot measures
     ans$lambdavector <- plot_meas$lambdavector
     ans$measvector <- plot_meas$measvector
+  } else if (plotit == FALSE) {
+    ans$lambdavector <- NULL
+    ans$measvector <- NULL
   }
   
   # Get vector of transformed and standardized transformed variable
@@ -83,6 +86,9 @@ yeojohnson.lme <- function(object, lambda, method, lambdarange = c(-2, 2),
   
   ans$lambdahat <- lambdaoptim
   ans$measoptim <- measoptim
+  
+  # Get transformed model
+  ans$modelt <- get_modelt(object = object, trans_mod = ans, std = FALSE)
   
   # New class trafo
   class(ans) <- "trafo"

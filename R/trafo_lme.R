@@ -58,28 +58,6 @@ trafo_lme <- function(object, trafo, lambda = "estim", method,
   orig_mod <- object 
   
   # Get transformed lm object
-  # if (std == FALSE) {
-  #   formula <- formula(object)
-  #   tdata <- object$data
-  #   tdata[paste(formula[2])] <- trans_mod$yt
-  #   rand_eff <- names(object$coefficients$random)
-  #   suppressWarnings(modelt <- lme(fixed = formula, data = tdata,
-  #                                  random = as.formula(paste0("~ 1 | as.factor(", rand_eff, ")")),
-  #                                  method = "REML",
-  #                                  keep.data = FALSE,
-  #                                  na.action = na.omit))
-  # } else if (std == TRUE) {
-  #   formula <- formula(object)
-  #   tdata <- object$data
-  #   tdata[paste(formula[2])] <- trans_mod$zt
-  #   rand_eff <- names(object$coefficients$random)
-  #   suppressWarnings(modelt <- lme(fixed = formula, data = tdata,
-  #                                  random = as.formula(paste0("~ 1 | as.factor(", rand_eff, ")")),
-  #                                  method = "REML",
-  #                                  keep.data = FALSE,
-  #                                  na.action = na.omit))
-  # }
-  
   trafo_mod <- get_modelt(object = object, trans_mod = trans_mod, std = std)
   
   # Return new class

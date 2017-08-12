@@ -6,9 +6,20 @@
 #' @param ... additional arguments that are not used in this method
 #' @keywords internal
 #' @importFrom pryr %<a-%
+#' @importFrom grDevices dev.flush dev.hold
+#' @importFrom graphics abline par plot
 #' @export
 
 plot.trafo_mod <- function(x, ...) {
+  
+  residFit_orig <- NULL
+  residFit_trafo <- NULL
+  QQ_orig <- NULL
+  QQ_trafo <- NULL
+  scaleLoc_orig <- NULL
+  scaleLoc_trafo <- NULL
+  residLev_orig <- NULL
+  residLev_trafo <- NULL
   
   
   if (inherits(x$orig_mod, "lm")) {
