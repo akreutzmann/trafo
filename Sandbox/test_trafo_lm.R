@@ -10,7 +10,7 @@ plot(trafo_lm)
 
 
 
-trafo_lme <- trafo_lme(object = modelAustria, trafo = "box.cox", 
+trafo_lme <- trafo_lme(object = modelVienna, trafo = "box.cox", 
                      method = "reml", lambdarange = c(-2,2), plotit = FALSE, 
                      std = FALSE)
 
