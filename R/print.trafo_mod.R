@@ -1,8 +1,7 @@
-#' Print object of type transformation
+#' Print object of type trafo_mod
 #' 
-#' @param x an object of type trafo.
+#' @param x an object of type trafo_mod.
 #' @param ... other parameters that can be passed to the function.
-#' #@keywords internal
 #' @export
 
 print.trafo_mod <- function(x, ...){

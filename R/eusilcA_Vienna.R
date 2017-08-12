@@ -1,9 +1,9 @@
-#' Simulated eusilc data - sample data
+#' Simulated eusilc data - sample data for Vienna
 #'
-#' The data set is a simple random sample of data set \code{\link[emdi]{eusilcA_pop}} 
-#' which is based on \code{\link[simFrame]{eusilcP}} from package \pkg{simFrame}. 
+#' The data set is a selected part of the data set \code{\link[emdi]{eusilcA_smp}}. 
+#' The present data set only contains information for the state Vienna.
 #'
-#' @format A data frame with 1000 observations and 18 variables:
+#' @format A data frame with 236 observations and 19 variables:
 #' \describe{
 #' \item{eqIncome}{numeric; a simplified version of the equivalized household income.}
 #' \item{eqsize}{numeric; the equivalized household size according to the 

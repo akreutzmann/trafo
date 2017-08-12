@@ -37,7 +37,7 @@
 #' fam_allow + house_allow, data = eusilcA_Vienna)
 #' 
 #' # Transform dependent variable using skewness minimization
-#' modulus(object = modelVienna, lambda = "estim", method = "skew",
+#' modulus(object = lm_Vienna, lambda = "estim", method = "skew",
 #' plotit = FALSE)
 #' @export
 

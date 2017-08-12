@@ -37,7 +37,7 @@
 #' fam_allow + house_allow, data = eusilcA_Vienna)
 #' 
 #' # Transform dependent variable using a maximum likelihood approach
-#' bickeldoksum(object = modelVienna, lambda = "estim", method = "ml",
+#' bickeldoksum(object = lm_Vienna, lambda = "estim", method = "ml",
 #' plotit = FALSE)
 #' @export
 

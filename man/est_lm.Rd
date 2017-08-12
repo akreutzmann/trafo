@@ -11,23 +11,15 @@ est_lm(y, x, method, lambdarange, transfor, ...)
 
 \item{x}{matrix of regressors}
 
+\item{method}{a character string. Different estimation methods can be used 
+for the estimation of the optimal transformation parameter: 
+(i) Maximum likelihood approach ("ml"), (ii) Skewness minimization ("skew"),  
+(iii) Divergence minimization by Kolmogorov-Smirnoff ("div.ks"), 
+by Cramer-von-Mises ("div.cm") or by Kullback-Leibler ("div.kl").}
+
 \item{lambdarange}{range for the estimation parameter expr(lambda) - default c(-2, 2)}
 }
 \value{
-An object of class \code{transformation} with the following arguments
-
-llike The value of \code{profile log-likelihood} at its maximum
-
-logvector The profile log-likelihood evaluated at \code{lambdavector}
-
-lambdavector Employed family of transformations
-
-A sequence with optional values for \code{lambda}
-
-family Employed family of transformations
-
-yt Vector of the transformed response variable \code{y}
-
 modelt An object of type \code{lm} employing the transformed vector \code{yt} as the response variable
 }
 \description{

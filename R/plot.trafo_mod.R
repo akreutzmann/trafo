@@ -1,10 +1,11 @@
-#' Plot for models with untransformed and transformed dependent variable
+#' Plot for regression models with untransformed and transformed dependent 
+#' variable
 #'
-#' Plots for comparing the diagnostics of transformed and untransformed models.
+#' Plots for comparing the residual diagnostics of transformed and untransformed 
+#' models.
 #' 
 #' @param x an object of type \code{trafo_mod}
 #' @param ... additional arguments that are not used in this method
-#' @keywords internal
 #' @importFrom pryr %<a-%
 #' @importFrom grDevices dev.flush dev.hold
 #' @importFrom graphics abline par plot

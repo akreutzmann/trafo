@@ -37,8 +37,8 @@
 #' fam_allow + house_allow, data = eusilcA_Vienna)
 #' 
 #' # Transform dependent variable using a maximum likelihood approach
-#' manly(object = modelVienna, lambda = "estim", method = "ml",
-#' plotit = FALSE)
+#' manly(object = lm_Vienna, lambda = "estim", method = "ml", 
+#' lambdarange = c(-0.05, 0.05), plotit = FALSE)
 #' @export
 
 manly.lm <- function(object, lambda, method, lambdarange = c(-2, 2),

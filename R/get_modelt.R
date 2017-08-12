@@ -1,3 +1,12 @@
+#' Function that fits model with transformed dependent variable
+#' 
+#' @param object a model of type lm or lme
+#' @param trans_mod the return of one of the transformation functions
+#' @param std logical. If TRUE, the standardised transformations are used.
+#' @return A lm or lme model that uses the transformed variable as dependent 
+#' variable.
+#' @keywords internal
+
 get_modelt <- function(object, trans_mod, std) {
   
   

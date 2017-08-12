@@ -1,18 +1,31 @@
-#' Summary transformations
+#' Summary of trafo objects
 #'
-#' Information about the transformed data and model and components of an 
-#' transformation object are extracted. The returned object is suitable for 
-#' printing with the print.summary.transformation method.
+#' Information about the residuals from a transformed model. The returned object 
+#' is suitable for printing with the print.summary.trafo method.
 #' 
-#' @param x an object of type \code{transformation}
+#' @param object an object of type \code{trafo}
 #' @param ... additional arguments that are not used in this method
-#' @return an object of class \code{summary.transformation}
-#' @keywords internal
+#' @return an object of class \code{summary.trafo}
+#' @examples
+#' # Load data
+#' data("eusilcA_Vienna")
+#' 
+#' # Fit linear model
+#' lm_Vienna <- lm(eqIncome ~ eqsize + gender + cash + unempl_ben + age_ben + 
+#' rent + cap_inv + tax_adj + dis_ben + sick_ben + surv_ben + 
+#' fam_allow + house_allow, data = eusilcA_Vienna)
+#' 
+#' # Transform dependent variable using skewness minimization
+#' boxcox_trafo <- boxcox(object = lm_Vienna, lambda = "estim", method = "skew",
+#' plotit = FALSE)
+#' 
+#' # Get plots
+#' summary(boxcox_trafo)
 #' @importFrom moments skewness kurtosis
 #' @export
 
 summary.trafo <- function(object, ...) {
-  #yt <- summary(x$modelt)$residuals
+
   
   out <- NULL
   
@@ -81,12 +94,14 @@ summary.trafo <- function(object, ...) {
 }
 
 
-#' Print summary transformations
+#' Print summary trafo
 #'
-#' prints objects to be shown in the summary function for objects of type \code{transformation}
-#' @param x an object of type \code{transformation}
-#' @keywords internal
+#' prints objects to be shown in the summary function for objects of type 
+#' \code{transformation}
+#' @param x an object of type \code{trafo}
+#' @param ... additional arguments that are not used in this method
 #' @export
+
 print.summary.trafo <- function(x, ...) {
   cat(x$family, "Transformation \n")
   cat("Estimation method: ", x$method, " \n")

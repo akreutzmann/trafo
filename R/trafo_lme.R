@@ -1,25 +1,41 @@
 #' Fits transformed linear mixed models
 #'
-#' Function \code{trans_lm} fits linear mixed models with transformed dependent 
-#' variables. The return are two lme objects where the first is the transformed
-#' and the second the untransformed linear model. 
+#' Function \code{trans_lme} fits linear mixed models with one random effect 
+#' and transformed dependent variable. The return are two lme objects where the 
+#' first is the transformed and the second the untransformed linear mixed model. 
 #'
 #' @param object an object of type lm or lme with the model to transform
 #' @param trafo a character string. Different transformations can be used.
+#' @param lambda either a character named "estim" if the optimal transformation
+#' parameter should be estimated or a numeric value determining a given 
+#' transformation parameter.
 #' @param method a character string. Different estimation methods can be used 
-#' for the estimation of the optimal transformation parameter. 
-#' (i) Maximum likelihood approaches: for linear models maximum likelihood ("ML")
-#' and for linear mixed models restricted maximum likelihood ("reml"); 
-#' (ii) Skewness minimizations: for linear models only skewness minimization 
-#' ("skew") and for linear mixed models also pooled skewness minimization; 
+#' for the estimation of the optimal transformation parameter: 
+#' (i) Restricted maximum likelihood approach ("reml"), 
+#' (ii) Skewness minimization ("skew") and pooled skewness minimization ("pskew"), 
 #' (iii) Divergence minimization by Kolmogorov-Smirnoff ("div.ks"), 
-#' by Cramer-von-Mises ("div.cm") or by Kullback-Leibler ("div.kl") for both 
-#' model types. 
+#' by Cramer-von-Mises ("div.cm") or by Kullback-Leibler ("div.kl").
 #' @param lambdarange a numeric vector with two elements defining an interval 
 #' that is used for the estimation of the optimal transformation parameter. 
-#' Defaults to \code{c(-2, 2)} for the Box-Cox transformation.
-#' @return an object of class \code{transformation}
-#' @keywords internal
+#' @param plotit logical. If TRUE, a plot that illustrates the optimal 
+#' transformation parameter or the given transformation parameter is returned.
+#' @param std logical. If TRUE, the transformed model is returned based on the 
+#' standardized transformation.
+#' @return an object of class \code{trafo_mod}.
+#' @examples
+#' # Load data
+#' data("eusilcA_Vienna")
+#' 
+#' # Fit linear mixed model
+#' require(nlme)
+#' lme_Vienna <- lme(eqIncome ~ eqsize + gender + cash + unempl_ben + age_ben +
+#' rent + cap_inv + tax_adj + dis_ben + sick_ben + surv_ben + fam_allow + 
+#' house_allow, random = ~ 1 | county, data = eusilcA_Vienna, 
+#' na.action = na.omit)
+#' 
+#' # Get linear model with untransformed and transformed model
+#' trafo_lme(object = lme_Vienna, trafo = "box.cox", method = "reml", 
+#' lambdarange = c(0,2), plotit = TRUE, std = TRUE)
 #' @importFrom stats aggregate as.formula dnorm ecdf family lm logLik median 
 #' model.frame model.matrix model.response na.omit optimize qchisq qnorm 
 #' quantile residuals rstandard sd shapiro.test

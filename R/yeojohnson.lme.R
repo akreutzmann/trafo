@@ -1,33 +1,50 @@
-#' Yeo-Johnson transformation for linear and linear mixed models
+#' Yeo-Johnson transformation for linear mixed models
 #'
-#' Depending on the class of the first object, this function estimates the 
-#' optimal transformation parameter for the Yeo-Johnson transformation for the model 
-#' given to the function.
+#' The function transforms the dependent variable of a linear mixed model with 
+#' one random intercept using the Yeo-Johnson transformation. The 
+#' transformation parameter can either be estimated using different estimation 
+#' methods or given. 
 #'
-#' @param object an object of type lm or lme with the model to transform
-#' @param lambda either a character named "estim" if the optimal lambda should
-#' be estimated or a numeric value determining a given lambda. 
+#' @param object an object of type lme. 
+#' @param lambda either a character named "estim" if the optimal transformation
+#' parameter should be estimated or a numeric value determining a given 
+#' transformation parameter. 
 #' @param method a character string. Different estimation methods can be used 
-#' for the estimation of the optimal transformation parameter. 
-#' (i) Maximum likelihood approaches: for linear models maximum likelihood ("ML")
-#' and for linear mixed models restricted maximum likelihood ("reml"); 
-#' (ii) Skewness minimizations: for linear models only skewness minimization 
-#' ("skew") and for linear mixed models also pooled skewness minimization; 
+#' for the estimation of the optimal transformation parameter: 
+#' (i) Restricted maximum likelihood approach ("reml"), 
+#' (ii) Skewness minimization ("skew") and pooled skewness minimization ("pskew"), 
 #' (iii) Divergence minimization by Kolmogorov-Smirnoff ("div.ks"), 
-#' by Cramer-von-Mises ("div.cm") or by Kullback-Leibler ("div.kl") for both 
-#' model types. 
+#' by Cramer-von-Mises ("div.cm") or by Kullback-Leibler ("div.kl").
 #' @param lambdarange a numeric vector with two elements defining an interval 
 #' that is used for the estimation of the optimal transformation parameter. 
-#' Defaults to \code{c(-2, 2)} for the Yeo-Johnson transformation.
+#' Defaults to \code{c(1e-11, 2)}.
 #' @param plotit logical. If TRUE, a plot that illustrates the optimal 
-#' transformation parameter is returned.
+#' transformation parameter or the given transformation parameter is returned.
 #' @param ... other parameters that can be passed to the function.
-#' @return an object of class \code{transformation}
-#' @keywords internal
-#' @importFrom stats aggregate as.formula dnorm ecdf family lm logLik median 
-#' model.frame model.matrix model.response na.omit optimize qchisq qnorm 
-#' quantile residuals rstandard sd shapiro.test
+#' @return an object of class \code{trafo}.
+#' @references
+#' Battese, G.E., Harter, R.M. and Fuller, W.A. (1988). An Error-Components
+#' Model for Predictions of County Crop Areas Using Survey and Satellite Data.
+#' Journal of the American Statistical Association, Vol.83, No. 401, 28-36. \cr \cr
+#' Gonzalez-Manteiga, W. et al. (2008). Bootstrap mean squared error of
+#' a small-area EBLUP. Journal of Statistical Computation and Simulation,
+#' 78:5, 443-462.
+#' @examples
+#' # Load data
+#' data("eusilcA_Vienna")
+#' 
+#' # Fit linear mixed model
+#' require(nlme)
+#' lme_Vienna <- lme(eqIncome ~ eqsize + gender + cash + unempl_ben + age_ben +
+#' rent + cap_inv + tax_adj + dis_ben + sick_ben + surv_ben + fam_allow + 
+#' house_allow, random = ~ 1 | county, data = eusilcA_Vienna, 
+#' na.action = na.omit)
+#' 
+#' # Transform dependent variable using restricted maximum likelihood
+#' yeojohnson(object = lme_Vienna, lambda = "estim", method = "reml",
+#' plotit = FALSE)
 #' @export
+
 yeojohnson.lme <- function(object, lambda, method, lambdarange = c(-2, 2),
                            plotit = TRUE, ...) {
   

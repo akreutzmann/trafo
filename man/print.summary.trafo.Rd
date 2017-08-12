@@ -2,14 +2,16 @@
 % Please edit documentation in R/summary.trafo.R
 \name{print.summary.trafo}
 \alias{print.summary.trafo}
-\title{Print summary transformations}
+\title{Print summary trafo}
 \usage{
 \method{print}{summary.trafo}(x, ...)
 }
 \arguments{
-\item{x}{an object of type \code{transformation}}
+\item{x}{an object of type \code{trafo}}
+
+\item{...}{additional arguments that are not used in this method}
 }
 \description{
-prints objects to be shown in the summary function for objects of type \code{transformation}
+prints objects to be shown in the summary function for objects of type 
+\code{transformation}
 }
-\keyword{internal}

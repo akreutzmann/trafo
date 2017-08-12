@@ -12,26 +12,43 @@ trafo_lm(object, trafo, lambda = "estim", method, lambdarange,
 
 \item{trafo}{a character string. Different transformations can be used.}
 
+\item{lambda}{either a character named "estim" if the optimal transformation
+parameter should be estimated or a numeric value determining a given 
+transformation parameter.}
+
 \item{method}{a character string. Different estimation methods can be used 
-for the estimation of the optimal transformation parameter. 
-(i) Maximum likelihood approaches: for linear models maximum likelihood ("ML")
-and for linear mixed models restricted maximum likelihood ("reml"); 
-(ii) Skewness minimizations: for linear models only skewness minimization 
-("skew") and for linear mixed models also pooled skewness minimization; 
+for the estimation of the optimal transformation parameter: 
+(i) Maximum likelihood approach ("ml"), (ii) Skewness minimization ("skew"),  
 (iii) Divergence minimization by Kolmogorov-Smirnoff ("div.ks"), 
-by Cramer-von-Mises ("div.cm") or by Kullback-Leibler ("div.kl") for both 
-model types.}
+by Cramer-von-Mises ("div.cm") or by Kullback-Leibler ("div.kl").}
 
 \item{lambdarange}{a numeric vector with two elements defining an interval 
-that is used for the estimation of the optimal transformation parameter. 
-Defaults to \code{c(-2, 2)} for the Box-Cox transformation.}
+that is used for the estimation of the optimal transformation parameter.}
+
+\item{plotit}{logical. If TRUE, a plot that illustrates the optimal 
+transformation parameter or the given transformation parameter is returned.}
+
+\item{std}{logical. If TRUE, the transformed model is returned based on the 
+standardized transformation.}
 }
 \value{
-an object of class \code{transformation}
+an object of class \code{trafo_mod}.
 }
 \description{
 Function \code{trans_lm} fits linear models with transformed dependent 
-variables. The return are two lm objects where the first is the transformed
+variable. The return are two lm objects where the first is the transformed
 and the second the untransformed linear model.
 }
-\keyword{internal}
+\examples{
+# Load data
+data("eusilcA_Vienna")
+
+# Fit linear model
+lm_Vienna <- lm(eqIncome ~ eqsize + gender + cash + unempl_ben + age_ben + 
+rent + cap_inv + tax_adj + dis_ben + sick_ben + surv_ben + 
+fam_allow + house_allow, data = eusilcA_Vienna)
+
+# Get linear model with untransformed and transformed model
+trafo_lm(object = lm_Vienna, trafo = "box.cox", method = "ml", 
+lambdarange = c(0,2), plotit = TRUE, std = FALSE)
+}

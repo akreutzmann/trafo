@@ -12,25 +12,16 @@ est_lme(y, x, formula, data, rand_eff, method = method,
 
 \item{x}{matrix of regressors}
 
-\item{lambdarange}{range for the estimation parameter expr(lambda) - default c(-2, 2)}
+\item{method}{a character string. Different estimation methods can be used 
+for the estimation of the optimal transformation parameter: 
+(i) Restricted maximum likelihood approach ("reml"), 
+(ii) Skewness minimization ("skew") and pooled skewness minimization ("pskew"), 
+(iii) Divergence minimization by Kolmogorov-Smirnoff ("div.ks"), 
+by Cramer-von-Mises ("div.cm") or by Kullback-Leibler ("div.kl").}
 
-\item{tr}{logical value. if tr = TRUE warning messages for the likelihood functions are suppressed - default FALSE}
+\item{lambdarange}{range for the estimation parameter expr(lambda) - default c(-2, 2)}
 }
 \value{
-An object of class \code{transformation} with the following arguments
-
-llike The value of \code{profile log-likelihood} at its maximum
-
-logvector The profile log-likelihood evaluated at \code{lambdavector}
-
-lambdavector Employed family of transformations
-
-A sequence with optional values for \code{lambda}
-
-family Employed family of transformations
-
-yt Vector of the transformed response variable \code{y}
-
 modelt An object of type \code{lm} employing the transformed vector \code{yt} as the response variable
 }
 \description{

@@ -8,9 +8,10 @@
 }
 \arguments{
 \item{x}{an object of type \code{summary.trafo_mod}}
+
+\item{...}{additional arguments that are not used in this method}
 }
 \description{
 prints objects to be shown in the summary function for objects of 
 type \code{trafo_mod}
 }
-\keyword{internal}

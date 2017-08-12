@@ -2,16 +2,15 @@
 % Please edit documentation in R/print.trafo_mod.R
 \name{print.trafo_mod}
 \alias{print.trafo_mod}
-\title{Print object of type transformation}
+\title{Print object of type trafo_mod}
 \usage{
 \method{print}{trafo_mod}(x, ...)
 }
 \arguments{
-\item{x}{an object of type trafo.}
+\item{x}{an object of type trafo_mod.}
 
-\item{...}{other parameters that can be passed to the function.
-#@keywords internal}
+\item{...}{other parameters that can be passed to the function.}
 }
 \description{
-Print object of type transformation
+Print object of type trafo_mod
 }

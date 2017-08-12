@@ -2,21 +2,35 @@
 % Please edit documentation in R/summary.trafo.R
 \name{summary.trafo}
 \alias{summary.trafo}
-\title{Summary transformations}
+\title{Summary of trafo objects}
 \usage{
 \method{summary}{trafo}(object, ...)
 }
 \arguments{
-\item{...}{additional arguments that are not used in this method}
+\item{object}{an object of type \code{trafo}}
 
-\item{x}{an object of type \code{transformation}}
+\item{...}{additional arguments that are not used in this method}
 }
 \value{
-an object of class \code{summary.transformation}
+an object of class \code{summary.trafo}
 }
 \description{
-Information about the transformed data and model and components of an 
-transformation object are extracted. The returned object is suitable for 
-printing with the print.summary.transformation method.
+Information about the residuals from a transformed model. The returned object 
+is suitable for printing with the print.summary.trafo method.
 }
-\keyword{internal}
+\examples{
+# Load data
+data("eusilcA_Vienna")
+
+# Fit linear model
+lm_Vienna <- lm(eqIncome ~ eqsize + gender + cash + unempl_ben + age_ben + 
+rent + cap_inv + tax_adj + dis_ben + sick_ben + surv_ben + 
+fam_allow + house_allow, data = eusilcA_Vienna)
+
+# Transform dependent variable using skewness minimization
+boxcox_trafo <- boxcox(object = lm_Vienna, lambda = "estim", method = "skew",
+plotit = FALSE)
+
+# Get plots
+summary(boxcox_trafo)
+}

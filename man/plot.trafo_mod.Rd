@@ -2,7 +2,8 @@
 % Please edit documentation in R/plot.trafo_mod.R
 \name{plot.trafo_mod}
 \alias{plot.trafo_mod}
-\title{Plot for models with untransformed and transformed dependent variable}
+\title{Plot for regression models with untransformed and transformed dependent 
+variable}
 \usage{
 \method{plot}{trafo_mod}(x, ...)
 }
@@ -12,6 +13,6 @@
 \item{...}{additional arguments that are not used in this method}
 }
 \description{
-Plots for comparing the diagnostics of transformed and untransformed models.
+Plots for comparing the residual diagnostics of transformed and untransformed 
+models.
 }
-\keyword{internal}

@@ -4,10 +4,9 @@
 #' transformation object are extracted. The returned object is suitable for 
 #' printing with the print.summary.transformation method.
 #' 
-#' @param x an object of type \code{trafo_mod}
+#' @param object an object of type \code{trafo_mod}
 #' @param ... additional arguments that are not used in this method
 #' @return an object of class \code{summary.transformation}
-#' @keywords internal
 #' @export
 
 summary.trafo_mod <- function(object, ...) {
@@ -58,7 +57,7 @@ summary.trafo_mod <- function(object, ...) {
 #' prints objects to be shown in the summary function for objects of 
 #' type \code{trafo_mod}
 #' @param x an object of type \code{summary.trafo_mod}
-#' @keywords internal
+#' @param ... additional arguments that are not used in this method
 #' @export
 
 print.summary.trafo_mod <- function(x, ...) {

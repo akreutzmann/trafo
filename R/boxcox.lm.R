@@ -37,7 +37,7 @@
 #' fam_allow + house_allow, data = eusilcA_Vienna)
 #' 
 #' # Transform dependent variable using skewness minimization
-#' boxcox(object = modelVienna, lambda = "estim", method = "skew",
+#' boxcox(object = lm_Vienna, lambda = "estim", method = "skew",
 #' plotit = FALSE)
 #' @export
 

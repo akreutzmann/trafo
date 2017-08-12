@@ -2,18 +2,36 @@
 % Please edit documentation in R/plot.trafo.R
 \name{plot.trafo}
 \alias{plot.trafo}
-\title{Plot Transformation}
+\title{Plots for objects of type trafo}
 \usage{
 \method{plot}{trafo}(x, ...)
 }
 \arguments{
-\item{x}{an object of type \code{transformation}}
+\item{x}{an object of type \code{trafo}.}
 
 \item{\dots}{additional arguments to be passed to the estimation function; see bcxEst()}
 }
 \value{
-an object of class \code{transformation}; see bcxEst()
+Depending on the class of the underlying regression model one or two
+Q-Q plots are returned for the Pearson residuals and, if suitable, for the 
+standardized random effect.
 }
 \description{
-Plots object of type \code{transformation}. Four plots are shown: a plot of the profile loglikelihood vs lambda; a qq plot; a histogram of the residuals vs fitted values of the transformed model
+Plots that shows some residual diagnostics for the transformed model.
+}
+\examples{
+# Load data
+data("eusilcA_Vienna")
+
+# Fit linear model
+lm_Vienna <- lm(eqIncome ~ eqsize + gender + cash + unempl_ben + age_ben + 
+rent + cap_inv + tax_adj + dis_ben + sick_ben + surv_ben + 
+fam_allow + house_allow, data = eusilcA_Vienna)
+
+# Transform dependent variable using skewness minimization
+boxcox_trafo <- boxcox(object = lm_Vienna, lambda = "estim", method = "skew",
+plotit = FALSE)
+
+# Get plots
+plot(boxcox_trafo)
 }

@@ -38,7 +38,7 @@
 #' 
 #' # Transform dependent variable using divergence minimization by 
 #' # Kolmogorov-Smirnof
-#' dual(object = modelVienna, lambda = "estim", method = "div.ks",
+#' dual(object = lm_Vienna, lambda = "estim", method = "div.ks",
 #' plotit = FALSE)
 #' @export
 

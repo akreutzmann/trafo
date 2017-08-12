@@ -3,13 +3,11 @@
 #' @param x matrix of regressors
 #' @param y vector of response variables
 #' @param lambdarange range for the estimation parameter expr(lambda) - default c(-2, 2)
-#' @return An object of class \code{transformation} with the following arguments
-#' @return llike The value of \code{profile log-likelihood} at its maximum
-#' @return logvector The profile log-likelihood evaluated at \code{lambdavector}
-#' @return lambdavector Employed family of transformations
-#' @return A sequence with optional values for \code{lambda}
-#' @return family Employed family of transformations
-#' @return yt Vector of the transformed response variable \code{y}
+#' @param method a character string. Different estimation methods can be used 
+#' for the estimation of the optimal transformation parameter: 
+#' (i) Maximum likelihood approach ("ml"), (ii) Skewness minimization ("skew"),  
+#' (iii) Divergence minimization by Kolmogorov-Smirnoff ("div.ks"), 
+#' by Cramer-von-Mises ("div.cm") or by Kullback-Leibler ("div.kl").
 #' @return modelt An object of type \code{lm} employing the transformed vector \code{yt} as the response variable
 #' @keywords internal
 est_lm <- function(y, x , method, lambdarange, transfor, ...) {
@@ -42,14 +40,12 @@ est_lm <- function(y, x , method, lambdarange, transfor, ...) {
 #' @param x matrix of regressors
 #' @param y vector of response variables
 #' @param lambdarange range for the estimation parameter expr(lambda) - default c(-2, 2)
-#' @param tr logical value. if tr = TRUE warning messages for the likelihood functions are suppressed - default FALSE
-#' @return An object of class \code{transformation} with the following arguments
-#' @return llike The value of \code{profile log-likelihood} at its maximum
-#' @return logvector The profile log-likelihood evaluated at \code{lambdavector}
-#' @return lambdavector Employed family of transformations
-#' @return A sequence with optional values for \code{lambda}
-#' @return family Employed family of transformations
-#' @return yt Vector of the transformed response variable \code{y}
+#' @param method a character string. Different estimation methods can be used 
+#' for the estimation of the optimal transformation parameter: 
+#' (i) Restricted maximum likelihood approach ("reml"), 
+#' (ii) Skewness minimization ("skew") and pooled skewness minimization ("pskew"), 
+#' (iii) Divergence minimization by Kolmogorov-Smirnoff ("div.ks"), 
+#' by Cramer-von-Mises ("div.cm") or by Kullback-Leibler ("div.kl").
 #' @return modelt An object of type \code{lm} employing the transformed vector \code{yt} as the response variable
 #' @keywords internal
 est_lme <- function(y, x, formula, data, rand_eff, method = method, 

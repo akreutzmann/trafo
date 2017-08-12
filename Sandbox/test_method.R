@@ -187,22 +187,18 @@ summary(yeojohnson_divkl)
 
 # lme --------------------------------------------------------------------------
 
-library(laeken)
-data(eusilc)
-library(nlme)
-
-which(eusilc$eqIncome == 0)
-eusilc$eqIncome <- eusilc$eqIncome + 1
-
 modelAustria <- lme(eqIncome ~ pb220a + py050n, 
                     random = ~ 1 | db040, data = eusilc, 
                     na.action = na.omit)
 
-plot(modelAustria, db040 ~ resid(.))
-plot(modelAustria, eqIncome ~ fitted(.) | db040)
+
+modelVienna <- lme(eqIncome ~ eqsize + gender + cash + unempl_ben + age_ben +
+                   rent + cap_inv + tax_adj + dis_ben + sick_ben + surv_ben + 
+                   fam_allow + house_allow, random = ~ 1 | county, 
+                   data = eusilcA_Vienna, na.action = na.omit)
 
 # Box-Cox ----------------------------------------------------------------------
-bxcx_reml <- boxcox(modelAustria, lambda = "estim", method = "reml", plotit = TRUE)
+bxcx_reml <- boxcox(modelVienna, lambda = "estim", method = "reml", plotit = FALSE)
 
 print(bxcx_reml)
 summary(bxcx_reml)

@@ -7,9 +7,9 @@
 \method{summary}{trafo_mod}(object, ...)
 }
 \arguments{
-\item{...}{additional arguments that are not used in this method}
+\item{object}{an object of type \code{trafo_mod}}
 
-\item{x}{an object of type \code{trafo_mod}}
+\item{...}{additional arguments that are not used in this method}
 }
 \value{
 an object of class \code{summary.transformation}
@@ -19,4 +19,3 @@ Information about the transformed data and model and components of an
 transformation object are extracted. The returned object is suitable for 
 printing with the print.summary.transformation method.
 }
-\keyword{internal}

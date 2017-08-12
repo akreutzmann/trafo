@@ -1,3 +1,23 @@
+#' Plot for optimal transformation parameter - linear models
+#' 
+#' @param lambdarange a numeric vector with two elements defining an interval 
+#' that is used for the estimation of the optimal transformation parameter.
+#' @param lambdaoptim optimal or given transformation parameter.
+#' @param measoptim measure at the optimal transformation parameter.
+#' @param y dependent variable.
+#' @param formula formula object.
+#' @param data data extracted from the lme object.
+#' @param rand_eff random effect extracted from lme object.
+#' @param method a character string. Different estimation methods can be used 
+#' for the estimation of the optimal transformation parameter: 
+#' (i) Restricted maximum likelihood approach ("reml"), 
+#' (ii) Skewness minimization ("skew") and pooled skewness minimization ("pskew"), 
+#' (iii) Divergence minimization by Kolmogorov-Smirnoff ("div.ks"), 
+#' by Cramer-von-Mises ("div.cm") or by Kullback-Leibler ("div.kl").
+#' @param transfor a character string that selects the transformation.
+#' @keywords internal
+
+
 plot_trafolme <- function(lambdarange, lambdaoptim, measoptim, 
                          y, formula, data, rand_eff, transfor, method) {
   

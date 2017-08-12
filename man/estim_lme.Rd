@@ -11,6 +11,14 @@ estim_lme(lambda, y, formula, data, rand_eff, method, transfor)
 
 \item{y}{vector of response variables}
 
+\item{formula}{a formula object that contains the dependent and the explanatory
+measures}
+
+\item{data}{the data.frame that is given to functio nlme and that contains the 
+regression variables.}
+
+\item{rand_eff}{the random effect extracted from the lme object.}
+
 \item{method}{a character string. In order to determine the optimal parameter
 for the transformation five different estimation methods can be chosen
 (i) Maximum-Likelihood ("ml"); (ii) skewness minimization ("skew");
@@ -20,7 +28,7 @@ minimization of Kullback Leibner divergence  ("div.kl"). In case of no and
 log transformation "NA" can be selected since no optimization is neccessary
 for these two transformation types.}
 
-\item{x}{matrix of regressors}
+\item{transfor}{a character string that selects the transformation.}
 }
 \value{
 Depending on the selected \code{method} the return is a log

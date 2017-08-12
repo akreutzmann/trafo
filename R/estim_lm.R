@@ -11,6 +11,7 @@
 #' minimization of Kullback Leibner divergence  ("div.kl"). In case of no and
 #' log transformation "NA" can be selected since no optimization is neccessary
 #' for these two transformation types.
+#' @param transfor a character string that selects the transformation.
 #' @return Depending on the selected \code{method} the return is a log
 #' likelihood, a skewness, a pooled skewness or a Kolmogorov-Smirnoff, Craemer
 #' von Mises or Kullback Leibner divergence.
