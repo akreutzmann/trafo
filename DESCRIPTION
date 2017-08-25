@@ -22,4 +22,5 @@ Imports: nlme,
     ggplot2,
     pryr,
     graphics,
-    grDevices
+    grDevices,
+    lmtest

@@ -18,6 +18,7 @@ plot(bc_ML)
 
 
 
+
 # library(skewness) # need to load this lilbrary before
 bx_cx_skew <- boxcox(modelVienna, lambda = 0.2, method = "skew")
 
@@ -191,14 +192,14 @@ modelAustria <- lme(eqIncome ~ pb220a + py050n,
                     random = ~ 1 | db040, data = eusilc, 
                     na.action = na.omit)
 
-
-modelVienna <- lme(eqIncome ~ eqsize + gender + cash + unempl_ben + age_ben +
+library(nlme)
+modelVienna2 <- lme(eqIncome ~ eqsize + gender + cash + unempl_ben + age_ben +
                    rent + cap_inv + tax_adj + dis_ben + sick_ben + surv_ben + 
                    fam_allow + house_allow, random = ~ 1 | county, 
                    data = eusilcA_Vienna, na.action = na.omit)
 
 # Box-Cox ----------------------------------------------------------------------
-bxcx_reml <- boxcox(modelVienna, lambda = "estim", method = "reml", plotit = FALSE)
+bxcx_reml <- boxcox(modelVienna2, lambda = "estim", method = "reml", plotit = FALSE)
 
 print(bxcx_reml)
 summary(bxcx_reml)

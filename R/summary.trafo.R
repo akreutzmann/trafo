@@ -22,6 +22,7 @@
 #' # Get plots
 #' summary(boxcox_trafo)
 #' @importFrom moments skewness kurtosis
+#' @importFrom lmtest bptest
 #' @export
 
 summary.trafo <- function(object, ...) {
@@ -55,6 +56,13 @@ summary.trafo <- function(object, ...) {
   
   #out$R2t <- summary(object$modelt)$r.squared
   
+  breusch_pagan <- bptest(formula(object$modelt$terms), 
+                          data = object$modelt$model)
+  
+  hetero <- data.frame(BreuschPagan_V = breusch_pagan$statistic,
+                       BreuschPagan_p = breusch_pagan$p.value, 
+                       row.names = "")
+  
   
   if (inherits(object$modelt, "lme")) {
     
@@ -87,7 +95,8 @@ summary.trafo <- function(object, ...) {
               method = object$method,
               lambdahat = object$lambdahat, 
               measoptim = object$measoptim, 
-              normality = norm)
+              normality = norm, 
+              heterosce = hetero)
 
   class(out) <- "summary.trafo"
   out
@@ -120,4 +129,8 @@ print.summary.trafo <- function(x, ...) {
   cat("\n")
   cat("Normality:\n")
   print(x$normality)
+  cat("\n")
+  cat("Heteroscedasticity:\n")
+  print(x$heterosce)
+  
 }

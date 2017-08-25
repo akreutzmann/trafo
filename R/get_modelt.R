@@ -39,7 +39,7 @@ get_modelt <- function(object, trans_mod, std) {
       suppressWarnings(modelt <- lme(fixed = formula, data = tdata,
                                      random = as.formula(paste0("~ 1 | as.factor(", rand_eff, ")")),
                                      method = "REML",
-                                     keep.data = FALSE,
+                                     keep.data = TRUE,
                                      na.action = na.omit))
       
 
