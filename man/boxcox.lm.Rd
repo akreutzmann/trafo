@@ -4,15 +4,15 @@
 \alias{boxcox.lm}
 \title{Box-Cox transformation for linear models}
 \usage{
-\method{boxcox}{lm}(object, lambda, method, lambdarange = c(-2, 2),
-  plotit = TRUE, ...)
+\method{boxcox}{lm}(object, lambda = "estim", method = "ml",
+  lambdarange = c(-2, 2), plotit = TRUE, ...)
 }
 \arguments{
 \item{object}{an object of type lm.}
 
 \item{lambda}{either a character named "estim" if the optimal transformation
 parameter should be estimated or a numeric value determining a given 
-transformation parameter.}
+transformation parameter. Defaults to "estim".}
 
 \item{method}{a character string. Different estimation methods can be used 
 for the estimation of the optimal transformation parameter: 

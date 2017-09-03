@@ -4,15 +4,15 @@
 \alias{yeojohnson.lme}
 \title{Yeo-Johnson transformation for linear mixed models}
 \usage{
-\method{yeojohnson}{lme}(object, lambda, method, lambdarange = c(-2, 2),
-  plotit = TRUE, ...)
+\method{yeojohnson}{lme}(object, lambda = "estim", method = "reml",
+  lambdarange = c(-2, 2), plotit = TRUE, ...)
 }
 \arguments{
 \item{object}{an object of type lme.}
 
 \item{lambda}{either a character named "estim" if the optimal transformation
 parameter should be estimated or a numeric value determining a given 
-transformation parameter.}
+transformation parameter. Defaults to "estim".}
 
 \item{method}{a character string. Different estimation methods can be used 
 for the estimation of the optimal transformation parameter: 

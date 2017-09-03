@@ -20,26 +20,26 @@ plot(bc_ML)
 
 
 # library(skewness) # need to load this lilbrary before
-bx_cx_skew <- boxcox(modelVienna, lambda = 0.2, method = "skew")
+bx_cx_skew <- boxcox(modelVienna, lambda = "estim", method = "skew")
 
 print(bx_cx_skew)
 summary(bx_cx_skew)
 plot(bx_cx_skew)
 
-bx_cx_divks <- bx_cx(modelVienna, method = "div.ks")
+bx_cx_divks <- boxcox(modelVienna, method = "div.ks")
 
 print(bx_cx_divks)
 summary(bx_cx_divks)
 plot(bx_cx_divks)
 
 
-bx_cx_divcvm <- bx_cx(modelVienna, method = "div.cvm")
+bx_cx_divcvm <- boxcox(modelVienna, method = "div.cvm")
 
 print(bx_cx_divcvm)
 summary(bx_cx_divcvm)
 plot(bx_cx_divcvm)
 
-bx_cx_divkl <- bx_cx(modelVienna, method = "div.kl")
+bx_cx_divkl <- boxcox(modelVienna, method = "div.kl")
 
 print(bx_cx_divkl)
 summary(bx_cx_divkl)
@@ -47,7 +47,7 @@ plot(bx_cx_divkl)
 
 
 # Modulus ----------------------------------------------------------------------
-modulus_ml <- modulus(modelVienna, lambda = "estim",  method = "ml")
+modulus_ml <- modulus(modelVienna,  method = "ml")
 
 print(modulus_ml)
 summary(modulus_ml)
@@ -115,11 +115,13 @@ manly_skew <- manly(modelVienna, lambda = "estim", method = "skew", lambdarange 
 
 print(manly_skew)
 summary(manly_skew)
+plot(manly_skew)
 
 manly_divks <- manly(modelVienna, method = "div.ks", lambdarange = c(-0.05, 0.005))
 
 print(manly_divks)
 summary(manly_divks)
+plot(manly_divks)
 
 manly_divcvm <- manly(modelVienna, method = "div.cvm", lambdarange = c(-0.05, 0.005))
 
@@ -138,6 +140,8 @@ dual_ml <- dual(modelVienna, lambda = "estim", method = "ml")
 
 print(dual_ml)
 summary(dual_ml)
+plot(dual_ml)
+
 
 dual_skew <- dual(modelVienna, method = "skew")
 
@@ -169,6 +173,7 @@ yeojohnson_skew <- yeojohnson(modelVienna, method = "skew")
 
 print(yeojohnson_skew)
 summary(yeojohnson_skew)
+plot(yeojohnson_skew)
 
 yeojohnson_divks <- yeojohnson(modelVienna, method = "div.ks")
 
@@ -198,33 +203,38 @@ modelVienna2 <- lme(eqIncome ~ eqsize + gender + cash + unempl_ben + age_ben +
                    fam_allow + house_allow, random = ~ 1 | county, 
                    data = eusilcA_Vienna, na.action = na.omit)
 
+plot(modelVienna2)
+
 # Box-Cox ----------------------------------------------------------------------
-bxcx_reml <- boxcox(modelVienna2, lambda = "estim", method = "reml", plotit = FALSE)
+bxcx_reml <- boxcox(modelVienna2, plotit = FALSE)
 
 print(bxcx_reml)
 summary(bxcx_reml)
 plot(bxcx_reml)
 
 
-bxcx_skew <- bx_cx(modelAustria, method = "skew")
+bxcx_skew <- boxcox(modelVienna2, method = "skew", lambdarange = c(-0.5,2))
 
 print(bxcx_skew)
 summary(bxcx_skew)
 
-bxcx_pskew <- boxcox(modelAustria, lambda = "estim", method = "pskew")
+bxcx_pskew <- boxcox(modelVienna2, lambda = "estim", method = "pskew", 
+                     lambdarange = c(-0.5,2))
 
 print(bxcx_pskew)
 summary(bxcx_pskew)
 
-bxcx_divks <- bx_cx(modelAustria, method = "div.ks")
+bxcx_divks <- boxcox(modelVienna2, method = "div.ks", lambdarange = c(-0.5,2))
 
 print(bxcx_divks)
 summary(bxcx_divks)
 
-bxcx_divcvm <- bx_cx(modelAustria, method = "div.cvm")
+bxcx_divcvm <- boxcox(modelVienna2, method = "div.cvm", lambdarange = c(-0.5,2))
 
 print(bxcx_divcvm)
 summary(bxcx_divcvm)
+plot(bxcx_divcvm)
+
 
 bxcx_divkl <- bx_cx(modelAustria, method = "div.kl")
 
@@ -266,10 +276,12 @@ summary(modulus_divkl)
 
 # Bickel-Doksum ----------------------------------------------------------------
 
-bickeldoksum_reml <- bickeldoksum(modelAustria, lambda = "estim", method = "reml")
+bickeldoksum_reml <- bickeldoksum(modelVienna2, lambda = "estim", method = "reml")
 
 print(bickeldoksum_reml)
 summary(bickeldoksum_reml)
+plot(bickeldoksum_reml)
+
 
 bickeldoksum_skew <- bickeldoksum(modelAustria, lambda = "estim", method = "skew")
 

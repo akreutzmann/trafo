@@ -22,8 +22,8 @@
 #' 
 #' # Get plots
 #' plot(boxcox_trafo)
-#' @importFrom graphics mtext
-#' @importFrom stats qqline qqnorm 
+#' @importFrom graphics mtext panel.smooth
+#' @importFrom stats qqline qqnorm cooks.distance
 #' @export
 
 plot.trafo <- function(x, ...) {
@@ -37,6 +37,15 @@ plot.trafo <- function(x, ...) {
     qqline <- NULL
     mtext <- NULL
     residFitt <- NULL
+    yFitt <- NULL
+    cookst <- NULL
+    hist_residt <- NULL
+    hist_sraneft <- NULL
+    predict <- NULL
+    hist <- NULL
+    scattert <- NULL
+    pairs <- NULL
+    formula <- NULL
   
   
     # Residuals of the transformed model
@@ -45,14 +54,12 @@ plot.trafo <- function(x, ...) {
     QQ_residt %<a-% qqnorm(residt,
                            ylab = "Sample-quantiles: Pearson residuals",
                            main = "")
-    residFitt %<a-% plot_lm_adj(x$modelt, which = c(1L), sub = "",
+    residFitt %<a-% plot_lm_adj(x$modelt, which = c(1L), sub.caption = "",
                                 labels.id = 1:length(residt)) 
     
     yFitt %<a-% plot(predict(x$modelt), x$yt,
                      ylab = "Transformed y", xlab = "Fitted values")
     
-    cookst %<a-% plot_lm_adj(x$modelt, which = c(4L), sub = "",
-                             labels.id = 1:length(residt))  
     
     hist_residt %<a-% hist(residt, nclass = 20, 
                            xlab = "Pearson residuals", 
@@ -76,9 +83,26 @@ plot.trafo <- function(x, ...) {
       scattert %<a-% pairs(formula(x$modelt$terms), data = x$modelt$data,
                        main="")
       
+      #model <- x$modelt
+      #model$call$fixed <- formula(x$modelt$terms)
+      #cooksdist <- NULL
+      #try(cooksdist <- as.vector(cooks.distance(model)), silent = T)
+      #if(is.null(cooksdist))
+      #{
+      #  cooks <- FALSE
+      #  warning(paste0("Cook's distance could not be calculated, this is usually due",
+      #                 " to exceedence of available memory. Try using cooks = FALSE to ",
+      #                 "avoid this message and improve computation time."))
+      #} else{
+      #  cook_df <- data.frame(index = seq_along(cooksdist), cooksdist)
+      #  indexer <- cook_df[order(cooksdist, decreasing = TRUE),][1:3,]
+      #}
       
+     
       dev.hold()
-      old.par <- par(mfrow = c(1, 2), oma = c(0, 0, 2, 0))
+      old.par <- par(mfrow = c(1, 1), oma = c(0, 0, 0, 0))
+      par(mfrow = c(1, 2), oma = c(0, 0, 2, 0))
+      #old.par <- par(mfrow = c(1, 2), oma = c(0, 0, 2, 0))
       QQ_residt
       qqline(residt)
       QQ_sraneft
@@ -102,28 +126,34 @@ plot.trafo <- function(x, ...) {
       line <- readline()
       scattert
       mtext("Scatter plots", 3, 0.25, outer = TRUE, cex = 1)
-      cat("Press [enter] to continue")
-      line <- readline()
-      cookst
+      #cat("Press [enter] to continue")
+      #line <- readline()
+      #cookst
+      #par(old.par)
       dev.flush()
-    
+      
+      
     } else {
       
       scattert %<a-% pairs(formula(x$modelt$terms), data = x$modelt$model,
                           main="")
       
+      cookst %<a-% plot_lm_adj(x$modelt, which = c(4L), sub.caption = "",
+                               labels.id = 1:length(residt)) 
+      
+
       dev.hold()
-      old.par <- par(oma = c(0, 0, 2, 0))
+      #old.par <- par(oma = c(0, 0, 2, 0))
       QQ_residt
       qqline(residt)
       mtext("Normal Q-Q Plot", 3, 0.25, outer = FALSE, cex = 1)
-      par(old.par)
+      #par(old.par)
       cat("Press [enter] to continue")
       line <- readline()
-      old.par <- par(oma = c(0, 0, 2, 0))
+      #old.par <- par(oma = c(0, 0, 2, 0))
       hist_residt
       mtext("Histogram", 3, 0.25, outer = TRUE, cex = 1)
-      par(old.par)
+      #par(old.par)
       cat("Press [enter] to continue")
       line <- readline()
       residFitt
@@ -139,6 +169,7 @@ plot.trafo <- function(x, ...) {
       cat("Press [enter] to continue")
       line <- readline()
       cookst
+      #par(old.par)
       dev.flush()
     }
     

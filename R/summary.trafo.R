@@ -29,6 +29,7 @@ summary.trafo <- function(object, ...) {
 
   
   out <- NULL
+  formula <- NULL
   
   # Residuals for the transformed and non transformed model
   residt <- residuals(object$modelt, level = 0, type = "pearson")
@@ -55,13 +56,7 @@ summary.trafo <- function(object, ...) {
                      row.names = c("Residuals"))
   
   #out$R2t <- summary(object$modelt)$r.squared
-  
-  breusch_pagan <- bptest(formula(object$modelt$terms), 
-                          data = object$modelt$model)
-  
-  hetero <- data.frame(BreuschPagan_V = breusch_pagan$statistic,
-                       BreuschPagan_p = breusch_pagan$p.value, 
-                       row.names = "")
+
   
   
   if (inherits(object$modelt, "lme")) {
@@ -89,6 +84,21 @@ summary.trafo <- function(object, ...) {
                        Shapiro_p = c(shapiroP_residt, shapiroP_raneft),
                        row.names = c("Residuals", "Random effect"))
     
+    breusch_pagan <- bptest(formula(object$modelt$terms), 
+                            data = object$modelt$data)
+    
+    hetero <- data.frame(BreuschPagan_V = breusch_pagan$statistic,
+                         BreuschPagan_p = breusch_pagan$p.value, 
+                         row.names = "")
+    
+    
+  } else {
+    breusch_pagan <- bptest(formula(object$modelt$terms), 
+                            data = object$modelt$model)
+    
+    hetero <- data.frame(BreuschPagan_V = breusch_pagan$statistic,
+                         BreuschPagan_p = breusch_pagan$p.value, 
+                         row.names = "")
   }
   
   out <- list(family = object$family,

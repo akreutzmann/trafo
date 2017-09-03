@@ -7,7 +7,7 @@
 #' @param object an object of type lm. 
 #' @param lambda either a character named "estim" if the optimal transformation
 #' parameter should be estimated or a numeric value determining a given 
-#' transformation parameter. 
+#' transformation parameter. Defaults to "estim".
 #' @param method a character string. Different estimation methods can be used 
 #' for the estimation of the optimal transformation parameter: 
 #' (i) Maximum likelihood approach ("ml"), (ii) Skewness minimization ("skew"),  
@@ -42,8 +42,8 @@
 #' plotit = FALSE)
 #' @export
 
-dual.lm <- function(object, lambda, method, lambdarange = c(0, 2),
-                    plotit = TRUE, ...) {
+dual.lm <- function(object, lambda = "estim", method = "ml", 
+                    lambdarange = c(0, 2), plotit = TRUE, ...) {
   
 
   transfor <- "t_dl"

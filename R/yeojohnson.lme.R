@@ -8,7 +8,7 @@
 #' @param object an object of type lme. 
 #' @param lambda either a character named "estim" if the optimal transformation
 #' parameter should be estimated or a numeric value determining a given 
-#' transformation parameter. 
+#' transformation parameter. Defaults to "estim".
 #' @param method a character string. Different estimation methods can be used 
 #' for the estimation of the optimal transformation parameter: 
 #' (i) Restricted maximum likelihood approach ("reml"), 
@@ -45,8 +45,8 @@
 #' plotit = FALSE)
 #' @export
 
-yeojohnson.lme <- function(object, lambda, method, lambdarange = c(-2, 2),
-                           plotit = TRUE, ...) {
+yeojohnson.lme <- function(object, lambda = "estim", method = "reml", 
+                           lambdarange = c(-2, 2), plotit = TRUE, ...) {
   
   
   transfor <- "t_y_jhnsn"

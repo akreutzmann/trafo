@@ -8,6 +8,26 @@ plot_lm_adj <- function (x, which = c(1L:3L, 5L), caption = list("Residuals vs F
           label.pos = c(4, 2), cex.caption = 1, cex.oma.main = 1.25) 
 {
   
+  points <- NULL
+  dev.interactive <- NULL
+  predict <- NULL
+  weights <- NULL
+  deviance <- NULL
+  df.residual <- NULL
+  influence <- NULL
+  text <- NULL
+  as.graphicsAnnot <- NULL
+  devAskNewPage <- NULL
+  extendrange <- NULL
+  title <- NULL
+  strheight <- NULL
+  terms <- NULL
+  axis <- NULL
+  frame <- NULL
+  lines <- NULL 
+  legend <- NULL
+  strwidth <- NULL
+
   
   dropInf <- function(x, h) {
     if (any(isInf <- h >= 1)) {
