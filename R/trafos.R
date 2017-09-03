@@ -115,7 +115,7 @@ modul_back <- function(y, lambda = lambda) {
 #  Transformation: Bick-Doksum
 
 Bick_dok <-  function(y, lambda = lambda) {
-  u <- abs(y) + 1
+  u <- abs(y) 
   if (lambda > 1e-12){
     yt <- sign(y)*(u^lambda - 1)/lambda
   }
@@ -128,7 +128,7 @@ Bick_dok <-  function(y, lambda = lambda) {
 # Standardized transformation: Bick-Doksum
 
 Bick_dok_std <- function(y, lambda) {
-  u <- abs(y) + 1L
+  u <- abs(y)
   yt <- Bick_dok(y, lambda)
   zt <- yt/exp(mean(sign(y)*(lambda-1)*log(u)))
   y <- zt

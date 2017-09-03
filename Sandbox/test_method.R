@@ -10,7 +10,7 @@ plot(modelVienna)
 
 # Box-Cox ----------------------------------------------------------------------
 
-bc_ML <- boxcox(modelVienna, lambda = "estim", method = "ml")
+bc_ML <- boxcox(modelVienna)
   
 print(bc_ML)
 summary(bc_ML)
