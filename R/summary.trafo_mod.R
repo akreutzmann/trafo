@@ -22,9 +22,12 @@ summary.trafo_mod <- function(object, ...) {
     # Summary of original model
     orig_sum <- summary(object$orig_mod)
     
-    
     # Summary of transformed model
-    trafo_sum <- summary(object$trafo_mod) 
+    trafo_sum <- summary(object$trafo_mod)
+    trafo_sum$call <- as.symbol((paste(paste(deparse(object$trafo_mod$call), sep = "\n", 
+                                      collapse = "\n"), 
+                                paste0("formula = ",object$trafo_mod$formula), 
+                                sep = "\n")))
     trafo_sum$coefficients <- matrix(trafo_sum$coefficients[, 1])
     colnames(trafo_sum$coefficients) <- c("Estimate")
     rownames(trafo_sum$coefficients) <- rownames(orig_sum$coefficients)
