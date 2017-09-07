@@ -10,14 +10,14 @@
 #' by Cramer-von-Mises ("div.cm") or by Kullback-Leibler ("div.kl").
 #' @return modelt An object of type \code{lm} employing the transformed vector \code{yt} as the response variable
 #' @keywords internal
-est_lm <- function(y, x , method, lambdarange, transfor, ...) {
+est_lm <- function(y, x , method, lambdarange, trafo, ...) {
   
   # Number of explanatory variables
   k <- ncol(x)
   
   # Get the optimal lambda via optimization on lambdarange
   res <- suppressWarnings(optimize(f = estim_lm, y = y, x = x, method = method,
-                                   transfor = transfor, interval = lambdarange, 
+                                   trafo = trafo, interval = lambdarange, 
                                    tol = 0.0001))
   
   if (is.infinite(res$objective)) {
@@ -49,7 +49,7 @@ est_lm <- function(y, x , method, lambdarange, transfor, ...) {
 #' @return modelt An object of type \code{lm} employing the transformed vector \code{yt} as the response variable
 #' @keywords internal
 est_lme <- function(y, x, formula, data, rand_eff, method = method, 
-                    lambdarange = lambdarange, transfor) {
+                    lambdarange = lambdarange, trafo) {
   
   # Number of explanatory variables
   k <- ncol(x)
@@ -61,7 +61,7 @@ est_lme <- function(y, x, formula, data, rand_eff, method = method,
                                    data = data,
                                    rand_eff = rand_eff,
                                    method = method,
-                                   transfor = transfor,
+                                   trafo = trafo,
                                    interval = lambdarange, tol = 0.0001))
   
   if (is.infinite(res$objective)) {

@@ -4,7 +4,7 @@
 \alias{estim_lme}
 \title{Wrapper function for estimation methods - linear mixed models}
 \usage{
-estim_lme(lambda, y, formula, data, rand_eff, method, transfor)
+estim_lme(lambda, y, formula, data, rand_eff, method, trafo)
 }
 \arguments{
 \item{lambda}{transformation parameter}
@@ -28,7 +28,7 @@ minimization of Kullback Leibner divergence  ("div.kl"). In case of no and
 log transformation "NA" can be selected since no optimization is neccessary
 for these two transformation types.}
 
-\item{transfor}{a character string that selects the transformation.}
+\item{trafo}{a character string that selects the transformation.}
 }
 \value{
 Depending on the selected \code{method} the return is a log

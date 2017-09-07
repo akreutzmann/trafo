@@ -7,7 +7,7 @@ box_cox <- function(y, lambda = lambda, shift = 0) {
   with_shift <- function(y, shift) {
     min <- min(y)
     if (min <= 0) {
-      shift <- shift + abs(min(y)) + 1
+      shift <- shift + abs(min(y)) +1
     } else {
       shift <- shift
     }
@@ -15,7 +15,7 @@ box_cox <- function(y, lambda = lambda, shift = 0) {
   }
   # Shift parameter
   shift <- with_shift(y = y, shift = shift)
-
+  
   lambda_cases <- function(y, lambda = lambda) {
     lambda_absolute <- abs(lambda)
     if (lambda_absolute <= 1e-12) {  #case lambda=0
@@ -26,7 +26,7 @@ box_cox <- function(y, lambda = lambda, shift = 0) {
     return(y)
   }
   y <- lambda_cases(y = y, lambda = lambda)
-
+  
   return(list(y = y, shift = shift))
 } # End box_cox
 
@@ -43,9 +43,9 @@ box_cox_std <- function(y, lambda) {
   if (min <= 0) {
     y <- y - min + 1
   }
-
+  
   gm <- geometric.mean(y)
-  y <- if (abs(lambda) > 1e-12) {
+  y <- if(abs(lambda) > 1e-12) {
     y <- (y^lambda - 1) / (lambda * ((gm)^(lambda - 1)))
   } else {
     y <- gm * log(y)
@@ -56,7 +56,7 @@ box_cox_std <- function(y, lambda) {
 
 # Back transformation: Box Cox
 box_cox_back <- function(y, lambda, shift = 0) {
-
+  
   lambda_cases_back <- function(y, lambda = lambda, shift){
     if (abs(lambda) <= 1e-12) {   #case lambda=0
       y <-  exp(y) - shift
@@ -66,7 +66,7 @@ box_cox_back <- function(y, lambda, shift = 0) {
     return(y = y)
   }
   y <- lambda_cases_back(y = y, lambda = lambda, shift = shift)
-
+  
   return(y = y)
 } #  End box_cox_back
 
@@ -77,11 +77,11 @@ modul <- function(y, lambda = lambda) {
   u <- abs(y) + 1L
   lambda_absolute <- abs(lambda)
   if (lambda_absolute <= 1e-12) {  #case lambda=0
-    yt <-  sign(y)*log(u)
+    yt <-  sign(y)*log(u) 
   } else {
-    yt <- sign(y)*(u^lambda - 1L)/lambda
+    yt <- sign(y)*(u^lambda - 1L)/lambda 
   }
-  return(y = yt)
+  return(y = yt) 
 }
 
 # Standardized transformation: Modulus
@@ -90,9 +90,9 @@ modul_std <- function(y, lambda) {
   u <- abs(y) + 1L
   yt <- modul(y, lambda)
   zt <- yt/exp(mean(sign(y)*(lambda - 1L)*log(u)))
-
+  
   y <- zt
-
+  
   return(y)
 }
 
@@ -115,7 +115,7 @@ modul_back <- function(y, lambda = lambda) {
 #  Transformation: Bick-Doksum
 
 Bick_dok <-  function(y, lambda = lambda) {
-  u <- abs(y) + 1
+  u <- abs(y) 
   if (lambda > 1e-12){
     yt <- sign(y)*(u^lambda - 1)/lambda
   }
@@ -128,7 +128,7 @@ Bick_dok <-  function(y, lambda = lambda) {
 # Standardized transformation: Bick-Doksum
 
 Bick_dok_std <- function(y, lambda) {
-  u <- abs(y) + 1L
+  u <- abs(y)
   yt <- Bick_dok(y, lambda)
   zt <- yt/exp(mean(sign(y)*(lambda-1)*log(u)))
   y <- zt
@@ -138,7 +138,7 @@ Bick_dok_std <- function(y, lambda) {
 
 # Back transformation: Bick-Doksum
 Bick_dok_back <- function(y, lambda = lambda) {
-
+  
 }
 
 # The Manly transformation ----------------------------------------------------------------------
@@ -170,7 +170,7 @@ Manly_std <- function(y, lambda) {
 
 # Back transformation: Manly
 Manly_back <- function(y, lambda = lambda) {
-
+  
 }
 
 # The dual transformation ----------------------------------------------------------------------
@@ -182,7 +182,7 @@ Dual <-  function(y, lambda = lambda) {
     yt <-  log(y)
   } else if (lambda > 1e-12){
     yt <- (y^(lambda) - y^(-lambda))/2*lambda
-  } else {
+  } else { 
     stop("lambda can not be negative for the dual transformation")
   }
   return(y = yt)
@@ -193,9 +193,9 @@ Dual <-  function(y, lambda = lambda) {
 Dual_std <- function(y, lambda) {
   yt <- Dual(y, lambda)
   zt <- yt/exp((mean(log((y^(lambda-1) + y^(-lambda-1))/2))))
-
+  
   y <- zt
-
+  
   return(y)
 }
 
@@ -217,7 +217,7 @@ Dual_back <- function(y, lambda = lambda) {
 # Transformation: Yeo-Johnson
 Yeo_john <-  function(y, lambda = lambda) {
   n <- length(y)
-  u <- abs(y) + 1L
+  u <- abs(y) + 1L 
   yt <- rep(NA, n)
   negativos <- which(y < 0)
   positivos <- which(y >= 0)
@@ -242,239 +242,14 @@ Yeo_john_std <- function(y, lambda) {
   u <- abs(y) + 1L
   yt <- Yeo_john(y, lambda)
   zt <- yt/exp(mean(sign(y)*(lambda-1)*log(u)))
-
+  
   y <- zt
-
+  
   return(y)
 }
 
 
 # Back transformation: Yeo-Johnson
 Yeo_john_back <- function(y, lambda = lambda) {
-
+  
 }
-
-###################################### Neue Transformationen #######################################
-
-
-#  Transformation: log_shift
-
-
-log_shift <- function(y, lambda = lambda) {
-
-  with_shift <-  function(y, lambda) {
-
-      min <- min(y + lambda)
-    if (min <= 0) {
-      lambda <- lambda + abs(min(y)) + 1
-    } else {
-      lambda <- lambda
-    }
-      return(lambda)
-  }
-
-  # Shift parameter
-  lambda <- with_shift(y = y, lambda = lambda )
-
-  log_trafo <- function(y, lambda = lambda) {
-      y <- log(y + lambda)
-    return(y)
-  }
-  y <- log_trafo(y = y, lambda = lambda)
-  return(y)
-} # End log_shift
-
-
-
-# Standardized transformation: Log_shift
-
-geometric.mean <- function(x) { #for RMLE in the parameter estimation
-  exp(mean(log(x)))
-}
-
-log_shift_std <- function(y, lambda) {
-
-  with_shift <-  function(y, lambda) {
-    min <- min(y + lambda)
-    if (min <= 0) {
-      lambda <- lambda + abs(min(y)) + 1
-    } else {
-      lambda <- lambda
-    }
-    return(lambda)
-  }
-
-  # Shift parameter
-  lambda <- with_shift(y = y, lambda = lambda )
-
-  log_trafo_std <- function(y, lambda = lambda) {
-    gm <- geometric.mean(y + lambda)
-    y <- gm * log(y + lambda)
-    return(y)
-  }
-  y <- log_trafo_std(y = y, lambda = lambda)
-  return(y)
-  }
-
-# Back transformation: log_shift
-log_shift_back <- function(y, lambda) {
-  log_shift_back <- function(y, lambda = lambda){
-      y <-  exp(y) - lambda
-    return(y = y)
-  }
-  y <- log_shift_back(y = y, lambda = lambda)
-  return(y = y)
-} #  End log_shift
-
-##############
-
-
-#  Transformation: neg_log
-neg_log <- function(y) {
-  u <- abs(y) + 1L
-  yt <-  sign(y)*log(u)
-
-  return(y = yt)
-}
-
-# Standardized transformation: neg_log
-
-neg_log_std <- function(y) {
-  u <- abs(y) + 1L
-  yt <- modul(y)
-  zt <- yt/exp(mean(sign(y)*log(u)))
-
-  y <- zt
-  return(y)
-}
-
-# Back transformation: neg_log
-neg_log_back <- function(y, lambda = lambda) {
-    y <- sign(y) * (exp(abs(y)) - 1)
-
-    return(y)
-}
-
-
-
-# Transformation: Reciprocal
-reciprocal <- function(y)  {#lambda is fixed
-    y <- box_cox(y, lambda = -1)
-    return(y)
-}
-
-# Standardized transformation: Reciprocal
-
-reciprocal_std  <- function(y) {
-   y <- box_cox_std(y, lambda = -1 )
-   return(y)
-}
-
-# Back transformation: Reciprocal
-reciprocal_back <- function(y) {
-    box_cox_back(y, lambda = -1 )
-}
-
-
-
-# Standardized transformation: squared_root_shift
-
-
-sqrt_shift <- function(y, lambda = lambda) {
-
-  with_shift <-  function(y, lambda) {
-
-    min <- min(y + lambda)
-    if (min <= 0) {
-      lambda <- lambda + abs(min(y)) + 1
-    } else {
-      lambda <- lambda
-    }
-    return(lambda)
-  }
-
-  # Shift parameter
-  lambda <- with_shift(y = y, lambda = lambda )
-
- sqrt_trafo <- function(y, lambda = lambda) {
-    y <- sqrt(y + lambda)
-    return(y)
-  }
-  y <- sqrt_trafo(y = y, lambda = lambda)
-  return(y)
-} # End log_shift
-
-
-
-# Standardized transformation: sqrt_shift
-
-geometric.mean <- function(x) { #for RMLE in the parameter estimation
-  exp(mean(log(x)))
-}
-
-sqrt_shift_std <- function(y, lambda) {
-
-  with_shift <-  function(y, lambda) {
-    min <- min(y + lambda)
-    if (min <= 0) {
-      lambda <- lambda + abs(min(y)) + 1
-    } else {
-      lambda <- lambda
-    }
-    return(lambda)
-  }
-
-  # Shift parameter
-  lambda <- with_shift(y = y, lambda = lambda )
-
-  sqrt_trafo_std <- function(y, lambda = lambda) {
-    gm <- geometric.mean(y + lambda)
-    y <- gm * sqrt(y + lambda)
-    return(y)
-  }
-  y <- sqrt_trafo_std(y = y, lambda = lambda)
-  return(y)
-}
-
-# Back transformation: log_shift
-sqrt_shift_back <- function(y, lambda) {
-  sqrt_shift_back <- function(y, lambda = lambda){
-    y <-  y^2 - lambda
-    return(y = y)
-  }
-  y <- sqrt_shift_back(y = y, lambda = lambda)
-  return(y = y)
-} #  End sqrt_shift
-
-
-
-
-# Transformation: Gpower
-
-gPower <-  function(y, lambda = lambda) {
-  lambda_absolute <- abs(lambda)
-  if (lambda_absolute <= 1e-12) {  #case lambda=0
-    yt <-  log(y + sqrt(y^2 + 1))
-  } else if (lambda > 1e-12) {
-    yt <- ((y + sqrt(y^2 + 1))^lambda-1)/lambda
-  }
-  return(y = yt)
-}
-
-# Standardized transformation: Gpower
-
-gPower_std <- function(y, lambda) {
-  yt <- gPower(y, lambda)
-  zt <- yt/exp((mean( lambda*(log(y + sqrt(y^2))) - log(y^2+1)/2 )))
-
-  y <- zt
-
-  return(y)
-}
-
-# Back transformation: Gpower
-gPower_back <- function(y, lambda = lambda) {
-
-}
-
-##############

@@ -45,10 +45,10 @@ trafo_lm <- function(object, trafo, lambda = "estim", method,
   if (trafo == "log") {
     trans_mod <- boxcox(object = object, lambda = 0, method = method, 
                        lambdarange = lambdarange, plotit = plotit)
-  } else if (trafo == "box.cox") {
+  } else if (trafo == "boxcox") {
     trans_mod <- boxcox(object = object, lambda = lambda, method = method, 
                        lambdarange = lambdarange, plotit = plotit)
-  } else if (trafo == "bickel.doksum") {
+  } else if (trafo == "bickeldoksum") {
     trans_mod <- bickeldoksum(object = object, lambda = lambda, method = method, 
                               lambdarange = lambdarange, plotit = plotit)
   } else if (trafo == "manly") {
@@ -60,9 +60,18 @@ trafo_lm <- function(object, trafo, lambda = "estim", method,
   } else if (trafo == "dual") {
     trans_mod <- dual(object = object, lambda = lambda, method = method, 
                               lambdarange = lambdarange, plotit = plotit)
-  } else if (trafo == "yeo.johnson") {
+  } else if (trafo == "yeojohnson") {
     trans_mod <- yeojohnson(object = object, lambda = lambda, method = method, 
                               lambdarange = lambdarange, plotit = plotit)
+  } else if (trafo == "logshiftopt") {
+    trans_mod <- logshiftopt(object = object, lambda = lambda, method = method, 
+                            lambdarange = lambdarange, plotit = plotit)
+  } else if (trafo == "sqrtshift") {
+    trans_mod <- sqrtshift(object = object, lambda = lambda, method = method, 
+                             lambdarange = lambdarange, plotit = plotit)
+  } else if (trafo == "gpower") {
+    trans_mod <- gpower(object = object, lambda = lambda, method = method, 
+                           lambdarange = lambdarange, plotit = plotit)
   } 
   
   # Get original lm object

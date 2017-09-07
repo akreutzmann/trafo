@@ -15,14 +15,14 @@
 #' minimization of Kullback Leibner divergence  ("div.kl"). In case of no and
 #' log transformation "NA" can be selected since no optimization is neccessary
 #' for these two transformation types.
-#' @param transfor a character string that selects the transformation.
+#' @param trafo a character string that selects the transformation.
 #' @return Depending on the selected \code{method} the return is a log
 #' likelihood, a skewness, a pooled skewness or a Kolmogorov-Smirnoff, Craemer
 #' von Mises or Kullback Leibner divergence.
 #' @keywords internal
 
 
-estim_lme <- function(lambda, y, formula, data, rand_eff, method, transfor){
+estim_lme <- function(lambda, y, formula, data, rand_eff, method, trafo){
   
   # Find the optimal lambda depending on method
   optimization <- if (method == "reml") {
@@ -31,24 +31,30 @@ estim_lme <- function(lambda, y, formula, data, rand_eff, method, transfor){
          lambda = lambda,
          data = data,
          rand_eff = rand_eff,
-         transfor = transfor)
+         trafo = trafo)
   } else if (method != "reml") {
     
     # Get residuals for all methods but ML
     # Wrapper for transformations, this means that we need a new argument
     # trafo in the function
-    yt <- if(transfor == "t_bx_cx") {
+    yt <- if (trafo == "boxcox") {
       box_cox(y = y, lambda = lambda, shift = 0)$y
-    } else if (transfor == "t_mdls") {
+    } else if (trafo == "modulus") {
       modul(y = y, lambda = lambda)
-    } else if (transfor == "t_bck_dk") {
+    } else if (trafo == "bickeldoksum") {
       Bick_dok(y = y, lambda = lambda)
-    } else if (transfor == "t_mnl") {
+    } else if (trafo == "manly") {
       Manly(y = y, lambda = lambda)
-    } else if (transfor == "t_dl") {
+    } else if (trafo == "dual") {
       Dual(y = y, lambda = lambda)
-    } else if (transfor == "t_y_jhnsn") {
+    } else if (trafo == "yeojohnson") {
       Yeo_john(y = y, lambda = lambda)
+    } else if (trafo == "logshiftopt") {
+      as.matrix(log_shift(y = y, lambda = lambda))
+    } else if (trafo == "sqrtshift") {
+      as.matrix(sqrt_shift(y = y, lambda = lambda))
+    } else if (trafo == "gpower") {
+      as.matrix(gPower(y = y, lambda = lambda))
     }
     
     data[paste(formula[2])] <- yt

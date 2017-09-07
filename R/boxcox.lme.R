@@ -48,7 +48,7 @@
 boxcox.lme <- function(object, lambda = "estim", method = "reml", 
                        lambdarange = c(-2,2), plotit = TRUE, ...) {
   
-  transfor <- "t_bx_cx"
+  trafo <- "boxcox"
   
   # Get model variables: dependent variable y and explanatory variables x
   formula <- formula(object)
@@ -64,7 +64,7 @@ boxcox.lme <- function(object, lambda = "estim", method = "reml",
   if (lambda == "estim") {
     Optim <- est_lme(y = y, x = x, formula = formula, data = data, 
                      rand_eff = rand_eff, method = method, 
-                     lambdarange = lambdarange, transfor = transfor) 
+                     lambdarange = lambdarange, trafo = trafo) 
     
     lambdaoptim <- Optim$lambdaoptim
     measoptim <- Optim$measoptim
@@ -73,7 +73,7 @@ boxcox.lme <- function(object, lambda = "estim", method = "reml",
     lambdaoptim <- lambda
     measoptim <- estim_lme(lambda = lambda, y = y, formula = formula, 
                            data = data, rand_eff = rand_eff, method = method, 
-                           transfor =  transfor)
+                           trafo =  trafo)
   }
   
   # Plot the curve of the measure with line at the optimal transformation 
@@ -81,12 +81,17 @@ boxcox.lme <- function(object, lambda = "estim", method = "reml",
   if (plotit == TRUE) {
     plot_meas <- plot_trafolme(lambdarange = lambdarange, lambdaoptim = lambdaoptim,
                                measoptim = measoptim, y = y, formula = formula, 
-                               data = data, rand_eff = rand_eff, transfor = transfor, 
+                               data = data, rand_eff = rand_eff, trafo = trafo, 
                                method = method)
     
-    # Get plot measures
-    ans$lambdavector <- plot_meas$lambdavector
-    ans$measvector <- plot_meas$measvector
+    if (!is.character(plot_meas)) {
+      # Get plot measures
+      ans$lambdavector <- plot_meas$lambdavector
+      ans$measvector <- plot_meas$measvector 
+    } else {
+      ans$lambdavector <- NULL
+      ans$measvector <- NULL
+    }
   } else if (plotit == FALSE) {
     ans$lambdavector <- NULL
     ans$measvector <- NULL
@@ -96,11 +101,14 @@ boxcox.lme <- function(object, lambda = "estim", method = "reml",
   
   
   # Get vector of transformed and standardized transformed variable
-  ans$yt <- box_cox(y = y, lambda = lambdaoptim)$y
-  ans$zt <- box_cox_std(y = y, lambda = lambdaoptim)
+  #ans$yt <- box_cox(y = y, lambda = lambdaoptim)$y
+  #ans$zt <- box_cox_std(y = y, lambda = lambdaoptim)
   
   # Save transformation family and method
-  ans$family <- "Box-Cox"
+  #ans$family <- "Box-Cox"
+  
+  ans <- get_transformed(trafo = trafo, ans = ans, y = y, lambda = lambdaoptim)
+  
   ans$method <- method
   
   ans$lambdahat <- lambdaoptim

@@ -11,14 +11,14 @@
 #' minimization of Kullback Leibner divergence  ("div.kl"). In case of no and
 #' log transformation "NA" can be selected since no optimization is neccessary
 #' for these two transformation types.
-#' @param transfor a character string that selects the transformation.
+#' @param trafo a character string that selects the transformation.
 #' @return Depending on the selected \code{method} the return is a log
 #' likelihood, a skewness, a pooled skewness or a Kolmogorov-Smirnoff, Craemer
 #' von Mises or Kullback Leibner divergence.
 #' @keywords internal
 
 
-estim_lm <- function(lambda, y, x, method, transfor){
+estim_lm <- function(lambda, y, x, method, trafo){
 
     # Get residuals for all methods but ML
   # Wrapper for transformations, this means that we need a new argument
@@ -26,28 +26,35 @@ estim_lm <- function(lambda, y, x, method, transfor){
   
   # Find the optimal lambda depending on method
   optimization <- if (method == "ml") {
-    ML(y, x, lambda, transfor)
+    ML(y, x, lambda, trafo)
   } else if (method != "ml") {
     
-    yt <- if(transfor == "t_bx_cx") {
+    yt <- if(trafo == "boxcox") {
       as.matrix(box_cox(y = y, lambda = lambda, shift = 0)$y)
-    } else if (transfor == "t_mdls") {
+    } else if (trafo == "modulus") {
       as.matrix(modul(y = y, lambda = lambda))
-    } else if (transfor == "t_bck_dk") {
+    } else if (trafo == "bickeldoksum") {
       as.matrix(Bick_dok(y = y, lambda = lambda))
-    } else if (transfor == "t_mnl") {
+    } else if (trafo == "manly") {
       as.matrix(Manly(y = y, lambda = lambda))
-    } else if (transfor == "t_dl") {
+    } else if (trafo == "dual") {
       as.matrix(Dual(y = y, lambda = lambda))
-    } else if (transfor == "t_y_jhnsn") {
+    } else if (trafo == "yeojohnson") {
       as.matrix(Yeo_john(y = y, lambda = lambda))
+    } else if (trafo == "logshiftopt") {
+      as.matrix(log_shift(y = y, lambda = lambda))
+    } else if (trafo == "sqrtshift") {
+      as.matrix(sqrt_shift(y = y, lambda = lambda))
+    } else if (trafo == "gpower") {
+      as.matrix(gPower(y = y, lambda = lambda))
     }
+    
     # yt <- as.matrix(box_cox(y = y, lambda = lambda, shift = 0)$y)
     
     model_ML <- NULL
     try(model_ML <- lm(formula = yt ~ - 1 + x), silent = TRUE)
     
-    if(is.null(model_ML)){
+    if (is.null(model_ML)){
       stop("For some lambda in the interval, the likelihood does not converge.
          Choose another lambdarange.")
     } else {

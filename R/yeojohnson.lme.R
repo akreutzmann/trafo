@@ -49,7 +49,7 @@ yeojohnson.lme <- function(object, lambda = "estim", method = "reml",
                            lambdarange = c(-2, 2), plotit = TRUE, ...) {
   
   
-  transfor <- "t_y_jhnsn"
+  trafo <- "yeojohnson"
   
   # Get model variables: dependent variable y and explanatory variables x
   formula <- formula(object)
@@ -65,7 +65,7 @@ yeojohnson.lme <- function(object, lambda = "estim", method = "reml",
   if (lambda == "estim") {
     Optim <- est_lme(y = y, x = x, formula = formula, data = data, 
                                  rand_eff = rand_eff, method = method, 
-                                 lambdarange = lambdarange, transfor = transfor) 
+                                 lambdarange = lambdarange, trafo = trafo) 
     
     lambdaoptim <- Optim$lambdaoptim
     measoptim <- Optim$measoptim
@@ -74,7 +74,7 @@ yeojohnson.lme <- function(object, lambda = "estim", method = "reml",
     lambdaoptim <- lambda
     measoptim <- estim_lme(lambda = lambda, y = y, formula = formula, 
                            data = data, rand_eff = rand_eff, method = method, 
-                           transfor =  transfor)
+                           trafo =  trafo)
   }
   
   # Plot the curve of the measure with line at the optimal transformation 
@@ -82,23 +82,31 @@ yeojohnson.lme <- function(object, lambda = "estim", method = "reml",
   if (plotit == TRUE) {
     plot_meas <- plot_trafolme(lambdarange = lambdarange, lambdaoptim = lambdaoptim,
                                measoptim = measoptim, y = y, formula = formula, 
-                               data = data, rand_eff = rand_eff, transfor = transfor, 
+                               data = data, rand_eff = rand_eff, trafo = trafo, 
                                method = method)
     
-    # Get plot measures
-    ans$lambdavector <- plot_meas$lambdavector
-    ans$measvector <- plot_meas$measvector
+    if (!is.character(plot_meas)) {
+      # Get plot measures
+      ans$lambdavector <- plot_meas$lambdavector
+      ans$measvector <- plot_meas$measvector 
+    } else {
+      ans$lambdavector <- NULL
+      ans$measvector <- NULL
+    }
   } else if (plotit == FALSE) {
     ans$lambdavector <- NULL
     ans$measvector <- NULL
   }
   
   # Get vector of transformed and standardized transformed variable
-  ans$yt <- Yeo_john(y = y, lambda = lambdaoptim)
-  ans$zt <- Yeo_john_std(y = y, lambda = lambdaoptim)
+  #ans$yt <- Yeo_john(y = y, lambda = lambdaoptim)
+  #ans$zt <- Yeo_john_std(y = y, lambda = lambdaoptim)
   
   # Save transformation family and method
-  ans$family <- "Yeo-Johnson"
+  #ans$family <- "Yeo-Johnson"
+  
+  ans <- get_transformed(trafo = trafo, ans = ans, y = y, lambda = lambdaoptim)
+  
   ans$method <- method
   
   ans$lambdahat <- lambdaoptim

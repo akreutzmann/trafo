@@ -120,7 +120,7 @@ plot.trafo <- function(x, ...) {
       cat("Press [enter] to continue")
       line <- readline()
       yFitt
-      abline(lm(as.numeric(x$yt) ~ as.numeric(predict(x$modelt))),col="red",lwd=1.5)
+      abline(lm(as.numeric(x$yt) ~ as.numeric(predict(x$modelt))),col = "red",lwd=1.5)
       mtext("Transformed y vs Fitted", 3, 0.25, outer = FALSE, cex = 1)
       cat("Press [enter] to continue")
       line <- readline()
@@ -129,7 +129,7 @@ plot.trafo <- function(x, ...) {
       #cat("Press [enter] to continue")
       #line <- readline()
       #cookst
-      #par(old.par)
+      par(old.par)
       dev.flush()
       
       

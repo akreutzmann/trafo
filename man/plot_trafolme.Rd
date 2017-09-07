@@ -5,7 +5,7 @@
 \title{Plot for optimal transformation parameter - linear models}
 \usage{
 plot_trafolme(lambdarange, lambdaoptim, measoptim, y, formula, data, rand_eff,
-  transfor, method)
+  trafo, method)
 }
 \arguments{
 \item{lambdarange}{a numeric vector with two elements defining an interval 
@@ -23,7 +23,7 @@ that is used for the estimation of the optimal transformation parameter.}
 
 \item{rand_eff}{random effect extracted from lme object.}
 
-\item{transfor}{a character string that selects the transformation.}
+\item{trafo}{a character string that selects the transformation.}
 
 \item{method}{a character string. Different estimation methods can be used 
 for the estimation of the optimal transformation parameter: 

@@ -1,18 +1,16 @@
-#' Dual transformation for linear mixed models
+#' Square-root shift transformation for linear models
 #'
-#' The function transforms the dependent variable of a linear mixed model with 
-#' one random intercept using the Dual transformation. The 
-#' transformation parameter can either be estimated using different estimation 
-#' methods or given. 
+#' The function transforms the dependent variable of a linear model using the 
+#' Square-root shift transformation. The transformation parameter can either be 
+#' estimated using different estimation methods or given. 
 #'
-#' @param object an object of type lme. 
+#' @param object an object of type lm. 
 #' @param lambda either a character named "estim" if the optimal transformation
 #' parameter should be estimated or a numeric value determining a given 
 #' transformation parameter. Defaults to "estim".
 #' @param method a character string. Different estimation methods can be used 
 #' for the estimation of the optimal transformation parameter: 
-#' (i) Restricted maximum likelihood approach ("reml"), 
-#' (ii) Skewness minimization ("skew") and pooled skewness minimization ("pskew"), 
+#' (i) Maximum likelihood approach ("ml"), (ii) Skewness minimization ("skew"),  
 #' (iii) Divergence minimization by Kolmogorov-Smirnoff ("div.ks"), 
 #' by Cramer-von-Mises ("div.cm") or by Kullback-Leibler ("div.kl").
 #' @param lambdarange a numeric vector with two elements defining an interval 
@@ -33,58 +31,54 @@
 #' # Load data
 #' data("eusilcA_Vienna")
 #' 
-#' # Fit linear mixed model
-#' require(nlme)
-#' lme_Vienna <- lme(eqIncome ~ eqsize + gender + cash + unempl_ben + age_ben +
-#' rent + cap_inv + tax_adj + dis_ben + sick_ben + surv_ben + fam_allow + 
-#' house_allow, random = ~ 1 | county, data = eusilcA_Vienna, 
-#' na.action = na.omit)
+#' # Fit linear model
+#' lm_Vienna <- lm(eqIncome ~ eqsize + gender + cash + unempl_ben + age_ben + 
+#' rent + cap_inv + tax_adj + dis_ben + sick_ben + surv_ben + 
+#' fam_allow + house_allow, data = eusilcA_Vienna)
 #' 
-#' # Transform dependent variable using divergence minimization following
-#' # Cramer-von-Mises
-#' dual(object = lme_Vienna, lambda = "estim", method = "div.cvm",
+#' # Transform dependent variable using skewness minimization
+#' boxcox(object = lm_Vienna, lambda = "estim", method = "skew",
 #' plotit = FALSE)
 #' @export
 
-dual.lme <- function(object, lambda = "estim", method = "reml", 
-                     lambdarange = c(0, 2), plotit = TRUE, ...) {
+sqrtshift.lm <- function(object, lambda ="estim", method = "ml", 
+                      lambdarange = c(0, 2), plotit = TRUE, ...) {
   
-  trafo <- "dual"
+  trafo <- "sqrtshift"
   
   # Get model variables: dependent variable y and explanatory variables x
-  formula <- formula(object)
-  rand_eff <- names(object$coefficients$random)
-  data <- object$data
-  x <- model.matrix(formula, data = object$data)
-  y <- as.matrix(object$data[paste(formula[2])])
+  model_frame <- object$model 
   
+  # Check if arguments are as expected (for model variables)
+  if (is.null(y <- model.response(model_frame))) 
+    stop("Dependent variable y must not be empty")
+  if (is.null(x <- model.matrix(attr(model_frame, "terms"), data = model_frame))) 
+    stop("Matrix of covariates X must not be empty")
+
   
   # For saving returns
   ans <- list()
   
   # Get the optimal transformation parameter
   if (lambda == "estim") {
-    Optim <- est_lme(y = y, x = x, formula = formula, data = data, 
-                                 rand_eff = rand_eff, method = method, 
-                                 lambdarange = lambdarange, trafo = trafo) 
+    optim <- est_lm(y = y, x = x, trafo = trafo, method = method, 
+                         lambdarange = lambdarange) 
     
-    lambdaoptim <- Optim$lambdaoptim
-    measoptim <- Optim$measoptim
+    lambdaoptim <- optim$lambdaoptim
+    measoptim <- optim$measoptim
     
   } else if (is.numeric(lambda)) {
     lambdaoptim <- lambda
-    measoptim <- estim_lme(lambda = lambda, y = y, formula = formula, 
-                           data = data, rand_eff = rand_eff, method = method, 
-                           trafo =  trafo)
+    measoptim <- estim_lm(lambda = lambdaoptim, y = y, x = x, 
+                       trafo = trafo, method = method)
   }
   
   # Plot the curve of the measure with line at the optimal transformation 
   # parameter
   if (plotit == TRUE) {
-    plot_meas <- plot_trafolme(lambdarange = lambdarange, lambdaoptim = lambdaoptim,
-                               measoptim = measoptim, y = y, formula = formula, 
-                               data = data, rand_eff = rand_eff, trafo = trafo, 
-                               method = method)
+    plot_meas <- plot_trafolm(lambdarange = lambdarange, lambdaoptim = lambdaoptim, 
+                              measoptim = measoptim, y = y, x = x, 
+                              trafo = trafo, method = method)
     
     # Get plot measures
     ans$lambdavector <- plot_meas$lambdavector
@@ -95,12 +89,13 @@ dual.lme <- function(object, lambda = "estim", method = "reml",
   }
 
   
+  
   # Get vector of transformed and standardized transformed variable
-  #ans$yt <- Dual(y = y, lambda = lambdaoptim)
-  #ans$zt <- Dual_std(y = y, lambda = lambdaoptim)
+  #ans$yt <- box_cox(y = y, lambda = lambdaoptim)$y
+  #ans$zt <- box_cox_std(y = y, lambda = lambdaoptim)
   
   # Save transformation family and method
-  #ans$family <- "Dual"
+  #ans$family <- "Box-Cox"
   
   ans <- get_transformed(trafo = trafo, ans = ans, y = y, lambda = lambdaoptim)
   

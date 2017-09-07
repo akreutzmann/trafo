@@ -1,6 +1,6 @@
-#' Box-Cox Transformation
+#' logshiftopt Transformation
 #'
-#' Transforms the dependent variable of a regression model using the Box-Cox
+#' Transforms the dependent variable of a regression model using the logshiftopt
 #' transformation. The regression model can be a linear or a linear mixed model 
 #' with one random intercept. 
 #' 
@@ -9,8 +9,8 @@
 #' @return The return depends on the class of its argument. The 
 #' documentation of particular methods gives detailed information about the 
 #' return of that method.
-#' @seealso  \code{\link{boxcox.lm}}, \code{\link{boxcox.lme}}
-#' @keywords Box-Cox
+#' @seealso  \code{\link{logshiftopt.lm}},  \code{\link{logshiftopt.lme}}
+#' @keywords logshiftopt
 #' @export
-boxcox <- function(object,...) UseMethod("boxcox")
+logshiftopt <- function(object,...) UseMethod("logshiftopt")
 

@@ -4,7 +4,7 @@
 \alias{plot_trafolm}
 \title{Plot for optimal transformation parameter - linear models}
 \usage{
-plot_trafolm(lambdarange, lambdaoptim, measoptim, y, x, transfor, method)
+plot_trafolm(lambdarange, lambdaoptim, measoptim, y, x, trafo, method)
 }
 \arguments{
 \item{lambdarange}{a numeric vector with two elements defining an interval 
@@ -18,7 +18,7 @@ that is used for the estimation of the optimal transformation parameter.}
 
 \item{x}{matrix of regressors}
 
-\item{transfor}{a character string that selects the transformation.}
+\item{trafo}{a character string that selects the transformation.}
 
 \item{method}{a character string. In order to determine the optimal parameter
 for the transformation five different estimation methods can be chosen

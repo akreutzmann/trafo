@@ -8,16 +8,16 @@
 #' @return log-likelihood
 #' @keywords internal
 
-ML <- function(y, x, lambda, transfor){
+ML <- function(y, x, lambda, trafo){
   qr <- qr(x)
   n <- length(y)
   yt <- rep(NA, n)
   
-  lglike <- -lglike(lambda = lambda, y = y, qr = qr, n = n, transfor = transfor)
+  lglike <- -lglike(lambda = lambda, y = y, qr = qr, n = n, trafo = trafo)
 }
 
 # Log-likelihood function for ML method
-lglike <- function(lambda, y, qr, n, transfor, ...) {
+lglike <- function(lambda, y, qr, n, trafo, ...) {
   
   # if (abs(lambda) != 0) {
   #   yt <- (y^lambda - 1)/lambda
@@ -29,19 +29,25 @@ lglike <- function(lambda, y, qr, n, transfor, ...) {
 
   
   # Wrapper with standardized tranformations (Done!)
-  zt <- if (transfor == "t_bx_cx") {
+  zt <- if (trafo == "boxcox") {
     box_cox_std(y = y, lambda = lambda)
-  } else if (transfor == "t_mdls") {
+  } else if (trafo == "modulus") {
     modul_std(y = y, lambda = lambda)
-  } else if (transfor == "t_bck_dk") {
+  } else if (trafo == "bickeldoksum") {
     Bick_dok_std(y = y, lambda = lambda)
-  } else if (transfor == "t_mnl") {
+  } else if (trafo == "manly") {
     Manly_std(y = y, lambda = lambda)
-  } else if (transfor == "t_dl") {
+  } else if (trafo == "dual") {
     Dual_std(y = y, lambda = lambda)
-  } else if (transfor == "t_y_jhnsn") {
+  } else if (trafo == "yeojohnson") {
     Yeo_john_std(y = y, lambda = lambda)
-  } 
+  } else if (trafo == "logshiftopt") {
+    log_shift_std(y = y, lambda = lambda)
+  } else if (trafo == "sqrtshift") {
+    sqrt_shift_std(y = y, lambda = lambda)
+  } else if (trafo == "gpower") {
+    gPower_std(y = y, lambda = lambda)
+  }
   
   # zt <- yt/exp((lambda - 1)*mean(log(y)))
   
@@ -63,25 +69,31 @@ restricted_ML <- function(y = y,
                  lambda,
                  data = data,
                  rand_eff = rand_eff,
-                 transfor) {
+                 trafo) {
   
   # Wrapper for other standardized transformations (Done!)
-  yt <- if(transfor == "t_bx_cx") {
+  zt <- if (trafo == "boxcox") {
     box_cox_std(y = y, lambda = lambda)
-  } else if (transfor == "t_mdls") {
+  } else if (trafo == "modulus") {
     modul_std(y = y, lambda = lambda)
-  } else if (transfor == "t_bck_dk") {
+  } else if (trafo == "bickeldoksum") {
     Bick_dok_std(y = y, lambda = lambda)
-  } else if (transfor == "t_mnl") {
+  } else if (trafo == "manly") {
     Manly_std(y = y, lambda = lambda)
-  } else if (transfor == "t_dl") {
+  } else if (trafo == "dual") {
     Dual_std(y = y, lambda = lambda)
-  } else if (transfor == "t_y_jhnsn") {
+  } else if (trafo == "yeojohnson") {
     Yeo_john_std(y = y, lambda = lambda)
-  } 
+  } else if (trafo == "logshiftopt") {
+    log_shift_std(y = y, lambda = lambda)
+  } else if (trafo == "sqrtshift") {
+    sqrt_shift_std(y = y, lambda = lambda)
+  } else if (trafo == "gpower") {
+    gPower_std(y = y, lambda = lambda)
+  }
   
 
-  data[paste(formula[2])] <- yt
+  data[paste(formula[2])] <- zt
   tdata <- data
 
   
@@ -91,8 +103,8 @@ restricted_ML <- function(y = y,
                         random    = as.formula(paste0("~ 1 | as.factor(", rand_eff, ")")),
                         method    = "REML",
                         keep.data = FALSE, 
-                        na.action = na.omit), silent=TRUE)
-  if(is.null(model_REML)){
+                        na.action = na.omit), silent = TRUE)
+  if (is.null(model_REML)) {
     stop("For some lambda in the lambdarange, the likelihood does not converge.
          Choose another lambdarange.")
   } else {

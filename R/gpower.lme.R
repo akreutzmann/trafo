@@ -1,7 +1,7 @@
-#' Manly transformation for linear mixed models
+#' Gpower transformation for linear mixed models
 #'
 #' The function transforms the dependent variable of a linear mixed model with 
-#' one random intercept using the Manly transformation. The 
+#' one random intercept using the Gpower transformation. The 
 #' transformation parameter can either be estimated using different estimation 
 #' methods or given. 
 #'
@@ -17,7 +17,7 @@
 #' by Cramer-von-Mises ("div.cm") or by Kullback-Leibler ("div.kl").
 #' @param lambdarange a numeric vector with two elements defining an interval 
 #' that is used for the estimation of the optimal transformation parameter. 
-#' Defaults to \code{c(1e-11, 2)}.
+#' Defaults to \code{c(-2, 2)}.
 #' @param plotit logical. If TRUE, a plot that illustrates the optimal 
 #' transformation parameter or the given transformation parameter is returned.
 #' @param ... other parameters that can be passed to the function.
@@ -40,15 +40,15 @@
 #' house_allow, random = ~ 1 | county, data = eusilcA_Vienna, 
 #' na.action = na.omit)
 #' 
-#' # Transform dependent variable using restricted maximum likelihood
-#' manly(object = lme_Vienna, lambda = "estim", method = "reml",
-#' lambdarange = c(-0.005, 0.005), plotit = FALSE)
+#' # Transform dependent variable using pooled skewness minimization
+#' boxcox(object = lme_Vienna, lambda = "estim", method = "pskew",
+#' plotit = FALSE)
 #' @export
 
-manly.lme <- function(object, lambda = "estim", method = "reml", 
-                      lambdarange = c(-2, 2), plotit = TRUE, ...) {
+gpower.lme <- function(object, lambda = "estim", method = "reml", 
+                       lambdarange = c(-2,2), plotit = TRUE, ...) {
   
-  trafo <- "manly"
+  trafo <- "gpower"
   
   # Get model variables: dependent variable y and explanatory variables x
   formula <- formula(object)
@@ -56,15 +56,15 @@ manly.lme <- function(object, lambda = "estim", method = "reml",
   data <- object$data
   x <- model.matrix(formula, data = object$data)
   y <- as.matrix(object$data[paste(formula[2])])
-  
+
   # For saving returns
   ans <- list()
   
   # Get the optimal transformation parameter
   if (lambda == "estim") {
     Optim <- est_lme(y = y, x = x, formula = formula, data = data, 
-                                 rand_eff = rand_eff, method = method, 
-                                 lambdarange = lambdarange, trafo = trafo) 
+                     rand_eff = rand_eff, method = method, 
+                     lambdarange = lambdarange, trafo = trafo) 
     
     lambdaoptim <- Optim$lambdaoptim
     measoptim <- Optim$measoptim
@@ -98,12 +98,14 @@ manly.lme <- function(object, lambda = "estim", method = "reml",
   }
   
   
+  
+  
   # Get vector of transformed and standardized transformed variable
-  #ans$yt <- Manly(y = y, lambda = lambdaoptim)
-  #ans$zt <- Manly_std(y = y, lambda = lambdaoptim)
+  #ans$yt <- box_cox(y = y, lambda = lambdaoptim)$y
+  #ans$zt <- box_cox_std(y = y, lambda = lambdaoptim)
   
   # Save transformation family and method
-  #ans$family <- "Manly"
+  #ans$family <- "Box-Cox"
   
   ans <- get_transformed(trafo = trafo, ans = ans, y = y, lambda = lambdaoptim)
   

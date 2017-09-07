@@ -45,7 +45,7 @@ bickeldoksum.lm <- function(object, lambda = "estim", method = "ml",
                             lambdarange = c(1e-11, 2), plotit = TRUE, ...) {
   
   
-  transfor <- "t_bck_dk"
+  trafo <- "bickeldoksum"
   
   # Get model variables: dependent variable y and explanatory variables x
   model_frame <- object$model 
@@ -61,16 +61,16 @@ bickeldoksum.lm <- function(object, lambda = "estim", method = "ml",
   
   # Get the optimal transformation parameter
   if (lambda == "estim") {
-    Optim <- est_lm(y = y, x = x, transfor = transfor, 
+    optim <- est_lm(y = y, x = x, trafo = trafo, 
                     method = method, lambdarange = lambdarange) 
     
-    lambdaoptim <- Optim$lambdaoptim
-    measoptim <- Optim$measoptim
+    lambdaoptim <- optim$lambdaoptim
+    measoptim <- optim$measoptim
     
   } else if (is.numeric(lambda)) {
     lambdaoptim <- lambda
     measoptim <- estim_lm(lambda = lambdaoptim, y = y, x = x, 
-                          transfor = transfor, method = method)
+                          trafo = trafo, method = method)
   }
   
   # Plot the curve of the measure with line at the optimal transformation 
@@ -78,7 +78,7 @@ bickeldoksum.lm <- function(object, lambda = "estim", method = "ml",
   if (plotit == TRUE) {
     plot_meas <- plot_trafolm(lambdarange = lambdarange, lambdaoptim = lambdaoptim, 
                               measoptim = measoptim, y = y, x = x, 
-                              transfor = transfor, method = method)
+                              trafo = trafo, method = method)
     
     # Get plot measures
     ans$lambdavector <- plot_meas$lambdavector
@@ -89,14 +89,22 @@ bickeldoksum.lm <- function(object, lambda = "estim", method = "ml",
   }
 
   
+  
+  
   # Get vector of transformed and standardized transformed variable
-  ans$yt <- Bick_dok(y = y, lambda = lambdaoptim)
-  ans$zt <- Bick_dok_std(y = y, lambda = lambdaoptim)
+  # ans$yt <- Bick_dok(y = y, lambda = lambdaoptim)
+  # ans$zt <- Bick_dok_std(y = y, lambda = lambdaoptim)
   
   # Save transformation family and method
-  ans$family <- "Bickel-Doksum"
+  # ans$family <- "Bickel-Doksum"
+  
+  ans <- get_transformed(trafo = trafo, ans = ans, y = y, lambda = lambdaoptim)
+  
+  # Save estimation method
   ans$method <- method
   
+  # Save optimal transformation parameter and corresponding statistics depending
+  # on the estimation method
   ans$lambdahat <- lambdaoptim
   ans$measoptim <- measoptim
   

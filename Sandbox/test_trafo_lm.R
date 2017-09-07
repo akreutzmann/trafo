@@ -1,4 +1,4 @@
-trafo_lm <- trafo_lm(object = modelVienna, trafo = "box.cox", 
+trafo_lm <- trafo_lm(object = modelVienna, trafo = "boxcox", 
                      method = "ml", lambdarange = c(0,2), plotit = TRUE, 
                      std = FALSE)
 

@@ -81,6 +81,7 @@ bd_ml <- bickeldoksum(object = modelVienna, lambda = "estim", method = "ml",
 
 print(bd_ml)
 summary(bd_ml)
+plot(bd_ml)
 
 bd_skew <- bickeldoksum(modelVienna, method = "skew")
 
@@ -206,7 +207,7 @@ modelVienna2 <- lme(eqIncome ~ eqsize + gender + cash + unempl_ben + age_ben +
 plot(modelVienna2)
 
 # Box-Cox ----------------------------------------------------------------------
-bxcx_reml <- boxcox(modelVienna2, plotit = FALSE)
+bxcx_reml <- boxcox(modelVienna2, plotit = TRUE)
 
 print(bxcx_reml)
 summary(bxcx_reml)
@@ -276,14 +277,16 @@ summary(modulus_divkl)
 
 # Bickel-Doksum ----------------------------------------------------------------
 
-bickeldoksum_reml <- bickeldoksum(modelVienna2, lambda = "estim", method = "reml")
+bickeldoksum_reml <- bickeldoksum(modelVienna2, lambda = "estim", method = "reml",
+                                   plotit= TRUE)
 
 print(bickeldoksum_reml)
 summary(bickeldoksum_reml)
 plot(bickeldoksum_reml)
 
 
-bickeldoksum_skew <- bickeldoksum(modelAustria, lambda = "estim", method = "skew")
+bickeldoksum_skew <- bickeldoksum(modelVienna2, lambda = "estim", method = "skew",
+                                  plotit = TRUE)
 
 print(bickeldoksum_skew)
 summary(bickeldoksum_skew)

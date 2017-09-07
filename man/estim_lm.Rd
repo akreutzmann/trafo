@@ -4,7 +4,7 @@
 \alias{estim_lm}
 \title{Wrapper function for estimation methods - linear models}
 \usage{
-estim_lm(lambda, y, x, method, transfor)
+estim_lm(lambda, y, x, method, trafo)
 }
 \arguments{
 \item{lambda}{transformation parameter}
@@ -22,7 +22,7 @@ minimization of Kullback Leibner divergence  ("div.kl"). In case of no and
 log transformation "NA" can be selected since no optimization is neccessary
 for these two transformation types.}
 
-\item{transfor}{a character string that selects the transformation.}
+\item{trafo}{a character string that selects the transformation.}
 }
 \value{
 Depending on the selected \code{method} the return is a log

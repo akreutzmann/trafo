@@ -14,18 +14,18 @@
 #' minimization of Kullback Leibner divergence  ("div.kl"). In case of no and
 #' log transformation "NA" can be selected since no optimization is neccessary
 #' for these two transformation types.
-#' @param transfor a character string that selects the transformation.
+#' @param trafo a character string that selects the transformation.
 #' @keywords internal
 
 
 plot_trafolm <- function(lambdarange, lambdaoptim, measoptim, 
-                         y, x, transfor, method) {
+                         y, x, trafo, method) {
   
   lambdavector <- seq(lambdarange[1], lambdarange[2], 0.025)
   l <- length(lambdavector)
   lambdavector[l + 1]  <- lambdaoptim
   lambdavector <- sort(lambdavector)
-  measvector <- sapply(lambdavector, estim_lm, y = y, x = x, transfor = transfor,
+  measvector <- sapply(lambdavector, estim_lm, y = y, x = x, trafo = trafo,
                        method = method)
   vline <- lambdaoptim
   

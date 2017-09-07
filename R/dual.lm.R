@@ -46,7 +46,7 @@ dual.lm <- function(object, lambda = "estim", method = "ml",
                     lambdarange = c(0, 2), plotit = TRUE, ...) {
   
 
-  transfor <- "t_dl"
+  trafo <- "dual"
   
   # Get model variables: dependent variable y and explanatory variables x
   model_frame <- object$model 
@@ -62,7 +62,7 @@ dual.lm <- function(object, lambda = "estim", method = "ml",
   
   # Get the optimal transformation parameter
   if (lambda == "estim") {
-    bx_cxOptim <- est_lm(y = y, x = x, transfor = transfor, method = method, 
+    bx_cxOptim <- est_lm(y = y, x = x, trafo = trafo, method = method, 
                          lambdarange = lambdarange) 
     
     lambdaoptim <- bx_cxOptim$lambdaoptim
@@ -71,7 +71,7 @@ dual.lm <- function(object, lambda = "estim", method = "ml",
   } else if (is.numeric(lambda)) {
     lambdaoptim <- lambda
     measoptim <- estim_lm(lambda = lambdaoptim, y = y, x = x, 
-                          transfor = transfor, method = method)
+                          trafo = trafo, method = method)
   }
   
   # Plot the curve of the measure with line at the optimal transformation 
@@ -79,7 +79,7 @@ dual.lm <- function(object, lambda = "estim", method = "ml",
   if (plotit == TRUE) {
     plot_meas <- plot_trafolm(lambdarange = lambdarange, lambdaoptim = lambdaoptim, 
                               measoptim = measoptim, y = y, x = x, 
-                              transfor = transfor, method = method)
+                              trafo = trafo, method = method)
     
     # Get plot measures
     ans$lambdavector <- plot_meas$lambdavector
@@ -91,11 +91,14 @@ dual.lm <- function(object, lambda = "estim", method = "ml",
 
   
   # Get vector of transformed and standardized transformed variable
-  ans$yt <- Dual(y = y, lambda = lambdaoptim)
-  ans$zt <- Dual_std(y = y, lambda = lambdaoptim)
+  #ans$yt <- Dual(y = y, lambda = lambdaoptim)
+  #ans$zt <- Dual_std(y = y, lambda = lambdaoptim)
   
   # Save transformation family and method
-  ans$family <- "Dual"
+  #ans$family <- "Dual"
+  
+  ans <- get_transformed(trafo = trafo, ans = ans, y = y, lambda = lambdaoptim)
+  
   ans$method <- method
   
   ans$lambdahat <- lambdaoptim

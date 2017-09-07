@@ -1,6 +1,6 @@
-#' Box-Cox Transformation
+#' sqrtshift Transformation
 #'
-#' Transforms the dependent variable of a regression model using the Box-Cox
+#' Transforms the dependent variable of a regression model using the sqrtshift
 #' transformation. The regression model can be a linear or a linear mixed model 
 #' with one random intercept. 
 #' 
@@ -9,8 +9,8 @@
 #' @return The return depends on the class of its argument. The 
 #' documentation of particular methods gives detailed information about the 
 #' return of that method.
-#' @seealso  \code{\link{boxcox.lm}}, \code{\link{boxcox.lme}}
-#' @keywords Box-Cox
+#' @seealso  \code{\link{sqrtshift.lm}},  \code{\link{sqrtshift.lme}}
+#' @keywords Sqrt shift
 #' @export
-boxcox <- function(object,...) UseMethod("boxcox")
+sqrtshift <- function(object,...) UseMethod("sqrtshift")
 
