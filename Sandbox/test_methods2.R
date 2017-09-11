@@ -26,6 +26,7 @@ bd_ml <- bickeldoksum(object = modelVienna, lambda = "estim", method = "ml",
                       plotit = TRUE)
 
 print(bd_ml)
+as.data.frame(bd_ml, model_obj = modelVienna)
 
 
 trafo_lmBD <- trafo_lm(object = modelVienna, trafo = "bickeldoksum", 
@@ -51,7 +52,7 @@ plot(bickeldoksum_reml)
 boxcox_skew <- boxcox(modelVienna, method = "skew", plotit = TRUE)
 
 print(boxcox_skew)
-as.data.frame(boxcox_skew, modelVienna)
+as.data.frame(boxcox_skew, model_obj = modelVienna)
 
 trafo_lmBC <- trafo_lm(object = modelVienna, trafo = "boxcox", 
                        method = "skew", lambdarange = c(0,2), std = TRUE)
