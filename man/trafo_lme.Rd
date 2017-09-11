@@ -52,6 +52,6 @@ house_allow, random = ~ 1 | county, data = eusilcA_Vienna,
 na.action = na.omit)
 
 # Get linear model with untransformed and transformed model
-trafo_lme(object = lme_Vienna, trafo = "box.cox", method = "reml", 
+trafo_lme(object = lme_Vienna, trafo = "boxcox", method = "reml", 
 lambdarange = c(0,2), plotit = TRUE, std = TRUE)
 }

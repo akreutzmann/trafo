@@ -359,20 +359,20 @@ neg_log_back <- function(y, lambda = lambda) {
 
 # Transformation: Reciprocal
 reciprocal <- function(y)  {#lambda is fixed
-    y <- box_cox(y, lambda = -1)
+    y <- box_cox(y, lambda = -1)$y
     return(y)
 }
 
 # Standardized transformation: Reciprocal
 
 reciprocal_std  <- function(y) {
-   y <- box_cox_std(y, lambda = -1 )
+   y <- box_cox_std(y, lambda = -1)
    return(y)
 }
 
 # Back transformation: Reciprocal
 reciprocal_back <- function(y) {
-    box_cox_back(y, lambda = -1 )
+    box_cox_back(y, lambda = -1)
 }
 
 
@@ -455,7 +455,7 @@ gPower <-  function(y, lambda = lambda) {
   lambda_absolute <- abs(lambda)
   if (lambda_absolute <= 1e-12) {  #case lambda=0
     yt <-  log(y + sqrt(y^2 + 1))
-  } else if (lambda > 1e-12) {
+  } else if (lambda_absolute > 1e-12) {
     yt <- ((y + sqrt(y^2 + 1))^lambda-1)/lambda
   }
   return(y = yt)
@@ -464,7 +464,7 @@ gPower <-  function(y, lambda = lambda) {
 # Standardized transformation: Gpower
 
 gPower_std <- function(y, lambda) {
-  yt <- gPower(y, lambda)
+  yt <- gPower(y = y, lambda = lambda)
   zt <- yt/exp((mean( lambda*(log(y + sqrt(y^2))) - log(y^2+1)/2 )))
 
   y <- zt

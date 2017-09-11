@@ -34,7 +34,7 @@
 #' na.action = na.omit)
 #' 
 #' # Get linear model with untransformed and transformed model
-#' trafo_lme(object = lme_Vienna, trafo = "box.cox", method = "reml", 
+#' trafo_lme(object = lme_Vienna, trafo = "boxcox", method = "reml", 
 #' lambdarange = c(0,2), plotit = TRUE, std = TRUE)
 #' @importFrom stats aggregate as.formula dnorm ecdf family lm logLik median 
 #' model.frame model.matrix model.response na.omit optimize qchisq qnorm 

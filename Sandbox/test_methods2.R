@@ -29,6 +29,12 @@ print(bd_ml)
 summary(bd_ml)
 plot(bd_ml)
 
+trafo_lmBD <- trafo_lm(object = modelVienna, trafo = "bickeldoksum", 
+                       method = "ml", lambdarange = c(0,2), std = FALSE)
+
+print(trafo_lmBD)
+summary(trafo_lmBD)
+plot(trafo_lmBD)
 
 # lme with reml
 bickeldoksum_reml <- bickeldoksum(modelVienna2, lambda = "estim", method = "reml",
@@ -48,6 +54,21 @@ print(boxcox_skew)
 summary(boxcox_skew)
 plot(boxcox_skew)
 
+trafo_lmBC <- trafo_lm(object = modelVienna, trafo = "boxcox", 
+                       method = "skew", lambdarange = c(0,2), std = TRUE)
+
+print(trafo_lmBC)
+summary(trafo_lmBC)
+plot(trafo_lmBC)
+
+compare_BDBC <- compare_trafo(modelVienna, trafos = list(bd_ml, boxcox_skew), 
+                              std = FALSE)
+
+print(compare_BDBC)
+summary(compare_BDBC)
+plot(compare_BDBC)
+
+
 # lme with minimization of pooled skewness
 boxcox_pskew <- boxcox(modelVienna2, lambdarange = c(-0.5,2), 
                       method = "pskew", plotit = TRUE)
@@ -66,6 +87,13 @@ print(dual_divks)
 summary(dual_divks)
 plot(dual_divks)
 
+trafo_lmD <- trafo_lm(object = modelVienna, trafo = "dual", 
+                       method = "div.ks", lambdarange = c(0,2), std = FALSE)
+
+print(trafo_lmD)
+summary(trafo_lmD)
+plot(trafo_lmD)
+
 # lme with divergence minimization following Cramer-von-Mises
 dual_divcvm <- dual(modelVienna2, method = "div.cvm")
 
@@ -83,6 +111,13 @@ print(manly_ml)
 summary(manly_ml)
 plot(manly_ml)
 
+trafo_lmML <- trafo_lm(object = modelVienna, trafo = "manly", 
+                      method = "ml", lambdarange = c(0.00005,0.005), std = FALSE)
+
+print(trafo_lmML)
+summary(trafo_lmML)
+plot(trafo_lmML)
+
 # lme with divergence minimization following Kullback-Leibner
 manly_divkl <- manly(modelVienna2, method = "div.kl", lambdarange = c(-0.0005, 0.005))
 
@@ -99,6 +134,15 @@ modulus_divcvm <- modulus(modelVienna, method = "div.cvm")
 print(modulus_divcvm)
 summary(modulus_divcvm)
 plot(modulus_divcvm)
+
+
+trafo_lmMD <- trafo_lm(object = modelVienna, trafo = "modulus", 
+                       method = "div.cvm", lambdarange = c(0, 2), 
+                       std = TRUE)
+
+print(trafo_lmMD)
+summary(trafo_lmMD)
+plot(trafo_lmMD)
 
 # lme with skewness minimization
 modulus_skew <- modulus(modelVienna2, method = "skew")
@@ -121,7 +165,13 @@ summary(yeojohnson_ml)
 plot(yeojohnson_03)
 plot(yeojohnson_ml)
 
+trafo_lmY <- trafo_lm(object = modelVienna, trafo = "yeojohnson", 
+                       method = "div.cvm", lambdarange = c(0, 2), 
+                       std = FALSE)
 
+print(trafo_lmY)
+summary(trafo_lmY)
+plot(trafo_lmY)
 
 # lme with given lambda
 yeojohnson_035 <- yeojohnson(modelVienna2, lambda = 0.35,  
@@ -145,6 +195,14 @@ print(logshiftopt_divcvm)
 summary(logshiftopt_divcvm)
 plot(logshiftopt_divcvm)
 
+trafo_lmlopt <- trafo_lm(object = modelVienna, trafo = "logshiftopt", 
+                      method = "div.cvm", lambdarange = c(900, 1000), 
+                      std = FALSE)
+
+print(trafo_lmlopt)
+summary(trafo_lmlopt)
+plot(trafo_lmlopt)
+
 # lme with skewness minimization
 logshiftopt_skew <- logshiftopt(modelVienna2, lambdarange = c(950,1000), 
                                 method = "skew", plotit = FALSE)
@@ -165,6 +223,14 @@ print(sqrtshift_ml)
 summary(sqrtshift_ml)
 plot(sqrtshift_ml)
 
+trafo_lmsqrt <- trafo_lm(object = modelVienna, trafo = "sqrtshift", 
+                         method = "ml", lambdarange = c(0, 2), 
+                         std = FALSE)
+
+print(trafo_lmsqrt)
+summary(trafo_lmsqrt)
+plot(trafo_lmsqrt)
+
 # lme with skewness minimization
 sqrtshift_reml <- sqrtshift(modelVienna2, lambdarange = c(0,2), 
                                 method = "reml", plotit = FALSE)
@@ -176,17 +242,74 @@ plot(sqrtshift_reml)
 
 # 9. Gpower 
 
-# lm with divergence following Cramer-von-Mises
-gpower_ml <- gpower(modelVienna, lambda = 100)
+# lm with ml
+gpower_skew <- gpower(modelVienna, lambda = "estim", method = "skew")
 
-print(sqrtshift_ml)
-summary(sqrtshift_ml)
-plot(sqrtshift_ml)
+print(gpower_skew)
+summary(gpower_skew)
+plot(gpower_skew)
+
+
+trafo_lmGP <- trafo_lm(object = modelVienna, trafo = "gpower", 
+                         method = "ml", lambdarange = c(0, 2), 
+                         std = FALSE)
+
+print(trafo_lmGP)
+summary(trafo_lmGP)
+plot(trafo_lmGP)
 
 # lme with skewness minimization
-sqrtshift_reml <- sqrtshift(modelVienna2, lambdarange = c(0,2), 
-                            method = "reml", plotit = FALSE)
+gpower_reml <- gpower(modelVienna2, lambdarange = c(0,2), 
+                            method = "reml", plotit = TRUE)
 
-print(sqrtshift_reml)
-summary(sqrtshift_reml)
-plot(sqrtshift_reml)
+print(gpower_reml)
+summary(gpower_reml)
+plot(gpower_reml)
+
+
+# 10. Reciprocal
+
+reciprocal_Vienna <- simple_trafo(modelVienna, trafo = "reciprocal")
+
+print(reciprocal_Vienna)
+summary(reciprocal_Vienna)
+plot(reciprocal_Vienna)
+
+trafo_lmRC <- trafo_lm(object = modelVienna, trafo = "reciprocal", 
+                       method = "ml", lambdarange = c(0, 2), 
+                       std = FALSE)
+
+print(trafo_lmRC)
+summary(trafo_lmRC)
+plot(trafo_lmRC)
+
+
+# 11. Neg Log
+
+neglog_Vienna <- simple_trafo(modelVienna, trafo = "neglog")
+
+print(neglog_Vienna)
+summary(neglog_Vienna)
+plot(neglog_Vienna)
+
+
+trafo_lmNL <- trafo_lm(object = modelVienna, trafo = "neglog", 
+                       method = "ml", lambdarange = c(0, 2), 
+                       std = FALSE)
+
+print(trafo_lmNL)
+summary(trafo_lmNL)
+plot(trafo_lmNL)
+
+
+
+neglog_custom <- simple_trafo(modelVienna, trafo = "custom", 
+                              custom_trafo = function(y) {
+                                u <- abs(y) + 1L
+                                yt <-  sign(y)*log(u)
+                                
+                                return(y = yt)
+                              })
+
+
+all.equal(neglog_custom$yt, neglog_Vienna$yt)

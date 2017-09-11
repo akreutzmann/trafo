@@ -112,7 +112,7 @@ bickeldoksum.lm <- function(object, lambda = "estim", method = "ml",
   ans$modelt <- get_modelt(object = object, trans_mod = ans, std = FALSE)
   
   # New class trafo
-  class(ans) <- "trafo"
+  class(ans) <- c("trafo", "oneparam")
   ans
   
 }

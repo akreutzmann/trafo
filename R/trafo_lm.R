@@ -1,6 +1,6 @@
 #' Fits transformed linear models
 #'
-#' Function \code{trans_lm} fits linear models with transformed dependent 
+#' Function \code{trafo_lm} fits linear models with transformed dependent 
 #' variable. The return are two lm objects where the first is the transformed
 #' and the second the untransformed linear model. 
 #'
@@ -16,10 +16,12 @@
 #' by Cramer-von-Mises ("div.cm") or by Kullback-Leibler ("div.kl").
 #' @param lambdarange a numeric vector with two elements defining an interval 
 #' that is used for the estimation of the optimal transformation parameter. 
-#' @param plotit logical. If TRUE, a plot that illustrates the optimal 
-#' transformation parameter or the given transformation parameter is returned.
+# #' @param plotit logical. If TRUE, a plot that illustrates the optimal 
+# #' transformation parameter or the given transformation parameter is returned.
 #' @param std logical. If TRUE, the transformed model is returned based on the 
 #' standardized transformation.
+#' @param custom_trafo a function that specifies a transformation without 
+#' transformation parameter that needs to be estimated or given.
 #' @return an object of class \code{trafo_mod}.
 #' @examples
 #' # Load data
@@ -31,16 +33,19 @@
 #' fam_allow + house_allow, data = eusilcA_Vienna)
 #' 
 #' # Get linear model with untransformed and transformed model
-#' trafo_lm(object = lm_Vienna, trafo = "box.cox", method = "ml", 
-#' lambdarange = c(0,2), plotit = TRUE, std = FALSE)
+#' trafo_lm(object = lm_Vienna, trafo = "boxcox", method = "ml", 
+#' lambdarange = c(0,2), std = FALSE)
 #' @importFrom stats aggregate as.formula dnorm ecdf family lm logLik median 
 #' model.frame model.matrix model.response na.omit optimize qchisq qnorm 
 #' quantile residuals rstandard sd shapiro.test
 #' @export
 
 trafo_lm <- function(object, trafo, lambda = "estim", method, 
-                     lambdarange, plotit = TRUE, std = FALSE){
+                     lambdarange, std = FALSE, 
+                     custom_trafo){
   
+  
+  plotit <- FALSE
   
   if (trafo == "log") {
     trans_mod <- boxcox(object = object, lambda = 0, method = method, 
@@ -72,6 +77,13 @@ trafo_lm <- function(object, trafo, lambda = "estim", method,
   } else if (trafo == "gpower") {
     trans_mod <- gpower(object = object, lambda = lambda, method = method, 
                            lambdarange = lambdarange, plotit = plotit)
+  } else if (trafo == "reciprocal") {
+    trans_mod <- simple_trafo(object = object, trafo = trafo)
+  } else if (trafo == "neglog") {
+    trans_mod <- simple_trafo(object = object, trafo = trafo)
+  } else if (trafo == "custom") {
+    trans_mod <- simple_trafo(object = object, trafo = trafo, 
+                              custom_trafo = custom_trafo)
   } 
   
   # Get original lm object

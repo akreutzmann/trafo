@@ -21,12 +21,19 @@ get_modelt <- function(object, trans_mod, std) {
       modelt$formula <- paste(transformed_dependent, "~", as.character(formula(object$terms)[3]))
 
     } else if (std == TRUE) {
-      model_frame <- object$model 
-      x <- model.matrix(attr(model_frame, "terms"), data = model_frame)
-      k <- ncol(x)
-      zt <- trans_mod$zt
-      suppressWarnings(modelt <- lm(zt ~ ., data.frame(zt = zt, x[, 2:k])))
-
+      data <- object$model 
+      transformed_dependent <- paste0(as.character(formula(object$terms)[2]), "sdtt")
+      formula <- as.formula(paste(transformed_dependent, "~", as.character(formula(object$terms)[3])))
+      data[, transformed_dependent] <- trans_mod$zt
+      suppressWarnings(modelt <- lm(formula, data = data))
+      modelt$formula <- paste(transformed_dependent, "~", as.character(formula(object$terms)[3]))
+      
+      
+      #model_frame <- object$model 
+      #x <- model.matrix(attr(model_frame, "terms"), data = model_frame)
+      #k <- ncol(x)
+      #zt <- trans_mod$zt
+      #suppressWarnings(modelt <- lm(zt ~ ., data.frame(zt = zt, x[, 2:k])))
     }
     
     
