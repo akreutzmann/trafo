@@ -26,13 +26,13 @@ bd_ml <- bickeldoksum(object = modelVienna, lambda = "estim", method = "ml",
                       plotit = TRUE)
 
 print(bd_ml)
-summary(bd_ml)
-plot(bd_ml)
+
 
 trafo_lmBD <- trafo_lm(object = modelVienna, trafo = "bickeldoksum", 
                        method = "ml", lambdarange = c(0,2), std = FALSE)
 
 print(trafo_lmBD)
+diagnostics(trafo_lmBD)
 summary(trafo_lmBD)
 plot(trafo_lmBD)
 
@@ -51,13 +51,13 @@ plot(bickeldoksum_reml)
 boxcox_skew <- boxcox(modelVienna, method = "skew", plotit = TRUE)
 
 print(boxcox_skew)
-summary(boxcox_skew)
-plot(boxcox_skew)
+as.data.frame(boxcox_skew, modelVienna)
 
 trafo_lmBC <- trafo_lm(object = modelVienna, trafo = "boxcox", 
                        method = "skew", lambdarange = c(0,2), std = TRUE)
 
 print(trafo_lmBC)
+diagnostics(trafo_lmBC)
 summary(trafo_lmBC)
 plot(trafo_lmBC)
 
@@ -65,6 +65,7 @@ compare_BDBC <- compare_trafo(modelVienna, trafos = list(bd_ml, boxcox_skew),
                               std = FALSE)
 
 print(compare_BDBC)
+diagnostics(compare_BDBC)
 summary(compare_BDBC)
 plot(compare_BDBC)
 
@@ -269,7 +270,7 @@ plot(gpower_reml)
 
 # 10. Reciprocal
 
-reciprocal_Vienna <- simple_trafo(modelVienna, trafo = "reciprocal")
+reciprocal_Vienna <- woparam(modelVienna, trafo = "reciprocal")
 
 print(reciprocal_Vienna)
 summary(reciprocal_Vienna)

@@ -358,20 +358,20 @@ neg_log_back <- function(y, lambda = lambda) {
 
 
 # Transformation: Reciprocal
-reciprocal <- function(y)  {#lambda is fixed
+Reciprocal <- function(y)  {#lambda is fixed
     y <- box_cox(y, lambda = -1)$y
     return(y)
 }
 
 # Standardized transformation: Reciprocal
 
-reciprocal_std  <- function(y) {
+Reciprocal_std  <- function(y) {
    y <- box_cox_std(y, lambda = -1)
    return(y)
 }
 
 # Back transformation: Reciprocal
-reciprocal_back <- function(y) {
+Reciprocal_back <- function(y) {
     box_cox_back(y, lambda = -1)
 }
 
@@ -480,7 +480,7 @@ gPower_back <- function(y, lambda = lambda) {
 
 
 # Glog
-glog <- function(y) {
+g_log <- function(y) {
 
   yt <-  log(y + sqrt(y^2 + 1))
   

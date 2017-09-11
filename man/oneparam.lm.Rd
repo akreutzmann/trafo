@@ -10,6 +10,8 @@
 \arguments{
 \item{object}{an object of type lm.}
 
+\item{trafo}{character that determines the selected transformation.}
+
 \item{lambda}{either a character named "estim" if the optimal transformation
 parameter should be estimated or a numeric value determining a given 
 transformation parameter. Defaults to "estim".}
@@ -26,6 +28,9 @@ Defaults to \code{c(-2, 2)}.}
 
 \item{plotit}{logical. If TRUE, a plot that illustrates the optimal 
 transformation parameter or the given transformation parameter is returned.}
+
+\item{custom_trafo}{a list that determines a one parameter transformation and
+the standardized one parameter transformation.}
 
 \item{...}{other parameters that can be passed to the function.}
 }

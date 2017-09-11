@@ -7,6 +7,7 @@
 #' @param trafo character that determines the transformation.
 #' @param custom_trafo a function that specifies a transformation without 
 #' paramater that needs to be estimated or given.
+#' @param ... other parameters that can be passed to the function.
 #' @return an object of class \code{trafo}.
 #' @references
 #' Battese, G.E., Harter, R.M. and Fuller, W.A. (1988). An Error-Components
@@ -30,7 +31,7 @@
 #' @export
 
 
-woparam.lm <- function(object, trafo, custom_trafo = NULL) {
+woparam.lm <- function(object, trafo, custom_trafo = NULL, ...) {
   
   
   model_frame <- object$model 
@@ -45,13 +46,13 @@ woparam.lm <- function(object, trafo, custom_trafo = NULL) {
   ans <- list()
   
   if (trafo == "reciprocal") {
-    ans$yt <- reciprocal(y = y)
+    ans$yt <- Reciprocal(y = y)
     ans$family <- "Reciprocal"
   } else if (trafo == "neglog") {
     ans$yt <- neg_log(y = y)
     ans$family <- "Neglog"
   } else if (trafo == "glog") {
-    ans$yt <- glog(y = y)
+    ans$yt <- g_log(y = y)
     ans$family <- "Glog"
   } else if (trafo == "custom") {
     custom_func <- custom_trafo[[1]]

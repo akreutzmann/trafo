@@ -41,7 +41,7 @@
 #' @export
 
 yeojohnson <- function(object, lambda = "estim", method = "ml", 
-                          lambdarange = c(-2, 2), plotit = TRUE, ...) {
+                          lambdarange = c(-2, 2), plotit = TRUE) {
   
   trafo <- "yeojohnson"
   oneparam(object = object, trafo = trafo, lambda = lambda, method = method, 

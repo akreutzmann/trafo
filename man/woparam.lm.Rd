@@ -4,7 +4,7 @@
 \alias{woparam.lm}
 \title{Transformations without parameter for linear models}
 \usage{
-\method{woparam}{lm}(object, trafo, custom_trafo = NULL)
+\method{woparam}{lm}(object, trafo, custom_trafo = NULL, ...)
 }
 \arguments{
 \item{object}{an object of type lm.}
@@ -13,6 +13,8 @@
 
 \item{custom_trafo}{a function that specifies a transformation without 
 paramater that needs to be estimated or given.}
+
+\item{...}{other parameters that can be passed to the function.}
 }
 \value{
 an object of class \code{trafo}.

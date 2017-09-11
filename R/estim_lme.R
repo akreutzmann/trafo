@@ -22,7 +22,8 @@
 #' @keywords internal
 
 
-estim_lme <- function(lambda, y, formula, data, rand_eff, method, trafo){
+estim_lme <- function(lambda, y, formula, data, rand_eff, method, trafo, 
+                      custom_func, custom_func_std){
   
   # Find the optimal lambda depending on method
   optimization <- if (method == "reml") {

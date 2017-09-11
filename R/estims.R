@@ -18,7 +18,7 @@ ML <- function(y, x, lambda, trafo, custom_func_std){
 }
 
 # Log-likelihood function for ML method
-lglike <- function(lambda, y, qr, n, trafo, ...) {
+lglike <- function(lambda, y, qr, n, trafo, custom_func_std, ...) {
   
   # if (abs(lambda) != 0) {
   #   yt <- (y^lambda - 1)/lambda

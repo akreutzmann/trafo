@@ -17,6 +17,8 @@ plot.compare_trafo <- function(x, ...) {
   residFit_Two <- NULL
   QQ_One <- NULL
   QQ_Two <- NULL
+  hist_One <- NULL
+  hist_Two <- NULL
   yFit_One <- NULL
   yFit_Two <- NULL
   scatter_One <- NULL
@@ -104,7 +106,7 @@ plot.compare_trafo <- function(x, ...) {
                                labels.id = 1:n, cex.oma.main = 1.15, 
                                sub.caption = "")
     
-    
+    dev.hold()
     old.par <- par(mfrow = c(1, 1))
     par(mfrow = c(1, 2))  
     # Normality
@@ -141,6 +143,7 @@ plot.compare_trafo <- function(x, ...) {
     mtext("Scatter plot", 3, 0.25, outer = TRUE, cex = 1)
     cat("Press [enter] to continue")
     line <- readline()
+    old.par <- par(mfrow = c(1, 1))
     par(mfrow = c(1, 2))
     cooks_One
     cooks_Two
@@ -153,9 +156,18 @@ plot.compare_trafo <- function(x, ...) {
     residLev_One
     residLev_Two
     par(old.par)
+    dev.flush()
+    
   } else if (inherits(x$orig_mod, "lme")) {
     resid <- residuals(x$orig_mod, level = 0, type = "pearson")
     residt <- residuals(x$trafo_mod, level = 0, type = "pearson")
+    
+    QQ_resid_orig <- NULL
+    QQ_resid_trafo <- NULL
+    residFit_orig <- NULL
+    residFit_trafo <- NULL
+    QQ_sranef_trafo <- NULL
+    QQ_sranef_orig <- NULL
     
     
     QQ_resid_orig %<a-% qqnorm(resid,

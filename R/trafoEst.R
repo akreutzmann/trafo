@@ -52,7 +52,8 @@ est_lm <- function(y, x , method, lambdarange, trafo, custom_func,
 #' @return modelt An object of type \code{lm} employing the transformed vector \code{yt} as the response variable
 #' @keywords internal
 est_lme <- function(y, x, formula, data, rand_eff, method = method, 
-                    lambdarange = lambdarange, trafo) {
+                    lambdarange = lambdarange, trafo, custom_func, 
+                    custom_func_std) {
   
   # Number of explanatory variables
   k <- ncol(x)
@@ -65,6 +66,8 @@ est_lme <- function(y, x, formula, data, rand_eff, method = method,
                                    rand_eff = rand_eff,
                                    method = method,
                                    trafo = trafo,
+                                   custom_func = custom_func, 
+                                   custom_func_std = custom_func_std,
                                    interval = lambdarange, tol = 0.0001))
   
   if (is.infinite(res$objective)) {

@@ -5,14 +5,16 @@
 #' @export
 
 print.trafo_mod <- function(x, ...){
-  cat("Applied transformation \n")
-  cat("Transformation: ",x$trafo," \n")
-  if (x$trafo != "log") {
-    cat("Estimation method: ", x$method, " \n")
-  }
-  cat("Optimal Parameter: ", x$lambdahat, " \n")
-  cat("\n")
-  cat("Transformed model \n")
+  # cat("Applied transformation \n")
+  # cat("Transformation: ",x$trafo," \n")
+  # if (x$trafo != "log") {
+  #   cat("Estimation method: ", x$method, " \n")
+  # }
+  # cat("Optimal Parameter: ", x$lambdahat, " \n")
+  # cat("\n")
+  cat("Untransformed model \n")
+  print(x$orig_mod)
+  cat("Transformed model: ", x$trafo, "transformation \n")
   cat("\n")
   cat("Call: ", paste(deparse(x$trafo_mod$call), sep = "\n", collapse = "\n") , "\n")
   cat("formula = ",x$trafo_mod$formula, "\n")

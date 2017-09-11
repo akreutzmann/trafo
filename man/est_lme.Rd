@@ -5,7 +5,7 @@
 \title{Box Cox Estimation - lme}
 \usage{
 est_lme(y, x, formula, data, rand_eff, method = method,
-  lambdarange = lambdarange, trafo)
+  lambdarange = lambdarange, trafo, custom_func, custom_func_std)
 }
 \arguments{
 \item{y}{vector of response variables}

@@ -5,6 +5,7 @@
 #' estimated using different estimation methods or given. 
 #'
 #' @param object an object of type lm. 
+#' @param trafo character that determines the selected transformation.
 #' @param lambda either a character named "estim" if the optimal transformation
 #' parameter should be estimated or a numeric value determining a given 
 #' transformation parameter. Defaults to "estim".
@@ -18,6 +19,8 @@
 #' Defaults to \code{c(-2, 2)}.
 #' @param plotit logical. If TRUE, a plot that illustrates the optimal 
 #' transformation parameter or the given transformation parameter is returned.
+#' @param custom_trafo a list that determines a one parameter transformation and
+#' the standardized one parameter transformation.
 #' @param ... other parameters that can be passed to the function.
 #' @return an object of class \code{trafo}.
 #' @references

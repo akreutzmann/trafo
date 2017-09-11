@@ -10,6 +10,8 @@
 \arguments{
 \item{object}{an object of type lm.}
 
+\item{trafo}{character that determines the selected transformation.}
+
 \item{lambda}{either a character named "estim" if the optimal transformation
 parameter should be estimated or a numeric value determining a given 
 transformation parameter. Defaults to "estim".}

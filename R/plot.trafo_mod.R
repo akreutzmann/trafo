@@ -8,7 +8,8 @@
 #' @param ... additional arguments that are not used in this method
 #' @importFrom pryr %<a-%
 #' @importFrom grDevices dev.flush dev.hold
-#' @importFrom graphics abline par plot
+#' @importFrom graphics abline par plot hist mtext pairs panel.smooth
+#' @importFrom stats cooks.distance formula predict qqline qqnorm
 #' @export
 
 plot.trafo_mod <- function(x, ...) {
@@ -117,7 +118,7 @@ plot.trafo_mod <- function(x, ...) {
                                labels.id = 1:n, cex.oma.main = 1.15, 
                                sub.caption = "")
     
-    
+    dev.hold()
     old.par <- par(mfrow = c(1, 1))
     par(mfrow = c(1, 2))  
     # Normality
@@ -167,6 +168,8 @@ plot.trafo_mod <- function(x, ...) {
     residLev_orig
     residLev_trafo
     par(old.par)
+    dev.flush()
+    
   } else if (inherits(x$orig_mod, "lme")) {
     resid <- residuals(x$orig_mod, level = 0, type = "pearson")
     residt <- residuals(x$trafo_mod, level = 0, type = "pearson")

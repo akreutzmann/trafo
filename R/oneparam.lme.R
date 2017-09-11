@@ -5,6 +5,7 @@
 #' estimated using different estimation methods or given. 
 #'
 #' @param object an object of type lm. 
+#' @param trafo character that determines the selected transformation.
 #' @param lambda either a character named "estim" if the optimal transformation
 #' parameter should be estimated or a numeric value determining a given 
 #' transformation parameter. Defaults to "estim".

@@ -69,9 +69,14 @@ trafo_lm <- function(object, trafo, lambda = "estim", method,
                     trafo_mod = trafo_mod, 
                     trafo = trafo, 
                     method = method, 
-                    lambdahat = trans_mod$lambdahat)
+                    lambdahat = trans_mod$lambdahat, 
+                    std = std)
   
-  class(trafo_out) <- "trafo_mod"
+  if (inherits(trans_mod, "woparam")) {
+    class(trafo_out) <- c("trafo_mod", "woparam")
+  } else if (inherits(trans_mod, "oneparam")) {
+    class(trafo_out) <- c("trafo_mod", "oneparam")
+  }
   
   return(trafo_out)
 }

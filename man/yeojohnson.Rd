@@ -5,7 +5,7 @@
 \title{Yeo-Johnson transformation for linear models}
 \usage{
 yeojohnson(object, lambda = "estim", method = "ml", lambdarange = c(-2,
-  2), plotit = TRUE, ...)
+  2), plotit = TRUE)
 }
 \arguments{
 \item{object}{an object of type lm.}
