@@ -5,7 +5,7 @@
 \title{Fits transformed linear models}
 \usage{
 trafo_lm(object, trafo, lambda = "estim", method, lambdarange, std = FALSE,
-  custom_trafo)
+  custom_trafo = NULL)
 }
 \arguments{
 \item{object}{an object of type lm or lme with the model to transform}

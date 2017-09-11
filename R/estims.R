@@ -8,12 +8,13 @@
 #' @return log-likelihood
 #' @keywords internal
 
-ML <- function(y, x, lambda, trafo){
+ML <- function(y, x, lambda, trafo, custom_func_std){
   qr <- qr(x)
   n <- length(y)
   yt <- rep(NA, n)
   
-  lglike <- -lglike(lambda = lambda, y = y, qr = qr, n = n, trafo = trafo)
+  lglike <- -lglike(lambda = lambda, y = y, qr = qr, n = n, trafo = trafo,
+                    custom_func_std = custom_func_std)
 }
 
 # Log-likelihood function for ML method
@@ -47,6 +48,8 @@ lglike <- function(lambda, y, qr, n, trafo, ...) {
     sqrt_shift_std(y = y, lambda = lambda)
   } else if (trafo == "gpower") {
     gPower_std(y = y, lambda = lambda)
+  } else if (trafo == "custom") {
+    custom_func_std(y = y, lambda = lambda)
   }
   
   # zt <- yt/exp((lambda - 1)*mean(log(y)))
@@ -69,7 +72,8 @@ restricted_ML <- function(y = y,
                  lambda,
                  data = data,
                  rand_eff = rand_eff,
-                 trafo) {
+                 trafo, 
+                 custom_func_std) {
   
   # Wrapper for other standardized transformations (Done!)
   zt <- if (trafo == "boxcox") {
@@ -90,6 +94,8 @@ restricted_ML <- function(y = y,
     sqrt_shift_std(y = y, lambda = lambda)
   } else if (trafo == "gpower") {
     gPower_std(y = y, lambda = lambda)
+  } else if (trafo == "custom") {
+    custom_func_std(y = y, lambda = lambda)
   }
   
 

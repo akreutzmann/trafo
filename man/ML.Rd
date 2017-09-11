@@ -4,7 +4,7 @@
 \alias{ML}
 \title{Maximum Likelihood}
 \usage{
-ML(y, x, lambda, trafo)
+ML(y, x, lambda, trafo, custom_func_std)
 }
 \arguments{
 \item{y}{vector of response variables}

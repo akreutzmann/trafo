@@ -10,7 +10,8 @@
 #' by Cramer-von-Mises ("div.cm") or by Kullback-Leibler ("div.kl").
 #' @return modelt An object of type \code{lm} employing the transformed vector \code{yt} as the response variable
 #' @keywords internal
-est_lm <- function(y, x , method, lambdarange, trafo, ...) {
+est_lm <- function(y, x , method, lambdarange, trafo, custom_func, 
+                   custom_func_std, ...) {
   
   # Number of explanatory variables
   k <- ncol(x)
@@ -18,6 +19,8 @@ est_lm <- function(y, x , method, lambdarange, trafo, ...) {
   # Get the optimal lambda via optimization on lambdarange
   res <- suppressWarnings(optimize(f = estim_lm, y = y, x = x, method = method,
                                    trafo = trafo, interval = lambdarange, 
+                                   custom_func = custom_func, 
+                                   custom_func_std = custom_func_std,
                                    tol = 0.0001))
   
   if (is.infinite(res$objective)) {

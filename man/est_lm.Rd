@@ -4,7 +4,7 @@
 \alias{est_lm}
 \title{Estimation of optimal transformation parameter - lm}
 \usage{
-est_lm(y, x, method, lambdarange, trafo, ...)
+est_lm(y, x, method, lambdarange, trafo, custom_func, custom_func_std, ...)
 }
 \arguments{
 \item{y}{vector of response variables}

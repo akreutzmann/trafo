@@ -1,4 +1,6 @@
-get_transformed <- function(trafo, ans, y, lambda) {
+get_transformed <- function(trafo, ans, y, lambda, custom_func, 
+                            custom_func_std, 
+                            custom_family) {
   
   if (trafo == "boxcox") {
     # Get vector of transformed and standardized transformed variable
@@ -73,6 +75,14 @@ get_transformed <- function(trafo, ans, y, lambda) {
     
     # Save transformation family and method
     ans$family <- "Gpower"
+  } else if (trafo == "custom") {
+    # Get vector of transformed and standardized transformed variable
+    ans$yt <- custom_func(y = y, lambda = lambda)
+    ans$s <- NULL
+    ans$zt <- custom_func_std(y = y, lambda = lambda)
+    
+    # Save transformation family and method
+    ans$family <- custom_family
   } 
   
   return(ans)

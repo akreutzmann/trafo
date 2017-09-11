@@ -1,7 +1,7 @@
-#' Square-root shift transformation for linear models
+#' One parameter transformations for linear models
 #'
 #' The function transforms the dependent variable of a linear model using the 
-#' Square-root shift transformation. The transformation parameter can either be 
+#' one parameter transformations. The transformation parameter can either be 
 #' estimated using different estimation methods or given. 
 #'
 #' @param object an object of type lm. 
@@ -15,7 +15,7 @@
 #' by Cramer-von-Mises ("div.cm") or by Kullback-Leibler ("div.kl").
 #' @param lambdarange a numeric vector with two elements defining an interval 
 #' that is used for the estimation of the optimal transformation parameter. 
-#' Defaults to \code{c(0, 2)}.
+#' Defaults to \code{c(-2, 2)}.
 #' @param plotit logical. If TRUE, a plot that illustrates the optimal 
 #' transformation parameter or the given transformation parameter is returned.
 #' @param ... other parameters that can be passed to the function.
@@ -27,24 +27,10 @@
 #' Gonzalez-Manteiga, W. et al. (2008). Bootstrap mean squared error of
 #' a small-area EBLUP. Journal of Statistical Computation and Simulation,
 #' 78:5, 443-462.
-#' @examples
-#' # Load data
-#' data("eusilcA_Vienna")
-#' 
-#' # Fit linear model
-#' lm_Vienna <- lm(eqIncome ~ eqsize + gender + cash + unempl_ben + age_ben + 
-#' rent + cap_inv + tax_adj + dis_ben + sick_ben + surv_ben + 
-#' fam_allow + house_allow, data = eusilcA_Vienna)
-#' 
-#' # Transform dependent variable using skewness minimization
-#' boxcox(object = lm_Vienna, lambda = "estim", method = "skew",
-#' plotit = FALSE)
 #' @export
 
-sqrtshift.lm <- function(object, lambda ="estim", method = "ml", 
-                      lambdarange = c(0, 2), plotit = TRUE, ...) {
-  
-  trafo <- "sqrtshift"
+oneparam.lm <- function(object, trafo, lambda = "estim", method = "ml", 
+                          lambdarange, plotit = TRUE, custom_trafo, ...) {
   
   # Get model variables: dependent variable y and explanatory variables x
   model_frame <- object$model 
@@ -55,6 +41,12 @@ sqrtshift.lm <- function(object, lambda ="estim", method = "ml",
   if (is.null(x <- model.matrix(attr(model_frame, "terms"), data = model_frame))) 
     stop("Matrix of covariates X must not be empty")
 
+
+  if (trafo == "custom") {
+    custom_func <- custom_trafo[[1]]
+    custom_func_std <- custom_trafo[[2]]
+    custom_family <- names(custom_trafo)[[1]]
+  }
   
   # For saving returns
   ans <- list()
@@ -62,7 +54,8 @@ sqrtshift.lm <- function(object, lambda ="estim", method = "ml",
   # Get the optimal transformation parameter
   if (lambda == "estim") {
     optim <- est_lm(y = y, x = x, trafo = trafo, method = method, 
-                         lambdarange = lambdarange) 
+                         lambdarange = lambdarange, custom_func = custom_func, 
+                         custom_func_std = custom_func_std) 
     
     lambdaoptim <- optim$lambdaoptim
     measoptim <- optim$measoptim
@@ -70,7 +63,7 @@ sqrtshift.lm <- function(object, lambda ="estim", method = "ml",
   } else if (is.numeric(lambda)) {
     lambdaoptim <- lambda
     measoptim <- estim_lm(lambda = lambdaoptim, y = y, x = x, 
-                       trafo = trafo, method = method)
+                          trafo = trafo, method = method)
   }
   
   # Plot the curve of the measure with line at the optimal transformation 
@@ -78,7 +71,9 @@ sqrtshift.lm <- function(object, lambda ="estim", method = "ml",
   if (plotit == TRUE) {
     plot_meas <- plot_trafolm(lambdarange = lambdarange, lambdaoptim = lambdaoptim, 
                               measoptim = measoptim, y = y, x = x, 
-                              trafo = trafo, method = method)
+                              trafo = trafo, method = method, 
+                              custom_func = custom_func, 
+                              custom_func_std = custom_func_std)
     
     # Get plot measures
     ans$lambdavector <- plot_meas$lambdavector
@@ -87,17 +82,18 @@ sqrtshift.lm <- function(object, lambda ="estim", method = "ml",
     ans$lambdavector <- NULL
     ans$measvector <- NULL
   }
-
-  
   
   # Get vector of transformed and standardized transformed variable
-  #ans$yt <- box_cox(y = y, lambda = lambdaoptim)$y
-  #ans$zt <- box_cox_std(y = y, lambda = lambdaoptim)
+  #ans$yt <- Yeo_john(y = y, lambda = lambdaoptim)
+  #ans$zt <- Yeo_john_std(y = y, lambda = lambdaoptim)
   
   # Save transformation family and method
-  #ans$family <- "Box-Cox"
+  #ans$family <- "Yeo-Johnson"
   
-  ans <- get_transformed(trafo = trafo, ans = ans, y = y, lambda = lambdaoptim)
+  ans <- get_transformed(trafo = trafo, ans = ans, y = y, lambda = lambdaoptim,
+                         custom_func = custom_func,
+                         custom_func_std = custom_func_std, 
+                         custom_family = custom_family)
   
   ans$method <- method
   
@@ -108,6 +104,6 @@ sqrtshift.lm <- function(object, lambda ="estim", method = "ml",
   ans$modelt <- get_modelt(object = object, trans_mod = ans, std = FALSE)
   
   # New class trafo
-  class(ans) <- "trafo"
+  class(ans) <- c("trafo", "oneparam")
   ans
 }

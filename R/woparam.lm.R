@@ -30,7 +30,7 @@
 #' @export
 
 
-simple_trafo <- function(object, trafo, custom_trafo = NULL) {
+woparam.lm <- function(object, trafo, custom_trafo = NULL) {
   
   
   model_frame <- object$model 
@@ -44,15 +44,19 @@ simple_trafo <- function(object, trafo, custom_trafo = NULL) {
   # For saving returns
   ans <- list()
   
-  if(trafo == "reciprocal") {
+  if (trafo == "reciprocal") {
     ans$yt <- reciprocal(y = y)
     ans$family <- "Reciprocal"
-  } else if(trafo == "neglog") {
+  } else if (trafo == "neglog") {
     ans$yt <- neg_log(y = y)
     ans$family <- "Neglog"
-  } else if(trafo == "custom") {
-    ans$yt <- custom_trafo(y = y)
-    ans$family <- "Custom"
+  } else if (trafo == "glog") {
+    ans$yt <- glog(y = y)
+    ans$family <- "Glog"
+  } else if (trafo == "custom") {
+    custom_func <- custom_trafo[[1]]
+    ans$yt <- custom_func(y = y)
+    ans$family <- names(custom_trafo)
   }
   
   ans$lambdavector <- NULL
@@ -74,7 +78,7 @@ simple_trafo <- function(object, trafo, custom_trafo = NULL) {
   ans$modelt <- get_modelt(object = object, trans_mod = ans, std = FALSE)
   
   # New class trafo
-  class(ans) <- c("trafo", "wo_param")
+  class(ans) <- c("trafo", "woparam")
   ans
   
 }

@@ -6,8 +6,9 @@
 
 print.trafo <- function(x, ...){
 
-  if(inherits(x, "oneparam")) {
-    cat(x$family, "Transformation \n")
+ 
+  cat(x$family, "Transformation \n")
+  if (inherits(x, "oneparam")) {
     cat("\n")
     cat("Estimation method: ", x$method, " \n")
     cat("Optimal parameter: ", x$lambdahat, " \n")
@@ -19,9 +20,7 @@ print.trafo <- function(x, ...){
                x$method == "div.kl") {
       cat("Divergence: ", x$measoptim,"\n")
     }
-  } else if(inherits(x, "wo_param")) {
-    cat(x$family, "Transformation \n")
-  }
+  } 
    
  invisible(x)
 }

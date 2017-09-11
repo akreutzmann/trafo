@@ -2,26 +2,57 @@
 % Please edit documentation in R/yeojohnson.R
 \name{yeojohnson}
 \alias{yeojohnson}
-\title{Yeo-Johnson Transformation}
+\title{Yeo-Johnson transformation for linear models}
 \usage{
-yeojohnson(object, ...)
+yeojohnson(object, lambda = "estim", method = "ml", lambdarange = c(-2,
+  2), plotit = TRUE, ...)
 }
 \arguments{
-\item{object}{an object of type lm or lme.}
+\item{object}{an object of type lm.}
 
-\item{...}{other parameters that can be passed to the function.}
+\item{lambda}{either a character named "estim" if the optimal transformation
+parameter should be estimated or a numeric value determining a given 
+transformation parameter. Defaults to "estim".}
+
+\item{method}{a character string. Different estimation methods can be used 
+for the estimation of the optimal transformation parameter: 
+(i) Maximum likelihood approach ("ml"), (ii) Skewness minimization ("skew"),  
+(iii) Divergence minimization by Kolmogorov-Smirnoff ("div.ks"), 
+by Cramer-von-Mises ("div.cm") or by Kullback-Leibler ("div.kl").}
+
+\item{lambdarange}{a numeric vector with two elements defining an interval 
+that is used for the estimation of the optimal transformation parameter. 
+Defaults to \code{c(-2, 2)}.}
+
+\item{plotit}{logical. If TRUE, a plot that illustrates the optimal 
+transformation parameter or the given transformation parameter is returned.}
 }
 \value{
-The return depends on the class of its argument. The 
-documentation of particular methods gives detailed information about the 
-return of that method.
+an object of class \code{trafo}.
 }
 \description{
-Transforms the dependent variable of a regression model using the Yeo-Johnson
-transformation. The regression model can be a linear or a linear mixed model 
-with one random intercept.
+The function transforms the dependent variable of a linear model using the 
+Yeo-Johnson transformation. The transformation parameter can either be 
+estimated using different estimation methods or given.
 }
-\seealso{
-\code{\link{yeojohnson.lm}},  \code{\link{yeojohnson.lme}}
+\examples{
+# Load data
+data("eusilcA_Vienna")
+
+# Fit linear model
+lm_Vienna <- lm(eqIncome ~ eqsize + gender + cash + unempl_ben + age_ben + 
+rent + cap_inv + tax_adj + dis_ben + sick_ben + surv_ben + 
+fam_allow + house_allow, data = eusilcA_Vienna)
+
+# Transform dependent variable using a maximum likelihood approach
+yeojohnson(object = lm_Vienna, lambda = "estim", method = "ml",
+plotit = FALSE)
 }
-\keyword{Yeo-Johnson}
+\references{
+Battese, G.E., Harter, R.M. and Fuller, W.A. (1988). An Error-Components
+Model for Predictions of County Crop Areas Using Survey and Satellite Data.
+Journal of the American Statistical Association, Vol.83, No. 401, 28-36. \cr \cr
+Gonzalez-Manteiga, W. et al. (2008). Bootstrap mean squared error of
+a small-area EBLUP. Journal of Statistical Computation and Simulation,
+78:5, 443-462.
+}

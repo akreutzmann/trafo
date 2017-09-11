@@ -456,7 +456,7 @@ gPower <-  function(y, lambda = lambda) {
   if (lambda_absolute <= 1e-12) {  #case lambda=0
     yt <-  log(y + sqrt(y^2 + 1))
   } else if (lambda_absolute > 1e-12) {
-    yt <- ((y + sqrt(y^2 + 1))^lambda-1)/lambda
+    yt <- ((y + sqrt(y^2 + 1))^lambda - 1)/lambda
   }
   return(y = yt)
 }
@@ -465,7 +465,7 @@ gPower <-  function(y, lambda = lambda) {
 
 gPower_std <- function(y, lambda) {
   yt <- gPower(y = y, lambda = lambda)
-  zt <- yt/exp((mean( lambda*(log(y + sqrt(y^2))) - log(y^2+1)/2 )))
+  zt <- yt/exp((mean( lambda*(log(y + sqrt(y^2))) - log(y^2 + 1)/2 )))
 
   y <- zt
 
@@ -477,4 +477,17 @@ gPower_back <- function(y, lambda = lambda) {
 
 }
 
+
+
+# Glog
+glog <- function(y) {
+
+  yt <-  log(y + sqrt(y^2 + 1))
+  
+  return(y = yt)
+}
+
+
+
 ##############
+

@@ -286,7 +286,7 @@ plot(trafo_lmRC)
 
 # 11. Neg Log
 
-neglog_Vienna <- simple_trafo(modelVienna, trafo = "neglog")
+neglog_Vienna <- woparam(modelVienna, trafo = "neglog")
 
 print(neglog_Vienna)
 summary(neglog_Vienna)
@@ -303,13 +303,55 @@ plot(trafo_lmNL)
 
 
 
-neglog_custom <- simple_trafo(modelVienna, trafo = "custom", 
-                              custom_trafo = function(y) {
+neglog_custom <- woparam(modelVienna, trafo = "custom", 
+                              custom_trafo = list(neglog = function(y) {
                                 u <- abs(y) + 1L
                                 yt <-  sign(y)*log(u)
                                 
                                 return(y = yt)
-                              })
+                              }))
 
+print(neglog_custom)
 
 all.equal(neglog_custom$yt, neglog_Vienna$yt)
+
+
+# Test oneparam function
+
+boxcox2_Vienna <- oneparam(modelVienna, trafo = "boxcox",  
+                           method = "skew", lambdarange = c(0, 2), plotit = TRUE)
+
+
+# Test oneparam function with custom transformation
+
+modul <- function(y, lambda = lambda) {
+  u <- abs(y) + 1L
+  lambda_absolute <- abs(lambda)
+  if (lambda_absolute <= 1e-12) {  #case lambda=0
+    yt <-  sign(y)*log(u)
+  } else {
+    yt <- sign(y)*(u^lambda - 1L)/lambda
+  }
+  return(y = yt)
+}
+
+modul_std <- function(y, lambda) {
+  u <- abs(y) + 1L
+  yt <- modul(y, lambda)
+  zt <- yt/exp(mean(sign(y)*(lambda - 1L)*log(u)))
+  
+  y <- zt
+  
+  return(y)
+}
+
+modul2_Vienna <- oneparam(modelVienna, trafo = "custom",  
+                           method = "skew", lambdarange = c(0, 2), plotit = TRUE, 
+                          custom_trafo = list(modul = modul, modul_std = modul_std))
+
+
+print(modul2_Vienna)
+summary(modul2_Vienna)
+
+
+

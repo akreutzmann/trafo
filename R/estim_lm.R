@@ -18,7 +18,7 @@
 #' @keywords internal
 
 
-estim_lm <- function(lambda, y, x, method, trafo){
+estim_lm <- function(lambda, y, x, method, trafo, custom_func, custom_func_std){
 
     # Get residuals for all methods but ML
   # Wrapper for transformations, this means that we need a new argument
@@ -26,10 +26,10 @@ estim_lm <- function(lambda, y, x, method, trafo){
   
   # Find the optimal lambda depending on method
   optimization <- if (method == "ml") {
-    ML(y, x, lambda, trafo)
+    ML(y, x, lambda, trafo, custom_func_std = custom_func_std)
   } else if (method != "ml") {
     
-    yt <- if(trafo == "boxcox") {
+    yt <- if (trafo == "boxcox") {
       as.matrix(box_cox(y = y, lambda = lambda, shift = 0)$y)
     } else if (trafo == "modulus") {
       as.matrix(modul(y = y, lambda = lambda))
@@ -47,6 +47,8 @@ estim_lm <- function(lambda, y, x, method, trafo){
       as.matrix(sqrt_shift(y = y, lambda = lambda))
     } else if (trafo == "gpower") {
       as.matrix(gPower(y = y, lambda = lambda))
+    } else if (trafo == "custom") {
+      as.matrix(custom_func(y = y, lambda = lambda))
     }
     
     # yt <- as.matrix(box_cox(y = y, lambda = lambda, shift = 0)$y)

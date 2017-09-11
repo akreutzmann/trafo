@@ -1,7 +1,7 @@
-#' Modulus transformation for linear models
+#' One parameter transformations for linear models
 #'
 #' The function transforms the dependent variable of a linear model using the 
-#' Modulus transformation. The transformation parameter can either be 
+#' one parameter transformations. The transformation parameter can either be 
 #' estimated using different estimation methods or given. 
 #'
 #' @param object an object of type lm. 
@@ -27,76 +27,70 @@
 #' Gonzalez-Manteiga, W. et al. (2008). Bootstrap mean squared error of
 #' a small-area EBLUP. Journal of Statistical Computation and Simulation,
 #' 78:5, 443-462.
-#' @examples
-#' # Load data
-#' data("eusilcA_Vienna")
-#' 
-#' # Fit linear model
-#' lm_Vienna <- lm(eqIncome ~ eqsize + gender + cash + unempl_ben + age_ben + 
-#' rent + cap_inv + tax_adj + dis_ben + sick_ben + surv_ben + 
-#' fam_allow + house_allow, data = eusilcA_Vienna)
-#' 
-#' # Transform dependent variable using skewness minimization
-#' modulus(object = lm_Vienna, lambda = "estim", method = "skew",
-#' plotit = FALSE)
 #' @export
 
-modulus.lm <- function(object, lambda = "estim", method = "ml", 
-                       lambdarange = c(-2, 2), plotit = TRUE, ...) {
-  
-  trafo <- "modulus"
+oneparam.lme <- function(object, trafo, lambda = "estim", method = "ml", 
+                          lambdarange, plotit = TRUE, ...) {
   
   # Get model variables: dependent variable y and explanatory variables x
-  model_frame <- object$model 
+  formula <- formula(object)
+  rand_eff <- names(object$coefficients$random)
+  data <- object$data
+  x <- model.matrix(formula, data = object$data)
+  y <- as.matrix(object$data[paste(formula[2])])
   
-  # Check if arguments are as expected (for model variables)
-  if (is.null(y <- model.response(model_frame))) 
-    stop("Dependent variable y must not be empty")
-  if (is.null(x <- model.matrix(attr(model_frame, "terms"), data = model_frame))) 
-    stop("Matrix of covariates X must not be empty")
-
+  
   # For saving returns
   ans <- list()
   
   # Get the optimal transformation parameter
   if (lambda == "estim") {
-    bx_cxOptim <- est_lm(y = y, x = x, trafo = trafo, method = method, 
-                         lambdarange = lambdarange) 
+    optim <- est_lme(y = y, x = x, formula = formula, data = data, 
+                     rand_eff = rand_eff, method = method, 
+                     lambdarange = lambdarange, trafo = trafo) 
     
-    lambdaoptim <- bx_cxOptim$lambdaoptim
-    measoptim <- bx_cxOptim$measoptim
+    lambdaoptim <- optim$lambdaoptim
+    measoptim <- optim$measoptim
     
   } else if (is.numeric(lambda)) {
     lambdaoptim <- lambda
-    measoptim <- estim_lm(lambda = lambdaoptim, y = y, x = x, 
-                          trafo = trafo, method = method)
+    measoptim <- estim_lme(lambda = lambda, y = y, formula = formula, 
+                           data = data, rand_eff = rand_eff, method = method, 
+                           trafo = trafo)
   }
   
   # Plot the curve of the measure with line at the optimal transformation 
   # parameter
   if (plotit == TRUE) {
-    plot_meas <- plot_trafolm(lambdarange = lambdarange, lambdaoptim = lambdaoptim, 
-                              measoptim = measoptim, y = y, x = x, 
-                              trafo = trafo, method = method)
+    plot_meas <- plot_trafolme(lambdarange = lambdarange, lambdaoptim = lambdaoptim,
+                               measoptim = measoptim, y = y, formula = formula, 
+                               data = data, rand_eff = rand_eff, trafo = trafo, 
+                               method = method)
     
-    # Get plot measures
-    ans$lambdavector <- plot_meas$lambdavector
-    ans$measvector <- plot_meas$measvector
+    if (!is.character(plot_meas)) {
+      # Get plot measures
+      ans$lambdavector <- plot_meas$lambdavector
+      ans$measvector <- plot_meas$measvector 
+    } else {
+      ans$lambdavector <- NULL
+      ans$measvector <- NULL
+    }
   } else if (plotit == FALSE) {
     ans$lambdavector <- NULL
     ans$measvector <- NULL
   }
-
+  
   
   # Get vector of transformed and standardized transformed variable
-  #ans$yt <- modul(y = y, lambda = lambdaoptim)
-  #ans$zt <- modul_std(y = y, lambda = lambdaoptim)
+  #ans$yt <- Bick_dok(y = y, lambda = lambdaoptim)
+  #ans$zt <- Bick_dok_std(y = y, lambda = lambdaoptim)
   
   # Save transformation family and method
-  #ans$family <- "Modulus"
+  #ans$family <- "Bickel-Doksum"
   
   ans <- get_transformed(trafo = trafo, ans = ans, y = y, lambda = lambdaoptim)
   
+  # Save estimation method
   ans$method <- method
   
   ans$lambdahat <- lambdaoptim
@@ -106,6 +100,6 @@ modulus.lm <- function(object, lambda = "estim", method = "ml",
   ans$modelt <- get_modelt(object = object, trans_mod = ans, std = FALSE)
   
   # New class trafo
-  class(ans) <- "trafo"
+  class(ans) <- c("trafo", "oneparam")
   ans
 }

@@ -42,50 +42,21 @@
 
 trafo_lm <- function(object, trafo, lambda = "estim", method, 
                      lambdarange, std = FALSE, 
-                     custom_trafo){
+                     custom_trafo = NULL) {
   
   
   plotit <- FALSE
   
-  if (trafo == "log") {
-    trans_mod <- boxcox(object = object, lambda = 0, method = method, 
-                       lambdarange = lambdarange, plotit = plotit)
-  } else if (trafo == "boxcox") {
-    trans_mod <- boxcox(object = object, lambda = lambda, method = method, 
-                       lambdarange = lambdarange, plotit = plotit)
-  } else if (trafo == "bickeldoksum") {
-    trans_mod <- bickeldoksum(object = object, lambda = lambda, method = method, 
-                              lambdarange = lambdarange, plotit = plotit)
-  } else if (trafo == "manly") {
-    trans_mod <- manly(object = object, lambda = lambda, method = method, 
-                              lambdarange = lambdarange, plotit = plotit)
-  } else if (trafo == "modulus") {
-    trans_mod <- modulus(object = object, lambda = lambda, method = method, 
-                              lambdarange = lambdarange, plotit = plotit)
-  } else if (trafo == "dual") {
-    trans_mod <- dual(object = object, lambda = lambda, method = method, 
-                              lambdarange = lambdarange, plotit = plotit)
-  } else if (trafo == "yeojohnson") {
-    trans_mod <- yeojohnson(object = object, lambda = lambda, method = method, 
-                              lambdarange = lambdarange, plotit = plotit)
-  } else if (trafo == "logshiftopt") {
-    trans_mod <- logshiftopt(object = object, lambda = lambda, method = method, 
-                            lambdarange = lambdarange, plotit = plotit)
-  } else if (trafo == "sqrtshift") {
-    trans_mod <- sqrtshift(object = object, lambda = lambda, method = method, 
-                             lambdarange = lambdarange, plotit = plotit)
-  } else if (trafo == "gpower") {
-    trans_mod <- gpower(object = object, lambda = lambda, method = method, 
-                           lambdarange = lambdarange, plotit = plotit)
-  } else if (trafo == "reciprocal") {
-    trans_mod <- simple_trafo(object = object, trafo = trafo)
-  } else if (trafo == "neglog") {
-    trans_mod <- simple_trafo(object = object, trafo = trafo)
-  } else if (trafo == "custom") {
-    trans_mod <- simple_trafo(object = object, trafo = trafo, 
-                              custom_trafo = custom_trafo)
-  } 
-  
+  if (trafo %in% c("bickeldoksum", "boxcox", "dual", "gpower", "manly", 
+                   "modulus", "logshiftopt", "sqrtshift", "yeojohnonson")) {
+    trans_mod <- oneparam(object = object, trafo = trafo, lambda = lambda, 
+                          method = method, lambdarange = lambdarange, 
+                          plotit = plotit)
+  } else if (trafo %in% c("reciprocal", "neglog", "custom")) {
+    trans_mod <- woparam(object = object, trafo = trafo,
+                         custom_trafo = custom_trafo)
+  }
+
   # Get original lm object
   orig_mod <- object 
   

@@ -1,7 +1,7 @@
-#' Modulus transformation for linear models
+#' Glog transformation for linear models
 #'
 #' The function transforms the dependent variable of a linear model using the 
-#' Modulus transformation. The transformation parameter can either be 
+#' Glog transformation. The transformation parameter can either be 
 #' estimated using different estimation methods or given. 
 #'
 #' @param object an object of type lm. 
@@ -15,7 +15,7 @@
 #' by Cramer-von-Mises ("div.cm") or by Kullback-Leibler ("div.kl").
 #' @param lambdarange a numeric vector with two elements defining an interval 
 #' that is used for the estimation of the optimal transformation parameter. 
-#' Defaults to \code{c(-2, 2)}.
+#' Defaults to \code{c(1e-11, 2)}.
 #' @param plotit logical. If TRUE, a plot that illustrates the optimal 
 #' transformation parameter or the given transformation parameter is returned.
 #' @return an object of class \code{trafo}.
@@ -35,16 +35,13 @@
 #' rent + cap_inv + tax_adj + dis_ben + sick_ben + surv_ben + 
 #' fam_allow + house_allow, data = eusilcA_Vienna)
 #' 
-#' # Transform dependent variable using skewness minimization
-#' modulus(object = lm_Vienna, lambda = "estim", method = "skew",
+#' # Transform dependent variable using a maximum likelihood approach
+#' bickeldoksum(object = lm_Vienna, lambda = "estim", method = "ml",
 #' plotit = FALSE)
 #' @export
 
-modulus <- function(object, lambda = "estim", method = "ml", 
-                       lambdarange = c(-2, 2), plotit = TRUE) {
+glog <- function(object) {
   
-  trafo <- "modulus"
-  oneparam(object = object, trafo = trafo, lambda = lambda, method = method, 
-           lambdarange = lambdarange, plotit = plotit)
-  
+  trafo <- "glog"
+  woparam(object = object, trafo = trafo)
 }

@@ -50,11 +50,13 @@ estim_lme <- function(lambda, y, formula, data, rand_eff, method, trafo){
     } else if (trafo == "yeojohnson") {
       Yeo_john(y = y, lambda = lambda)
     } else if (trafo == "logshiftopt") {
-      as.matrix(log_shift(y = y, lambda = lambda))
+      log_shift(y = y, lambda = lambda)
     } else if (trafo == "sqrtshift") {
-      as.matrix(sqrt_shift(y = y, lambda = lambda))
+      sqrt_shift(y = y, lambda = lambda)
     } else if (trafo == "gpower") {
-      as.matrix(gPower(y = y, lambda = lambda))
+      gPower(y = y, lambda = lambda)
+    } else if (trafo == "custom") {
+      custom_func(y = y, lambda = lambda)
     }
     
     data[paste(formula[2])] <- yt
@@ -66,14 +68,14 @@ estim_lme <- function(lambda, y, formula, data, rand_eff, method, trafo){
                           random = as.formula(paste0("~ 1 | as.factor(", rand_eff, ")")),
                           method = "REML", 
                           keep.data = FALSE, 
-                          na.action = na.omit), silent=TRUE)
+                          na.action = na.omit), silent = TRUE)
     if (is.null(model_REML)) {
       stop("For some lambda in the lambdarange, the likelihood does not converge.
            Choose another lambdarange.")
     } else {
       model_REML <- model_REML
     }
-    res <- residuals(model_REML, level=0, type = "pearson")
+    res <- residuals(model_REML, level = 0, type = "pearson")
     
     optimization <- if (method == "pskew") {
       pooled_skewness_min(model = model_REML, res = res)  
