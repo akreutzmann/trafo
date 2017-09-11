@@ -17,6 +17,10 @@ plot.compare_trafo <- function(x, ...) {
   residFit_Two <- NULL
   QQ_One <- NULL
   QQ_Two <- NULL
+  yFit_One <- NULL
+  yFit_Two <- NULL
+  scatter_One <- NULL
+  scatter_Two <- NULL
   scaleLoc_One <- NULL
   scaleLoc_Two <- NULL
   residLev_One <- NULL
@@ -48,6 +52,37 @@ plot.compare_trafo <- function(x, ...) {
                          labels.id = 1:n, cex.oma.main = 1.15, 
                          sub.caption = "")
     
+    # Histogram
+    resid_One <- residuals(x$trafoOne, level = 0, type = "pearson")
+    resid_Two <- residuals(x$trafoTwo, level = 0, type = "pearson")
+    
+    
+    hist_One %<a-% hist(resid_One, nclass = 20, xlab = "Pearson residuals", 
+                         main = x$trafos[[1]], prob = TRUE)
+    hist_Two %<a-% hist(resid_Two, nclass = 20, xlab = "Pearson residuals", 
+                          main = x$trafos[[2]], prob = TRUE)
+    
+    # Fitted vs. observed
+    fitted_One <- predict(x$trafoOne)
+    fitted_Two <- predict(x$trafoTwo)
+    
+    y_One <- model.response(x$trafoOne$model)
+    y_Two <- model.response(x$trafoTwo$model)
+    
+    yFit_One %<a-% plot(fitted_One, y_One,
+                         ylab = "Transformed y", xlab = "Fitted values",
+                         main = x$trafos[[1]])
+    yFit_Two %<a-% plot(fitted_Two, y_Two,
+                          ylab = "Transformed y", xlab = "Fitted values",
+                          main = x$trafos[[2]])
+    
+    # Scatterplots
+    scatter_One %<a-% pairs(formula(x$trafoOne$terms), data = x$trafoOne$model,
+                             main = x$trafos[[1]])
+    scatter_Two %<a-% pairs(formula(x$trafoTwo$terms), data = x$trafoTwo$model,
+                              main = x$trafos[[2]])
+    
+    
     scaleLoc_One %<a-%  plot(x$trafoOne, which = c(3L), main = x$trafos[[1]],
                               labels.id = 1:n, cex.oma.main = 1.15, 
                               sub.caption = "")
@@ -72,32 +107,51 @@ plot.compare_trafo <- function(x, ...) {
     
     old.par <- par(mfrow = c(1, 1))
     par(mfrow = c(1, 2))  
-    residFit_One
-    residFit_Two
-    #par(old.par)
-    cat("Press [enter] to continue")
-    line <- readline()
-    #old.par <- par(mfrow = c(1, 2))
+    # Normality
     QQ_One
     QQ_Two
-    #par(old.par)
     cat("Press [enter] to continue")
     line <- readline()
-    #old.par <- par(mfrow = c(1, 2))
-    scaleLoc_One
-    scaleLoc_Two
-    #par(old.par)
+    hist_One
+    mtext("Histogram", 3, 0.25, cex = 1)
+    hist_Two
+    mtext("Histogram", 3, 0.25, cex = 1)
     cat("Press [enter] to continue")
     line <- readline()
-    #old.par <- par(mfrow = c(1, 2))
-    residLev_One
-    residLev_Two
-    #par(old.par)
+    # Homoscedasticity
+    residFit_One
+    residFit_Two
     cat("Press [enter] to continue")
     line <- readline()
-    #old.par <- par(mfrow = c(1, 2))
+    # Linearity
+    yFit_One
+    abline(lm(as.numeric(y_One) ~ as.numeric(fitted_One)),col = "red",lwd = 1.5)
+    mtext("Transformed observed vs Fitted", 3, 0.25, cex = 1)
+    yFit_Two
+    abline(lm(as.numeric(y_Two) ~ as.numeric(fitted_Two)),col = "red",lwd = 1.5)
+    mtext("Transformed observed vs Fitted", 3, 0.25, cex = 1)
+    cat("Press [enter] to continue")
+    line <- readline()
+    par(old.par)
+    scatter_One
+    mtext("Scatter plot", 3, 0.25, outer = TRUE, cex = 1)
+    cat("Press [enter] to continue")
+    line <- readline()
+    scatter_Two   
+    mtext("Scatter plot", 3, 0.25, outer = TRUE, cex = 1)
+    cat("Press [enter] to continue")
+    line <- readline()
+    par(mfrow = c(1, 2))
     cooks_One
     cooks_Two
+    cat("Press [enter] to continue")
+    line <- readline()
+    scaleLoc_One
+    scaleLoc_Two
+    cat("Press [enter] to continue")
+    line <- readline()
+    residLev_One
+    residLev_Two
     par(old.par)
   } else if (inherits(x$orig_mod, "lme")) {
     resid <- residuals(x$orig_mod, level = 0, type = "pearson")

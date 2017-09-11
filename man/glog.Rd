@@ -8,26 +8,6 @@ glog(y)
 }
 \arguments{
 \item{object}{an object of type lm.}
-
-\item{lambda}{either a character named "estim" if the optimal transformation
-parameter should be estimated or a numeric value determining a given 
-transformation parameter. Defaults to "estim".}
-
-\item{method}{a character string. Different estimation methods can be used 
-for the estimation of the optimal transformation parameter: 
-(i) Maximum likelihood approach ("ml"), (ii) Skewness minimization ("skew"),  
-(iii) Divergence minimization by Kolmogorov-Smirnoff ("div.ks"), 
-by Cramer-von-Mises ("div.cm") or by Kullback-Leibler ("div.kl").}
-
-\item{lambdarange}{a numeric vector with two elements defining an interval 
-that is used for the estimation of the optimal transformation parameter. 
-Defaults to \code{c(1e-11, 2)}.}
-
-\item{plotit}{logical. If TRUE, a plot that illustrates the optimal 
-transformation parameter or the given transformation parameter is returned.}
-}
-\value{
-an object of class \code{trafo}.
 }
 \description{
 The function transforms the dependent variable of a linear model using the 

@@ -13,16 +13,23 @@
 
 plot.trafo_mod <- function(x, ...) {
   
-  residFit_orig <- NULL
-  residFit_trafo <- NULL
+  
   QQ_orig <- NULL
   QQ_trafo <- NULL
+  hist_orig <- NULL
+  hist_trafo <- NULL
+  residFit_orig <- NULL
+  residFit_trafo <- NULL
+  yFit_orig <- NULL
+  yFit_trafo <- NULL
+  scatter_orig <- NULL
+  scatter_trafo <- NULL
+  cooks_orig <- NULL
+  cooks_trafo <- NULL
   scaleLoc_orig <- NULL
   scaleLoc_trafo <- NULL
   residLev_orig <- NULL
   residLev_trafo <- NULL
-  cooks_orig <- NULL
-  cooks_trafo <- NULL
   QQ_resid_orig <- NULL
   QQ_resid_trafo <- NULL
   QQ_sranef_orig <- NULL
@@ -34,13 +41,8 @@ plot.trafo_mod <- function(x, ...) {
     
     n <- length(x$orig_mod$residuals)
     
-    residFit_orig %<a-%  plot(x$orig_mod, which = c(1L), main = "Untransformed model",
-                              labels.id = 1:n, cex.oma.main = 1.15, 
-                              sub.caption = "")
-    residFit_trafo %<a-%  plot(x$trafo_mod, which = c(1L), main = "Transformed model",
-                               labels.id = 1:n, cex.oma.main = 1.15, 
-                               sub.caption = "")
     
+    # QQ plots
     QQ_orig %<a-%  plot(x$orig_mod, which = c(2L), main = "Untransformed model",
                         labels.id = 1:n, cex.oma.main = 1.15, 
                         sub.caption = "")
@@ -48,56 +50,122 @@ plot.trafo_mod <- function(x, ...) {
                          labels.id = 1:n, cex.oma.main = 1.15, 
                          sub.caption = "")
     
-    scaleLoc_orig %<a-%  plot(x$orig_mod, which = c(3L), main = "Untransformed model",
+    # Histogram
+    resid_orig <- residuals(x$orig_mod, level = 0, type = "pearson")
+    resid_trafo <- residuals(x$trafo_mod, level = 0, type = "pearson")
+    
+    
+    hist_orig %<a-% hist(resid_orig, nclass = 20, xlab = "Pearson residuals", 
+                           main = "Untransformed model", prob = TRUE)
+    hist_trafo %<a-% hist(resid_trafo, nclass = 20, xlab = "Pearson residuals", 
+                         main = "Transformed model", prob = TRUE)
+    
+
+    
+    # Residuals vs Fitted
+    residFit_orig %<a-%  plot(x$orig_mod, which = c(1L), main = "Untransformed model",
                               labels.id = 1:n, cex.oma.main = 1.15, 
                               sub.caption = "")
-    scaleLoc_trafo %<a-%  plot(x$trafo_mod, which = c(3L), main = "Transformed model",
+    residFit_trafo %<a-%  plot(x$trafo_mod, which = c(1L), main = "Transformed model",
                                labels.id = 1:n, cex.oma.main = 1.15, 
                                sub.caption = "")
     
-    cooks_orig %<a-%  plot(x$orig_mod, which = c(4L), main = "Untransformed model",
+    # Fitted vs. observed
+    fitted_orig <- predict(x$orig_mod)
+    fitted_trafo <- predict(x$trafo_mod)
+    
+    y_orig <- model.response(x$orig_mod$model)
+    y_trafo <- model.response(x$trafo_mod$model)
+    
+    yFit_orig %<a-% plot(fitted_orig, y_orig,
+                         ylab = "y", xlab = "Fitted values",
+                         main = "Untransformed model")
+    yFit_trafo %<a-% plot(fitted_trafo, y_trafo,
+                          ylab = "Transformed y", xlab = "Fitted values",
+                          main = "Transformed model")
+    
+    # Scatterplots
+    scatter_orig %<a-% pairs(formula(x$orig_mod$terms), data = x$orig_mod$model,
+                         main = "Untransformed model")
+    scatter_trafo %<a-% pairs(formula(x$trafo_mod$terms), data = x$trafo_mod$model,
+                             main = "Transformed model")
+    
+    cooks_orig %<a-%  plot(x$orig_mod, which = c(4L), 
+                           main = "Untransformed model",
                            labels.id = 1:n, cex.oma.main = 1.15, 
                            sub.caption = "")
-    cooks_trafo %<a-%  plot(x$trafo_mod, which = c(4L), main = "Transformed model",
+    cooks_trafo %<a-%  plot(x$trafo_mod, which = c(4L), 
+                            main = "Transformed model",
                             labels.id = 1:n, cex.oma.main = 1.15, 
                             sub.caption = "")
     
-    residLev_orig %<a-%  plot(x$orig_mod, which = c(5L), main = "Untransformed model",
+    scaleLoc_orig %<a-%  plot(x$orig_mod, which = c(3L), 
+                              main = "Untransformed model",
                               labels.id = 1:n, cex.oma.main = 1.15, 
                               sub.caption = "")
-    residLev_trafo %<a-%  plot(x$trafo_mod, which = c(5L), main = "Transformed model",
+    scaleLoc_trafo %<a-%  plot(x$trafo_mod, which = c(3L), 
+                               main = "Transformed model",
+                               labels.id = 1:n, cex.oma.main = 1.15, 
+                               sub.caption = "")
+    
+    residLev_orig %<a-%  plot(x$orig_mod, which = c(5L), 
+                              main = "Untransformed model",
+                              labels.id = 1:n, cex.oma.main = 1.15, 
+                              sub.caption = "")
+    residLev_trafo %<a-%  plot(x$trafo_mod, which = c(5L), 
+                               main = "Transformed model",
                                labels.id = 1:n, cex.oma.main = 1.15, 
                                sub.caption = "")
     
     
     old.par <- par(mfrow = c(1, 1))
     par(mfrow = c(1, 2))  
-    residFit_orig
-    residFit_trafo
-    #par(old.par)
-    cat("Press [enter] to continue")
-    line <- readline()
-    #old.par <- par(mfrow = c(1, 2))
+    # Normality
     QQ_orig
     QQ_trafo
-    #par(old.par)
     cat("Press [enter] to continue")
     line <- readline()
-    #old.par <- par(mfrow = c(1, 2))
-    scaleLoc_orig
-    scaleLoc_trafo
-    #par(old.par)
+    hist_orig
+    mtext("Histogram", 3, 0.25, cex = 1)
+    hist_trafo
+    mtext("Histogram", 3, 0.25, cex = 1)
     cat("Press [enter] to continue")
     line <- readline()
-    #old.par <- par(mfrow = c(1, 2))
-    residLev_orig
-    residLev_trafo
-    #par(old.par)
+    # Homoscedasticity
+    residFit_orig
+    residFit_trafo
     cat("Press [enter] to continue")
     line <- readline()
-    #old.par <- par(mfrow = c(1, 2))
+    # Linearity
+    yFit_orig
+    abline(lm(as.numeric(y_orig) ~ as.numeric(fitted_orig)),col = "red",lwd = 1.5)
+    mtext("Observed vs Fitted", 3, 0.25, cex = 1)
+    yFit_trafo
+    abline(lm(as.numeric(y_trafo) ~ as.numeric(fitted_trafo)),col = "red",lwd = 1.5)
+    mtext("Transformed observed vs Fitted", 3, 0.25, cex = 1)
+    cat("Press [enter] to continue")
+    line <- readline()
+    par(old.par)
+    scatter_orig
+    mtext("Scatter plot", 3, 0.25, outer = TRUE, cex = 1)
+    cat("Press [enter] to continue")
+    line <- readline()
+    scatter_trafo    
+    mtext("Scatter plot", 3, 0.25, outer = TRUE, cex = 1)
+    cat("Press [enter] to continue")
+    line <- readline()
+    old.par <- par(mfrow = c(1, 1))
+    par(mfrow = c(1, 2))
     cooks_orig
     cooks_trafo
+    cat("Press [enter] to continue")
+    line <- readline()
+    scaleLoc_orig
+    scaleLoc_trafo
+    cat("Press [enter] to continue")
+    line <- readline()
+    residLev_orig
+    residLev_trafo
     par(old.par)
   } else if (inherits(x$orig_mod, "lme")) {
     resid <- residuals(x$orig_mod, level = 0, type = "pearson")
