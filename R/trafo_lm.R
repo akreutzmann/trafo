@@ -52,7 +52,7 @@ trafo_lm <- function(object, trafo, lambda = "estim", method,
     trans_mod <- oneparam(object = object, trafo = trafo, lambda = lambda, 
                           method = method, lambdarange = lambdarange, 
                           plotit = plotit)
-  } else if (trafo %in% c("reciprocal", "neglog", "custom")) {
+  } else if (trafo %in% c("reciprocal", "neglog", "glog", "custom")) {
     trans_mod <- woparam(object = object, trafo = trafo,
                          custom_trafo = custom_trafo)
   }
