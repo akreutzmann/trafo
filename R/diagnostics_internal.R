@@ -56,84 +56,83 @@ diagnostics_internal <- function(modOne, modTwo) {
                          row.names = c(modOne$name, 
                                        modTwo$name))
     
-    
+    return(list(norm_resid = norm_resid, 
+                norm_ranef = norm_ranef, 
+                hetero = hetero))
     
     
   } else if (inherits(modOne, "lme")) {
     
-    resid <- residuals(modOne, level = 0, type = "pearson")
-    residt <- residuals(modTwo, level = 0, type = "pearson")
+    resid_One <- residuals(modOne, level = 0, type = "pearson")
+    resid_Two <- residuals(modTwo, level = 0, type = "pearson")
     
-    if (length(residt) > 3 & length(residt) < 5000) {
-      shapiroEst_residt <- shapiro.test(residt)$statistic[[1]]
-      shapiroP_residt <- shapiro.test(residt)$p.value[[1]]
+    if (length(resid_One) > 3 & length(resid_One) < 5000) {
+      shapiroEst_residOne <- shapiro.test(resid_One)$statistic[[1]]
+      shapiroP_residOne <- shapiro.test(resid_One)$p.value[[1]]
       
-      shapiroEst_resid <- shapiro.test(resid)$statistic[[1]]
-      shapiroP_resid <- shapiro.test(resid)$p.value[[1]]
+      shapiroEst_residTwo <- shapiro.test(resid_Two)$statistic[[1]]
+      shapiroP_residTwo <- shapiro.test(resid_Two)$p.value[[1]]
     } else {
       warning("Number of domains exceeds 5000 or is lower then 3 and thus the
               Shapiro-Wilk test is not applicable for residuals.")
       
-      shapiroEst_residt <- NA
-      shapiroP_residt <- NA
+      shapiroEst_residOne <- NA
+      shapiroP_residOne <- NA
       
-      shapiroEst_resid <- NA
-      shapiroP_resid <- NA
+      shapiroEst_residTwo <- NA
+      shapiroP_residTwo <- NA
     }
     
-    skewness_residt <- skewness(residt)
-    kurtosis_residt <- kurtosis(residt)
+    skewness_residOne <- skewness(resid_One)
+    kurtosis_residOne <- kurtosis(resid_One)
     
-    skewness_resid <- skewness(resid)
-    kurtosis_resid <- kurtosis(resid)
+    skewness_residTwo <- skewness(resid_Two)
+    kurtosis_residTwo <- kurtosis(resid_Two)
     
     
-    raneft <- ranef(modOne)$'(Intercept)'
-    ranefo <- ranef(modTwo)$'(Intercept)'
+    ranef_One <- ranef(modOne)$'(Intercept)'
+    ranef_Two <- ranef(modTwo)$'(Intercept)'
     
-    if (length(raneft) > 3 & length(raneft) < 5000) {
-      shapiroEst_raneft <- shapiro.test(raneft)$statistic[[1]]
-      shapiroP_raneft <- shapiro.test(raneft)$p.value[[1]]
+    if (length(ranef_One) > 3 & length(ranef_One) < 5000) {
+      shapiroEst_ranefOne <- shapiro.test(ranef_One)$statistic[[1]]
+      shapiroP_ranefOne <- shapiro.test(ranef_One)$p.value[[1]]
       
-      shapiroEst_ranef <- shapiro.test(ranefo)$statistic[[1]]
-      shapiroP_ranef <- shapiro.test(ranefo)$p.value[[1]]
+      shapiroEst_ranefTwo <- shapiro.test(ranef_Two)$statistic[[1]]
+      shapiroP_ranefTwo <- shapiro.test(ranef_Two)$p.value[[1]]
     }
     else{
       warning("Number of domains exceeds 5000 or is lower then 3 and thus the
               Shapiro-Wilk test is not applicable for random effects.")
-      shapiroEst_raneft <- NA
-      shapiroP_raneft <- NA
+      shapiroEst_ranefOne <- NA
+      shapiroP_ranefOne <- NA
       
-      shapiroEst_ranef <- NA
-      shapiroP_ranef <- NA
+      shapiroEst_ranefTwo <- NA
+      shapiroP_ranefTwo <- NA
     }
     
-    skewness_raneft <- skewness(raneft)
-    kurtosis_raneft <- kurtosis(raneft)
+    skewness_ranefOne <- skewness(ranef_One)
+    kurtosis_ranefOne <- kurtosis(ranef_One)
     
-    skewness_ranef <- skewness(ranefo)
-    kurtosis_ranef <- kurtosis(ranefo)
+    skewness_ranefTwo <- skewness(ranef_Two)
+    kurtosis_ranefTwo <- kurtosis(ranef_Two)
     
-    norm_resid <- data.frame(Skewness  = c(skewness_resid, skewness_residt),
-                             Kurtosis  = c(kurtosis_resid, kurtosis_residt),
-                             Shapiro_W = c(shapiroEst_resid, shapiroEst_residt),
-                             Shapiro_p = c(shapiroP_resid, shapiroP_residt),
-                             row.names = c("Untransformed model", 
-                                           "Transformed model"))
+    norm_resid <- data.frame(Skewness  = c(skewness_residOne, skewness_residTwo),
+                             Kurtosis  = c(kurtosis_residOne, kurtosis_residTwo),
+                             Shapiro_W = c(shapiroEst_residOne, shapiroEst_residTwo),
+                             Shapiro_p = c(shapiroP_residOne, shapiroP_residTwo),
+                             row.names = c(modOne$name, 
+                                           modTwo$name))
     
-    norm_ranef <- data.frame(Skewness  = c(skewness_ranef, skewness_raneft),
-                             Kurtosis  = c(kurtosis_ranef, kurtosis_raneft),
-                             Shapiro_W = c(shapiroEst_ranef, shapiroEst_raneft),
-                             Shapiro_p = c(shapiroP_ranef, shapiroP_raneft),
-                             row.names = c("Untransformed model", 
-                                           "Transformed model"))
+    norm_ranef <- data.frame(Skewness  = c(skewness_ranefOne, skewness_ranefTwo),
+                             Kurtosis  = c(kurtosis_ranefOne, kurtosis_ranefTwo),
+                             Shapiro_W = c(shapiroEst_ranefOne, shapiroEst_ranefTwo),
+                             Shapiro_p = c(shapiroP_ranefOne, shapiroP_ranefTwo),
+                             row.names = c(modOne$name, 
+                                           modTwo$name))
+    
+    return(list(norm_resid = norm_resid, 
+                norm_ranef = norm_ranef,
+                hetero = NULL))
     
   }
-  
-  
-  return(list(norm_resid = norm_resid, 
-              norm_ranef = norm_ranef, 
-              hetero = hetero))
-  
-  
 }

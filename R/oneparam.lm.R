@@ -104,7 +104,8 @@ oneparam.lm <- function(object, trafo, lambda = "estim", method = "ml",
   ans$measoptim <- measoptim
   
   # Get transformed model
-  ans$modelt <- get_modelt(object = object, trans_mod = ans, std = FALSE)
+  #ans$modelt <- get_modelt(object = object, trans_mod = ans, std = FALSE)
+  ans$object <- object
   
   # New class trafo
   class(ans) <- c("trafo", "oneparam")

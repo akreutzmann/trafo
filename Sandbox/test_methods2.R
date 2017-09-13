@@ -26,7 +26,7 @@ bd_ml <- bickeldoksum(object = modelVienna, lambda = "estim", method = "ml",
                       plotit = TRUE)
 
 print(bd_ml)
-as.data.frame(bd_ml, model_obj = modelVienna)
+as.data.frame(bd_ml)
 
 
 trafo_lmBD <- trafo_lm(object = modelVienna, trafo = "bickeldoksum", 
@@ -41,9 +41,27 @@ plot(trafo_lmBD)
 bickeldoksum_reml <- bickeldoksum(modelVienna2, lambda = "estim", method = "reml",
                                   plotit = TRUE)
 
+
+
 print(bickeldoksum_reml)
-summary(bickeldoksum_reml)
-plot(bickeldoksum_reml)
+as.data.frame(bickeldoksum_reml)
+
+
+trafo_lmeBD <- trafo_lme(object = modelVienna2, trafo = "custom", 
+                         method = "skew", lambdarange = c(0.1,2), std = FALSE,
+                         custom_trafo = list(neglog = function(y) {
+                           u <- abs(y) + 1L
+                           yt <-  sign(y)*log(u)
+                           
+                           return(y = yt)
+                         }))
+
+
+print(trafo_lmeBD)
+summary(trafo_lmeBD)
+diagnostics(trafo_lmeBD)
+plot(trafo_lmeBD)
+
 
 
 # 2. Box-Cox
@@ -55,7 +73,7 @@ print(boxcox_skew)
 as.data.frame(boxcox_skew, model_obj = modelVienna)
 
 trafo_lmBC <- trafo_lm(object = modelVienna, trafo = "boxcox", 
-                       method = "skew", lambdarange = c(0,2), std = TRUE)
+                       method = "div.cvm", lambdarange = c(0,2), std = TRUE)
 
 print(trafo_lmBC)
 diagnostics(trafo_lmBC)
@@ -76,8 +94,18 @@ boxcox_pskew <- boxcox(modelVienna2, lambdarange = c(-0.5,2),
                       method = "pskew", plotit = TRUE)
 
 print(boxcox_pskew)
-summary(boxcox_pskew)
-plot(boxcox_pskew)
+
+
+compare_BDBC <- compare_trafo(modelVienna2, 
+                              trafos = list(boxcox_pskew, bickeldoksum_reml), 
+                              std = FALSE)
+
+print(compare_BDBC)
+diagnostics(compare_BDBC)
+summary(compare_BDBC)
+plot(compare_BDBC)
+
+
 
 
 # 3. Dual

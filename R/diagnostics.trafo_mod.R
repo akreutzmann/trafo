@@ -73,9 +73,11 @@ print.diagnostics.trafo_mod <- function(x, ...) {
      cat("Standardized random effects:\n")
      print(x$norm_ranef) 
   }
-  cat("\n")
-  cat("Heteroscedasticity:\n")
-  print(x$hetero)
+  if (!is.null(x$hetero)) {
+    cat("\n")
+    cat("Heteroscedasticity:\n")
+    print(x$hetero)
+  }
   invisible(x)
 }
 

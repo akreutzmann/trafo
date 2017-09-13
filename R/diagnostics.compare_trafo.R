@@ -69,10 +69,11 @@ print.diagnostics.compare_trafo <- function(x, ...) {
     cat("Standardized random effects:\n")
     print(x$norm_ranef) 
   }
-  cat("\n")
-  cat("Heteroscedasticity:\n")
-  print(x$hetero)
-  cat("\n")
+  if (!is.null(x$hetero)) {
+    cat("\n")
+    cat("Heteroscedasticity:\n")
+    print(x$hetero)
+  }
   invisible(x)
 }
 

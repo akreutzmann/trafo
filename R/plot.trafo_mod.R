@@ -33,9 +33,12 @@ plot.trafo_mod <- function(x, ...) {
   residLev_trafo <- NULL
   QQ_resid_orig <- NULL
   QQ_resid_trafo <- NULL
+  hist_resid_orig <- NULL
+  hist_resid_trafo <- NULL
   QQ_sranef_orig <- NULL
   QQ_sranef_trafo <- NULL
-  
+  hist_sranef_orig <- NULL
+  hist_sranef_trafo <- NULL
   
   
   if (inherits(x$orig_mod, "lm")) {
@@ -148,11 +151,11 @@ plot.trafo_mod <- function(x, ...) {
     line <- readline()
     par(old.par)
     scatter_orig
-    mtext("Scatter plot", 3, 0.25, outer = TRUE, cex = 1)
+    #mtext("Scatter plot", 3, 0.25, outer = FALSE, cex = 1)
     cat("Press [enter] to continue")
     line <- readline()
     scatter_trafo    
-    mtext("Scatter plot", 3, 0.25, outer = TRUE, cex = 1)
+    #mtext("Scatter plot", 3, 0.25, outer = FALSE, cex = 1)
     cat("Press [enter] to continue")
     line <- readline()
     old.par <- par(mfrow = c(1, 1))
@@ -176,20 +179,26 @@ plot.trafo_mod <- function(x, ...) {
     
     
     QQ_resid_orig %<a-% qqnorm(resid,
-                          ylab = "Sample-quantiles",
+                          ylab = "Sample-quantiles Pearson residuals",
                           main = "Untransformed model")
     QQ_resid_trafo %<a-% qqnorm(residt,
-                           ylab = "Sample-quantiles",
+                           ylab = "Sample-quantiles Pearson residuals",
                            main = "Transformed model")
     
-    n <- length(residt)
+    hist_resid_orig %<a-% hist(resid, nclass = 20, xlab = "Pearson residuals", 
+                                main = "Untransformed model", prob = TRUE)
+    hist_resid_trafo %<a-% hist(residt, nclass = 20, xlab = "Pearson residuals", 
+                                main = "Transformed model", prob = TRUE)
     
-    residFit_orig %<a-% plot_lm_adj(x$orig_mod, which = c(1L), sub.caption = "",
-                                   labels.id = 1:n, 
-                                   main = "Untransformed model")
-    residFit_trafo %<a-% plot_lm_adj(x$trafo_mod, which = c(1L), sub.caption = "",
-                                    labels.id = 1:n, 
-                                    main = "Transformed model") 
+    
+    #n <- length(residt)
+    
+    # residFit_orig %<a-% plot_lm_adj(x$orig_mod, which = c(1L), sub.caption = "",
+    #                                labels.id = 1:n, 
+    #                                main = "Untransformed model")
+    # residFit_trafo %<a-% plot_lm_adj(x$trafo_mod, which = c(1L), sub.caption = "",
+    #                                 labels.id = 1:n, 
+    #                                 main = "Transformed model") 
     
   #  scaleLoc_orig %<a-%  plot_lm_adj(x$orig_mod, which = c(3L), 
   #                                   main = "Untransformed model",
@@ -216,35 +225,56 @@ plot.trafo_mod <- function(x, ...) {
     sranef <- (ranef - mean(ranef)) / sd(ranef)
     
     QQ_sranef_trafo %<a-% qqnorm(sraneft,
-                            ylab = "Sample-quantiles",
+                            ylab = "Sample-quantiles Std. random effects",
                             main = "Transformed model")
     QQ_sranef_orig %<a-% qqnorm(sranef,
-                            ylab = "Sample-quantiles",
+                            ylab = "Sample-quantiles Std. random effects",
                             main = "Untransformed model")
     
-    old.par <- par(mfrow = c(1, 1), oma = c(0, 0, 0, 0))
-    par(mfrow = c(1, 2), oma = c(0, 0, 2, 0))
+    hist_sranef_orig %<a-% hist(sranef, nclass = 20, xlab = "Std. random effects", 
+                               main = "Untransformed model", prob = TRUE)
+    hist_sranef_trafo %<a-% hist(sraneft, nclass = 20, xlab = "Std. random effects", 
+                                main = "Transformed model", prob = TRUE)
+    
+    
+    
     dev.hold()
+    old.par <- par(mfrow = c(1, 1), oma = c(0, 0, 0, 0))
+    par(mfrow = c(1, 2), oma = c(0, 0, 2, 0))  
     #old.par <- par(mfrow = c(1, 1))
     #par(mfrow = c(1, 2), oma = c(0, 0, 2, 0))
-    residFit_orig
-    residFit_trafo
-    cat("Press [enter] to continue")
-    line <- readline()
+    # residFit_orig
+    # residFit_trafo
+    # cat("Press [enter] to continue")
+    # line <- readline()
     #old.par <- par(mfrow = c(1, 2), oma = c(0, 0, 2, 0))
     QQ_resid_orig
     qqline(resid)
+    mtext("Normal Q-Q Plots", 3, 0.25, cex = 1)
     QQ_resid_trafo
     qqline(residt)
-    mtext("Normal Q-Q Plots - Pearson residuals", outer = TRUE, cex = 1)
+    mtext("Normal Q-Q Plots", 3, 0.25, cex = 1)
     cat("Press [enter] to continue")
     line <- readline()
-    #old.par <- par(mfrow = c(1, 2), oma = c(0, 0, 2, 0))
+    hist_resid_orig
+    mtext("Histogram", 3, 0.25, cex = 1)
+    hist_resid_trafo
+    mtext("Histogram", 3, 0.25, cex = 1)
+    #mtext("Normal Q-Q Plots - Pearson residuals", outer = TRUE, cex = 1)
+    cat("Press [enter] to continue")
+    line <- readline()
     QQ_sranef_orig
     qqline(sranef)
+    mtext("Normal Q-Q Plots", 3, 0.25, cex = 1)
     QQ_sranef_trafo
     qqline(sraneft)
-    mtext("Normal Q-Q Plots - Std. random effects", outer = TRUE, cex = 1)
+    mtext("Normal Q-Q Plots", 3, 0.25, cex = 1)
+    cat("Press [enter] to continue")
+    line <- readline()
+    hist_sranef_orig
+    mtext("Histogram", 3, 0.25, cex = 1)
+    hist_sranef_trafo
+    mtext("Histogram", 3, 0.25, cex = 1)
   #  cat("Press [enter] to continue")
   #  line <- readline()
   #  old.par <- par(mfrow = c(1, 2))
@@ -256,9 +286,9 @@ plot.trafo_mod <- function(x, ...) {
   #  old.par <- par(mfrow = c(1, 2))
   #  residLev_orig
    # residLev_trafo
-    #par(old.par)
-    dev.flush()
     par(old.par)
+    dev.flush()
+    
   }
   invisible()
 }

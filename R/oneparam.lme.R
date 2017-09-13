@@ -40,6 +40,11 @@ oneparam.lme <- function(object, trafo, lambda = "estim", method = "ml",
   x <- model.matrix(formula, data = object$data)
   y <- as.matrix(object$data[paste(formula[2])])
   
+  if (trafo == "custom") {
+    custom_func <- custom_trafo[[1]]
+    custom_func_std <- custom_trafo[[2]]
+    custom_family <- names(custom_trafo)[[1]]
+  }
   
   # For saving returns
   ans <- list()
@@ -48,7 +53,9 @@ oneparam.lme <- function(object, trafo, lambda = "estim", method = "ml",
   if (lambda == "estim") {
     optim <- est_lme(y = y, x = x, formula = formula, data = data, 
                      rand_eff = rand_eff, method = method, 
-                     lambdarange = lambdarange, trafo = trafo) 
+                     lambdarange = lambdarange, trafo = trafo, 
+                     custom_func = custom_func, 
+                     custom_func_std = custom_func_std) 
     
     lambdaoptim <- optim$lambdaoptim
     measoptim <- optim$measoptim
@@ -98,7 +105,8 @@ oneparam.lme <- function(object, trafo, lambda = "estim", method = "ml",
   ans$measoptim <- measoptim
   
   # Get transformed model
-  ans$modelt <- get_modelt(object = object, trans_mod = ans, std = FALSE)
+  # ans$modelt <- get_modelt(object = object, trans_mod = ans, std = FALSE)
+  ans$object <- object
   
   # New class trafo
   class(ans) <- c("trafo", "oneparam")

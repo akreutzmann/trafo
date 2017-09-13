@@ -46,14 +46,22 @@ print.trafo <- function(x, ...){
 #' @param ... other parameters that can be passed to the function.
 #' @export
 
-as.data.frame.trafo <- function(x, row.names = NULL, optional = FALSE, 
-                                model_obj, ...) {
+as.data.frame.trafo <- function(x, row.names = NULL, optional = FALSE, ...) {
   
   formula <- NULL
   
-  data <- model_obj$model 
-  transformed_dependent <- paste0(as.character(formula(model_obj$terms)[2]), "t")
-  data[, transformed_dependent] <- x$yt
-  
+  if (inherits(x$object, "lm")) {
+    data <- x$object$model 
+    transformed_dependent <- paste0(as.character(formula(x$object$terms)[2]), "t")
+    data[, transformed_dependent] <- x$yt
+    
+    data <- as.data.frame(data, row.names = row.names, optional = optional, ...)
+  } else if (inherits(x$object, "lme")) {
+   data <- x$object$data
+   transformed_dependent <- paste0(as.character(formula(x$object$terms)[2]), "t")
+   data[, transformed_dependent] <- as.numeric(x$yt)
+   
+   data <- as.data.frame(data, row.names = row.names, optional = optional, ...)
+  }
   return(data)
 }

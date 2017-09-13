@@ -31,16 +31,14 @@
 #' @export
 
 
-woparam.lm <- function(object, trafo, custom_trafo = NULL, ...) {
+woparam.lme <- function(object, trafo, custom_trafo = NULL, ...) {
   
-  
-  model_frame <- object$model 
-  
-  # Check if arguments are as expected (for model variables)
-  if (is.null(y <- model.response(model_frame))) 
-    stop("Dependent variable y must not be empty")
-  if (is.null(x <- model.matrix(attr(model_frame, "terms"), data = model_frame))) 
-    stop("Matrix of covariates X must not be empty")
+  # Get model variables: dependent variable y and explanatory variables x
+  formula <- formula(object)
+  rand_eff <- names(object$coefficients$random)
+  data <- object$data
+  x <- model.matrix(formula, data = object$data)
+  y <- as.matrix(object$data[paste(formula[2])])
   
   # For saving returns
   ans <- list()

@@ -4,8 +4,7 @@
 \alias{as.data.frame.trafo}
 \title{Data frame with transformed variables}
 \usage{
-\method{as.data.frame}{trafo}(x, row.names = NULL, optional = FALSE,
-  model_obj, ...)
+\method{as.data.frame}{trafo}(x, row.names = NULL, optional = FALSE, ...)
 }
 \arguments{
 \item{x}{an object of type trafo.}
@@ -19,10 +18,10 @@ base package as.data.frame() methods use optional only for column names
 treatment, basically with the meaning of 
 data.frame(*, check.names = !optional)}
 
+\item{...}{other parameters that can be passed to the function.}
+
 \item{model_obj}{an object of a fitted model. In this version only objects
 of class lm can be included.}
-
-\item{...}{other parameters that can be passed to the function.}
 }
 \description{
 Data frame with transformed variables
