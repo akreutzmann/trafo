@@ -355,6 +355,17 @@ neg_log_back <- function(y, lambda = lambda) {
     return(y)
 }
 
+# Transformation: log
+Log <- function(y) {
+  y <- box_cox(y, lambda = 0)$y
+  return(y)
+}
+
+# Standardized transformation: log
+Log_std <- function(y) {
+  y <- box_cox_std(y, lambda = 0)$y
+  return(y)
+}
 
 
 # Transformation: Reciprocal

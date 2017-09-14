@@ -9,31 +9,12 @@
 #' paramater that needs to be estimated or given.
 #' @param ... other parameters that can be passed to the function.
 #' @return an object of class \code{trafo}.
-#' @references
-#' Battese, G.E., Harter, R.M. and Fuller, W.A. (1988). An Error-Components
-#' Model for Predictions of County Crop Areas Using Survey and Satellite Data.
-#' Journal of the American Statistical Association, Vol.83, No. 401, 28-36. \cr \cr
-#' Gonzalez-Manteiga, W. et al. (2008). Bootstrap mean squared error of
-#' a small-area EBLUP. Journal of Statistical Computation and Simulation,
-#' 78:5, 443-462.
-#' @examples
-#' # Load data
-#' data("eusilcA_Vienna")
-#' 
-#' # Fit linear model
-#' lm_Vienna <- lm(eqIncome ~ eqsize + gender + cash + unempl_ben + age_ben + 
-#' rent + cap_inv + tax_adj + dis_ben + sick_ben + surv_ben + 
-#' fam_allow + house_allow, data = eusilcA_Vienna)
-#' 
-#' # Transform dependent variable using a maximum likelihood approach
-#' bickeldoksum(object = lm_Vienna, lambda = "estim", method = "ml",
-#' plotit = FALSE)
-#' @export
+#' @keywords internal
 
 
 woparam.lme <- function(object, trafo, custom_trafo = NULL, ...) {
   
-  check_oneparam(trafo = trafo, custom_trafo = custom_trafo)
+  check_woparam(trafo = trafo, custom_trafo = custom_trafo)
   
   # Get model variables: dependent variable y and explanatory variables x
   formula <- formula(object)

@@ -24,7 +24,7 @@ dependent variable.
 }
 \examples{
 # Load data
-data("cars", package = "caret")
+data("cars", package = "datasets")
 
 # Fit linear model
 lm_cars <- lm(dist ~ speed, data = cars)

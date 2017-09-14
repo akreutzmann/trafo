@@ -1,12 +1,14 @@
-#' Summary for models with untransformed and transformed dependent variable
+#' Summary for linear models with untransformed and transformed dependent 
+#' variable
 #'
-#' Information about the transformed data and model and components of an 
-#' transformation object are extracted. The returned object is suitable for 
-#' printing with the print.summary.transformation method.
+#' The summary contains the summary for the untransformed and transformed model. 
+#' The summary is based on the summary for objects of type \code{lm}. The 
+#' returned object is suitable for printing with the print.summary.trafo_mod 
+#' method.
 #' 
 #' @param object an object of type \code{trafo_mod}
 #' @param ... additional arguments that are not used in this method
-#' @return an object of class \code{summary.transformation}
+#' @return an object of class \code{summary.trafo_mod}
 #' @export
 
 summary.trafo_mod <- function(object, ...) {

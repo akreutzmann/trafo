@@ -23,18 +23,12 @@
 #' the standardized one parameter transformation.
 #' @param ... other parameters that can be passed to the function.
 #' @return an object of class \code{trafo}.
-#' @references
-#' Battese, G.E., Harter, R.M. and Fuller, W.A. (1988). An Error-Components
-#' Model for Predictions of County Crop Areas Using Survey and Satellite Data.
-#' Journal of the American Statistical Association, Vol.83, No. 401, 28-36. \cr \cr
-#' Gonzalez-Manteiga, W. et al. (2008). Bootstrap mean squared error of
-#' a small-area EBLUP. Journal of Statistical Computation and Simulation,
-#' 78:5, 443-462.
-#' @export
+#' @keywords internal
 
 oneparam.lm <- function(object, trafo, lambda = "estim", method = "ml", 
-                          lambdarange, plotit = TRUE, custom_trafo, ...) {
-  
+                          lambdarange, plotit = TRUE, custom_trafo = NULL, ...) {
+
+ 
   check_oneparam(trafo = trafo, lambda = lambda, method = method, 
                  lambdarange = lambdarange, plotit = plotit, 
                  custom_trafo = custom_trafo)

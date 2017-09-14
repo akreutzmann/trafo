@@ -2,17 +2,16 @@
 % Please edit documentation in R/plot.compare_trafo.R
 \name{plot.compare_trafo}
 \alias{plot.compare_trafo}
-\title{Plot for regression models with untransformed and transformed dependent 
-variable}
+\title{Plots for linear models with transformed dependent variable}
 \usage{
 \method{plot}{compare_trafo}(x, ...)
 }
 \arguments{
-\item{x}{an object of type \code{trafo_mod}}
+\item{x}{an object of type \code{compare_trafo}}
 
 \item{...}{additional arguments that are not used in this method}
 }
 \description{
-Plots for comparing the residual diagnostics of transformed and untransformed 
-models.
+For the two transformed models a range of plots is returned in order to check
+model assumptions graphically.
 }

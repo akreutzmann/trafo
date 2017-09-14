@@ -12,7 +12,8 @@
 #' for the estimation of the optimal transformation parameter: 
 #' (i) Maximum likelihood approach ("ml"), (ii) Skewness minimization ("skew"),  
 #' (iii) Divergence minimization by Kolmogorov-Smirnoff ("div.ks"), 
-#' by Cramer-von-Mises ("div.cm") or by Kullback-Leibler ("div.kl").
+#' by Cramer-von-Mises ("div.cm") or by Kullback-Leibler ("div.kl"). Defaults
+#' to "ml".
 #' @param lambdarange a numeric vector with two elements defining an interval 
 #' that is used for the estimation of the optimal transformation parameter.
 #' The Dual transformation is not defined for negative values of 
@@ -21,21 +22,17 @@
 #' transformation parameter or the given transformation parameter is returned.
 #' @return an object of class \code{trafo}.
 #' @references
-#' Battese, G.E., Harter, R.M. and Fuller, W.A. (1988). An Error-Components
-#' Model for Predictions of County Crop Areas Using Survey and Satellite Data.
-#' Journal of the American Statistical Association, Vol.83, No. 401, 28-36. \cr \cr
-#' Gonzalez-Manteiga, W. et al. (2008). Bootstrap mean squared error of
-#' a small-area EBLUP. Journal of Statistical Computation and Simulation,
-#' 78:5, 443-462.
+#' Yang Z (2006). A modified family of power transformations. Economics Letters, 
+#' Vol. 92, 14-19.
 #' @examples
 #' # Load data
-#' data("cars", package = "caret")
+#' data("cars", package = "datasets")
 #' 
 #' # Fit linear model
 #' lm_cars <- lm(dist ~ speed, data = cars)
 #' 
 #' # Transform dependent variable using divergence minimization following
-#' Cramer-von-Mises
+#' # Cramer-von-Mises
 #' dual(object = lm_cars, method = "div.cvm", plotit = TRUE)
 #' @export
 

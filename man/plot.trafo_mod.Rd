@@ -13,6 +13,6 @@ variable}
 \item{...}{additional arguments that are not used in this method}
 }
 \description{
-Plots for comparing the residual diagnostics of transformed and untransformed 
-models.
+For the untransformed and transformed model a range of plots is returned in 
+order to check model assumptions graphically.
 }

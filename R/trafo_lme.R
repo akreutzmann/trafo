@@ -17,36 +17,25 @@
 #' by Cramer-von-Mises ("div.cm") or by Kullback-Leibler ("div.kl").
 #' @param lambdarange a numeric vector with two elements defining an interval 
 #' that is used for the estimation of the optimal transformation parameter. 
-#' @param plotit logical. If TRUE, a plot that illustrates the optimal 
-#' transformation parameter or the given transformation parameter is returned.
 #' @param std logical. If TRUE, the transformed model is returned based on the 
 #' standardized transformation.
+#' @param custom_trafo a list that determines a one parameter transformation and
+#' the standardized one parameter transformation.
 #' @return an object of class \code{trafo_mod}.
-#' @examples
-#' # Load data
-#' data("eusilcA_Vienna")
-#' 
-#' # Fit linear mixed model
-#' require(nlme)
-#' lme_Vienna <- lme(eqIncome ~ eqsize + gender + cash + unempl_ben + age_ben +
-#' rent + cap_inv + tax_adj + dis_ben + sick_ben + surv_ben + fam_allow + 
-#' house_allow, random = ~ 1 | county, data = eusilcA_Vienna, 
-#' na.action = na.omit)
-#' 
-#' # Get linear model with untransformed and transformed model
-#' trafo_lme(object = lme_Vienna, trafo = "boxcox", method = "reml", 
-#' lambdarange = c(0,2), plotit = TRUE, std = TRUE)
 #' @importFrom stats aggregate as.formula dnorm ecdf family lm logLik median 
 #' model.frame model.matrix model.response na.omit optimize qchisq qnorm 
 #' quantile residuals rstandard sd shapiro.test
 #' @import nlme
-#' @export
+#' @keywords internal
 
 trafo_lme <- function(object, trafo = "boxcox", lambda = "estim", 
                       method = "reml", lambdarange = c(-2, 2), 
                       std = FALSE, custom_trafo = NULL){
   
   plotit <- FALSE
+  
+  check_trafomod_lme(object = object, std = std, custom_trafo = custom_trafo)
+
   
   if (trafo %in% c("bickeldoksum", "boxcox", "dual", "gpower", "manly", 
                    "modulus", "logshiftopt", "sqrtshift", "yeojohnonson")) {

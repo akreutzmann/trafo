@@ -2,20 +2,34 @@
 % Please edit documentation in R/diagnostics.trafo_mod.R
 \name{diagnostics.trafo_mod}
 \alias{diagnostics.trafo_mod}
-\title{Diagnostics for models with untransformed and transformed dependent variable}
+\title{Diagnostics for an untransformed and a transformed model}
 \usage{
 \method{diagnostics}{trafo_mod}(object, ...)
 }
 \arguments{
-\item{object}{an object of type \code{compare_trafo}}
+\item{object}{an object of type \code{trafo_mod}}
 
 \item{...}{additional arguments that are not used in this method}
 }
 \value{
-an object of class \code{summary.transformation}
+an object of class \code{diagnostics.trafo_mod}
 }
 \description{
-Information about the transformed data and model and components of an 
-transformation object are extracted. The returned object is suitable for 
-printing with the print.summary.transformation method.
+Returns information about the applied transformation and selected diagnostics 
+to check model assumptions. The untransformed and the transformed model are 
+compared.
+}
+\examples{
+# Load data
+data("cars", package = "datasets")
+
+# Fit linear model
+lm_cars <- lm(dist ~ speed, data = cars)
+
+# Compare transformed models
+BD_lm <- trafo_lm(object = lm_cars, trafo = "bickeldoksum", 
+method = "skew", lambdarange = c(1e-11, 2))
+
+# Get diagnostics
+diagnostics(BD_lm)
 }

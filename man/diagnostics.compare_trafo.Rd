@@ -12,15 +12,16 @@
 \item{...}{additional arguments that are not used in this method}
 }
 \value{
-an object of class \code{summary.transformation}
+an object of class \code{diagnostics.compare_trafo}
 }
 \description{
-Returns information about the transformations and selected diagnostics to 
-check model assumptions. Two differently transformed models are compared.
+Returns information about the applied transformations and selected 
+diagnostics to check model assumptions. Two differently transformed models
+are compared.
 }
 \examples{
 # Load data
-data("cars", package = "caret")
+data("cars", package = "datasets")
 
 # Fit linear model
 lm_cars <- lm(dist ~ speed, data = cars)

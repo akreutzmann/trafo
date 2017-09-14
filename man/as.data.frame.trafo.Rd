@@ -7,7 +7,7 @@
 \method{as.data.frame}{trafo}(x, row.names = NULL, optional = FALSE, ...)
 }
 \arguments{
-\item{x}{an object of type trafo.}
+\item{x}{an object of type \code{trafo}.}
 
 \item{row.names}{NULL or a character vector giving the row names for the 
 data frame. Missing values are not allowed.}
@@ -19,10 +19,10 @@ treatment, basically with the meaning of
 data.frame(*, check.names = !optional)}
 
 \item{...}{other parameters that can be passed to the function.}
-
-\item{model_obj}{an object of a fitted model. In this version only objects
-of class lm can be included.}
 }
 \description{
-Data frame with transformed variables
+The data frame that is returned contains the variables that are used
+in the model and additionally a variable with the transformed dependent
+variable. To the variable name of the dependent variable a t is added for
+transformed.
 }

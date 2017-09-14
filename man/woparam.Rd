@@ -21,6 +21,6 @@ Transforms the dependent variable of a regression model using
 transformations without transformation parameter.
 }
 \seealso{
-\code{\link{oneparam.lm}}
+\code{\link{woparam.lm}}
 }
-\keyword{woparam}
+\keyword{internal}

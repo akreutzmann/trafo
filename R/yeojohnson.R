@@ -13,6 +13,7 @@
 #' (i) Maximum likelihood approach ("ml"), (ii) Skewness minimization ("skew"),  
 #' (iii) Divergence minimization by Kolmogorov-Smirnoff ("div.ks"), 
 #' by Cramer-von-Mises ("div.cm") or by Kullback-Leibler ("div.kl").
+#' Defaults to "ml".
 #' @param lambdarange a numeric vector with two elements defining an interval 
 #' that is used for the estimation of the optimal transformation parameter. 
 #' Defaults to \code{c(-2, 2)}.
@@ -20,24 +21,17 @@
 #' transformation parameter or the given transformation parameter is returned.
 #' @return an object of class \code{trafo}.
 #' @references
-#' Battese, G.E., Harter, R.M. and Fuller, W.A. (1988). An Error-Components
-#' Model for Predictions of County Crop Areas Using Survey and Satellite Data.
-#' Journal of the American Statistical Association, Vol.83, No. 401, 28-36. \cr \cr
-#' Gonzalez-Manteiga, W. et al. (2008). Bootstrap mean squared error of
-#' a small-area EBLUP. Journal of Statistical Computation and Simulation,
-#' 78:5, 443-462.
+#' Yeo IK, Johnson RA (2000). A new family of power transformations to improve 
+#' normality or symmetry. Biometrika, Vol.87, 954-959.
 #' @examples
 #' # Load data
-#' data("eusilcA_Vienna")
+#' data("cars", package = "datasets")
 #' 
 #' # Fit linear model
-#' lm_Vienna <- lm(eqIncome ~ eqsize + gender + cash + unempl_ben + age_ben + 
-#' rent + cap_inv + tax_adj + dis_ben + sick_ben + surv_ben + 
-#' fam_allow + house_allow, data = eusilcA_Vienna)
+#' lm_cars <- lm(dist ~ speed, data = cars)
 #' 
 #' # Transform dependent variable using a maximum likelihood approach
-#' yeojohnson(object = lm_Vienna, lambda = "estim", method = "ml",
-#' plotit = FALSE)
+#' yeojohnson(object = lm_cars, plotit = FALSE)
 #' @export
 
 yeojohnson <- function(object, lambda = "estim", method = "ml", 

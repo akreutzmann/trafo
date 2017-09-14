@@ -23,4 +23,4 @@ transformations.
 \seealso{
 \code{\link{oneparam.lm}}
 }
-\keyword{oneparam}
+\keyword{internal}

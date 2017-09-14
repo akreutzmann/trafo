@@ -1,8 +1,8 @@
 #' Plot for regression models with untransformed and transformed dependent 
 #' variable
 #'
-#' Plots for comparing the residual diagnostics of transformed and untransformed 
-#' models.
+#' For the untransformed and transformed model a range of plots is returned in 
+#' order to check model assumptions graphically. 
 #' 
 #' @param x an object of type \code{trafo_mod}
 #' @param ... additional arguments that are not used in this method

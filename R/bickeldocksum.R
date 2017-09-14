@@ -22,21 +22,17 @@
 #' transformation parameter or the given transformation parameter is returned.
 #' @return an object of class \code{trafo}.
 #' @references
-#' Battese, G.E., Harter, R.M. and Fuller, W.A. (1988). An Error-Components
-#' Model for Predictions of County Crop Areas Using Survey and Satellite Data.
-#' Journal of the American Statistical Association, Vol.83, No. 401, 28-36. \cr \cr
-#' Gonzalez-Manteiga, W. et al. (2008). Bootstrap mean squared error of
-#' a small-area EBLUP. Journal of Statistical Computation and Simulation,
-#' 78:5, 443-462.
+#' Bickel PJ, Doksum KA (1981). An analysis of transformations revisited. 
+#' Journal of the American Statistical Association, Vol. 76, 296-311.
 #' @examples
 #' # Load data
-#' data("cars", package = "caret")
+#' data("cars", package = "datasets")
 #' 
 #' # Fit linear model
 #' lm_cars <- lm(dist ~ speed, data = cars)
 #' 
 #' # Transform dependent variable using a maximum likelihood approach
-#' bickeldoksum(object = lm_cars, plotit = FALSE)
+#' bickeldoksum(object = lm_cars, lambdarange = c(1e-11, 2), plotit = FALSE)
 #' @export
 
 bickeldoksum <- function(object, lambda = "estim", method = "ml", 

@@ -1,4 +1,4 @@
-check_oneparam <- function(trafo, custom_trafo) {
+check_woparam <- function(trafo, custom_trafo) {
   
   if (!(trafo %in% c("log", "neglog", "reciprocal", "glog"))) {
     stop(paste0(trafo, " is not a supported transformation. 

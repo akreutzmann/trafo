@@ -18,11 +18,13 @@ transformation parameter. Defaults to "estim".}
 for the estimation of the optimal transformation parameter: 
 (i) Maximum likelihood approach ("ml"), (ii) Skewness minimization ("skew"),  
 (iii) Divergence minimization by Kolmogorov-Smirnoff ("div.ks"), 
-by Cramer-von-Mises ("div.cm") or by Kullback-Leibler ("div.kl").}
+by Cramer-von-Mises ("div.cm") or by Kullback-Leibler ("div.kl"). Defaults
+to "ml".}
 
 \item{lambdarange}{a numeric vector with two elements defining an interval 
-that is used for the estimation of the optimal transformation parameter. 
-Defaults to \code{c(0, 2)}.}
+that is used for the estimation of the optimal transformation parameter.
+The Dual transformation is not defined for negative values of 
+lambda. Defaults to \code{c(0, 2)}.}
 
 \item{plotit}{logical. If TRUE, a plot that illustrates the optimal 
 transformation parameter or the given transformation parameter is returned.}
@@ -37,23 +39,16 @@ estimated using different estimation methods or given.
 }
 \examples{
 # Load data
-data("eusilcA_Vienna")
+data("cars", package = "datasets")
 
 # Fit linear model
-lm_Vienna <- lm(eqIncome ~ eqsize + gender + cash + unempl_ben + age_ben + 
-rent + cap_inv + tax_adj + dis_ben + sick_ben + surv_ben + 
-fam_allow + house_allow, data = eusilcA_Vienna)
+lm_cars <- lm(dist ~ speed, data = cars)
 
-# Transform dependent variable using divergence minimization by 
-# Kolmogorov-Smirnof
-dual(object = lm_Vienna, lambda = "estim", method = "div.ks",
-plotit = FALSE)
+# Transform dependent variable using divergence minimization following
+# Cramer-von-Mises
+dual(object = lm_cars, method = "div.cvm", plotit = TRUE)
 }
 \references{
-Battese, G.E., Harter, R.M. and Fuller, W.A. (1988). An Error-Components
-Model for Predictions of County Crop Areas Using Survey and Satellite Data.
-Journal of the American Statistical Association, Vol.83, No. 401, 28-36. \cr \cr
-Gonzalez-Manteiga, W. et al. (2008). Bootstrap mean squared error of
-a small-area EBLUP. Journal of Statistical Computation and Simulation,
-78:5, 443-462.
+Yang Z (2006). A modified family of power transformations. Economics Letters, 
+Vol. 92, 14-19.
 }

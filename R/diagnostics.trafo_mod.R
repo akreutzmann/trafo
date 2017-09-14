@@ -9,13 +9,14 @@
 #' @return an object of class \code{diagnostics.trafo_mod}
 #' @examples
 #' # Load data
-#' data("cars", package = "caret")
+#' data("cars", package = "datasets")
 #' 
 #' # Fit linear model
 #' lm_cars <- lm(dist ~ speed, data = cars)
 #' 
 #' # Compare transformed models
-#' BD_lm <- trafo_lm(object = lm_cars, trafo = "bickeldoksum", method = "skew")
+#' BD_lm <- trafo_lm(object = lm_cars, trafo = "bickeldoksum", 
+#' method = "skew", lambdarange = c(1e-11, 2))
 #' 
 #' # Get diagnostics
 #' diagnostics(BD_lm)

@@ -18,7 +18,8 @@ transformation parameter. Defaults to "estim".}
 for the estimation of the optimal transformation parameter: 
 (i) Maximum likelihood approach ("ml"), (ii) Skewness minimization ("skew"),  
 (iii) Divergence minimization by Kolmogorov-Smirnoff ("div.ks"), 
-by Cramer-von-Mises ("div.cm") or by Kullback-Leibler ("div.kl").}
+by Cramer-von-Mises ("div.cm") or by Kullback-Leibler ("div.kl"). Defaults
+to "ml".}
 
 \item{lambdarange}{a numeric vector with two elements defining an interval 
 that is used for the estimation of the optimal transformation parameter. 
@@ -37,19 +38,11 @@ estimated using different estimation methods or given.
 }
 \examples{
 # Load data
-data("cars", package = "caret")
+data("cars", package = "datasets")
 
 # Fit linear model
 lm_cars <- lm(dist ~ speed, data = cars)
 
 # Transform dependent variable using skewness minimization
 boxcox(object = lm_cars, method = "skew", plotit = FALSE)
-}
-\references{
-Battese, G.E., Harter, R.M. and Fuller, W.A. (1988). An Error-Components
-Model for Predictions of County Crop Areas Using Survey and Satellite Data.
-Journal of the American Statistical Association, Vol.83, No. 401, 28-36. \cr \cr
-Gonzalez-Manteiga, W. et al. (2008). Bootstrap mean squared error of
-a small-area EBLUP. Journal of Statistical Computation and Simulation,
-78:5, 443-462.
 }

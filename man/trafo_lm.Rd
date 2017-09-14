@@ -8,47 +8,57 @@ trafo_lm(object, trafo = "boxcox", lambda = "estim", method = "ml",
   lambdarange = c(-2, 2), std = FALSE, custom_trafo = NULL)
 }
 \arguments{
-\item{object}{an object of type lm or lme with the model to transform}
+\item{object}{an object of type \code{lm}.}
 
-\item{trafo}{a character string. Different transformations can be used.}
+\item{trafo}{a character string. Different transformations can be used 
+for transforming the dependent variable in a linear model: 
+(i)  "bickeldoksum", (ii) "boxcox", (iii) "dual", (iv) "glog", (v) "gpower", 
+(vi) "log", (vii) "logshiftopt", (viii) "manly", (ix) "modulus", (x) "neglog",
+(xi) "reciprocal", (xii) "yeojohnson".
+Defaults to "boxcox".}
 
 \item{lambda}{either a character named "estim" if the optimal transformation
 parameter should be estimated or a numeric value determining a given 
-transformation parameter.}
+transformation parameter. Defaults to "estim".}
 
 \item{method}{a character string. Different estimation methods can be used 
 for the estimation of the optimal transformation parameter: 
 (i) Maximum likelihood approach ("ml"), (ii) Skewness minimization ("skew"),  
 (iii) Divergence minimization by Kolmogorov-Smirnoff ("div.ks"), 
-by Cramer-von-Mises ("div.cm") or by Kullback-Leibler ("div.kl").}
+by Cramer-von-Mises ("div.cm") or by Kullback-Leibler ("div.kl").
+Defaults to "ml".}
 
 \item{lambdarange}{a numeric vector with two elements defining an interval 
-that is used for the estimation of the optimal transformation parameter.}
+that is used for the estimation of the optimal transformation parameter. 
+Defaults to c(-2, 2).}
 
 \item{std}{logical. If TRUE, the transformed model is returned based on the 
 standardized transformation.}
 
-\item{custom_trafo}{a function that specifies a transformation without 
-transformation parameter that needs to be estimated or given.}
+\item{custom_trafo}{a list. If the customized transformation does 
+not contain a transformation parameter the list has one element that is a 
+function specifying the desired transformation. If the customized 
+transformation contains a transformation parameter the list has two elements
+where the first element is a function specifying the desired transformation
+and the second element is a function specifying the corresponding standardized
+transformation. Defaults to \code{NULL}.}
 }
 \value{
 an object of class \code{trafo_mod}.
 }
 \description{
 Function \code{trafo_lm} fits linear models with transformed dependent 
-variable. The return are two lm objects where the first is the transformed
-and the second the untransformed linear model.
+variable. The main return are two lm objects where one is the untransformed
+linear model and the other one the transformed linear model.
 }
 \examples{
 # Load data
-data("eusilcA_Vienna")
+data("cars", package = "datasets")
 
 # Fit linear model
-lm_Vienna <- lm(eqIncome ~ eqsize + gender + cash + unempl_ben + age_ben + 
-rent + cap_inv + tax_adj + dis_ben + sick_ben + surv_ben + 
-fam_allow + house_allow, data = eusilcA_Vienna)
+lm_cars <- lm(dist ~ speed, data = cars)
 
-# Get linear model with untransformed and transformed model
-trafo_lm(object = lm_Vienna, trafo = "boxcox", method = "ml", 
-lambdarange = c(0,2), std = FALSE)
+# Compare transformed models
+trafo_lm(object = lm_cars, trafo = "bickeldoksum", method = "skew", 
+lambdarange = c(1e-11, 2))
 }

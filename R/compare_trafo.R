@@ -11,7 +11,7 @@
 #' @return an object of class \code{compare_trafo}.
 #' @examples
 #' # Load data
-#' data("cars", package = "caret")
+#' data("cars", package = "datasets")
 #' 
 #' # Fit linear model
 #' lm_cars <- lm(dist ~ speed, data = cars)
@@ -28,6 +28,8 @@
 #' @export
 
 compare_trafo <- function(object, trafos, std) {
+  
+  check_compare_trafo(object = object, trafos = trafos, std = std)
   
   trafoOne <- trafos[[1]]
   trafoTwo <- trafos[[2]]

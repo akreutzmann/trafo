@@ -1,12 +1,12 @@
-#' Summary for models with untransformed and transformed dependent variable
+#' Summary for linear models with transformed dependent variable
 #'
-#' Information about the transformed data and model and components of an 
-#' transformation object are extracted. The returned object is suitable for 
-#' printing with the print.summary.transformation method.
+#' The summary contains the summary for both transformed models. The summary is 
+#' based on the summary for objects of type \code{lm}. The returned object is 
+#' suitable for printing with the print.summary.compare_trafo method.
 #' 
-#' @param object an object of type \code{trafo_mod}
+#' @param object an object of type \code{compare_trafo}
 #' @param ... additional arguments that are not used in this method
-#' @return an object of class \code{summary.transformation}
+#' @return an object of class \code{summary.compare_trafo}
 #' @export
 
 summary.compare_trafo <- function(object, ...) {

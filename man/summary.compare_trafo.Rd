@@ -2,20 +2,20 @@
 % Please edit documentation in R/summary.compare_trafo.R
 \name{summary.compare_trafo}
 \alias{summary.compare_trafo}
-\title{Summary for models with untransformed and transformed dependent variable}
+\title{Summary for linear models with transformed dependent variable}
 \usage{
 \method{summary}{compare_trafo}(object, ...)
 }
 \arguments{
-\item{object}{an object of type \code{trafo_mod}}
+\item{object}{an object of type \code{compare_trafo}}
 
 \item{...}{additional arguments that are not used in this method}
 }
 \value{
-an object of class \code{summary.transformation}
+an object of class \code{summary.compare_trafo}
 }
 \description{
-Information about the transformed data and model and components of an 
-transformation object are extracted. The returned object is suitable for 
-printing with the print.summary.transformation method.
+The summary contains the summary for both transformed models. The summary is 
+based on the summary for objects of type \code{lm}. The returned object is 
+suitable for printing with the print.summary.compare_trafo method.
 }

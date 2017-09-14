@@ -12,6 +12,11 @@ ML(y, x, lambda, trafo, custom_func_std)
 \item{x}{matrix of regressors}
 
 \item{lambda}{transformation parameter}
+
+\item{trafo}{determines the chosen transformation}
+
+\item{custom_func_std}{a function that determines a customized standard
+transformation.}
 }
 \value{
 log-likelihood

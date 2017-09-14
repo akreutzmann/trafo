@@ -1,29 +1,42 @@
-check_oneparam <- function(trafo, lambda, method, lambdarange, plotit, 
+check_oneparam <- function(trafo, lambda, method, 
+                           lambdarange, plotit, 
                            custom_trafo) {
   
   if (!(trafo %in% c("bickeldoksum", "boxcox", "dual", "gpower", "manly", 
-                    "modulus", "logshiftopt", "sqrtshift", "yeojohnonson",
+                    "modulus", "logshiftopt", "sqrtshift", "yeojohnson",
                     "custom"))) {
     stop(paste0(trafo, " is not a supported transformation. 
                 Please provide valid variable name for trafo."))
   } 
-  if (lambda != "estim" || is.numeric(lambda)) {
+
+  if (lambda != "estim" && !is.numeric(lambda)) {
     
     stop(paste0(lambda, " needs to be the character 'estim' or a numeric value. 
          Please provide valid value for lambda."))
+  }
+  if (is.numeric(lambda) && length(lambda) != 1) {
+    
+    stop("If lambda is a numeric value it needs to be a numeric vector of 
+         length 1.")
   }
   if (!(method %in% c("ml", "skew", "div.ks", "div.cvm", "div.kl" 
                      #,"reml", "pskew"
                      ))) {
     stop(paste0(method, " is not a supported estimation method. 
                 Please provide valid variable name for method."))
-  } if (length(lambdarange) != 2 || !is.vector(lambdarange, mode = "numeric") ||
+  } 
+  if (length(lambdarange) != 2 || !is.vector(lambdarange, mode = "numeric") ||
         !(lambdarange[1] < lambdarange[2])) {
     stop("lambdarange needs to be a numeric vector of length 2 
          defining a lower and upper limit for the estimation of the optimal 
          transformation parameter. The value of the lower limit needs to be 
          smaller than the upper limit.")
-  } if (!is.logical(plotit) || length(plotit) != 1) {
+  } 
+  if (trafo == "bickeldoksum" && lambdarange <= 0) {
+    stop("The Bickel-Doksum transformation is only defined for positive 
+         values of lambda.")
+  }
+  if (!is.logical(plotit) || length(plotit) != 1) {
     stop("plotit must be a logical value. Set plotit to TRUE or FALSE.")
   }
   if (!is.null(custom_trafo)) {
@@ -38,13 +51,13 @@ check_oneparam <- function(trafo, lambda, method, lambdarange, plotit,
       if (!inherits(custom_trafo[[i]], "function")) {
         stop("The elements of the list need to be named functions. These functions 
              for custom transformations and standardized custom transformations 
-             need to have exactly one argument y and only one return yt.")
+             need to have two arguments y and lambda and only one return y.")
       }
       else if (inherits(custom_trafo[[i]], "function") 
                && !all(names(formals(custom_trafo[[i]])) == c("y"))) {
         stop("The functions for custom transformations and standardized custom 
-              transformations need to have exactly one argument y and only one 
-              return yt.")
+              transformations need to have two arguments y and lambda and only 
+              one return y.")
       }
     }
   }

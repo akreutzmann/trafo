@@ -1,7 +1,7 @@
-#' Reciprocal transformation for linear models
+#' Log transformation for linear models
 #'
 #' The function transforms the dependent variable of a linear model using the 
-#' Reciprocal transformation. The transformation parameter can either be 
+#' Log transformation. The transformation parameter can either be 
 #' estimated using different estimation methods or given. 
 #'
 #' @param object an object of type lm. 
@@ -14,11 +14,11 @@
 #' lm_cars <- lm(dist ~ speed, data = cars)
 #' 
 #' # Transform dependent variable 
-#' reciprocal(object = lm_cars)
+#' logtrafo(object = lm_cars)
 #' @export
 
-reciprocal <- function(object) {
+logtrafo <- function(object) {
   
-  trafo <- "reciprocal"
+  trafo <- "log"
   woparam(object = object, trafo = trafo)
 }

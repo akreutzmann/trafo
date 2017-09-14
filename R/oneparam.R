@@ -9,9 +9,7 @@
 #' documentation of particular methods gives detailed information about the 
 #' return of that method.
 #' @seealso  \code{\link{oneparam.lm}}
-# #' ,  \code{\link{yeojohnson.lme}}
-#' @keywords oneparam
-#' @export
+#' @keywords internal
 oneparam <- function(object,...) UseMethod("oneparam")
 
 
