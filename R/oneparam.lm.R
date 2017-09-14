@@ -35,6 +35,10 @@
 oneparam.lm <- function(object, trafo, lambda = "estim", method = "ml", 
                           lambdarange, plotit = TRUE, custom_trafo, ...) {
   
+  check_oneparam(trafo = trafo, lambda = lambda, method = method, 
+                 lambdarange = lambdarange, plotit = plotit, 
+                 custom_trafo = custom_trafo)
+  
   # Get model variables: dependent variable y and explanatory variables x
   model_frame <- object$model 
   
