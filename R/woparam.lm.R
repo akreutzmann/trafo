@@ -33,6 +33,7 @@
 
 woparam.lm <- function(object, trafo, custom_trafo = NULL, ...) {
   
+  check_oneparam(trafo = trafo, custom_trafo = custom_trafo)
   
   model_frame <- object$model 
   

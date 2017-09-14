@@ -33,6 +33,8 @@
 
 woparam.lme <- function(object, trafo, custom_trafo = NULL, ...) {
   
+  check_oneparam(trafo = trafo, custom_trafo = custom_trafo)
+  
   # Get model variables: dependent variable y and explanatory variables x
   formula <- formula(object)
   rand_eff <- names(object$coefficients$random)

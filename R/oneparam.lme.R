@@ -33,6 +33,10 @@
 oneparam.lme <- function(object, trafo, lambda = "estim", method = "reml", 
                           lambdarange, plotit = TRUE, custom_trafo = NULL,...) {
   
+  check_oneparam(trafo = trafo, lambda = lambda, method = method, 
+                 lambdarange = lambdarange, plotit = plotit, 
+                 custom_trafo = custom_trafo)
+  
   # Get model variables: dependent variable y and explanatory variables x
   formula <- formula(object)
   rand_eff <- names(object$coefficients$random)
