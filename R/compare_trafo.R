@@ -1,14 +1,30 @@
 #' Compares transformed linear models
 #'
-#' Function \code{compare_trafo} fits linear models with transformed dependent 
-#' variable. 
+#' Function \code{compare_trafo} compares linear models with transformed 
+#' dependent variable. 
 #'
-#' @param object an object of type lm or lme with the model to transform
-#' @param trafos a list of trafo objects based on the same model as given 
+#' @param object an object of type lm
+#' @param trafos a list of \code{trafo} objects based on the same model given 
 #' in object.
-#' @param std logical. If TRUE, the transformed model is returned based on the 
+#' @param std logical. If TRUE, the transformed models are returned based on the 
 #' standardized transformation.
 #' @return an object of class \code{compare_trafo}.
+#' @examples
+#' # Load data
+#' data("cars", package = "caret")
+#' 
+#' # Fit linear model
+#' lm_cars <- lm(dist ~ speed, data = cars)
+#' 
+#' # Transform with Bickel-Doksum transformation
+#' bd_trafo <- bickeldoksum(object = lm_cars, plotit = FALSE)
+#' 
+#' # Transform with Box-Cox transformation
+#' bc_trafo <- boxcox(object = lm_cars, method = "skew", plotit = FALSE)
+#' 
+#' # Compare transformed models
+#' compare_trafo(object = lm_cars, trafos = list(bd_trafo, bc_trafo), 
+#' std = FALSE)
 #' @export
 
 compare_trafo <- function(object, trafos, std) {

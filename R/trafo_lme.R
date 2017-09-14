@@ -42,17 +42,25 @@
 #' @import nlme
 #' @export
 
-trafo_lme <- function(object, trafo, lambda = "estim", method, 
-                     lambdarange, plotit = TRUE, std = FALSE, 
-                     custom_trafo){
+trafo_lme <- function(object, trafo = "boxcox", lambda = "estim", 
+                      method = "reml", lambdarange = c(-2, 2), 
+                      std = FALSE, custom_trafo = NULL){
   
+  plotit <- FALSE
   
   if (trafo %in% c("bickeldoksum", "boxcox", "dual", "gpower", "manly", 
                    "modulus", "logshiftopt", "sqrtshift", "yeojohnonson")) {
     trans_mod <- oneparam(object = object, trafo = trafo, lambda = lambda, 
                           method = method, lambdarange = lambdarange, 
                           plotit = plotit)
-  } else if (trafo %in% c("reciprocal", "neglog", "glog", "custom")) {
+  } else if (trafo %in% c("reciprocal", "neglog", "glog")) {
+    trans_mod <- woparam(object = object, trafo = trafo,
+                         custom_trafo = custom_trafo)
+  } else if (trafo == "custom" && length(custom_trafo) == 2) {
+    trans_mod <- oneparam(object = object, trafo = trafo, lambda = lambda, 
+                          method = method, lambdarange = lambdarange, 
+                          plotit = plotit, custom_trafo = custom_trafo)
+  } else if (trafo == "custom" && length(custom_trafo) == 1) {
     trans_mod <- woparam(object = object, trafo = trafo,
                          custom_trafo = custom_trafo)
   }

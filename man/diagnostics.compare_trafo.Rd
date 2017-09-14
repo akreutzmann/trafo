@@ -15,7 +15,26 @@
 an object of class \code{summary.transformation}
 }
 \description{
-Information about the transformed data and model and components of an 
-transformation object are extracted. The returned object is suitable for 
-printing with the print.summary.transformation method.
+Returns information about the transformations and selected diagnostics to 
+check model assumptions. Two differently transformed models are compared.
+}
+\examples{
+# Load data
+data("cars", package = "caret")
+
+# Fit linear model
+lm_cars <- lm(dist ~ speed, data = cars)
+
+# Transform with Bickel-Doksum transformation
+bd_trafo <- bickeldoksum(object = lm_cars, plotit = FALSE)
+
+# Transform with Box-Cox transformation
+bc_trafo <- boxcox(object = lm_cars, method = "skew", plotit = FALSE)
+
+# Compare transformed models
+compare <- compare_trafo(object = lm_cars, trafos = list(bd_trafo, bc_trafo), 
+std = FALSE)
+
+# Get diagnostics
+diagnostics(compare)
 }

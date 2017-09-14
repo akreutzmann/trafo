@@ -1,12 +1,24 @@
-#' Diagnostics for models with untransformed and transformed dependent variable
+#' Diagnostics for an untransformed and a transformed model
 #'
-#' Information about the transformed data and model and components of an 
-#' transformation object are extracted. The returned object is suitable for 
-#' printing with the print.summary.transformation method.
+#' Returns information about the applied transformation and selected diagnostics 
+#' to check model assumptions. The untransformed and the transformed model are 
+#' compared.
 #' 
-#' @param object an object of type \code{compare_trafo}
+#' @param object an object of type \code{trafo_mod}
 #' @param ... additional arguments that are not used in this method
-#' @return an object of class \code{summary.transformation}
+#' @return an object of class \code{diagnostics.trafo_mod}
+#' @examples
+#' # Load data
+#' data("cars", package = "caret")
+#' 
+#' # Fit linear model
+#' lm_cars <- lm(dist ~ speed, data = cars)
+#' 
+#' # Compare transformed models
+#' BD_lm <- trafo_lm(object = lm_cars, trafo = "bickeldoksum", method = "skew")
+#' 
+#' # Get diagnostics
+#' diagnostics(BD_lm)
 #' @importFrom moments skewness kurtosis
 #' @importFrom lmtest bptest
 #' @export

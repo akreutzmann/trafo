@@ -21,8 +21,10 @@ modelVienna2 <- lme(eqIncome ~ eqsize + gender + cash + unempl_ben + age_ben +
 
 # One parameter transformations
 
-# 1. Oneparam
 
+# lm with ml
+
+# Try function oneparam with given transformation and estimated lambda
 boxcox1 <- oneparam(object = modelVienna, trafo = "boxcox", lambda = "estim", 
                     method = "ml", lambdarange = c(-2,2), 
                     plotit = TRUE, custom_trafo = NULL)
@@ -30,7 +32,8 @@ print(boxcox1)
 as.data.frame(boxcox1)
 
 
-
+# Define transformation and standardized transformation in order to use
+# customized transformation with one transformation parameter
 modul <- function(y, lambda = lambda) {
   u <- abs(y) + 1L
   lambda_absolute <- abs(lambda)
@@ -52,6 +55,7 @@ modul_std <- function(y, lambda) {
   return(y)
 }
 
+# Use customized transformation for lm
 custom1 <- oneparam(object = modelVienna, trafo = "custom", lambda = "estim", 
                     method = "ml", lambdarange = c(-2,2), 
                     plotit = TRUE, 
@@ -59,9 +63,162 @@ custom1 <- oneparam(object = modelVienna, trafo = "custom", lambda = "estim",
 print(custom1)
 as.data.frame(custom1)
 
+# Compare with original
+modul1 <- modulus(object = modelVienna, lambda = "estim", method = "ml",
+                  plotit = TRUE, lambdarange = c(-2,2))
 
 
-# 1. Bickeldoksum
+
+# lme with reml
+boxcox2 <- oneparam(object = modelVienna2, trafo = "boxcox", lambda = "estim", 
+                    method = "reml", lambdarange = c(-2,2), 
+                    plotit = TRUE, custom_trafo = NULL)
+print(boxcox2)
+as.data.frame(boxcox2)
+
+
+# Define transformation and standardized transformation in order to use
+# customized transformation with one transformation parameter
+modul <- function(y, lambda = lambda) {
+  u <- abs(y) + 1L
+  lambda_absolute <- abs(lambda)
+  if (lambda_absolute <= 1e-12) {  #case lambda=0
+    yt <-  sign(y)*log(u)
+  } else {
+    yt <- sign(y)*(u^lambda - 1L)/lambda
+  }
+  return(y = yt)
+}
+
+modul_std <- function(y, lambda) {
+  u <- abs(y) + 1L
+  yt <- modul(y, lambda)
+  zt <- yt/exp(mean(sign(y)*(lambda - 1L)*log(u)))
+  
+  y <- zt
+  
+  return(y)
+}
+
+# Use customized transformation for lme
+custom2 <- oneparam(object = modelVienna2, trafo = "custom", lambda = "estim", 
+                    method = "reml", lambdarange = c(-0.5,2), 
+                    plotit = FALSE, 
+                    custom_trafo = list(modul = modul, modul_std = modul_std))
+print(custom2)
+as.data.frame(custom2)
+
+
+modul2 <- modulus(object = modelVienna2, lambda = "estim", method = "reml",
+                  plotit = TRUE, lambdarange = c(-0.5,2))
+
+# Bickeldoksum
+
+bickeldoksum1 <- bickeldoksum(object = modelVienna)
+bickeldoksum2 <- bickeldoksum(object = modelVienna2, method = "reml")
+bickeldoksum3 <- bickeldoksum(object = modelVienna, lambda = 0.4)
+bickeldoksum4 <- bickeldoksum(object = modelVienna2, lambda = 0.5)
+
+# Transformations without parameter
+
+
+# lm 
+
+# Try function woparam with given transformation
+reciprocal1 <- woparam(object = modelVienna, trafo = "reciprocal", 
+                   custom_trafo = NULL)
+print(reciprocal1)
+as.data.frame(reciprocal1)
+
+
+# Define transformation and standardized transformation in order to use
+# customized transformation with one transformation parameter
+mylog <- function(y) {
+  
+  yt <- log(y)
+  return(y = yt)
+}
+
+
+# Use customized transformation for lm
+custom3 <- woparam(object = modelVienna, trafo = "custom", 
+                   custom_trafo = list(mylog = mylog))
+print(custom3)
+as.data.frame(custom3)
+
+
+# lme
+glog1 <- woparam(object = modelVienna2, trafo = "glog", 
+                 custom_trafo = NULL)
+print(glog1)
+as.data.frame(glog1)
+
+
+# Neglog
+
+neglog1 <- neglog(object = modelVienna)
+neglog2 <- neglog(object = modelVienna2)
+
+
+
+# trafo_lm and trafo_lme
+
+trafo_lm1 <- trafo_lm(object = modelVienna, trafo = "modulus")
+
+print(trafo_lm1)
+summary(trafo_lm1)
+diagnostics(trafo_lm1)
+plot(trafo_lm1)
+
+# Try customized option with modulus
+trafo_lm2 <- trafo_lm(object = modelVienna, 
+                      custom_trafo = list(modul = modul))
+
+print(trafo_lm2)
+summary(trafo_lm2)
+diagnostics(trafo_lm2)
+plot(trafo_lm2)
+
+# Try with trafo without parameter
+trafo_lm3 <- trafo_lm(object = modelVienna, trafo = "glog")
+
+print(trafo_lm3)
+summary(trafo_lm3)
+diagnostics(trafo_lm3)
+
+
+# Default for trafo_lme
+trafo_lme1 <- trafo_lme(object = modelVienna2)
+
+print(trafo_lm1)
+summary(trafo_lm1)
+diagnostics(trafo_lm1)
+plot(trafo_lm1)
+
+
+# Compare trafo
+
+compare_modul1 <- compare_trafo(modelVienna, 
+                                trafos = list(reciprocal1, bickeldoksum1), 
+                                std = FALSE)
+
+print(compare_modul1)
+summary(compare_modul1)
+diagnostics(compare_modul1)
+plot(compare_modul1)
+
+
+
+compare_modul2 <- compare_trafo(modelVienna, 
+                                trafos = list(boxcox1, bickeldoksum1), 
+                                std = FALSE)
+
+print(compare_modul2)
+summary(compare_modul2)
+diagnostics(compare_modul2)
+plot(compare_modul2)
+
+# Bickeldoksum
 
 # lm with ml
 bd_ml <- bickeldoksum(object = modelVienna, lambda = "estim", method = "ml",

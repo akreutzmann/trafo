@@ -4,8 +4,8 @@
 \alias{trafo_lme}
 \title{Fits transformed linear mixed models}
 \usage{
-trafo_lme(object, trafo, lambda = "estim", method, lambdarange,
-  plotit = TRUE, std = FALSE, custom_trafo)
+trafo_lme(object, trafo = "boxcox", lambda = "estim", method = "reml",
+  lambdarange = c(-2, 2), std = FALSE, custom_trafo = NULL)
 }
 \arguments{
 \item{object}{an object of type lm or lme with the model to transform}
@@ -26,11 +26,11 @@ by Cramer-von-Mises ("div.cm") or by Kullback-Leibler ("div.kl").}
 \item{lambdarange}{a numeric vector with two elements defining an interval 
 that is used for the estimation of the optimal transformation parameter.}
 
-\item{plotit}{logical. If TRUE, a plot that illustrates the optimal 
-transformation parameter or the given transformation parameter is returned.}
-
 \item{std}{logical. If TRUE, the transformed model is returned based on the 
 standardized transformation.}
+
+\item{plotit}{logical. If TRUE, a plot that illustrates the optimal 
+transformation parameter or the given transformation parameter is returned.}
 }
 \value{
 an object of class \code{trafo_mod}.

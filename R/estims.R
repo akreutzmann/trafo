@@ -5,6 +5,9 @@
 #' @param y vector of response variables
 #' @param x matrix of regressors
 #' @param lambda transformation parameter
+#' @param trafo determines the chosen transformation
+#' @param custom_func_std a function that determines a customized standard
+#' transformation.
 #' @return log-likelihood
 #' @keywords internal
 

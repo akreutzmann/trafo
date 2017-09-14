@@ -5,6 +5,7 @@
 #' estimated using different estimation methods or given. 
 #'
 #' @param object an object of type lm. 
+#' @return an object of class \code{trafo}.
 #' @references
 #' Battese, G.E., Harter, R.M. and Fuller, W.A. (1988). An Error-Components
 #' Model for Predictions of County Crop Areas Using Survey and Satellite Data.
@@ -13,17 +14,15 @@
 #' a small-area EBLUP. Journal of Statistical Computation and Simulation,
 #' 78:5, 443-462.
 #' @examples
+#' @examples
 #' # Load data
-#' data("eusilcA_Vienna")
+#' data("cars", package = "caret")
 #' 
 #' # Fit linear model
-#' lm_Vienna <- lm(eqIncome ~ eqsize + gender + cash + unempl_ben + age_ben + 
-#' rent + cap_inv + tax_adj + dis_ben + sick_ben + surv_ben + 
-#' fam_allow + house_allow, data = eusilcA_Vienna)
+#' lm_cars <- lm(dist ~ speed, data = cars)
 #' 
-#' # Transform dependent variable using a maximum likelihood approach
-#' bickeldoksum(object = lm_Vienna, lambda = "estim", method = "ml",
-#' plotit = FALSE)
+#' # Transform dependent variable 
+#' glog(object = lm_cars)
 #' @export
 
 glog <- function(object) {

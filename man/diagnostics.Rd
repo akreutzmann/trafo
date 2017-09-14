@@ -7,7 +7,7 @@
 diagnostics(object, ...)
 }
 \arguments{
-\item{object}{an object of type trafo_mod.}
+\item{object}{an object that contains two models that should be compared.}
 
 \item{...}{other parameters that can be passed to the function.}
 }
@@ -17,9 +17,11 @@ documentation of particular methods gives detailed information about the
 return of that method.
 }
 \description{
-Returns information about the transformation and selected diagnostics.
+Returns information about the transformation and selected diagnostics to 
+check model assumptions.
 }
 \seealso{
-\code{\link{diagnostics.trafo_mod}}
+\code{\link{diagnostics.trafo_mod}}, 
+\code{\link{diagnostics.compare_trafo}}
 }
 \keyword{diagnostics}

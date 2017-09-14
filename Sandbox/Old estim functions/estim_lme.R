@@ -16,6 +16,9 @@
 #' log transformation "NA" can be selected since no optimization is neccessary
 #' for these two transformation types.
 #' @param trafo a character string that selects the transformation.
+#' #' @param custum_func a function that determines a customized transformation.
+#' @param custom_func_std a function that determines a customized standard
+#' transformation.
 #' @return Depending on the selected \code{method} the return is a log
 #' likelihood, a skewness, a pooled skewness or a Kolmogorov-Smirnoff, Craemer
 #' von Mises or Kullback Leibner divergence.
@@ -32,7 +35,8 @@ estim_lme <- function(lambda, y, formula, data, rand_eff, method, trafo,
          lambda = lambda,
          data = data,
          rand_eff = rand_eff,
-         trafo = trafo)
+         trafo = trafo, 
+         custom_func_std = custom_func_std)
   } else if (method != "reml") {
     
     # Get residuals for all methods but ML

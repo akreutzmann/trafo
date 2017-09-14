@@ -40,8 +40,8 @@
 #' quantile residuals rstandard sd shapiro.test
 #' @export
 
-trafo_lm <- function(object, trafo, lambda = "estim", method, 
-                     lambdarange, std = FALSE, 
+trafo_lm <- function(object, trafo = "boxcox", lambda = "estim", method = "ml", 
+                     lambdarange = c(-2, 2), std = FALSE, 
                      custom_trafo = NULL) {
   
   
@@ -52,10 +52,19 @@ trafo_lm <- function(object, trafo, lambda = "estim", method,
     trans_mod <- oneparam(object = object, trafo = trafo, lambda = lambda, 
                           method = method, lambdarange = lambdarange, 
                           plotit = plotit)
-  } else if (trafo %in% c("reciprocal", "neglog", "glog", "custom")) {
+  } else if (trafo %in% c("reciprocal", "neglog", "glog")) {
+    trans_mod <- woparam(object = object, trafo = trafo,
+                         custom_trafo = custom_trafo)
+  } else if (trafo == "custom" && length(custom_trafo) == 2) {
+    trans_mod <- oneparam(object = object, trafo = trafo, lambda = lambda, 
+                          method = method, lambdarange = lambdarange, 
+                          plotit = plotit, custom_trafo = custom_trafo)
+  } else if (trafo == "custom" && length(custom_trafo) == 1) {
     trans_mod <- woparam(object = object, trafo = trafo,
                          custom_trafo = custom_trafo)
   }
+  
+  
 
   # Get original lm object
   orig_mod <- object 

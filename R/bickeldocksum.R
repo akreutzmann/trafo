@@ -12,10 +12,12 @@
 #' for the estimation of the optimal transformation parameter: 
 #' (i) Maximum likelihood approach ("ml"), (ii) Skewness minimization ("skew"),  
 #' (iii) Divergence minimization by Kolmogorov-Smirnoff ("div.ks"), 
-#' by Cramer-von-Mises ("div.cm") or by Kullback-Leibler ("div.kl").
+#' by Cramer-von-Mises ("div.cm") or by Kullback-Leibler ("div.kl"). Defaults
+#' to "ml".
 #' @param lambdarange a numeric vector with two elements defining an interval 
 #' that is used for the estimation of the optimal transformation parameter. 
-#' Defaults to \code{c(1e-11, 2)}.
+#' The Bickel-Doksum transformation is only defined for positive values of 
+#' lambda. Defaults to \code{c(1e-11, 2)}.
 #' @param plotit logical. If TRUE, a plot that illustrates the optimal 
 #' transformation parameter or the given transformation parameter is returned.
 #' @return an object of class \code{trafo}.
@@ -28,16 +30,13 @@
 #' 78:5, 443-462.
 #' @examples
 #' # Load data
-#' data("eusilcA_Vienna")
+#' data("cars", package = "caret")
 #' 
 #' # Fit linear model
-#' lm_Vienna <- lm(eqIncome ~ eqsize + gender + cash + unempl_ben + age_ben + 
-#' rent + cap_inv + tax_adj + dis_ben + sick_ben + surv_ben + 
-#' fam_allow + house_allow, data = eusilcA_Vienna)
+#' lm_cars <- lm(dist ~ speed, data = cars)
 #' 
 #' # Transform dependent variable using a maximum likelihood approach
-#' bickeldoksum(object = lm_Vienna, lambda = "estim", method = "ml",
-#' plotit = FALSE)
+#' bickeldoksum(object = lm_cars, plotit = FALSE)
 #' @export
 
 bickeldoksum <- function(object, lambda = "estim", method = "ml", 

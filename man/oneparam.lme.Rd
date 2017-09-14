@@ -4,8 +4,8 @@
 \alias{oneparam.lme}
 \title{One parameter transformations for linear models}
 \usage{
-\method{oneparam}{lme}(object, trafo, lambda = "estim", method = "ml",
-  lambdarange, plotit = TRUE, ...)
+\method{oneparam}{lme}(object, trafo, lambda = "estim", method = "reml",
+  lambdarange, plotit = TRUE, custom_trafo = NULL, ...)
 }
 \arguments{
 \item{object}{an object of type lm.}

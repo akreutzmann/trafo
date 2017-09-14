@@ -4,8 +4,8 @@
 \alias{trafo_lm}
 \title{Fits transformed linear models}
 \usage{
-trafo_lm(object, trafo, lambda = "estim", method, lambdarange, std = FALSE,
-  custom_trafo = NULL)
+trafo_lm(object, trafo = "boxcox", lambda = "estim", method = "ml",
+  lambdarange = c(-2, 2), std = FALSE, custom_trafo = NULL)
 }
 \arguments{
 \item{object}{an object of type lm or lme with the model to transform}

@@ -14,8 +14,9 @@
 #' (iii) Divergence minimization by Kolmogorov-Smirnoff ("div.ks"), 
 #' by Cramer-von-Mises ("div.cm") or by Kullback-Leibler ("div.kl").
 #' @param lambdarange a numeric vector with two elements defining an interval 
-#' that is used for the estimation of the optimal transformation parameter. 
-#' Defaults to \code{c(0, 2)}.
+#' that is used for the estimation of the optimal transformation parameter.
+#' The Dual transformation is not defined for negative values of 
+#' lambda. Defaults to \code{c(0, 2)}.
 #' @param plotit logical. If TRUE, a plot that illustrates the optimal 
 #' transformation parameter or the given transformation parameter is returned.
 #' @return an object of class \code{trafo}.
@@ -28,17 +29,14 @@
 #' 78:5, 443-462.
 #' @examples
 #' # Load data
-#' data("eusilcA_Vienna")
+#' data("cars", package = "caret")
 #' 
 #' # Fit linear model
-#' lm_Vienna <- lm(eqIncome ~ eqsize + gender + cash + unempl_ben + age_ben + 
-#' rent + cap_inv + tax_adj + dis_ben + sick_ben + surv_ben + 
-#' fam_allow + house_allow, data = eusilcA_Vienna)
+#' lm_cars <- lm(dist ~ speed, data = cars)
 #' 
-#' # Transform dependent variable using divergence minimization by 
-#' # Kolmogorov-Smirnof
-#' dual(object = lm_Vienna, lambda = "estim", method = "div.ks",
-#' plotit = FALSE)
+#' # Transform dependent variable using divergence minimization following
+#' Cramer-von-Mises
+#' dual(object = lm_cars, method = "div.cvm", plotit = TRUE)
 #' @export
 
 dual <- function(object, lambda = "estim", method = "ml", 

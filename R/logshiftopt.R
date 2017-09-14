@@ -14,7 +14,7 @@
 #' (iii) Divergence minimization by Kolmogorov-Smirnoff ("div.ks"), 
 #' by Cramer-von-Mises ("div.cm") or by Kullback-Leibler ("div.kl").
 #' @param lambdarange a numeric vector with two elements defining an interval 
-#' that is used for the estimation of the optimal transformation parameter. 
+#' that is used for the estimation of the optimal transformation parameter.
 #' Defaults to \code{c(0, 2)}.
 #' @param plotit logical. If TRUE, a plot that illustrates the optimal 
 #' transformation parameter or the given transformation parameter is returned.

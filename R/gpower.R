@@ -1,7 +1,7 @@
 #' Gpower transformation for linear models
 #'
 #' The function transforms the dependent variable of a linear model using the 
-#' Gpowertransformation. The transformation parameter can either be 
+#' Gpower transformation. The transformation parameter can either be 
 #' estimated using different estimation methods or given. 
 #'
 #' @param object an object of type lm. 
@@ -28,16 +28,14 @@
 #' 78:5, 443-462.
 #' @examples
 #' # Load data
-#' data("eusilcA_Vienna")
+#' data("cars", package = "caret")
 #' 
 #' # Fit linear model
-#' lm_Vienna <- lm(eqIncome ~ eqsize + gender + cash + unempl_ben + age_ben + 
-#' rent + cap_inv + tax_adj + dis_ben + sick_ben + surv_ben + 
-#' fam_allow + house_allow, data = eusilcA_Vienna)
+#' lm_cars <- lm(dist ~ speed, data = cars)
 #' 
-#' # Transform dependent variable using skewness minimization
-#' boxcox(object = lm_Vienna, lambda = "estim", method = "skew",
-#' plotit = FALSE)
+#' # Transform dependent variable using divergence minimization following 
+#' Kullback-Leibler
+#' gpower(object = lm_cars, method = "div.kl", plotit = FALSE)
 #' @export
 
 gpower <- function(object, lambda ="estim", method = "ml", 

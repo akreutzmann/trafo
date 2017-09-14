@@ -1,3 +1,8 @@
+#' Function that bundles the return of a trafo object
+#' 
+#' @keywords internal
+
+
 get_transformed <- function(trafo, ans, y, lambda, custom_func, 
                             custom_func_std, 
                             custom_family) {

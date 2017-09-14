@@ -1,3 +1,10 @@
+#' Internal diagnostic functions
+#'
+#' The function is called in diagnostics.trafo_mod and 
+#' diagnostics.compare_trafo.
+#' @keywords internal
+
+
 diagnostics_internal <- function(modOne, modTwo) {
   
   

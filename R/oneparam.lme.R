@@ -30,8 +30,8 @@
 #' 78:5, 443-462.
 #' @export
 
-oneparam.lme <- function(object, trafo, lambda = "estim", method = "ml", 
-                          lambdarange, plotit = TRUE, ...) {
+oneparam.lme <- function(object, trafo, lambda = "estim", method = "reml", 
+                          lambdarange, plotit = TRUE, custom_trafo = NULL,...) {
   
   # Get model variables: dependent variable y and explanatory variables x
   formula <- formula(object)
@@ -70,6 +70,7 @@ oneparam.lme <- function(object, trafo, lambda = "estim", method = "ml",
   # Plot the curve of the measure with line at the optimal transformation 
   # parameter
   if (plotit == TRUE) {
+  
     plot_meas <- plot_trafolme(lambdarange = lambdarange, lambdaoptim = lambdaoptim,
                                measoptim = measoptim, y = y, formula = formula, 
                                data = data, rand_eff = rand_eff, trafo = trafo, 
@@ -96,7 +97,10 @@ oneparam.lme <- function(object, trafo, lambda = "estim", method = "ml",
   # Save transformation family and method
   #ans$family <- "Bickel-Doksum"
   
-  ans <- get_transformed(trafo = trafo, ans = ans, y = y, lambda = lambdaoptim)
+  ans <- get_transformed(trafo = trafo, ans = ans, y = y, lambda = lambdaoptim,
+                         custom_func = custom_func,
+                         custom_func_std = custom_func_std, 
+                         custom_family = custom_family)
   
   # Save estimation method
   ans$method <- method

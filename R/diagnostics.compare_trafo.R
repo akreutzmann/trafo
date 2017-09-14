@@ -1,12 +1,31 @@
 #' Diagnostics for two differently transformed models
 #'
-#' Information about the transformed data and model and components of an 
-#' transformation object are extracted. The returned object is suitable for 
-#' printing with the print.summary.transformation method.
+#' Returns information about the applied transformations and selected 
+#' diagnostics to check model assumptions. Two differently transformed models
+#' are compared.
 #' 
 #' @param object an object of type \code{compare_trafo}
 #' @param ... additional arguments that are not used in this method
-#' @return an object of class \code{summary.transformation}
+#' @return an object of class \code{diagnostics.compare_trafo}
+#' @examples
+#' # Load data
+#' data("cars", package = "caret")
+#' 
+#' # Fit linear model
+#' lm_cars <- lm(dist ~ speed, data = cars)
+#' 
+#' # Transform with Bickel-Doksum transformation
+#' bd_trafo <- bickeldoksum(object = lm_cars, plotit = FALSE)
+#' 
+#' # Transform with Box-Cox transformation
+#' bc_trafo <- boxcox(object = lm_cars, method = "skew", plotit = FALSE)
+#' 
+#' # Compare transformed models
+#' compare <- compare_trafo(object = lm_cars, trafos = list(bd_trafo, bc_trafo), 
+#' std = FALSE)
+#' 
+#' # Get diagnostics
+#' diagnostics(compare)
 #' @importFrom moments skewness kurtosis
 #' @importFrom lmtest bptest
 #' @export
@@ -27,7 +46,7 @@ diagnostics.compare_trafo <- function(object, ...) {
   
   diagnose <- diagnostics_internal(modOne = modOne, modTwo = modTwo)
   
-  diagnose_out <- list(trafo = trafos, 
+  diagnose_out <- list(trafos = trafos, 
                        method = method, 
                        lambdahat = lambdahat, 
                        param = param, 
@@ -55,9 +74,28 @@ print.diagnostics.compare_trafo <- function(x, ...) {
   # 
   cat("Diagnostics of two transformed models \n")
   cat("\n")
-  cat("Transformations: ",x$trafo[[1]], "and",x$trafo[[2]],"\n")
-  cat("Estimation methods: ", x$method[[1]], "and", x$method[[2]], " \n")
-  cat("Optimal Parameters: ", x$lambdahat[[1]], "and", x$lambdahat[[2]]," \n")
+  
+  if(x$param[[1]] == "oneparam" && x$param[[2]] == "oneparam") {
+    cat("Transformations: ",x$trafos[[1]], "and",x$trafos[[2]],"\n")
+    cat("Estimation methods: ", x$method[[1]], "and", x$method[[2]], " \n")
+    cat("Optimal Parameters: ", x$lambdahat[[1]], "and", x$lambdahat[[2]]," \n")
+    cat("\n")
+    } else if (x$param[[1]] == "oneparam" && x$param[[2]] == "woparam") {
+      cat("Transformations: ",x$trafos[[1]], "and",x$trafos[[2]],"\n")
+      cat("Estimation methods: ", x$method[[2]], " and no estimation \n")
+      cat("Optimal Parameters: ", x$lambdahat[[2]]," and no parameter \n")
+      cat("\n")
+      } else if (x$param[[1]] == "woparam" && x$param[[2]] == "oneparam") {
+        cat("Transformations: ",x$trafos[[1]], "and",x$trafos[[2]],"\n")
+        cat("Estimation methods: No estimation and", x$method[[1]], " \n")
+        cat("Optimal Parameters: No parameter and", x$lambdahat[[1]]," \n")
+        cat("\n")
+        } else if (x$param[[1]] == "woparam" && x$param[[2]] == "woparam") {
+          cat("Transformations: ",x$trafos[[1]], "and",x$trafos[[2]],"\n")
+          cat("Estimation methods: No estimation \n")
+          cat("Optimal Parameters: No parameter  \n")
+          cat("\n")
+        }
   cat("\n")
   cat("Residual diagnostics:\n")
   
