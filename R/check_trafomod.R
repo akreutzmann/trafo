@@ -7,7 +7,7 @@ check_trafomod_lm <- function(object, std, custom_trafo) {
   if (!is.logical(std) || length(std) != 1) {
     stop("std must be a logical value. Set std to TRUE or FALSE.")
   }
-  if (!is.null(custom_trafo) && (length(custom_trafo) != 1 || length(custom_trafo) != 2)) {
+  if (!is.null(custom_trafo) && (!(length(custom_trafo) == 1 || length(custom_trafo) == 2))) {
     stop("custom_trafo needs to be a list with one or two elements depending on 
          the transformation.")
     

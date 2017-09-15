@@ -39,6 +39,7 @@ check_oneparam <- function(trafo, lambda, method,
   if (!is.logical(plotit) || length(plotit) != 1) {
     stop("plotit must be a logical value. Set plotit to TRUE or FALSE.")
   }
+
   if (!is.null(custom_trafo)) {
     
     if (!inherits(custom_trafo, "list")) {
@@ -54,7 +55,7 @@ check_oneparam <- function(trafo, lambda, method,
              need to have two arguments y and lambda and only one return y.")
       }
       else if (inherits(custom_trafo[[i]], "function") 
-               && !all(names(formals(custom_trafo[[i]])) == c("y"))) {
+               && !all(names(formals(custom_trafo[[i]])) == c("y", "lambda"))) {
         stop("The functions for custom transformations and standardized custom 
               transformations need to have two arguments y and lambda and only 
               one return y.")

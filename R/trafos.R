@@ -192,8 +192,16 @@ Dual <-  function(y, lambda = lambda) {
 
 Dual_std <- function(y, lambda) {
   yt <- Dual(y, lambda)
-  zt <- yt/exp((mean(log((y^(lambda-1) + y^(-lambda-1))/2))))
-
+  #zt <- yt/exp((mean(log((y^(lambda-1) + y^(-lambda-1))/2))))
+  #zt <- yt/geometric.mean(yt/2)
+  
+  gm <- geometric.mean(yt)
+  zt <- if (abs(lambda) > 1e-12) {
+    zt <- yt / (gm/2)
+  } else {
+    zt <- gm * log(yt)
+  }
+  
   y <- zt
 
   return(y)
