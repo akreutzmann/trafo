@@ -7,10 +7,16 @@ get_transformed <- function(trafo, ans, y, lambda, custom_func,
                             custom_func_std, 
                             custom_family) {
   
-  if (trafo == "boxcox") {
+  if (trafo == "boxcoxshift") {
     # Get vector of transformed and standardized transformed variable
-    ans$yt <- box_cox(y = y, lambda = lambda)$y
-    ans$s <- box_cox(y = y, lambda = lambda)$shift
+    ans$yt <- box_cox_shift(y = y, lambda = lambda)$y
+    ans$zt <- box_cox_shift_std(y = y, lambda = lambda)
+    
+    # Save transformation family
+    ans$family <- "Box-Cox shift"
+  } else if (trafo == "boxcox") {
+    # Get vector of transformed and standardized transformed variable
+    ans$yt <- box_cox(y = y, lambda = lambda)
     ans$zt <- box_cox_std(y = y, lambda = lambda)
     
     # Save transformation family
@@ -18,7 +24,6 @@ get_transformed <- function(trafo, ans, y, lambda, custom_func,
   } else if (trafo == "bickeldoksum") {
     # Get vector of transformed and standardized transformed variable
     ans$yt <- Bick_dok(y = y, lambda = lambda)
-    ans$s <- NULL
     ans$zt <- Bick_dok_std(y = y, lambda = lambda)
     
     # Save transformation family 
@@ -27,7 +32,6 @@ get_transformed <- function(trafo, ans, y, lambda, custom_func,
   } else if (trafo == "manly") {
     # Get vector of transformed and standardized transformed variable
     ans$yt <- Manly(y = y, lambda = lambda)
-    ans$s <- NULL
     ans$zt <- Manly_std(y = y, lambda = lambda)
     
     # Save transformation family and method
@@ -35,7 +39,6 @@ get_transformed <- function(trafo, ans, y, lambda, custom_func,
   } else if (trafo == "modulus") {
     # Get vector of transformed and standardized transformed variable
     ans$yt <- modul(y = y, lambda = lambda)
-    ans$s <- NULL
     ans$zt <- modul_std(y = y, lambda = lambda)
     
     # Save transformation family and method
@@ -43,7 +46,6 @@ get_transformed <- function(trafo, ans, y, lambda, custom_func,
   } else if (trafo == "dual") {
     # Get vector of transformed and standardized transformed variable
     ans$yt <- Dual(y = y, lambda = lambda)
-    ans$s <- NULL
     ans$zt <- Dual_std(y = y, lambda = lambda)
     
     # Save transformation family and method
@@ -51,7 +53,6 @@ get_transformed <- function(trafo, ans, y, lambda, custom_func,
   } else if (trafo == "yeojohnson") {
     # Get vector of transformed and standardized transformed variable
     ans$yt <- Yeo_john(y = y, lambda = lambda)
-    ans$s <- NULL
     ans$zt <- Yeo_john_std(y = y, lambda = lambda)
     
     # Save transformation family and method
@@ -59,7 +60,6 @@ get_transformed <- function(trafo, ans, y, lambda, custom_func,
   } else if (trafo == "logshiftopt") {
     # Get vector of transformed and standardized transformed variable
     ans$yt <- log_shift(y = y, lambda = lambda)
-    ans$s <- NULL
     ans$zt <- log_shift_std(y = y, lambda = lambda)
     
     # Save transformation family and method
@@ -67,7 +67,6 @@ get_transformed <- function(trafo, ans, y, lambda, custom_func,
   } else if (trafo == "sqrtshift") {
     # Get vector of transformed and standardized transformed variable
     ans$yt <- sqrt_shift(y = y, lambda = lambda)
-    ans$s <- NULL
     ans$zt <- sqrt_shift_std(y = y, lambda = lambda)
     
     # Save transformation family and method
@@ -75,7 +74,6 @@ get_transformed <- function(trafo, ans, y, lambda, custom_func,
   } else if (trafo == "gpower") {
     # Get vector of transformed and standardized transformed variable
     ans$yt <- gPower(y = y, lambda = lambda)
-    ans$s <- NULL
     ans$zt <- gPower_std(y = y, lambda = lambda)
     
     # Save transformation family and method
@@ -83,7 +81,6 @@ get_transformed <- function(trafo, ans, y, lambda, custom_func,
   } else if (trafo == "custom") {
     # Get vector of transformed and standardized transformed variable
     ans$yt <- custom_func(y = y, lambda = lambda)
-    ans$s <- NULL
     ans$zt <- custom_func_std(y = y, lambda = lambda)
     
     # Save transformation family and method

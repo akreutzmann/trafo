@@ -27,7 +27,7 @@
 #' std = FALSE)
 #' @export
 
-compare_trafo <- function(object, trafos, std) {
+compare_trafo <- function(object, trafos, std = FALSE) {
   
   check_compare_trafo(object = object, trafos = trafos, std = std)
   

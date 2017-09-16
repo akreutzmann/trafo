@@ -41,8 +41,8 @@ print.compare_trafo <- function(x, ...){
       print(x$trafoTwo)
     }} else if (x$param[[1]] == "oneparam" && x$param[[2]] == "woparam") {
       cat("Transformations: ",x$trafos[[1]], "and",x$trafos[[2]],"\n")
-      cat("Estimation methods: ", x$method[[2]], " and no estimation \n")
-      cat("Optimal Parameters: ", x$lambdahat[[2]]," and no parameter \n")
+      cat("Estimation methods: ", x$method[[1]], " and no estimation \n")
+      cat("Optimal Parameters: ", x$lambdahat[[1]]," and no parameter \n")
       cat("\n")
       if (inherits(x$trafoOne, "lm")) {
         cat("Model using ",x$trafos[[1]], " with ",x$method[[1]], "\n")
@@ -73,8 +73,8 @@ print.compare_trafo <- function(x, ...){
         print(x$trafoTwo)
       } } else if (x$param[[1]] == "woparam" && x$param[[2]] == "oneparam") {
         cat("Transformations: ",x$trafos[[1]], "and",x$trafos[[2]],"\n")
-        cat("Estimation methods: No estimation and", x$method[[1]], " \n")
-        cat("Optimal Parameters: No parameter and", x$lambdahat[[1]]," \n")
+        cat("Estimation methods: No estimation and", x$method[[2]], " \n")
+        cat("Optimal Parameters: No parameter and", x$lambdahat[[2]]," \n")
         cat("\n")
         if (inherits(x$trafoOne, "lm")) {
           cat("Model using ",x$trafos[[1]], "\n")
@@ -87,7 +87,7 @@ print.compare_trafo <- function(x, ...){
                 print.gap = 2L, quote = FALSE)
           #print(x$trafo_mod)
           cat("\n")
-          cat("Model using ",x$trafos[[2]], " with ",x$method[[1]], "\n")
+          cat("Model using ",x$trafos[[2]], " with ",x$method[[2]], "\n")
           cat("\n")
           cat("Call: ", paste(deparse(x$trafoTwo$call), sep = "\n", collapse = "\n") , "\n")
           cat("formula = ",x$trafoTwo$formula, "\n")

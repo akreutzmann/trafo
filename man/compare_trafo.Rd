@@ -4,7 +4,7 @@
 \alias{compare_trafo}
 \title{Compares transformed linear models}
 \usage{
-compare_trafo(object, trafos, std)
+compare_trafo(object, trafos, std = FALSE)
 }
 \arguments{
 \item{object}{an object of type lm}

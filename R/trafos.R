@@ -1,9 +1,47 @@
 # Box Cox ----------------------------------------------------------------------
 
+# Transformation: Box Cox
 
-#  Transformation: Box Cox
+box_cox <- function(y, lambda = lambda) {
 
-box_cox <- function(y, lambda = lambda, shift = 0) {
+  lambda_cases <- function(y, lambda = lambda) {
+    lambda_absolute <- abs(lambda)
+    if (lambda_absolute <= 1e-12) {  #case lambda=0
+      y <- log(y)
+    } else {
+      y <- ((y)^lambda - 1) / lambda
+    }
+    return(y)
+  }
+  y <- lambda_cases(y = y, lambda = lambda)
+  
+  return(y = y)
+} # End box_cox
+
+
+
+# Standardized transformation: Box Cox
+
+geometric.mean <- function(x) { #for RMLE in the parameter estimation
+  exp(mean(log(x)))
+}
+
+box_cox_std <- function(y, lambda) {
+  gm <- geometric.mean(y)
+  y <- if (abs(lambda) > 1e-12) {
+    y <- (y^lambda - 1) / (lambda * ((gm)^(lambda - 1)))
+  } else {
+    y <- gm * log(y)
+  }
+  return(y)
+}
+
+
+
+
+#  Transformation: Box Cox shift
+
+box_cox_shift <- function(y, lambda = lambda, shift = 0) {
   with_shift <- function(y, shift) {
     min <- min(y)
     if (min <= 0) {
@@ -38,7 +76,7 @@ geometric.mean <- function(x) { #for RMLE in the parameter estimation
   exp(mean(log(x)))
 }
 
-box_cox_std <- function(y, lambda) {
+box_cox_shift_std <- function(y, lambda) {
   min <- min(y)
   if (min <= 0) {
     y <- y - min + 1
@@ -55,7 +93,7 @@ box_cox_std <- function(y, lambda) {
 
 
 # Back transformation: Box Cox
-box_cox_back <- function(y, lambda, shift = 0) {
+box_cox_shift_back <- function(y, lambda, shift = 0) {
 
   lambda_cases_back <- function(y, lambda = lambda, shift){
     if (abs(lambda) <= 1e-12) {   #case lambda=0
@@ -349,7 +387,7 @@ neg_log <- function(y) {
 
 neg_log_std <- function(y) {
   u <- abs(y) + 1L
-  yt <- modul(y)
+  yt <- neg_log(y)
   zt <- yt/exp(mean(sign(y)*log(u)))
 
   y <- zt
@@ -365,20 +403,20 @@ neg_log_back <- function(y, lambda = lambda) {
 
 # Transformation: log
 Log <- function(y) {
-  y <- box_cox(y, lambda = 0)$y
+  y <- box_cox(y, lambda = 0)
   return(y)
 }
 
 # Standardized transformation: log
 Log_std <- function(y) {
-  y <- box_cox_std(y, lambda = 0)$y
+  y <- box_cox_std(y, lambda = 0)
   return(y)
 }
 
 
 # Transformation: Reciprocal
 Reciprocal <- function(y)  {#lambda is fixed
-    y <- box_cox(y, lambda = -1)$y
+    y <- box_cox(y, lambda = -1)
     return(y)
 }
 
@@ -501,6 +539,14 @@ gPower_back <- function(y, lambda = lambda) {
 # Glog
 g_log <- function(y) {
 
+  yt <-  log(y + sqrt(y^2 + 1))
+  
+  return(y = yt)
+}
+
+
+g_log_std <- function(y) {
+  
   yt <-  log(y + sqrt(y^2 + 1))
   
   return(y = yt)

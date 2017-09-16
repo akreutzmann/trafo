@@ -34,8 +34,10 @@ estim_lm <- function(lambda, y, x, method, trafo, custom_func, custom_func_std){
     ML(y, x, lambda, trafo, custom_func_std = custom_func_std)
   } else if (method != "ml") {
     
-    yt <- if (trafo == "boxcox") {
-      as.matrix(box_cox(y = y, lambda = lambda, shift = 0)$y)
+    yt <- if (trafo == "boxcoxshift") {
+      as.matrix(box_cox_shift(y = y, lambda = lambda, shift = 0)$y)
+    } else if (trafo == "boxcox") {
+      as.matrix(box_cox(y = y, lambda = lambda))
     } else if (trafo == "modulus") {
       as.matrix(modul(y = y, lambda = lambda))
     } else if (trafo == "bickeldoksum") {
@@ -133,8 +135,10 @@ estim_lme <- function(lambda, y, formula, data, rand_eff, method, trafo,
     # Get residuals for all methods but ML
     # Wrapper for transformations, this means that we need a new argument
     # trafo in the function
-    yt <- if (trafo == "boxcox") {
-      box_cox(y = y, lambda = lambda, shift = 0)$y
+    yt <- if (trafo == "boxcoxshift") {
+      box_cox_shift(y = y, lambda = lambda, shift = 0)$y
+    } else if (trafo == "boxcox") {
+      as.matrix(box_cox(y = y, lambda = lambda))
     } else if (trafo == "modulus") {
       modul(y = y, lambda = lambda)
     } else if (trafo == "bickeldoksum") {

@@ -2,9 +2,9 @@ check_oneparam <- function(trafo, lambda, method,
                            lambdarange, plotit, 
                            custom_trafo) {
   
-  if (!(trafo %in% c("bickeldoksum", "boxcox", "dual", "gpower", "manly", 
-                    "modulus", "logshiftopt", "sqrtshift", "yeojohnson",
-                    "custom"))) {
+  if (!(trafo %in% c("bickeldoksum", "boxcoxshift", "boxcox", "dual", "gpower", 
+                     "manly", "modulus", "logshiftopt", "sqrtshift", 
+                     "yeojohnson", "custom"))) {
     stop(paste0(trafo, " is not a supported transformation. 
                 Please provide valid variable name for trafo."))
   } 

@@ -33,7 +33,9 @@ lglike <- function(lambda, y, qr, n, trafo, custom_func_std, ...) {
 
   
   # Wrapper with standardized tranformations (Done!)
-  zt <- if (trafo == "boxcox") {
+  zt <- if (trafo == "boxcoxshift") {
+    box_cox_shift_std(y = y, lambda = lambda)
+  } else if (trafo == "boxcox") {
     box_cox_std(y = y, lambda = lambda)
   } else if (trafo == "modulus") {
     modul_std(y = y, lambda = lambda)
@@ -79,7 +81,9 @@ restricted_ML <- function(y = y,
                  custom_func_std) {
   
   # Wrapper for other standardized transformations (Done!)
-  zt <- if (trafo == "boxcox") {
+  zt <- if (trafo == "boxcoxshift") {
+    box_cox_shift_std(y = y, lambda = lambda)
+  } else if (trafo == "boxcox") {
     box_cox_std(y = y, lambda = lambda)
   } else if (trafo == "modulus") {
     modul_std(y = y, lambda = lambda)

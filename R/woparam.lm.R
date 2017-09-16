@@ -30,25 +30,30 @@ woparam.lm <- function(object, trafo, custom_trafo = NULL, ...) {
   
   if (trafo == "log") {
     ans$yt <- Log(y = y)
+    ans$zt <- Log_std(y = y)
     ans$family <- "Log"
   } else if (trafo == "reciprocal") {
     ans$yt <- Reciprocal(y = y)
+    ans$zt <- Reciprocal_std(y = y)
     ans$family <- "Reciprocal"
   } else if (trafo == "neglog") {
     ans$yt <- neg_log(y = y)
+    ans$zt <- neg_log_std(y = y)
     ans$family <- "Neglog"
   } else if (trafo == "glog") {
     ans$yt <- g_log(y = y)
+    ans$zt <- g_log_std(y = y)
     ans$family <- "Glog"
   } else if (trafo == "custom") {
     custom_func <- custom_trafo[[1]]
+    custom_func_std <- custom_trafo[[1]]
     ans$yt <- custom_func(y = y)
+    ans$zt <- custom_func_std(y = y)
     ans$family <- names(custom_trafo)
   }
   
   ans$lambdavector <- NULL
   ans$measvector <- NULL   
-  ans$zt <- NULL         
   ans$method <- NULL      
   ans$lambdahat <- NULL 
   ans$measoptim <- NULL    

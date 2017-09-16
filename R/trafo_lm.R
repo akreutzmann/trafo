@@ -7,10 +7,10 @@
 #' @param object an object of type \code{lm}. 
 #' @param trafo a character string. Different transformations can be used 
 #' for transforming the dependent variable in a linear model: 
-#' (i)  "bickeldoksum", (ii) "boxcox", (iii) "dual", (iv) "glog", (v) "gpower", 
-#' (vi) "log", (vii) "logshiftopt", (viii) "manly", (ix) "modulus", (x) "neglog",
-#' (xi) "reciprocal", (xii) "yeojohnson".
-#' Defaults to "boxcox".
+#' (i)  "bickeldoksum", (ii) "boxcoxshift", (iii) "dual", (iv) "glog", 
+#' (v) "gpower", (vi) "log", (vii) "logshiftopt", (viii) "manly", (ix) "modulus",
+#' (x) "neglog", (xi) "reciprocal", (xii) "yeojohnson".
+#' Defaults to "boxcoxshift".
 #' @param lambda either a character named "estim" if the optimal transformation
 #' parameter should be estimated or a numeric value determining a given 
 #' transformation parameter. Defaults to "estim".
@@ -18,7 +18,7 @@
 #' for the estimation of the optimal transformation parameter: 
 #' (i) Maximum likelihood approach ("ml"), (ii) Skewness minimization ("skew"),  
 #' (iii) Divergence minimization by Kolmogorov-Smirnoff ("div.ks"), 
-#' by Cramer-von-Mises ("div.cm") or by Kullback-Leibler ("div.kl").
+#' by Cramer-von-Mises ("div.cvm") or by Kullback-Leibler ("div.kl").
 #' Defaults to "ml".
 #' @param lambdarange a numeric vector with two elements defining an interval 
 #' that is used for the estimation of the optimal transformation parameter. 
@@ -56,19 +56,22 @@ trafo_lm <- function(object, trafo = "boxcox", lambda = "estim", method = "ml",
   
   plotit <- FALSE
   
-  if (trafo %in% c("bickeldoksum", "boxcox", "dual", "gpower", "manly", 
-                   "modulus", "logshiftopt", "sqrtshift", "yeojohnonson")) {
+  if (trafo %in% c("bickeldoksum", "boxcoxshift", "boxcox", "dual", "gpower", 
+                   "manly", "modulus", "logshiftopt", "sqrtshift", 
+                   "yeojohnonson")) {
     trans_mod <- oneparam(object = object, trafo = trafo, lambda = lambda, 
                           method = method, lambdarange = lambdarange, 
                           plotit = plotit)
   } else if (trafo %in% c("log", "reciprocal", "neglog", "glog")) {
     trans_mod <- woparam(object = object, trafo = trafo,
                          custom_trafo = custom_trafo)
-  } else if (trafo == "custom" && length(custom_trafo) == 2) {
+  } else if (trafo == "custom_one") {
+    trafo <- "custom"
     trans_mod <- oneparam(object = object, trafo = trafo, lambda = lambda, 
                           method = method, lambdarange = lambdarange, 
                           plotit = plotit, custom_trafo = custom_trafo)
-  } else if (trafo == "custom" && length(custom_trafo) == 1) {
+  } else if (trafo == "custom_wo") {
+    trafo <- "custom"
     trans_mod <- woparam(object = object, trafo = trafo,
                          custom_trafo = custom_trafo)
   }
@@ -81,6 +84,7 @@ trafo_lm <- function(object, trafo = "boxcox", lambda = "estim", method = "ml",
   
   # Get transformed lm object
   trafo_mod <- get_modelt(object = object, trans_mod = trans_mod, std = std)
+
   
   # Return new class
   trafo_out <- list(orig_mod = orig_mod,

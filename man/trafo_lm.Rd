@@ -12,10 +12,10 @@ trafo_lm(object, trafo = "boxcox", lambda = "estim", method = "ml",
 
 \item{trafo}{a character string. Different transformations can be used 
 for transforming the dependent variable in a linear model: 
-(i)  "bickeldoksum", (ii) "boxcox", (iii) "dual", (iv) "glog", (v) "gpower", 
-(vi) "log", (vii) "logshiftopt", (viii) "manly", (ix) "modulus", (x) "neglog",
-(xi) "reciprocal", (xii) "yeojohnson".
-Defaults to "boxcox".}
+(i)  "bickeldoksum", (ii) "boxcoxshift", (iii) "dual", (iv) "glog", 
+(v) "gpower", (vi) "log", (vii) "logshiftopt", (viii) "manly", (ix) "modulus",
+(x) "neglog", (xi) "reciprocal", (xii) "yeojohnson".
+Defaults to "boxcoxshift".}
 
 \item{lambda}{either a character named "estim" if the optimal transformation
 parameter should be estimated or a numeric value determining a given 
@@ -25,7 +25,7 @@ transformation parameter. Defaults to "estim".}
 for the estimation of the optimal transformation parameter: 
 (i) Maximum likelihood approach ("ml"), (ii) Skewness minimization ("skew"),  
 (iii) Divergence minimization by Kolmogorov-Smirnoff ("div.ks"), 
-by Cramer-von-Mises ("div.cm") or by Kullback-Leibler ("div.kl").
+by Cramer-von-Mises ("div.cvm") or by Kullback-Leibler ("div.kl").
 Defaults to "ml".}
 
 \item{lambdarange}{a numeric vector with two elements defining an interval 

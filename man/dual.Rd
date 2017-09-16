@@ -18,7 +18,7 @@ transformation parameter. Defaults to "estim".}
 for the estimation of the optimal transformation parameter: 
 (i) Maximum likelihood approach ("ml"), (ii) Skewness minimization ("skew"),  
 (iii) Divergence minimization by Kolmogorov-Smirnoff ("div.ks"), 
-by Cramer-von-Mises ("div.cm") or by Kullback-Leibler ("div.kl"). Defaults
+by Cramer-von-Mises ("div.cvm") or by Kullback-Leibler ("div.kl"). Defaults
 to "ml".}
 
 \item{lambdarange}{a numeric vector with two elements defining an interval 

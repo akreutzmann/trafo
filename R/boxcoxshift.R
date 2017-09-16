@@ -1,8 +1,9 @@
-#' Log shift opt transformation for linear models
+#' Box-Cox shift transformation for linear models
 #'
 #' The function transforms the dependent variable of a linear model using the 
-#' Log shift opt transformation. The transformation parameter can either be 
-#' estimated using different estimation methods or given. 
+#' Box-Cox shift transformation. The shift is not estimated but determined to 
+#' the value min(y) + 1 in order to make all y positive. The transformation 
+#' parameter can either be estimated using different estimation methods or given. 
 #'
 #' @param object an object of type lm. 
 #' @param lambda either a character named "estim" if the optimal transformation
@@ -15,8 +16,8 @@
 #' by Cramer-von-Mises ("div.cvm") or by Kullback-Leibler ("div.kl"). Defaults
 #' to "ml".
 #' @param lambdarange a numeric vector with two elements defining an interval 
-#' that is used for the estimation of the optimal transformation parameter.
-#' Defaults to \code{c(0, 2)}.
+#' that is used for the estimation of the optimal transformation parameter. 
+#' Defaults to \code{c(-2, 2)}.
 #' @param plotit logical. If TRUE, a plot that illustrates the optimal 
 #' transformation parameter or the given transformation parameter is returned.
 #' @return an object of class \code{trafo}.
@@ -27,15 +28,15 @@
 #' # Fit linear model
 #' lm_cars <- lm(dist ~ speed, data = cars)
 #' 
-#' # Transform dependent variable using divergence minimization following
-#' # Kolmogorov-Smirnof
-#' logshiftopt(object = lm_cars, method = "div.ks", plotit = FALSE)
+#' # Transform dependent variable using skewness minimization
+#' boxcoxshift(object = lm_cars, method = "skew", plotit = FALSE)
 #' @export
 
-logshiftopt <- function(object, lambda ="estim", method = "ml", 
-                      lambdarange = c(0, 2), plotit = TRUE) {
+boxcoxshift <- function(object, lambda ="estim", method = "ml", 
+                      lambdarange = c(-2, 2), plotit = TRUE) {
   
-  trafo <- "logshiftopt"
+  trafo <- "boxcoxshift"
   oneparam(object = object, trafo = trafo, lambda = lambda, method = method, 
            lambdarange = lambdarange, plotit = plotit)
+  
 }
