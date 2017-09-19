@@ -428,9 +428,9 @@ Reciprocal_std  <- function(y) {
 }
 
 # Back transformation: Reciprocal
-Reciprocal_back <- function(y) {
-    box_cox_back(y, lambda = -1)
-}
+#Reciprocal_back <- function(y) {
+#    box_cox_back(y, lambda = -1)
+#}
 
 
 

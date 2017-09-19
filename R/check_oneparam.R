@@ -19,6 +19,16 @@ check_oneparam <- function(trafo, lambda, method,
     stop("If lambda is a numeric value it needs to be a numeric vector of 
          length 1.")
   }
+  if (is.numeric(lambda) && trafo == "bickeldoksum" && lambda <= 0) {
+    stop("The Bickel-Doksum transformation is only defined for positive 
+         values of lambda.")
+  }
+  # if (is.numeric(lambda) && (trafo == "logshiftopt" || trafo == "sqrtshift")
+  #     && lambda < min(y) + 1) {
+  #   stop("The Bickel-Doksum transformation is only defined for positive 
+  #        values of lambda.")
+  # }
+  
   if (!(method %in% c("ml", "skew", "div.ks", "div.cvm", "div.kl" 
                      #,"reml", "pskew"
                      ))) {
@@ -32,10 +42,16 @@ check_oneparam <- function(trafo, lambda, method,
          transformation parameter. The value of the lower limit needs to be 
          smaller than the upper limit.")
   } 
-  if (trafo == "bickeldoksum" && lambdarange <= 0) {
+  if (trafo == "bickeldoksum" && lambdarange[1] <= 0) {
     stop("The Bickel-Doksum transformation is only defined for positive 
          values of lambda.")
   }
+  # if ((trafo == "logshiftopt" || trafo == "sqrtshift") && 
+  #     lambdarange[1] < min(y) + 1) {
+  #   stop("The lambda must be at least the minimum of the dependent variable
+  #        plus 1 in order to shift the values of the dependent variable to 
+  #        the positive scale.")
+  # }
   if (!is.logical(plotit) || length(plotit) != 1) {
     stop("plotit must be a logical value. Set plotit to TRUE or FALSE.")
   }
