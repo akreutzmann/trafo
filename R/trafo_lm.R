@@ -7,9 +7,9 @@
 #' @param object an object of type \code{lm}. 
 #' @param trafo a character string. Different transformations can be used 
 #' for transforming the dependent variable in a linear model: 
-#' (i)  "bickeldoksum", (ii) "boxcoxshift", (iii) "dual", (iv) "glog", 
-#' (v) "gpower", (vi) "log", (vii) "logshiftopt", (viii) "manly", (ix) "modulus",
-#' (x) "neglog", (xi) "reciprocal", (xii) "yeojohnson".
+#' (i)  "bickeldoksum", (ii) "boxcoxshift", (iii) "boxcox", (iv) "dual", 
+#' (v) "glog", (vi) "gpower", (vii) "log", (viii) "logshiftopt", (ix) "manly", 
+#' (x) "modulus", (xi) "neglog", (xii) "reciprocal", (xiii) "yeojohnson".
 #' Defaults to "boxcoxshift".
 #' @param lambda either a character named "estim" if the optimal transformation
 #' parameter should be estimated or a numeric value determining a given 
@@ -48,7 +48,7 @@
 #' quantile residuals rstandard sd shapiro.test
 #' @export
 
-trafo_lm <- function(object, trafo = "boxcox", lambda = "estim", method = "ml", 
+trafo_lm <- function(object, trafo = "boxcoxshift", lambda = "estim", method = "ml", 
                      lambdarange = c(-2, 2), std = FALSE, 
                      custom_trafo = NULL) {
  
@@ -58,7 +58,7 @@ trafo_lm <- function(object, trafo = "boxcox", lambda = "estim", method = "ml",
   
   if (trafo %in% c("bickeldoksum", "boxcoxshift", "boxcox", "dual", "gpower", 
                    "manly", "modulus", "logshiftopt", "sqrtshift", 
-                   "yeojohnonson")) {
+                   "yeojohnson")) {
     trans_mod <- oneparam(object = object, trafo = trafo, lambda = lambda, 
                           method = method, lambdarange = lambdarange, 
                           plotit = plotit)

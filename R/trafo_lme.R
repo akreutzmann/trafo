@@ -28,7 +28,7 @@
 #' @import nlme
 #' @keywords internal
 
-trafo_lme <- function(object, trafo = "boxcox", lambda = "estim", 
+trafo_lme <- function(object, trafo = "boxcoxshift", lambda = "estim", 
                       method = "reml", lambdarange = c(-2, 2), 
                       std = FALSE, custom_trafo = NULL){
   
@@ -38,7 +38,7 @@ trafo_lme <- function(object, trafo = "boxcox", lambda = "estim",
 
   
   if (trafo %in% c("bickeldoksum", "boxcox", "dual", "gpower", "manly", 
-                   "modulus", "logshiftopt", "sqrtshift", "yeojohnonson")) {
+                   "modulus", "logshiftopt", "sqrtshift", "yeojohnson")) {
     trans_mod <- oneparam(object = object, trafo = trafo, lambda = lambda, 
                           method = method, lambdarange = lambdarange, 
                           plotit = plotit)

@@ -4,8 +4,9 @@
 \alias{trafo_lme}
 \title{Fits transformed linear mixed models}
 \usage{
-trafo_lme(object, trafo = "boxcox", lambda = "estim", method = "reml",
-  lambdarange = c(-2, 2), std = FALSE, custom_trafo = NULL)
+trafo_lme(object, trafo = "boxcoxshift", lambda = "estim",
+  method = "reml", lambdarange = c(-2, 2), std = FALSE,
+  custom_trafo = NULL)
 }
 \arguments{
 \item{object}{an object of type lm or lme with the model to transform}
