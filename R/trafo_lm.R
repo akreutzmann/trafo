@@ -52,7 +52,8 @@ trafo_lm <- function(object, trafo = "boxcoxshift", lambda = "estim", method = "
                      lambdarange = c(-2, 2), std = FALSE, 
                      custom_trafo = NULL) {
  
-  check_trafomod_lm(object = object, std = std, custom_trafo = custom_trafo)
+  check_trafomod_lm(object = object, trafo = trafo, std = std, 
+                    custom_trafo = custom_trafo)
   
   plotit <- FALSE
   

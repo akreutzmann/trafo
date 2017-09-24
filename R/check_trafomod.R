@@ -1,5 +1,14 @@
-check_trafomod_lm <- function(object, std, custom_trafo) {
+check_trafomod_lm <- function(object, trafo, std, custom_trafo) {
   
+  
+  
+  if (!(trafo %in% c("bickeldoksum", "boxcoxshift", "boxcox", "dual", "gpower", 
+                     "manly", "modulus", "logshiftopt", "sqrtshift", 
+                     "yeojohnson", "custom_one", "log", "neglog", "reciprocal", 
+                     "glog", "custom_wo"))) {
+    stop(paste0(trafo, " is not a supported transformation. 
+                Please provide valid variable name for trafo."))
+  } 
   if (!inherits(object, "lm")) { 
     stop(paste0(object, "is of class", class(object), " but it needs to be of 
                 class lm." ))
