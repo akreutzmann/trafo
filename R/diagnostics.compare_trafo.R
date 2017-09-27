@@ -82,13 +82,13 @@ print.diagnostics.compare_trafo <- function(x, ...) {
     cat("\n")
     } else if (x$param[[1]] == "oneparam" && x$param[[2]] == "woparam") {
       cat("Transformations: ",x$trafos[[1]], "and",x$trafos[[2]],"\n")
-      cat("Estimation methods: ", x$method[[2]], " and no estimation \n")
-      cat("Optimal Parameters: ", x$lambdahat[[2]]," and no parameter \n")
+      cat("Estimation methods: ", x$method[[1]], " and no estimation \n")
+      cat("Optimal Parameters: ", x$lambdahat[[1]]," and no parameter \n")
       cat("\n")
       } else if (x$param[[1]] == "woparam" && x$param[[2]] == "oneparam") {
         cat("Transformations: ",x$trafos[[1]], "and",x$trafos[[2]],"\n")
-        cat("Estimation methods: No estimation and", x$method[[1]], " \n")
-        cat("Optimal Parameters: No parameter and", x$lambdahat[[1]]," \n")
+        cat("Estimation methods: No estimation and", x$method[[2]], " \n")
+        cat("Optimal Parameters: No parameter and", x$lambdahat[[2]]," \n")
         cat("\n")
         } else if (x$param[[1]] == "woparam" && x$param[[2]] == "woparam") {
           cat("Transformations: ",x$trafos[[1]], "and",x$trafos[[2]],"\n")
