@@ -121,6 +121,8 @@ estim_lm <- function(lambda, y, x, method, trafo, custom_func, custom_func_std){
 estim_lme <- function(lambda, y, formula, data, rand_eff, method, trafo, 
                       custom_func, custom_func_std){
   
+  lme <- NULL
+  
   # Find the optimal lambda depending on method
   optimization <- if (method == "reml") {
     restricted_ML(y = y,

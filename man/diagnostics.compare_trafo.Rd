@@ -12,12 +12,13 @@
 \item{...}{additional arguments that are not used in this method}
 }
 \value{
-an object of class \code{diagnostics.compare_trafo}
+An object of class \code{diagnostics.compare_trafo}. The method 
+\code{\link{print.diagnostics.compare_trafo}} can be used for this class.
 }
 \description{
 Returns information about the applied transformations and selected 
-diagnostics to check model assumptions. Two differently transformed models
-are compared.
+diagnostics to check model assumptions. Two models are compared where
+the dependent variable is transformed by different transformations.
 }
 \examples{
 # Load data
@@ -33,8 +34,7 @@ bd_trafo <- bickeldoksum(object = lm_cars, plotit = FALSE)
 bc_trafo <- boxcox(object = lm_cars, method = "skew", plotit = FALSE)
 
 # Compare transformed models
-compare <- compare_trafo(object = lm_cars, trafos = list(bd_trafo, bc_trafo), 
-std = FALSE)
+compare <- compare_trafo(object = lm_cars, trafos = list(bd_trafo, bc_trafo))
 
 # Get diagnostics
 diagnostics(compare)

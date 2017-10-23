@@ -13,11 +13,11 @@ variable}
 \item{...}{additional arguments that are not used in this method}
 }
 \value{
-an object of class \code{summary.trafo_mod}
+An object of class \code{summary.trafo_mod}. The method 
+\code{\link{print.summary.trafo_mod}} can be used for this class.
 }
 \description{
-The summary contains the summary for the untransformed and transformed model. 
-The summary is based on the summary for objects of type \code{lm}. The 
-returned object is suitable for printing with the print.summary.trafo_mod 
-method.
+The summary method for class \code{trafo_mod} contains a summary for an 
+untransformed and a transformed model. The resulting summary is based on the 
+summary for objects of type \code{lm}.
 }

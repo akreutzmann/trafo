@@ -1,14 +1,14 @@
 #' Summary for linear models with untransformed and transformed dependent 
 #' variable
 #'
-#' The summary contains the summary for the untransformed and transformed model. 
-#' The summary is based on the summary for objects of type \code{lm}. The 
-#' returned object is suitable for printing with the print.summary.trafo_mod 
-#' method.
+#' The summary method for class \code{trafo_mod} contains a summary for an 
+#' untransformed and a transformed model. The resulting summary is based on the 
+#' summary for objects of type \code{lm}. 
 #' 
 #' @param object an object of type \code{trafo_mod}
 #' @param ... additional arguments that are not used in this method
-#' @return an object of class \code{summary.trafo_mod}
+#' @return An object of class \code{summary.trafo_mod}. The method 
+#' \code{\link{print.summary.trafo_mod}} can be used for this class.
 #' @export
 
 summary.trafo_mod <- function(object, ...) {

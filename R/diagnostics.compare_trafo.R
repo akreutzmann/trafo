@@ -1,12 +1,13 @@
 #' Diagnostics for two differently transformed models
 #'
 #' Returns information about the applied transformations and selected 
-#' diagnostics to check model assumptions. Two differently transformed models
-#' are compared.
+#' diagnostics to check model assumptions. Two models are compared where
+#' the dependent variable is transformed by different transformations.
 #' 
 #' @param object an object of type \code{compare_trafo}
 #' @param ... additional arguments that are not used in this method
-#' @return an object of class \code{diagnostics.compare_trafo}
+#' @return An object of class \code{diagnostics.compare_trafo}. The method 
+#' \code{\link{print.diagnostics.compare_trafo}} can be used for this class.    
 #' @examples
 #' # Load data
 #' data("cars", package = "datasets")
@@ -21,8 +22,7 @@
 #' bc_trafo <- boxcox(object = lm_cars, method = "skew", plotit = FALSE)
 #' 
 #' # Compare transformed models
-#' compare <- compare_trafo(object = lm_cars, trafos = list(bd_trafo, bc_trafo), 
-#' std = FALSE)
+#' compare <- compare_trafo(object = lm_cars, trafos = list(bd_trafo, bc_trafo))
 #' 
 #' # Get diagnostics
 #' diagnostics(compare)
@@ -62,10 +62,10 @@ diagnostics.compare_trafo <- function(object, ...) {
 
 
 
-#' Print diagnostics trafo
-#'
-#' prints objects to be shown in the summary function for objects of 
-#' type \code{trafo_mod}
+#' Prints diagnostics of two trafo objects
+#' 
+#' Prints diagnostics of two trafo objects.
+#' 
 #' @param x an object of type \code{diagnostics.trafo_mod}
 #' @param ... additional arguments that are not used in this method
 #' @export

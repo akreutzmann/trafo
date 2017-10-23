@@ -32,6 +32,10 @@ woparam.lm <- function(object, trafo, custom_trafo = NULL, ...) {
     ans$yt <- Log(y = y)
     ans$zt <- Log_std(y = y)
     ans$family <- "Log"
+  } else if (trafo == "logshift") {
+    ans$yt <- Log_shift(y = y)$y
+    ans$zt <- Log_shift_std(y = y)
+    ans$family <- "Log shift"
   } else if (trafo == "reciprocal") {
     ans$yt <- Reciprocal(y = y)
     ans$zt <- Reciprocal_std(y = y)

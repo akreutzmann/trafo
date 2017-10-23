@@ -2,7 +2,7 @@
 % Please edit documentation in R/print.compare_trafo.R
 \name{print.compare_trafo}
 \alias{print.compare_trafo}
-\title{Print object of type compare_trafo}
+\title{Prints object of type compare_trafo}
 \usage{
 \method{print}{compare_trafo}(x, ...)
 }
@@ -12,5 +12,5 @@
 \item{...}{other parameters that can be passed to the function.}
 }
 \description{
-Print object of type compare_trafo
+Prints object of type compare_trafo
 }

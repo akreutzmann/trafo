@@ -3,7 +3,6 @@
 # Transformation: Box Cox
 
 box_cox <- function(y, lambda = lambda) {
-
   lambda_cases <- function(y, lambda = lambda) {
     lambda_absolute <- abs(lambda)
     if (lambda_absolute <= 1e-12) {  #case lambda=0
@@ -40,6 +39,16 @@ box_cox_std <- function(y, lambda) {
 
 
 #  Transformation: Box Cox shift
+
+with_shift <- function(y, shift) {
+  min <- min(y)
+  if (min <= 0) {
+    shift <- shift + abs(min(y)) + 1
+  } else {
+    shift <- shift
+  }
+  return(shift)
+}
 
 box_cox_shift <- function(y, lambda = lambda, shift = 0) {
   with_shift <- function(y, shift) {
@@ -158,7 +167,7 @@ Bick_dok <-  function(y, lambda = lambda) {
     yt <- sign(y)*(u^lambda - 1)/lambda
   }
   else{
-    stop("lambda must be positive for the Bick-Doksum transformation")
+    stop("lambda must be positive for the Bickel-Doksum transformation")
   }
   return(y = yt)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/diagnostics.compare_trafo.R
 \name{print.diagnostics.compare_trafo}
 \alias{print.diagnostics.compare_trafo}
-\title{Print diagnostics trafo}
+\title{Prints diagnostics of two trafo objects}
 \usage{
 \method{print}{diagnostics.compare_trafo}(x, ...)
 }
@@ -12,6 +12,5 @@
 \item{...}{additional arguments that are not used in this method}
 }
 \description{
-prints objects to be shown in the summary function for objects of 
-type \code{trafo_mod}
+Prints diagnostics of two trafo objects.
 }

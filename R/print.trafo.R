@@ -1,4 +1,4 @@
-#' Print object of type trafo
+#' Prints object of type trafo
 #' 
 #' @param x an object of type \code{trafo}.
 #' @param ... other parameters that can be passed to the function.

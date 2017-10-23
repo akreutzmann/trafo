@@ -1,11 +1,17 @@
 #' Neg log transformation for linear models
 #'
 #' The function transforms the dependent variable of a linear model using the 
-#' Neg log transformation. The transformation parameter can either be 
-#' estimated using different estimation methods or given. 
+#' Neg log transformation.  
 #'
 #' @param object an object of type lm. 
-#' @return an object of class \code{trafo}.
+#' @return An object of class \code{trafo}. Methods such as 
+#' \code{\link{as.data.frame.trafo}} and \code{\link{print.trafo}} can 
+#' be used for this class.
+#' @references
+#' Whittaker J, Whitehead C, Somers M (2005). The neglog transformation and 
+#' quantile regression for the analysis of a large credit scoring database. 
+#' Journal of the Royal Statistical Society. Series C (Applied Statistics), 
+#' 54(4), 863-878.
 #' @examples
 #' # Load data
 #' data("cars", package = "datasets")

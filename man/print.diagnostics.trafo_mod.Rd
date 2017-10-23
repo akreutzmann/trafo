@@ -2,7 +2,7 @@
 % Please edit documentation in R/diagnostics.trafo_mod.R
 \name{print.diagnostics.trafo_mod}
 \alias{print.diagnostics.trafo_mod}
-\title{Print diagnostics trafo}
+\title{Prints diagnostics of an untransformed and transformed model}
 \usage{
 \method{print}{diagnostics.trafo_mod}(x, ...)
 }
@@ -12,6 +12,5 @@
 \item{...}{additional arguments that are not used in this method}
 }
 \description{
-prints objects to be shown in the summary function for objects of 
-type \code{trafo_mod}
+Prints diagnostics of an untransformed and transformed model.
 }

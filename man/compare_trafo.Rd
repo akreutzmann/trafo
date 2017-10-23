@@ -2,25 +2,28 @@
 % Please edit documentation in R/compare_trafo.R
 \name{compare_trafo}
 \alias{compare_trafo}
-\title{Compares transformed linear models}
+\title{Compares linear models with transformed dependent variable}
 \usage{
-compare_trafo(object, trafos, std = FALSE)
+compare_trafo(object, trafos, std = TRUE)
 }
 \arguments{
 \item{object}{an object of type lm}
 
-\item{trafos}{a list of \code{trafo} objects based on the same model given 
-in object.}
+\item{trafos}{a list of two \code{trafo} objects based on the same model 
+given in object.}
 
 \item{std}{logical. If TRUE, the transformed models are returned based on the 
-standardized transformation.}
+standardized transformation. Defaults to \code{TRUE}.}
 }
 \value{
-an object of class \code{compare_trafo}.
+An object of class \code{compare_trafo}. Methods such as 
+\code{\link{diagnostics.compare_trafo}}, \code{\link{print.compare_trafo}},
+\code{\link{plot.compare_trafo}} and \code{\link{summary.compare_trafo}} can 
+be used for this class.
 }
 \description{
-Function \code{compare_trafo} compares linear models with transformed 
-dependent variable.
+Function \code{compare_trafo} compares linear models where the dependent 
+variable is transformed by different transformations.
 }
 \examples{
 # Load data
@@ -36,6 +39,5 @@ bd_trafo <- bickeldoksum(object = lm_cars, plotit = FALSE)
 bc_trafo <- boxcox(object = lm_cars, method = "skew", plotit = FALSE)
 
 # Compare transformed models
-compare_trafo(object = lm_cars, trafos = list(bd_trafo, bc_trafo), 
-std = FALSE)
+compare_trafo(object = lm_cars, trafos = list(bd_trafo, bc_trafo))
 }

@@ -10,12 +10,15 @@ logtrafo(object)
 \item{object}{an object of type lm.}
 }
 \value{
-an object of class \code{trafo}.
+An object of class \code{trafo}. Methods such as 
+\code{\link{as.data.frame.trafo}} and \code{\link{print.trafo}} can 
+be used for this class.
 }
 \description{
 The function transforms the dependent variable of a linear model using the 
-Log transformation. The transformation parameter can either be 
-estimated using different estimation methods or given.
+Log transformation. The Log transformation is only defined for positive 
+response values. In case the response contains zero or negative values
+a shift is automatically added such that y + shift > 0.
 }
 \examples{
 # Load data

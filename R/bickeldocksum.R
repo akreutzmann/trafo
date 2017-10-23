@@ -6,8 +6,8 @@
 #'
 #' @param object an object of type lm. 
 #' @param lambda either a character named "estim" if the optimal transformation
-#' parameter should be estimated or a numeric value determining a given 
-#' transformation parameter. Defaults to "estim".
+#' parameter should be estimated or a numeric value determining a given value 
+#' for the transformation parameter. Defaults to "estim".
 #' @param method a character string. Different estimation methods can be used 
 #' for the estimation of the optimal transformation parameter: 
 #' (i) Maximum likelihood approach ("ml"), (ii) Skewness minimization ("skew"),  
@@ -20,7 +20,9 @@
 #' lambda. Defaults to \code{c(1e-11, 2)}.
 #' @param plotit logical. If TRUE, a plot that illustrates the optimal 
 #' transformation parameter or the given transformation parameter is returned.
-#' @return an object of class \code{trafo}.
+#' @return An object of class \code{trafo}. Methods such as 
+#' \code{\link{as.data.frame.trafo}} and \code{\link{print.trafo}} can 
+#' be used for this class.    
 #' @references
 #' Bickel PJ, Doksum KA (1981). An analysis of transformations revisited. 
 #' Journal of the American Statistical Association, Vol. 76, 296-311.
@@ -32,7 +34,7 @@
 #' lm_cars <- lm(dist ~ speed, data = cars)
 #' 
 #' # Transform dependent variable using a maximum likelihood approach
-#' bickeldoksum(object = lm_cars, lambdarange = c(1e-11, 2), plotit = FALSE)
+#' bickeldoksum(object = lm_cars, plotit = FALSE)
 #' @export
 
 bickeldoksum <- function(object, lambda = "estim", method = "ml", 

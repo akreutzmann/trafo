@@ -80,6 +80,11 @@ restricted_ML <- function(y = y,
                  trafo, 
                  custom_func_std) {
   
+  lme <- NULL
+  VarCorr <- NULL
+  random.effects <- NULL
+  ranef <- NULL
+  
   # Wrapper for other standardized transformations (Done!)
   zt <- if (trafo == "boxcoxshift") {
     box_cox_shift_std(y = y, lambda = lambda)
@@ -132,6 +137,10 @@ restricted_ML <- function(y = y,
 
 # Pooled skewness by Rojas-Perilla
 pooled_skewness_min <- function(model, res) {
+  
+  random.effects <- NULL
+  VarCorr <- NULL
+  
   skew_resid <- skewness(res)
   random_effect <- as.matrix(random.effects(model))[,1]
   skew_random_effect <- skewness(random_effect)

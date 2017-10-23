@@ -2,9 +2,9 @@
 % Please edit documentation in R/assumptions.R
 \name{assumptions}
 \alias{assumptions}
-\title{First check of assumptions}
+\title{First check of assumptions to find suitable transformations}
 \usage{
-assumptions(object, method = "ml")
+assumptions(object, method = "ml", std = TRUE, ...)
 }
 \arguments{
 \item{object}{an object of type \code{lm}.}
@@ -15,9 +15,16 @@ for the estimation of the optimal transformation parameter:
 (iii) Divergence minimization by Kolmogorov-Smirnoff ("div.ks"), 
 by Cramer-von-Mises ("div.cvm") or by Kullback-Leibler ("div.kl"). Defaults
 to "ml".}
+
+\item{std}{logical. If \code{TRUE}, the transformed model is returned based 
+on the standardized transformation. Defaults to \code{TRUE}.}
+
+\item{...}{other parameters that can be passed to the function, e.g. other 
+lambdaranges.}
 }
 \value{
-an object of class \code{diagnostics.compare_trafo}
+A table with tests for normality and homoscedasticity. Furthermore, 
+scatterplots are returned to check the linearity assumption.
 }
 \description{
 Gives a first overview if a transformation is useful and which transformation
@@ -31,16 +38,5 @@ data("cars", package = "datasets")
 # Fit linear model
 lm_cars <- lm(dist ~ speed, data = cars)
 
-# Transform with Bickel-Doksum transformation
-bd_trafo <- bickeldoksum(object = lm_cars, plotit = FALSE)
-
-# Transform with Box-Cox transformation
-bc_trafo <- boxcox(object = lm_cars, method = "skew", plotit = FALSE)
-
-# Compare transformed models
-compare <- compare_trafo(object = lm_cars, trafos = list(bd_trafo, bc_trafo), 
-std = FALSE)
-
-# Get diagnostics
-diagnostics(compare)
+assumptions(lm_cars)
 }

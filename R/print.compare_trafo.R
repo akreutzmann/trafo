@@ -1,4 +1,4 @@
-#' Print object of type compare_trafo
+#' Prints object of type compare_trafo
 #' 
 #' @param x an object of type compare_trafo.
 #' @param ... other parameters that can be passed to the function.

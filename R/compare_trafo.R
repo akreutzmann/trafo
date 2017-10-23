@@ -1,14 +1,17 @@
-#' Compares transformed linear models
+#' Compares linear models with transformed dependent variable
 #'
-#' Function \code{compare_trafo} compares linear models with transformed 
-#' dependent variable. 
+#' Function \code{compare_trafo} compares linear models where the dependent 
+#' variable is transformed by different transformations. 
 #'
 #' @param object an object of type lm
-#' @param trafos a list of \code{trafo} objects based on the same model given 
-#' in object.
+#' @param trafos a list of two \code{trafo} objects based on the same model 
+#' given in object.
 #' @param std logical. If TRUE, the transformed models are returned based on the 
-#' standardized transformation.
-#' @return an object of class \code{compare_trafo}.
+#' standardized transformation. Defaults to \code{TRUE}.
+#' @return An object of class \code{compare_trafo}. Methods such as 
+#' \code{\link{diagnostics.compare_trafo}}, \code{\link{print.compare_trafo}},
+#' \code{\link{plot.compare_trafo}} and \code{\link{summary.compare_trafo}} can 
+#' be used for this class.    
 #' @examples
 #' # Load data
 #' data("cars", package = "datasets")
@@ -23,11 +26,10 @@
 #' bc_trafo <- boxcox(object = lm_cars, method = "skew", plotit = FALSE)
 #' 
 #' # Compare transformed models
-#' compare_trafo(object = lm_cars, trafos = list(bd_trafo, bc_trafo), 
-#' std = FALSE)
+#' compare_trafo(object = lm_cars, trafos = list(bd_trafo, bc_trafo))
 #' @export
 
-compare_trafo <- function(object, trafos, std = FALSE) {
+compare_trafo <- function(object, trafos, std = TRUE) {
   
   check_compare_trafo(object = object, trafos = trafos, std = std)
   

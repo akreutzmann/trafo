@@ -5,7 +5,7 @@
 \title{Fits transformed linear models}
 \usage{
 trafo_lm(object, trafo = "boxcoxshift", lambda = "estim", method = "ml",
-  lambdarange = c(-2, 2), std = FALSE, custom_trafo = NULL)
+  lambdarange = c(-2, 2), std = TRUE, custom_trafo = NULL)
 }
 \arguments{
 \item{object}{an object of type \code{lm}.}
@@ -18,8 +18,8 @@ for transforming the dependent variable in a linear model:
 Defaults to "boxcoxshift".}
 
 \item{lambda}{either a character named "estim" if the optimal transformation
-parameter should be estimated or a numeric value determining a given 
-transformation parameter. Defaults to "estim".}
+parameter should be estimated or a numeric value determining a given value 
+for the transformation parameter. Defaults to "estim".}
 
 \item{method}{a character string. Different estimation methods can be used 
 for the estimation of the optimal transformation parameter: 
@@ -33,23 +33,23 @@ that is used for the estimation of the optimal transformation parameter.
 Defaults to c(-2, 2).}
 
 \item{std}{logical. If TRUE, the transformed model is returned based on the 
-standardized transformation.}
+standardized transformation. Defaults to \code{TRUE}.}
 
-\item{custom_trafo}{a list. If the customized transformation does 
-not contain a transformation parameter the list has one element that is a 
-function specifying the desired transformation. If the customized 
-transformation contains a transformation parameter the list has two elements
-where the first element is a function specifying the desired transformation
-and the second element is a function specifying the corresponding standardized
-transformation. Defaults to \code{NULL}.}
+\item{custom_trafo}{a list. The list has two elements where the first element 
+is a function specifying the desired transformation and the second element is 
+a function specifying the corresponding standardized transformation. 
+Defaults to \code{NULL}.}
 }
 \value{
-an object of class \code{trafo_mod}.
+An object of class \code{trafo_mod}. Methods such as 
+\code{\link{diagnostics.trafo_mod}}, \code{\link{print.trafo_mod}},
+\code{\link{plot.trafo_mod}} and \code{\link{summary.trafo_mod}} can 
+be used for this class.
 }
 \description{
 Function \code{trafo_lm} fits linear models with transformed dependent 
-variable. The main return are two lm objects where one is the untransformed
-linear model and the other one the transformed linear model.
+variable. The main return are two \code{lm} objects where one is the 
+untransformed linear model and the other one the transformed linear model.
 }
 \examples{
 # Load data

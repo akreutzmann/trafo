@@ -1,11 +1,12 @@
 #' Glog transformation for linear models
 #'
 #' The function transforms the dependent variable of a linear model using the 
-#' Glog transformation. The transformation parameter can either be 
-#' estimated using different estimation methods or given. 
+#' Glog transformation. 
 #'
 #' @param object an object of type lm. 
-#' @return an object of class \code{trafo}.
+#' @return An object of class \code{trafo}. Methods such as 
+#' \code{\link{as.data.frame.trafo}} and \code{\link{print.trafo}} can 
+#' be used for this class.    
 #' @examples
 #' # Load data
 #' data("cars", package = "datasets")

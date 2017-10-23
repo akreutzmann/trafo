@@ -29,6 +29,7 @@ plot.compare_trafo <- function(x, ...) {
   cooks_One <- NULL
   cooks_Two <- NULL
   
+  ranef <- NULL
 
   
   if (inherits(x$trafoOne, "lm")) {

@@ -1,4 +1,4 @@
-#' Print object of type trafo_mod
+#' Prints object of type trafo_mod
 #' 
 #' @param x an object of type trafo_mod.
 #' @param ... other parameters that can be passed to the function.

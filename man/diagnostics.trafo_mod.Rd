@@ -12,12 +12,13 @@
 \item{...}{additional arguments that are not used in this method}
 }
 \value{
-an object of class \code{diagnostics.trafo_mod}
+An object of class \code{diagnostics.trafo_mod}. The method 
+\code{\link{print.diagnostics.trafo_mod}} can be used for this class.
 }
 \description{
 Returns information about the applied transformation and selected diagnostics 
-to check model assumptions. The untransformed and the transformed model are 
-compared.
+to check model assumptions. The return helps to compare the untransformed and 
+the transformed model with regard to model assumptions.
 }
 \examples{
 # Load data

@@ -70,6 +70,8 @@ diagnostics_internal <- function(modOne, modTwo) {
     
   } else if (inherits(modOne, "lme")) {
     
+    ranef <- NULL
+    
     resid_One <- residuals(modOne, level = 0, type = "pearson")
     resid_Two <- residuals(modTwo, level = 0, type = "pearson")
     

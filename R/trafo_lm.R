@@ -1,8 +1,8 @@
 #' Fits transformed linear models
 #'
 #' Function \code{trafo_lm} fits linear models with transformed dependent 
-#' variable. The main return are two lm objects where one is the untransformed
-#' linear model and the other one the transformed linear model. 
+#' variable. The main return are two \code{lm} objects where one is the 
+#' untransformed linear model and the other one the transformed linear model. 
 #'
 #' @param object an object of type \code{lm}. 
 #' @param trafo a character string. Different transformations can be used 
@@ -12,8 +12,8 @@
 #' (x) "modulus", (xi) "neglog", (xii) "reciprocal", (xiii) "yeojohnson".
 #' Defaults to "boxcoxshift".
 #' @param lambda either a character named "estim" if the optimal transformation
-#' parameter should be estimated or a numeric value determining a given 
-#' transformation parameter. Defaults to "estim".
+#' parameter should be estimated or a numeric value determining a given value 
+#' for the transformation parameter. Defaults to "estim".
 #' @param method a character string. Different estimation methods can be used 
 #' for the estimation of the optimal transformation parameter: 
 #' (i) Maximum likelihood approach ("ml"), (ii) Skewness minimization ("skew"),  
@@ -24,15 +24,15 @@
 #' that is used for the estimation of the optimal transformation parameter. 
 #' Defaults to c(-2, 2).
 #' @param std logical. If TRUE, the transformed model is returned based on the 
-#' standardized transformation. 
-#' @param custom_trafo a list. If the customized transformation does 
-#' not contain a transformation parameter the list has one element that is a 
-#' function specifying the desired transformation. If the customized 
-#' transformation contains a transformation parameter the list has two elements
-#' where the first element is a function specifying the desired transformation
-#' and the second element is a function specifying the corresponding standardized
-#' transformation. Defaults to \code{NULL}.
-#' @return an object of class \code{trafo_mod}.
+#' standardized transformation. Defaults to \code{TRUE}.
+#' @param custom_trafo a list. The list has two elements where the first element 
+#' is a function specifying the desired transformation and the second element is 
+#' a function specifying the corresponding standardized transformation. 
+#' Defaults to \code{NULL}.
+#' @return An object of class \code{trafo_mod}. Methods such as 
+#' \code{\link{diagnostics.trafo_mod}}, \code{\link{print.trafo_mod}},
+#' \code{\link{plot.trafo_mod}} and \code{\link{summary.trafo_mod}} can 
+#' be used for this class.    
 #' @examples
 #' # Load data
 #' data("cars", package = "datasets")
@@ -49,7 +49,7 @@
 #' @export
 
 trafo_lm <- function(object, trafo = "boxcoxshift", lambda = "estim", method = "ml", 
-                     lambdarange = c(-2, 2), std = FALSE, 
+                     lambdarange = c(-2, 2), std = TRUE, 
                      custom_trafo = NULL) {
  
   check_trafomod_lm(object = object, trafo = trafo, std = std, 
@@ -57,13 +57,16 @@ trafo_lm <- function(object, trafo = "boxcoxshift", lambda = "estim", method = "
   
   plotit <- FALSE
   
+  trafo <- check_negy(object = object, trafo = trafo)
+
+  
   if (trafo %in% c("bickeldoksum", "boxcoxshift", "boxcox", "dual", "gpower", 
                    "manly", "modulus", "logshiftopt", "sqrtshift", 
                    "yeojohnson")) {
     trans_mod <- oneparam(object = object, trafo = trafo, lambda = lambda, 
                           method = method, lambdarange = lambdarange, 
                           plotit = plotit)
-  } else if (trafo %in% c("log", "reciprocal", "neglog", "glog")) {
+  } else if (trafo %in% c("log", "logshift", "reciprocal", "neglog", "glog")) {
     trans_mod <- woparam(object = object, trafo = trafo,
                          custom_trafo = custom_trafo)
   } else if (trafo == "custom_one") {

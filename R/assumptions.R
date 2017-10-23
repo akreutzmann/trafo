@@ -1,4 +1,4 @@
-#' First check of assumptions
+#' First check of assumptions to find suitable transformations
 #'
 #' Gives a first overview if a transformation is useful and which transformation
 #' is promising to fulfill the model assumptions normality, homoscedasticity and 
@@ -11,7 +11,12 @@
 #' (iii) Divergence minimization by Kolmogorov-Smirnoff ("div.ks"), 
 #' by Cramer-von-Mises ("div.cvm") or by Kullback-Leibler ("div.kl"). Defaults
 #' to "ml".
-#' @return an object of class \code{diagnostics.compare_trafo}
+#' @param std logical. If \code{TRUE}, the transformed model is returned based 
+#' on the standardized transformation. Defaults to \code{TRUE}.
+#' @param ... other parameters that can be passed to the function, e.g. other 
+#' lambdaranges.
+#' @return A table with tests for normality and homoscedasticity. Furthermore, 
+#' scatterplots are returned to check the linearity assumption.
 #' @examples
 #' # Load data
 #' data("cars", package = "datasets")
@@ -19,48 +24,248 @@
 #' # Fit linear model
 #' lm_cars <- lm(dist ~ speed, data = cars)
 #' 
-#' # Transform with Bickel-Doksum transformation
-#' bd_trafo <- bickeldoksum(object = lm_cars, plotit = FALSE)
-#' 
-#' # Transform with Box-Cox transformation
-#' bc_trafo <- boxcox(object = lm_cars, method = "skew", plotit = FALSE)
-#' 
-#' # Compare transformed models
-#' compare <- compare_trafo(object = lm_cars, trafos = list(bd_trafo, bc_trafo), 
-#' std = FALSE)
-#' 
-#' # Get diagnostics
-#' diagnostics(compare)
+#' assumptions(lm_cars)
 #' @importFrom moments skewness kurtosis
 #' @importFrom lmtest bptest
 #' @export
 
-assumptions <- function(object, method = "ml"){
+assumptions <- function(object, method = "ml", std = TRUE, ...){
   
-  
-  trafos <- list()
+  check_assumptions(object = object, method = method, std = std)
 
-  trafos[["bickeldoksum"]] <- bickeldoksum(object = object, method = method,
-                                           plotit = FALSE)
-  trafos[["boxcoxshift"]] <- boxcoxshift(object = object, method = method,
-                                         plotit = FALSE)
-  trafos[["boxcox"]] <- boxcox(object = object, method = method,
-                               plotit = FALSE)
-  trafos[["dual"]] <- dual(object = object, method = method,
-                           plotit = FALSE)
-  trafos[["gpower"]] <- gpower(object = object, method = method,
-                               plotit = FALSE)
-  trafos[["manly"]] <- manly(object = object, method = method,
-                             plotit = FALSE)
-  trafos[["modulus"]] <- modulus(object = object, method = method,
-                                 plotit = FALSE)
-  trafos[["logshiftopt"]] <- logshiftopt(object = object, method = method,
-                                         plotit = FALSE)
-  trafos[["sqrtshift"]] <- sqrtshift(object = object, method = method,
-                                     plotit = FALSE)
-  trafos[["yeojohnson"]] <- yeojohnson(object = object, method = method,
-                                       plotit = FALSE)
+  lambdaranges <- list(...)
+
+  trafos <- list()
   
+  if (any(object$model[, paste0(formula(object)[2])] <= 0)) {
+    
+    # Box-Cox shift
+    if ("boxcox_lr" %in% names(lambdaranges)) {
+      try(trafos[["boxcoxshift"]] <- boxcoxshift(object = object, method = method,
+                                                 plotit = FALSE, 
+                                                 lambdarange = lambdaranges[["boxcox_lr"]]), 
+          silent = TRUE)
+    } else if (!("boxcox_lr" %in% names(lambdaranges))) {
+      try(trafos[["boxcoxshift"]] <- boxcoxshift(object = object, method = method,
+                                                 plotit = FALSE), 
+          silent = TRUE)
+    }
+    if (is.null(trafos[["boxcoxshift"]])) {
+      warning("The default lambarange is not suitable for the shifted Box-Cox 
+              transformation and this data. If the Box-Cox transformation is 
+            supposed to be considered in the fast check, please add an argument 
+               boxcox_lr which is a vector of two elements that define the lower and 
+               the upper bound for the lambdarange, e.g. boxcox_lr = c(-2,2).")
+    } else {
+      trafos[["boxcoxshift"]] <- trafos[["boxcoxshift"]]
+    }
+    
+    
+    # Log shift
+    trafos[["logshift"]] <- logshift(object = object)
+    
+    # Calculate shift
+    shift <- with_shift(y = object$model[, paste0(formula(object)[2])], 
+                        shift = 0)
+    cat(paste0(formula(object)[2]), " contains zero or negative values. Thus, 
+        a shift equal to ",shift," is included to the Log and the Box-Cox 
+        transformation such that y + shift > 0. The Dual transformation is 
+        only suitable for positive response values.")
+   } else if (all(object$model[, paste0(formula(object)[2])] > 0)) {
+     
+     # Box-Cox
+     if ("boxcox_lr" %in% names(lambdaranges)) {
+       try(trafos[["boxcox"]] <- boxcox(object = object, method = method,
+                                        plotit = FALSE, 
+                                        lambdarange = lambdaranges[["boxcox_lr"]]), 
+           silent = TRUE)
+     } else if (!("boxcox_lr" %in% names(lambdaranges))) {
+       try(trafos[["boxcox"]] <- boxcox(object = object, method = method,
+                                        plotit = FALSE), 
+           silent = TRUE)
+     }
+     if (is.null(trafos[["boxcox"]])) {
+       warning("The lambarange is not suitable for the Box-Cox 
+              transformation and this data. If the Box-Cox transformation is 
+            supposed to be considered in the fast check, please add an argument 
+               boxcox_lr which is a vector of two elements that define the lower and 
+               the upper bound for the lambdarange, e.g. boxcox_lr = c(-2,2).")
+     } else {
+       trafos[["boxcox"]] <- trafos[["boxcox"]]
+     }
+     
+     # Dual 
+     if ("dual_lr" %in% names(lambdaranges)) {
+       try(trafos[["dual"]] <- dual(object = object, method = method,
+                                    plotit = FALSE, 
+                                    lambdarange = lambdaranges[["dual_lr"]]), 
+           silent = TRUE)
+     } else if (!("dual_lr" %in% names(lambdaranges))) {
+       try(trafos[["dual"]] <- dual(object = object, method = method,
+                                    plotit = FALSE), silent = TRUE)
+     }
+     if (is.null(trafos[["dual"]])) {
+       warning("The lambarange is not suitable for the Dual 
+              transformation and this data. If the Dual transformation is 
+            supposed to be considered in the fast check, please add an argument 
+               dual_lr which is a vector of two elements that define the lower and 
+               the upper bound for the lambdarange, e.g. dual_lr = c(0,2).")
+     } else {
+       trafos[["dual"]] <- trafos[["dual"]]
+     }
+     
+     trafos[["log"]] <- logtrafo(object = object)
+   }
+  
+
+  
+  # Bickel-Doksum
+  if ("bickeldoksum_lr" %in% names(lambdaranges)) {
+    try(trafos[["bickeldoksum"]] <- bickeldoksum(object = object, method = method,
+                                                 plotit = FALSE, 
+                                                 lambdarange = lambdaranges[["bickeldoksum_lr"]]), 
+        silent = TRUE)
+  } else if (!("bickeldoksum_lr" %in% names(lambdaranges))) {
+    try(trafos[["bickeldoksum"]] <- bickeldoksum(object = object, method = method,
+                                                 plotit = FALSE), silent = TRUE)
+  }
+  if (is.null(trafos[["bickeldoksum"]])) {
+    warning("The lambarange is not suitable for the Bickel-Doksum 
+            transformation and this data. If the Bickel-Doksum transformation is 
+            supposed to be considered in the fast check, please add an argument 
+            bickeldoksum_lr which is a vector of two elements that define the lower and 
+            the upper bound for the lambdarange, e.g. bickeldoksum_lr = c(-1e-11,2).")
+  } else {
+    trafos[["bickeldoksum"]] <- trafos[["bickeldoksum"]]
+  }
+  
+  # Gpower
+  if ("gpower_lr" %in% names(lambdaranges)) {
+    try(trafos[["gpower"]] <- gpower(object = object, method = method,
+                                     plotit = FALSE, 
+                                     lambdarange = lambdaranges[["gpower_lr"]]), 
+        silent = TRUE)
+    
+  } else if (!("gpower_lr" %in% names(lambdaranges))) {
+    try(trafos[["gpower"]] <- gpower(object = object, method = method,
+                                     plotit = FALSE), silent = TRUE)
+  }
+  if (is.null(trafos[["gpower"]])) {
+    warning("The lambarange is not suitable for the Gpower 
+            transformation and this data. If the Gpower transformation is 
+            supposed to be considered in the fast check, please add an argument 
+            gpower_lr which is a vector of two elements that define the lower and 
+            the upper bound for the lambdarange, e.g. gpower_lr = c(-2,2).")
+  } else {
+    trafos[["gpower"]] <- trafos[["gpower"]]
+  }
+  
+  # Manly 
+  if ("manly_lr" %in% names(lambdaranges)) {
+    try(trafos[["manly"]] <- manly(object = object, method = method,
+                                   plotit = FALSE, 
+                                   lambdarange = lambdaranges[["manly_lr"]]), 
+        silent = TRUE)
+    
+  } else if (!("manly_lr" %in% names(lambdaranges))) {
+    try(trafos[["manly"]] <- manly(object = object, method = method,
+                                   plotit = FALSE), silent = TRUE)
+  }
+  if (is.null(trafos[["manly"]])) {
+    warning("The lambarange is not suitable for the Manly transformation
+            and this data. If the Manly transformation is 
+            supposed to be considered in the fast check, please add an argument 
+            manly_lr which is a vector of two elements that define the lower and 
+            the upper bound for the lambdarange, e.g. manly_lr = c(-2,2).")
+  } else {
+    trafos[["manly"]] <- trafos[["manly"]]
+  }
+  
+  # Modulus
+  if ("modulus_lr" %in% names(lambdaranges)) {
+    try(trafos[["modulus"]] <- modulus(object = object, method = method,
+                                       plotit = FALSE, 
+                                       lambdarange = lambdaranges[["modulus_lr"]]), 
+        silent = TRUE)
+    
+  } else if (!("modulus_lr" %in% names(lambdaranges))) {
+    try(trafos[["modulus"]] <- modulus(object = object, method = method,
+                                       plotit = FALSE), silent = TRUE)
+  }
+  if (is.null(trafos[["modulus"]])) {
+    warning("The lambarange is not suitable for the Modulus 
+            transformation and this data. If the Modulus transformation is 
+            supposed to be considered in the fast check, please add an argument 
+            modulus_lr which is a vector of two elements that define the lower and 
+            the upper bound for the lambdarange, e.g. modulus_lr = c(-2,2).")
+  } else {
+    trafos[["modulus"]] <- trafos[["modulus"]]
+  }
+  
+  # Log shift opt
+  if ("logshiftopt_lr" %in% names(lambdaranges)) {
+    try(trafos[["logshiftopt"]] <- logshiftopt(object = object, method = method,
+                                               plotit = FALSE, 
+                                               lambdarange = lambdaranges[["logshiftopt_lr"]]), 
+        silent = TRUE)
+  } else if (!("logshiftopt_lr" %in% names(lambdaranges))) {
+    try(trafos[["logshiftopt"]] <- logshiftopt(object = object, method = method,
+                                               plotit = FALSE), silent = TRUE)
+  }
+  if (is.null(trafos[["logshiftopt"]])) {
+    warning("The lambarange is not suitable for the Log shift opt 
+            transformation and this data. If the Log shift opt transformation is 
+            supposed to be considered in the fast check, please add an argument 
+            logshiftopt_lr which is a vector of two elements that define the lower and 
+            the upper bound for the lambdarange, e.g. logshiftopt_lr = c(-10,10).")
+  } else {
+    trafos[["logshiftopt"]] <- trafos[["logshiftopt"]]
+  }
+  
+  
+  # Square-root shift
+  if ("sqrtshift_lr" %in% names(lambdaranges)) {
+    try(trafos[["sqrtshift"]] <- sqrtshift(object = object, method = method,
+                                           plotit = FALSE, 
+                                           lambdarange = lambdaranges[["sqrtshift_lr"]]), 
+        silent = TRUE)
+    
+  } else if (!("sqrtshift_lr" %in% names(lambdaranges))) {
+    try(trafos[["sqrtshift"]] <- sqrtshift(object = object, method = method,
+                                           plotit = FALSE), silent = TRUE)
+  }
+  if (is.null(trafos[["sqrtshift"]])) {
+    warning("The lambarange is not suitable for the Square-root shift 
+            transformation and this data. If the Square-root shift transformation is 
+            supposed to be considered in the fast check, please add an argument 
+            sqrtshift_lr which is a vector of two elements that define the lower and 
+            the upper bound for the lambdarange, e.g. sqrtshift_lr = c(-10,10).")
+  } else {
+    trafos[["sqrtshift"]] <- trafos[["sqrtshift"]]
+  }
+  
+  
+  # Yeo-Johnson
+  if ("yeojohnson_lr" %in% names(lambdaranges)) {
+    try(trafos[["yeojohnson"]] <- yeojohnson(object = object, method = method,
+                                             plotit = FALSE, 
+                                             lambdarange = lambdaranges[["yeojohnson_lr"]]), 
+        silent = TRUE)
+    
+  } else if (!("yeojohnson_lr" %in% names(lambdaranges))) {
+    try(trafos[["yeojohnson"]] <- yeojohnson(object = object, method = method,
+                                             plotit = FALSE), silent = TRUE)
+  }
+  if (is.null(trafos[["yeojohnson"]])) {
+    warning("The lambarange is not suitable for the Yeo-Johnson 
+            transformation and this data. If the Yeo-Johnson transformation is 
+            supposed to be considered in the fast check, please add an argument 
+            yeojohnson_lr which is a vector of two elements that define the lower and 
+            the upper bound for the lambdarange, e.g. yeojohnson_lr = c(-2,2).")
+  } else {
+    trafos[["yeojohnson"]] <- trafos[["yeojohnson"]]
+  }
+
   trafos[["log"]] <- logtrafo(object = object)
   trafos[["reciprocal"]] <- reciprocal(object = object)
   trafos[["neglog"]] <- neglog(object = object)
@@ -81,7 +286,7 @@ assumptions <- function(object, method = "ml"){
   for (transform in names(trafos)) {
     trafo_mod[[transform]] <- get_modelt(object = object, 
                                          trans_mod = trafos[[transform]], 
-                                         std = FALSE)
+                                         std = std)
     resid[[transform]] <- residuals(trafo_mod[[transform]], level = 0, 
                                     type = "pearson")
     

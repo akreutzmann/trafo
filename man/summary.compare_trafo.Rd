@@ -12,10 +12,10 @@
 \item{...}{additional arguments that are not used in this method}
 }
 \value{
-an object of class \code{summary.compare_trafo}
+An object of class \code{summary.compare_trafo}. The method 
+\code{\link{print.summary.compare_trafo}} can be used for this class.
 }
 \description{
-The summary contains the summary for both transformed models. The summary is 
-based on the summary for objects of type \code{lm}. The returned object is 
-suitable for printing with the print.summary.compare_trafo method.
+The summary contains the summary for two transformed models. The summary is 
+based on the summary for objects of type \code{lm}.
 }
