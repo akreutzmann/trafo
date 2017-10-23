@@ -59,8 +59,8 @@ get_transformed <- function(trafo, ans, y, lambda, custom_func,
     ans$family <- "Yeo-Johnson"
   } else if (trafo == "logshiftopt") {
     # Get vector of transformed and standardized transformed variable
-    ans$yt <- log_shift(y = y, lambda = lambda)
-    ans$zt <- log_shift_std(y = y, lambda = lambda)
+    ans$yt <- log_shift_opt(y = y, lambda = lambda)
+    ans$zt <- log_shift_opt_std(y = y, lambda = lambda)
     
     # Save transformation family and method
     ans$family <- "Log shift opt"

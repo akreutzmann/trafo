@@ -5,7 +5,12 @@
 #' linearity.
 #' 
 #' @param object an object of type \code{lm}.
-#' @param ... additional arguments that are not used in this method
+#' @param method  a character string. Different estimation methods can be used 
+#' for the estimation of the optimal transformation parameter: 
+#' (i) Maximum likelihood approach ("ml"), (ii) Skewness minimization ("skew"),  
+#' (iii) Divergence minimization by Kolmogorov-Smirnoff ("div.ks"), 
+#' by Cramer-von-Mises ("div.cvm") or by Kullback-Leibler ("div.kl"). Defaults
+#' to "ml".
 #' @return an object of class \code{diagnostics.compare_trafo}
 #' @examples
 #' # Load data

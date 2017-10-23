@@ -303,10 +303,10 @@ Yeo_john_back <- function(y, lambda = lambda) {
 ###################################### Neue Transformationen #######################################
 
 
-#  Transformation: log_shift
+#  Transformation: log_shift_opt
 
 
-log_shift <- function(y, lambda = lambda) {
+log_shift_opt <- function(y, lambda = lambda) {
 
   with_shift <-  function(y, lambda) {
 
@@ -332,13 +332,13 @@ log_shift <- function(y, lambda = lambda) {
 
 
 
-# Standardized transformation: Log_shift
+# Standardized transformation: Log_shift_opt
 
 geometric.mean <- function(x) { #for RMLE in the parameter estimation
   exp(mean(log(x)))
 }
 
-log_shift_std <- function(y, lambda) {
+log_shift_opt_std <- function(y, lambda) {
 
   with_shift <-  function(y, lambda) {
     min <- min(y + lambda)
@@ -362,15 +362,15 @@ log_shift_std <- function(y, lambda) {
   return(y)
   }
 
-# Back transformation: log_shift
-log_shift_back <- function(y, lambda) {
-  log_shift_back <- function(y, lambda = lambda){
+# Back transformation: log_shift_opt
+log_shift_opt_back <- function(y, lambda) {
+  log_shift_opt_back <- function(y, lambda = lambda){
       y <-  exp(y) - lambda
     return(y = y)
   }
-  y <- log_shift_back(y = y, lambda = lambda)
+  y <- log_shift_opt_back(y = y, lambda = lambda)
   return(y = y)
-} #  End log_shift
+} #  End log_shift_opt
 
 ##############
 
@@ -410,6 +410,18 @@ Log <- function(y) {
 # Standardized transformation: log
 Log_std <- function(y) {
   y <- box_cox_std(y, lambda = 0)
+  return(y)
+}
+
+# Transformation: log
+Log_shift <- function(y) {
+  y <- box_cox_shift(y, lambda = 0)
+  return(y)
+}
+
+# Standardized transformation: log
+Log_shift_std <- function(y) {
+  y <- box_cox_shift_std(y, lambda = 0)
   return(y)
 }
 

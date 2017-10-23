@@ -49,7 +49,7 @@ estim_lm <- function(lambda, y, x, method, trafo, custom_func, custom_func_std){
     } else if (trafo == "yeojohnson") {
       as.matrix(Yeo_john(y = y, lambda = lambda))
     } else if (trafo == "logshiftopt") {
-      as.matrix(log_shift(y = y, lambda = lambda))
+      as.matrix(log_shift_opt(y = y, lambda = lambda))
     } else if (trafo == "sqrtshift") {
       as.matrix(sqrt_shift(y = y, lambda = lambda))
     } else if (trafo == "gpower") {
@@ -150,7 +150,7 @@ estim_lme <- function(lambda, y, formula, data, rand_eff, method, trafo,
     } else if (trafo == "yeojohnson") {
       Yeo_john(y = y, lambda = lambda)
     } else if (trafo == "logshiftopt") {
-      log_shift(y = y, lambda = lambda)
+      log_shift_opt(y = y, lambda = lambda)
     } else if (trafo == "sqrtshift") {
       sqrt_shift(y = y, lambda = lambda)
     } else if (trafo == "gpower") {

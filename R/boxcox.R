@@ -34,7 +34,14 @@
 boxcox <- function(object, lambda ="estim", method = "ml", 
                       lambdarange = c(-2, 2), plotit = TRUE) {
   
-  trafo <- "boxcox"
+  if(any(object$model[, paste0(formula(object)[2])] <= 0)) {
+    trafo <- "boxcox"
+  } else {
+    trafo <- "boxcoxshift"
+    cat(paste0(formula(object)[2]), " contains zero or negative values. Thus, 
+        a shift is included such that y + shift > 0.")
+  }
+  
   oneparam(object = object, trafo = trafo, lambda = lambda, method = method, 
            lambdarange = lambdarange, plotit = plotit)
   

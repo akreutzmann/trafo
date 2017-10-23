@@ -48,7 +48,7 @@ lglike <- function(lambda, y, qr, n, trafo, custom_func_std, ...) {
   } else if (trafo == "yeojohnson") {
     Yeo_john_std(y = y, lambda = lambda)
   } else if (trafo == "logshiftopt") {
-    log_shift_std(y = y, lambda = lambda)
+    log_shift_opt_std(y = y, lambda = lambda)
   } else if (trafo == "sqrtshift") {
     sqrt_shift_std(y = y, lambda = lambda)
   } else if (trafo == "gpower") {
@@ -96,7 +96,7 @@ restricted_ML <- function(y = y,
   } else if (trafo == "yeojohnson") {
     Yeo_john_std(y = y, lambda = lambda)
   } else if (trafo == "logshiftopt") {
-    log_shift_std(y = y, lambda = lambda)
+    log_shift_opt_std(y = y, lambda = lambda)
   } else if (trafo == "sqrtshift") {
     sqrt_shift_std(y = y, lambda = lambda)
   } else if (trafo == "gpower") {
