@@ -7,10 +7,10 @@
 #' @param object an object of type \code{lm}. 
 #' @param trafo a character string. Different transformations can be used 
 #' for transforming the dependent variable in a linear model: 
-#' (i)  "bickeldoksum", (ii) "boxcoxshift", (iii) "boxcox", (iv) "dual", 
-#' (v) "glog", (vi) "gpower", (vii) "log", (viii) "logshiftopt", (ix) "manly", 
-#' (x) "modulus", (xi) "neglog", (xii) "reciprocal", (xiii) "yeojohnson".
-#' Defaults to "boxcoxshift".
+#' (i)  "bickeldoksum", (ii) "boxcox", (iii) "dual", 
+#' (iv) "glog", (v) "gpower", (vi) "log", (vii) "logshiftopt", (viii) "manly", 
+#' (ix) "modulus", (x) "neglog", (xi) "reciprocal", (xii) "yeojohnson".
+#' Defaults to "boxcox".
 #' @param lambda either a character named "estim" if the optimal transformation
 #' parameter should be estimated or a numeric value determining a given value 
 #' for the transformation parameter. Defaults to "estim".
@@ -48,7 +48,7 @@
 #' quantile residuals rstandard sd shapiro.test
 #' @export
 
-trafo_lm <- function(object, trafo = "boxcoxshift", lambda = "estim", method = "ml", 
+trafo_lm <- function(object, trafo = "boxcox", lambda = "estim", method = "ml", 
                      lambdarange = c(-2, 2), std = TRUE, 
                      custom_trafo = NULL) {
  
