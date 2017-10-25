@@ -209,8 +209,8 @@ assumptions <- function(object, method = "ml", std = TRUE, ...){
                                                lambdarange = lambdaranges[["logshiftopt_lr"]]), 
         silent = TRUE)
   } else if (!("logshiftopt_lr" %in% names(lambdaranges))) {
-    try(trafos[["logshiftopt"]] <- logshiftopt(object = object, method = method,
-                                               plotit = FALSE), silent = TRUE)
+    try(trafos[["logshiftopt"]] <- suppressWarnings(logshiftopt(object = object, method = method,
+                                               plotit = FALSE)), silent = TRUE)
   }
   if (is.null(trafos[["logshiftopt"]])) {
     warning("The lambarange is not suitable for the Log shift opt 

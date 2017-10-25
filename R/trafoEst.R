@@ -16,12 +16,32 @@ est_lm <- function(y, x , method, lambdarange, trafo, custom_func,
   # Number of explanatory variables
   k <- ncol(x)
   
+
+    if (diff(range(lambdarange)) <= 1000) {
+      tol <- 0.0001
+    } else if (diff(range(lambdarange)) > 1000 && diff(range(lambdarange)) <= 2000) {
+      tol <- 0.001
+    } else if (diff(range(lambdarange)) > 2000 && diff(range(lambdarange)) <= 5000) {
+      tol <- 0.01
+    } else if (diff(range(lambdarange)) > 5000 && diff(range(lambdarange)) <= 10000) {
+      tol <- 0.1
+    } else if (diff(range(lambdarange)) > 10000) {
+      tol <- 1
+    } 
+  
+    # else if (diff(range(lambdarange)) > 50000 && diff(range(lambdarange)) <= 100000) {
+    #   tol <- 10
+    # } else if (diff(range(lambdarange)) > 100000) {
+    #   tol <- 100
+    # }
+
+  
   # Get the optimal lambda via optimization on lambdarange
   res <- suppressWarnings(optimize(f = estim_lm, y = y, x = x, method = method,
                                    trafo = trafo, interval = lambdarange, 
                                    custom_func = custom_func, 
                                    custom_func_std = custom_func_std,
-                                   tol = 0.0001))
+                                   tol = tol))
   
   if (is.infinite(res$objective)) {
     stop("For some lambda in the interval, the likelihood does not converge.

@@ -38,7 +38,8 @@
 #' @export
 
 bickeldoksum <- function(object, lambda = "estim", method = "ml", 
-                            lambdarange = c(1e-11, 2), plotit = TRUE) {
+                         lambdarange = c(1e-11, 2), 
+                         plotit = TRUE) {
   
   trafo <- "bickeldoksum"
   oneparam(object = object, trafo = trafo, lambda = lambda, method = method, 

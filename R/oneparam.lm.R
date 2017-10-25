@@ -55,8 +55,9 @@ oneparam.lm <- function(object, trafo, lambda = "estim", method = "ml",
   # Get the optimal transformation parameter
   if (lambda == "estim") {
     optim <- est_lm(y = y, x = x, trafo = trafo, method = method, 
-                         lambdarange = lambdarange, custom_func = custom_func, 
-                         custom_func_std = custom_func_std) 
+                    lambdarange = lambdarange, 
+                    custom_func = custom_func, 
+                    custom_func_std = custom_func_std) 
     
     lambdaoptim <- optim$lambdaoptim
     measoptim <- optim$measoptim

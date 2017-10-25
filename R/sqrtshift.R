@@ -15,8 +15,9 @@
 #' by Cramer-von-Mises ("div.cvm") or by Kullback-Leibler ("div.kl"). Defaults 
 #' to "ml".
 #' @param lambdarange a numeric vector with two elements defining an interval 
-#' that is used for the estimation of the optimal transformation parameter. 
-#' Defaults to \code{c(0, 2)}.
+#' that is used for the estimation of the optimal transformation parameter. No 
+#' default is set for the lambdarange since it depends on the scale. If the
+#' range is missing following range is set: c(|minimum of y|, 2*|minimum of y|).
 #' @param plotit logical. If TRUE, a plot that illustrates the optimal 
 #' transformation parameter or the given transformation parameter is returned.
 #' @return An object of class \code{trafo}. Methods such as 
@@ -34,9 +35,23 @@
 #' @export
 
 sqrtshift <- function(object, lambda ="estim", method = "ml", 
-                      lambdarange = c(0, 2), plotit = TRUE) {
+                      lambdarange, plotit = TRUE) {
   
+
   trafo <- "sqrtshift"
+  if (missing(lambdarange)) {
+    span <- range(object$model[, paste0(formula(object)[2])])
+    if ((span[1] + 1) <= 1) {
+      lower = abs(span[1]) + 1
+    } else {
+      lower <- -span[1] + 1
+    }
+    upper <- diff(span)
+    
+    lambdarange <- c(lower,upper)
+    cat(paste0("The default lambdarange for the Square-root shift transformation is calculated dependent on the data range. The lower value is set to ", lambdarange[1], " and the upper value to ", lambdarange[2], "\n"))
+    cat("\n")
+  }
   oneparam(object = object, trafo = trafo, lambda = lambda, method = method, 
            lambdarange = lambdarange, plotit = plotit)
   

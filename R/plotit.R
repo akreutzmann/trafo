@@ -22,7 +22,24 @@ plot_trafolm <- function(lambdarange, lambdaoptim, measoptim,
                          y, x, trafo, method, custom_func, 
                          custom_func_std) {
   
-  lambdavector <- seq(lambdarange[1], lambdarange[2], 0.025)
+  
+  if (diff(range(lambdarange)) <= 1000) {
+    tol <- 0.025
+  } else if (diff(range(lambdarange)) > 1000 && diff(range(lambdarange)) <= 2000) {
+    tol <- 1
+  } else if (diff(range(lambdarange)) > 2000 && diff(range(lambdarange)) <= 5000) {
+    tol <- 1.5
+  } else if (diff(range(lambdarange)) > 5000 && diff(range(lambdarange)) <= 10000) {
+    tol <- 2
+  } else if (diff(range(lambdarange)) > 10000 && diff(range(lambdarange)) <= 50000) {
+    tol <- 5
+  } else if (diff(range(lambdarange)) > 50000 && diff(range(lambdarange)) <= 100000) {
+    tol <- 10
+  } else if (diff(range(lambdarange)) > 100000) {
+    tol <- 100
+  }
+  
+  lambdavector <- seq(lambdarange[1], lambdarange[2], tol)
   l <- length(lambdavector)
   lambdavector[l + 1]  <- lambdaoptim
   lambdavector <- sort(lambdavector)

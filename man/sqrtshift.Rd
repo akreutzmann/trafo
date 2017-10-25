@@ -4,7 +4,7 @@
 \alias{sqrtshift}
 \title{Square-root shift transformation for linear models}
 \usage{
-sqrtshift(object, lambda = "estim", method = "ml", lambdarange = c(0, 2),
+sqrtshift(object, lambda = "estim", method = "ml", lambdarange,
   plotit = TRUE)
 }
 \arguments{
@@ -22,8 +22,9 @@ by Cramer-von-Mises ("div.cvm") or by Kullback-Leibler ("div.kl"). Defaults
 to "ml".}
 
 \item{lambdarange}{a numeric vector with two elements defining an interval 
-that is used for the estimation of the optimal transformation parameter. 
-Defaults to \code{c(0, 2)}.}
+that is used for the estimation of the optimal transformation parameter. No 
+default is set for the lambdarange since it depends on the scale. If the
+range is missing following range is set: c(|minimum of y|, 2*|minimum of y|).}
 
 \item{plotit}{logical. If TRUE, a plot that illustrates the optimal 
 transformation parameter or the given transformation parameter is returned.}

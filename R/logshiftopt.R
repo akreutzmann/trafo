@@ -38,6 +38,19 @@ logshiftopt <- function(object, lambda ="estim", method = "ml",
                       lambdarange = c(0, 2), plotit = TRUE) {
   
   trafo <- "logshiftopt"
+  if (missing(lambdarange)) {
+    span <- range(object$model[, paste0(formula(object)[2])])
+    if ((span[1] + 1) <= 1) {
+      lower = abs(span[1]) + 1
+    } else {
+      lower <- -span[1] + 1
+    }
+    upper <- diff(span)
+    
+    lambdarange <- c(lower,upper)
+    warning(paste0("The default lambdarange for the Log shift opt transformation is calculated dependent on the data range. The lower value is set to ", lambdarange[1], " and the upper value to ", lambdarange[2], "\n"))
+    cat("\n")
+  }
   oneparam(object = object, trafo = trafo, lambda = lambda, method = method, 
            lambdarange = lambdarange, plotit = plotit)
 }
