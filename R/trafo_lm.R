@@ -40,7 +40,7 @@
 #' # Fit linear model
 #' lm_cars <- lm(dist ~ speed, data = cars)
 #' 
-#' # Compare transformed models
+#' # Compare untransformed and transformed model
 #' trafo_lm(object = lm_cars, trafo = "bickeldoksum", method = "skew", 
 #' lambdarange = c(1e-11, 2))
 #' @importFrom stats aggregate as.formula dnorm ecdf family lm logLik median 

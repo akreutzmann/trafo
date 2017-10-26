@@ -66,7 +66,7 @@ diagnostics.compare_trafo <- function(object, ...) {
 #' 
 #' Prints diagnostics of two trafo objects.
 #' 
-#' @param x an object of type \code{diagnostics.trafo_mod}
+#' @param x an object of type \code{diagnostics.compare_trafo}
 #' @param ... additional arguments that are not used in this method
 #' @export
 

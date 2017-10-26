@@ -7,7 +7,7 @@
 #' @param object an object of type \code{trafo_mod}.
 #' @param newdata an optional data frame in which to look for variables with 
 #' which to predict. If omitted, the fitted values are used. 
-#' @param se.fit a switch indicating of standard errors are required.
+#' @param se.fit a switch indicating if standard errors are required.
 #' @param scale scale parameter for std. error calculation.
 #' @param df degrees of freedom for scale. 
 #' @param interval type of interval calculation.
@@ -24,7 +24,7 @@
 #' @param ... further arguments passed to or from other methods.
 #' @return A vector of predictions or a matrix of predictions and bounds with 
 #' column names fit, lwr and upr if interval is set. 
-#' If se.fit is TRUe, a list with the following components is returned: fit, 
+#' If se.fit is \code{TRUE}, a list with the following components is returned: fit, 
 #' se.fit, residual.scale, df
 #' @examples
 #' # Load data
@@ -33,7 +33,12 @@
 #' # Fit linear model
 #' lm_cars <- lm(dist ~ speed, data = cars)
 #' 
-#' assumptions(lm_cars)
+#' # Compare untransformed and transformed model
+#' trafo_lm(object = lm_cars, trafo = "bickeldoksum", method = "skew", 
+#' lambdarange = c(1e-11, 2))
+#' 
+#' # Get predictions in the back-transformed scale
+#' trafo_predict(trafo_lm)
 #' @importFrom moments skewness kurtosis
 #' @importFrom lmtest bptest
 #' @export
