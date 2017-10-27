@@ -15,7 +15,7 @@ trafo_predict(object, newdata, se.fit = FALSE, scale = NULL, df = Inf,
 \item{newdata}{an optional data frame in which to look for variables with 
 which to predict. If omitted, the fitted values are used.}
 
-\item{se.fit}{a switch indicating of standard errors are required.}
+\item{se.fit}{a switch indicating if standard errors are required.}
 
 \item{scale}{scale parameter for std. error calculation.}
 
@@ -43,7 +43,7 @@ expression evaluated in newdata.}
 \value{
 A vector of predictions or a matrix of predictions and bounds with 
 column names fit, lwr and upr if interval is set. 
-If se.fit is TRUe, a list with the following components is returned: fit, 
+If se.fit is \code{TRUE}, a list with the following components is returned: fit, 
 se.fit, residual.scale, df
 }
 \description{
@@ -58,5 +58,10 @@ data("cars", package = "datasets")
 # Fit linear model
 lm_cars <- lm(dist ~ speed, data = cars)
 
-assumptions(lm_cars)
+# Compare untransformed and transformed model
+trafo_cars <- trafo_lm(object = lm_cars, trafo = "bickeldoksum", method = "skew", 
+lambdarange = c(1e-11, 2))
+
+# Get predictions in the back-transformed scale
+trafo_predict(trafo_cars)
 }

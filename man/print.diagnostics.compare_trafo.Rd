@@ -7,7 +7,7 @@
 \method{print}{diagnostics.compare_trafo}(x, ...)
 }
 \arguments{
-\item{x}{an object of type \code{diagnostics.trafo_mod}}
+\item{x}{an object of type \code{diagnostics.compare_trafo}}
 
 \item{...}{additional arguments that are not used in this method}
 }

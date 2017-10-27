@@ -2,16 +2,16 @@
 % Please edit documentation in R/summary.compare_trafo.R
 \name{print.summary.compare_trafo}
 \alias{print.summary.compare_trafo}
-\title{Print summary trafo}
+\title{Prints summary of compare_trafo objects}
 \usage{
 \method{print}{summary.compare_trafo}(x, ...)
 }
 \arguments{
-\item{x}{an object of type \code{summary.trafo_mod}}
+\item{x}{an object of type \code{summary.compare_trafo}}
 
 \item{...}{additional arguments that are not used in this method}
 }
 \description{
-prints objects to be shown in the summary function for objects of 
-type \code{trafo_mod}
+Prints objects to be shown in the summary function for objects of 
+type \code{compare_trafo}.
 }

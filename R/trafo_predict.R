@@ -34,13 +34,12 @@
 #' lm_cars <- lm(dist ~ speed, data = cars)
 #' 
 #' # Compare untransformed and transformed model
-#' trafo_lm(object = lm_cars, trafo = "bickeldoksum", method = "skew", 
+#' trafo_cars <- trafo_lm(object = lm_cars, trafo = "bickeldoksum", method = "skew", 
 #' lambdarange = c(1e-11, 2))
 #' 
 #' # Get predictions in the back-transformed scale
-#' trafo_predict(trafo_lm)
-#' @importFrom moments skewness kurtosis
-#' @importFrom lmtest bptest
+#' trafo_predict(trafo_cars)
+#' @importFrom stats .checkMFClasses delete.response na.pass napredict qt terms
 #' @export
 
 
@@ -51,6 +50,8 @@ trafo_predict <- function(object, newdata, se.fit = FALSE, scale = NULL, df = In
                      na.action = na.pass, 
                      pred.var = res.var/weights, weights = 1, ...) 
 {
+  
+  
   object <- object$trafo_mod
   
   tt <- terms(object)

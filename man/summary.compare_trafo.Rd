@@ -2,7 +2,7 @@
 % Please edit documentation in R/summary.compare_trafo.R
 \name{summary.compare_trafo}
 \alias{summary.compare_trafo}
-\title{Summary for linear models with transformed dependent variable}
+\title{Summary for two differently transformed models}
 \usage{
 \method{summary}{compare_trafo}(object, ...)
 }

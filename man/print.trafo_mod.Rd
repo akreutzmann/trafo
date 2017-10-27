@@ -7,7 +7,7 @@
 \method{print}{trafo_mod}(x, ...)
 }
 \arguments{
-\item{x}{an object of type trafo_mod.}
+\item{x}{an object of type \code{trafo_mod}.}
 
 \item{...}{other parameters that can be passed to the function.}
 }

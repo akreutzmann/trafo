@@ -4,7 +4,7 @@
 \alias{trafo_lm}
 \title{Fits transformed linear models}
 \usage{
-trafo_lm(object, trafo = "boxcoxshift", lambda = "estim", method = "ml",
+trafo_lm(object, trafo = "boxcox", lambda = "estim", method = "ml",
   lambdarange = c(-2, 2), std = TRUE, custom_trafo = NULL)
 }
 \arguments{
@@ -12,10 +12,10 @@ trafo_lm(object, trafo = "boxcoxshift", lambda = "estim", method = "ml",
 
 \item{trafo}{a character string. Different transformations can be used 
 for transforming the dependent variable in a linear model: 
-(i)  "bickeldoksum", (ii) "boxcoxshift", (iii) "boxcox", (iv) "dual", 
-(v) "glog", (vi) "gpower", (vii) "log", (viii) "logshiftopt", (ix) "manly", 
-(x) "modulus", (xi) "neglog", (xii) "reciprocal", (xiii) "yeojohnson".
-Defaults to "boxcoxshift".}
+(i)  "bickeldoksum", (ii) "boxcox", (iii) "dual", 
+(iv) "glog", (v) "gpower", (vi) "log", (vii) "logshiftopt", (viii) "manly", 
+(ix) "modulus", (x) "neglog", (xi) "reciprocal", (xii) "yeojohnson".
+Defaults to "boxcox".}
 
 \item{lambda}{either a character named "estim" if the optimal transformation
 parameter should be estimated or a numeric value determining a given value 
@@ -58,7 +58,7 @@ data("cars", package = "datasets")
 # Fit linear model
 lm_cars <- lm(dist ~ speed, data = cars)
 
-# Compare transformed models
+# Compare untransformed and transformed model
 trafo_lm(object = lm_cars, trafo = "bickeldoksum", method = "skew", 
 lambdarange = c(1e-11, 2))
 }
