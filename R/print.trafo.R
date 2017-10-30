@@ -46,18 +46,46 @@ print.trafo <- function(x, ...){
 #' base package as.data.frame() methods use optional only for column names 
 #' treatment, basically with the meaning of 
 #' data.frame(*, check.names = !optional)
+#' @param std logical. If TRUE, the data is transformed by the standardized 
+#' transformation. Defaults to \code{TRUE}.
 #' @param ... other parameters that can be passed to the function.
+#' @return A data frame with the original variables and the transformed variable.
+#' @seealso \code{\link{bickeldoksum}}, \code{\link{boxcox}}, \code{\link{dual}}, 
+#' \code{\link{glog}}, \code{\link{gpower}}, \code{\link{log}}, 
+#' \code{\link{logshiftopt}}, \code{\link{manly}}, \code{\link{modulus}}, 
+#' \code{\link{neglog}}, \code{\link{sqrtshift}}, \code{\link{yeojohnson}} 
+#' @examples
+#' # Load data
+#' data("cars", package = "datasets")
+#' 
+#' # Fit linear model
+#' lm_cars <- lm(dist ~ speed, data = cars)
+#' 
+#' # Transform dependent variable using divergence minimization following
+#' # Kolmogorov-Smirnof
+#' logshiftopt_trafo <- logshiftopt(object = lm_cars, method = "div.ks", 
+#' plotit = FALSE)
+#' 
+#' # Get a data frame with the added transformed variable
+#' as.data.frame(logshiftopt_trafo)
 #' @export
 
-as.data.frame.trafo <- function(x, row.names = NULL, optional = FALSE, ...) {
+as.data.frame.trafo <- function(x, row.names = NULL, optional = FALSE, 
+                                std = TRUE, ...) {
   
   formula <- NULL
   
   if (inherits(x$object, "lm")) {
     data <- x$object$model 
     transformed_dependent <- paste0(as.character(formula(x$object$terms)[2]), "t")
-    data[, transformed_dependent] <- x$yt
     
+    if (std == TRUE) {
+      data[, transformed_dependent] <- x$yt
+    
+    } else if (std == FALSE) {
+      data[, transformed_dependent] <- x$yt
+    }
+  
     data <- as.data.frame(data, row.names = row.names, optional = optional, ...)
   } else if (inherits(x$object, "lme")) {
    data <- x$object$data

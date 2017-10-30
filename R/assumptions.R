@@ -14,9 +14,14 @@
 #' @param std logical. If \code{TRUE}, the transformed model is returned based 
 #' on the standardized transformation. Defaults to \code{TRUE}.
 #' @param ... other parameters that can be passed to the function, e.g. other 
-#' lambdaranges.
+#' lambdaranges. For the default values that are used for the lambdaranges see 
+#' the documentation for the provided transformations. 
 #' @return A table with tests for normality and homoscedasticity. Furthermore, 
 #' scatterplots are returned to check the linearity assumption.
+#' @seealso \code{\link{bickeldoksum}}, \code{\link{boxcox}}, \code{\link{dual}}, 
+#' \code{\link{glog}}, \code{\link{gpower}}, \code{\link{log}}, 
+#' \code{\link{logshiftopt}}, \code{\link{manly}}, \code{\link{modulus}}, 
+#' \code{\link{neglog}}, \code{\link{sqrtshift}}, \code{\link{yeojohnson}} 
 #' @examples
 #' # Load data
 #' data("cars", package = "datasets")
@@ -359,13 +364,15 @@ assumptions <- function(object, method = "ml", std = TRUE, ...){
   cat("Test linearity assumption \n")
   cat("Press [enter] to continue")
   line <- readline()
-  pairs(formula(object$terms), data = object$model, main = "Untransformed model")
+  pairs(formula(object$terms), data = object$model, main = "Untransformed model", 
+        lower.panel = panel.smooth, upper.panel = panel.cor)
   for (transform in names(trafos)) {
     cat("Press [enter] to continue")
     line <- readline()
     pairs(formula(trafo_mod[[transform]]$terms), 
           data = trafo_mod[[transform]]$model,
-          main = transform) 
+          main = transform, 
+          lower.panel = panel.smooth, upper.panel = panel.cor) 
   }
  
 }

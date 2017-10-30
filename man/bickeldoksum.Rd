@@ -27,7 +27,8 @@ The Bickel-Doksum transformation is only defined for positive values of
 lambda. Defaults to \code{c(1e-11, 2)}.}
 
 \item{plotit}{logical. If TRUE, a plot that illustrates the optimal 
-transformation parameter or the given transformation parameter is returned.}
+transformation parameter or the given transformation parameter is returned.
+Defaults to \code{TRUE}.}
 }
 \value{
 An object of class \code{trafo}. Methods such as 

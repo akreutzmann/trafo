@@ -11,7 +11,11 @@
 #' @return An object of class \code{compare_trafo}. Methods such as 
 #' \code{\link{diagnostics.compare_trafo}}, \code{\link{print.compare_trafo}},
 #' \code{\link{plot.compare_trafo}} and \code{\link{summary.compare_trafo}} can 
-#' be used for this class.    
+#' be used for this class.  
+#'  @seealso \code{\link{bickeldoksum}}, \code{\link{boxcox}}, \code{\link{dual}}, 
+#' \code{\link{glog}}, \code{\link{gpower}}, \code{\link{log}}, 
+#' \code{\link{logshiftopt}}, \code{\link{manly}}, \code{\link{modulus}}, 
+#' \code{\link{neglog}}, \code{\link{sqrtshift}}, \code{\link{yeojohnson}}   
 #' @examples
 #' # Load data
 #' data("cars", package = "datasets")

@@ -20,7 +20,8 @@ to "ml".}
 on the standardized transformation. Defaults to \code{TRUE}.}
 
 \item{...}{other parameters that can be passed to the function, e.g. other 
-lambdaranges.}
+lambdaranges. For the default values that are used for the lambdaranges see 
+the documentation for the provided transformations.}
 }
 \value{
 A table with tests for normality and homoscedasticity. Furthermore, 
@@ -39,4 +40,10 @@ data("cars", package = "datasets")
 lm_cars <- lm(dist ~ speed, data = cars)
 
 assumptions(lm_cars)
+}
+\seealso{
+\code{\link{bickeldoksum}}, \code{\link{boxcox}}, \code{\link{dual}}, 
+\code{\link{glog}}, \code{\link{gpower}}, \code{\link{log}}, 
+\code{\link{logshiftopt}}, \code{\link{manly}}, \code{\link{modulus}}, 
+\code{\link{neglog}}, \code{\link{sqrtshift}}, \code{\link{yeojohnson}}
 }

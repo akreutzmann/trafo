@@ -90,9 +90,11 @@ plot.trafo_mod <- function(x, ...) {
     
     # Scatterplots
     scatter_orig %<a-% pairs(formula(x$orig_mod$terms), data = x$orig_mod$model,
-                         main = "Untransformed model")
+                         main = "Untransformed model", lower.panel = panel.smooth, 
+                         upper.panel = panel.cor)
     scatter_trafo %<a-% pairs(formula(x$trafo_mod$terms), data = x$trafo_mod$model,
-                             main = "Transformed model")
+                             main = "Transformed model", lower.panel = panel.smooth, 
+                             upper.panel = panel.cor)
     
     cooks_orig %<a-%  plot(x$orig_mod, which = c(4L), 
                            main = "Untransformed model",
@@ -291,4 +293,16 @@ plot.trafo_mod <- function(x, ...) {
     
   }
   invisible()
+}
+
+
+panel.cor <- function(x, y, digits=2, prefix="", cex.cor, ...)
+{
+  usr <- par("usr"); on.exit(par(usr))
+  par(usr = c(0, 1, 0, 1))
+  r <- abs(cor(x, y))
+  txt <- format(c(r, 0.123456789), digits=digits)[1]
+  txt <- paste(prefix, txt, sep="")
+  if(missing(cex.cor)) cex.cor <- 0.8/strwidth(txt)
+  text(0.5, 0.5, txt, cex = cex.cor * r)
 }

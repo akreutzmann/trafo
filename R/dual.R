@@ -20,6 +20,7 @@
 #' lambda. Defaults to \code{c(0, 2)}.
 #' @param plotit logical. If TRUE, a plot that illustrates the optimal 
 #' transformation parameter or the given transformation parameter is returned.
+#' Defaults to \code{TRUE}.
 #' @return An object of class \code{trafo}. Methods such as 
 #' \code{\link{as.data.frame.trafo}} and \code{\link{print.trafo}} can 
 #' be used for this class.    

@@ -22,7 +22,8 @@
 #' Defaults to "ml".
 #' @param lambdarange a numeric vector with two elements defining an interval 
 #' that is used for the estimation of the optimal transformation parameter. 
-#' Defaults to c(-2, 2).
+#' Defaults to \code{NULL} which means that the default value of the chosen 
+#' transformation is used.
 #' @param std logical. If TRUE, the transformed model is returned based on the 
 #' standardized transformation. Defaults to \code{TRUE}.
 #' @param custom_trafo a list. The list has two elements where the first element 
@@ -33,6 +34,10 @@
 #' \code{\link{diagnostics.trafo_mod}}, \code{\link{print.trafo_mod}},
 #' \code{\link{plot.trafo_mod}} and \code{\link{summary.trafo_mod}} can 
 #' be used for this class.    
+#' @seealso \code{\link{bickeldoksum}}, \code{\link{boxcox}}, \code{\link{dual}}, 
+#' \code{\link{glog}}, \code{\link{gpower}}, \code{\link{log}}, 
+#' \code{\link{logshiftopt}}, \code{\link{manly}}, \code{\link{modulus}}, 
+#' \code{\link{neglog}}, \code{\link{sqrtshift}}, \code{\link{yeojohnson}} 
 #' @examples
 #' # Load data
 #' data("cars", package = "datasets")
@@ -49,7 +54,7 @@
 #' @export
 
 trafo_lm <- function(object, trafo = "boxcox", lambda = "estim", method = "ml", 
-                     lambdarange = c(-2, 2), std = TRUE, 
+                     lambdarange = NULL, std = TRUE, 
                      custom_trafo = NULL) {
  
   check_trafomod_lm(object = object, trafo = trafo, std = std, 

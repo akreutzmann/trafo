@@ -5,7 +5,7 @@
 \title{Fits transformed linear models}
 \usage{
 trafo_lm(object, trafo = "boxcox", lambda = "estim", method = "ml",
-  lambdarange = c(-2, 2), std = TRUE, custom_trafo = NULL)
+  lambdarange = NULL, std = TRUE, custom_trafo = NULL)
 }
 \arguments{
 \item{object}{an object of type \code{lm}.}
@@ -30,7 +30,8 @@ Defaults to "ml".}
 
 \item{lambdarange}{a numeric vector with two elements defining an interval 
 that is used for the estimation of the optimal transformation parameter. 
-Defaults to c(-2, 2).}
+Defaults to \code{NULL} which means that the default value of the chosen 
+transformation is used.}
 
 \item{std}{logical. If TRUE, the transformed model is returned based on the 
 standardized transformation. Defaults to \code{TRUE}.}
@@ -61,4 +62,10 @@ lm_cars <- lm(dist ~ speed, data = cars)
 # Compare untransformed and transformed model
 trafo_lm(object = lm_cars, trafo = "bickeldoksum", method = "skew", 
 lambdarange = c(1e-11, 2))
+}
+\seealso{
+\code{\link{bickeldoksum}}, \code{\link{boxcox}}, \code{\link{dual}}, 
+\code{\link{glog}}, \code{\link{gpower}}, \code{\link{log}}, 
+\code{\link{logshiftopt}}, \code{\link{manly}}, \code{\link{modulus}}, 
+\code{\link{neglog}}, \code{\link{sqrtshift}}, \code{\link{yeojohnson}}
 }

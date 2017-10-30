@@ -27,7 +27,8 @@ The Dual transformation is not defined for negative values of
 lambda. Defaults to \code{c(0, 2)}.}
 
 \item{plotit}{logical. If TRUE, a plot that illustrates the optimal 
-transformation parameter or the given transformation parameter is returned.}
+transformation parameter or the given transformation parameter is returned.
+Defaults to \code{TRUE}.}
 }
 \value{
 An object of class \code{trafo}. Methods such as 

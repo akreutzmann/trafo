@@ -20,6 +20,7 @@
 #' Defaults to \code{c(-2, 2)}.
 #' @param plotit logical. If TRUE, a plot that illustrates the optimal 
 #' transformation parameter or the given transformation parameter is returned.
+#' Defaults to \code{TRUE}.
 #' @return an object of class \code{trafo}.
 # #' @examples
 # #' # Load data

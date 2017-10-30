@@ -31,6 +31,7 @@
 #' @export
 
 diagnostics.compare_trafo <- function(object, ...) {
+
   
   formula <- NULL
   
@@ -43,6 +44,18 @@ diagnostics.compare_trafo <- function(object, ...) {
   modOne$name <- trafos[[1]]
   modTwo <- object$trafoTwo
   modTwo$name <- trafos[[2]]
+  
+  
+  if (modOne$name == modTwo$name && method[[1]] != method[[2]]) {
+    modOne$name <- paste0(modOne$name, "_", method[[1]])
+    modTwo$name <- paste0(modTwo$name, "_", method[[2]])
+  } else if (modOne$name == modTwo$name && method[[1]] != method[[2]]) {
+    modOne$name <- paste0(modOne$name, "1")
+    modTwo$name <- paste0(modOne$name, "2")
+    
+    warning("The same transformation and estimation method is used.")
+  }
+  
   
   diagnose <- diagnostics_internal(modOne = modOne, modTwo = modTwo)
   

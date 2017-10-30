@@ -27,6 +27,26 @@
 
 oneparam.lm <- function(object, trafo, lambda = "estim", method = "ml", 
                           lambdarange, plotit = TRUE, custom_trafo = NULL, ...) {
+  
+  
+  if (is.null(lambdarange) && trafo %in% c("boxcox", "boxcoxshift", "manly", 
+                                           "modulus", "yeojohnson", "gpower")) {
+    lambdarange <- c(-2,2)
+  } else if (is.null(lambdarange) && trafo == "bickeldoksum") {
+    lambdarange <- c(1e-11, 2)
+  } else if (is.null(lambdarange) && trafo == "dual") {
+    lambdarange <- c(0,2)
+  } else if (is.null(lambdarange) && trafo %in% c("logshiftopt", "sqrtshift")) {
+    span <- range(object$model[, paste0(formula(object)[2])])
+    if ((span[1] + 1) <= 1) {
+      lower = abs(span[1]) + 1
+    } else {
+      lower <- -span[1] + 1
+    }
+    upper <- diff(span)
+    
+    lambdarange <- c(lower,upper)
+  }
 
  
   check_oneparam(trafo = trafo, lambda = lambda, method = method, 

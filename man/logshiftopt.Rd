@@ -4,8 +4,8 @@
 \alias{logshiftopt}
 \title{Log shift opt transformation for linear models}
 \usage{
-logshiftopt(object, lambda = "estim", method = "ml", lambdarange = c(0,
-  2), plotit = TRUE)
+logshiftopt(object, lambda = "estim", method = "ml", lambdarange = NULL,
+  plotit = TRUE)
 }
 \arguments{
 \item{object}{an object of type lm.}
@@ -23,10 +23,13 @@ to "ml".}
 
 \item{lambdarange}{a numeric vector with two elements defining an interval 
 that is used for the estimation of the optimal transformation parameter.
-Defaults to \code{c(0, 2)}.}
+Defaults to \code{NULL}. In this case the lambdarange is set to the range 
+of the data. In case the lowest value is negative the absolute value of the
+lowest value plus 1 is the lower bound for the range.}
 
 \item{plotit}{logical. If TRUE, a plot that illustrates the optimal 
-transformation parameter or the given transformation parameter is returned.}
+transformation parameter or the given transformation parameter is returned.
+Defaults to \code{TRUE}.}
 }
 \value{
 An object of class \code{trafo}. Methods such as 
