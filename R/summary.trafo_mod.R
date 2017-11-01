@@ -1,17 +1,17 @@
 #' Summary for linear models with untransformed and transformed dependent 
 #' variable
 #'
-#' The summary method for class \code{trafo_mod} contains a summary for an 
+#' The summary method for class \code{trafo_lm} contains a summary for an 
 #' untransformed and a transformed model. The resulting summary is based on the 
 #' summary for objects of type \code{lm}. 
 #' 
-#' @param object an object of type \code{trafo_mod}
+#' @param object an object of type \code{trafo_lm}
 #' @param ... additional arguments that are not used in this method
-#' @return An object of class \code{summary.trafo_mod}. The method 
-#' \code{\link{print.summary.trafo_mod}} can be used for this class.
+#' @return An object of class \code{summary.trafo_lm}. The method 
+#' \code{\link{print.summary.trafo_lm}} can be used for this class.
 #' @export
 
-summary.trafo_mod <- function(object, ...) {
+summary.trafo_lm <- function(object, ...) {
   
   formula <- NULL
   
@@ -40,7 +40,7 @@ summary.trafo_mod <- function(object, ...) {
                   param = param, 
                   std = object$std)
 
-  class(sum_out) <- "summary.trafo_mod"
+  class(sum_out) <- "summary.trafo_lm"
   
   return(sum_out)
 }
@@ -50,12 +50,12 @@ summary.trafo_mod <- function(object, ...) {
 #' Print summary trafo
 #'
 #' prints objects to be shown in the summary function for objects of 
-#' type \code{trafo_mod}
-#' @param x an object of type \code{summary.trafo_mod}
+#' type \code{trafo_lm}
+#' @param x an object of type \code{summary.trafo_lm}
 #' @param ... additional arguments that are not used in this method
 #' @export
 
-print.summary.trafo_mod <- function(x, ...) {
+print.summary.trafo_lm <- function(x, ...) {
   # 
   # 
   # cat("Applied transformation \n")

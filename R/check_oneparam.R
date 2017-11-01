@@ -29,7 +29,7 @@ check_oneparam <- function(trafo, lambda, method,
   #        values of lambda.")
   # }
   
-  if (!(method %in% c("ml", "skew", "div.ks", "div.cvm", "div.kl" 
+  if (!(method %in% c("ml", "skew", "kurt", "div.ks", "div.cvm", "div.kl" 
                      #,"reml", "pskew"
                      ))) {
     stop(paste0(method, " is not a supported estimation method. 

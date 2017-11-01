@@ -8,8 +8,8 @@
 #' @return The return depends on the class of its argument. The 
 #' documentation of particular methods gives detailed information about the 
 #' return of that method.
-#' @seealso  \code{\link{diagnostics.trafo_mod}}, 
-#' \code{\link{diagnostics.compare_trafo}}
+#' @seealso  \code{\link{diagnostics.trafo_lm}}, 
+#' \code{\link{diagnostics.trafo_compare}}
 #' @keywords diagnostics
 #' @export
 diagnostics <- function(object,...) UseMethod("diagnostics")

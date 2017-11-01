@@ -21,7 +21,7 @@ Returns information about the transformation and selected diagnostics to
 check model assumptions.
 }
 \seealso{
-\code{\link{diagnostics.trafo_mod}}, 
-\code{\link{diagnostics.compare_trafo}}
+\code{\link{diagnostics.trafo_lm}}, 
+\code{\link{diagnostics.trafo_compare}}
 }
 \keyword{diagnostics}

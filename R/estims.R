@@ -172,6 +172,21 @@ skewness_min <- function(res = res) {
   return(absolute_skew)
 }
 
+
+#' Kurtosis 
+#' 
+#' @param res residuals from a linear model with response variable yt and 
+#' explanatory variables x
+#' @return absolute value of the skewness of the residuals
+#' @import moments
+#' @keywords internal
+
+kurtosis_min <- function(res = res) {
+  result <- abs(kurtosis(res) - 3)
+  return(result)
+}
+
+
 #' Divergence minimization by Kolmogorov Smirnoff
 #' 
 #' @param res residuals from a linear model with response variable yt and 

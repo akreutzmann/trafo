@@ -4,7 +4,7 @@
 #' For the untransformed and transformed model a range of plots is returned in 
 #' order to check model assumptions graphically. 
 #' 
-#' @param x an object of type \code{trafo_mod}
+#' @param x an object of type \code{trafo_lm}
 #' @param ... additional arguments that are not used in this method
 #' @importFrom pryr %<a-%
 #' @importFrom grDevices dev.flush dev.hold
@@ -12,7 +12,7 @@
 #' @importFrom stats cooks.distance formula predict qqline qqnorm
 #' @export
 
-plot.trafo_mod <- function(x, ...) {
+plot.trafo_lm <- function(x, ...) {
   
   
   QQ_orig <- NULL

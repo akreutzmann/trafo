@@ -10,7 +10,7 @@ trafo_predict(object, newdata, se.fit = FALSE, scale = NULL, df = Inf,
   weights = 1, ...)
 }
 \arguments{
-\item{object}{an object of type \code{trafo_mod}.}
+\item{object}{an object of type \code{trafo_lm}.}
 
 \item{newdata}{an optional data frame in which to look for variables with 
 which to predict. If omitted, the fitted values are used.}

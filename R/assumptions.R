@@ -5,12 +5,12 @@
 #' linearity.
 #' 
 #' @param object an object of type \code{lm}.
-#' @param method  a character string. Different estimation methods can be used 
+#' @param method a character string. Different estimation methods can be used 
 #' for the estimation of the optimal transformation parameter: 
-#' (i) Maximum likelihood approach ("ml"), (ii) Skewness minimization ("skew"),  
-#' (iii) Divergence minimization by Kolmogorov-Smirnoff ("div.ks"), 
-#' by Cramer-von-Mises ("div.cvm") or by Kullback-Leibler ("div.kl"). Defaults
-#' to "ml".
+#' (i) Maximum likelihood approach ("ml"), (ii) Skewness minimization ("skew"),
+#' (iii) Kurtosis optimization ("kurt"), (iv) Divergence minimization by 
+#' Kolmogorov-Smirnoff ("div.ks"), by Cramer-von-Mises ("div.cvm") or by 
+#' Kullback-Leibler ("div.kl"). Defaults to "ml".
 #' @param std logical. If \code{TRUE}, the transformed model is returned based 
 #' on the standardized transformation. Defaults to \code{TRUE}.
 #' @param ... other parameters that can be passed to the function, e.g. other 
@@ -36,6 +36,7 @@
 
 assumptions <- function(object, method = "ml", std = TRUE, ...){
   
+
   check_assumptions(object = object, method = method, std = std)
 
   lambdaranges <- list(...)

@@ -3,13 +3,13 @@
 #' The summary contains the summary for two transformed models. The summary is 
 #' based on the summary for objects of type \code{lm}. 
 #' 
-#' @param object an object of type \code{compare_trafo}
+#' @param object an object of type \code{trafo_compare}
 #' @param ... additional arguments that are not used in this method
-#' @return An object of class \code{summary.compare_trafo}. The method 
-#' \code{\link{print.summary.compare_trafo}} can be used for this class.
+#' @return An object of class \code{summary.trafo_compare}. The method 
+#' \code{\link{print.summary.trafo_compare}} can be used for this class.
 #' @export
 
-summary.compare_trafo <- function(object, ...) {
+summary.trafo_compare <- function(object, ...) {
   
   formula <- NULL
   
@@ -34,23 +34,23 @@ summary.compare_trafo <- function(object, ...) {
                   trafoTwo_sum  = sums$modTwo_sum,
                   std = object$std)
   
-  class(sum_out) <- "summary.compare_trafo"
+  class(sum_out) <- "summary.trafo_compare"
   
   return(sum_out)
 }
 
 
 
-#' Prints summary of compare_trafo objects
+#' Prints summary of trafo_compare objects
 #'
 #' Prints objects to be shown in the summary function for objects of 
-#' type \code{compare_trafo}.
+#' type \code{trafo_compare}.
 #' 
-#' @param x an object of type \code{summary.compare_trafo}
+#' @param x an object of type \code{summary.trafo_compare}
 #' @param ... additional arguments that are not used in this method
 #' @export
 
-print.summary.compare_trafo <- function(x, ...) {
+print.summary.trafo_compare <- function(x, ...) {
   
   cat("Summary of model with ", x$trafo[[1]], "\n")
   print(x$trafoOne_sum)
@@ -59,9 +59,7 @@ print.summary.compare_trafo <- function(x, ...) {
   print(x$trafoTwo_sum)
   cat("\n")
   if (x$std == TRUE) {
-    cat("Note that the standard errors are missing due to the lack of methods 
-      for correct standard errors in transformed models using standardized
-        transformation. \n")
+    cat("Note that the standard errors can be biased. \n")
   }
   invisible(x)
 }

@@ -162,14 +162,13 @@ modul_std <- function(y, lambda) {
 # Back transformation: Modulus
 modul_back <- function(y, lambda = lambda) {
   lambda_absolute <- abs(lambda)
-  if(lambda_absolute <= 1e-12)
-  {
+  if (lambda_absolute <= 1e-12) {
     y <- sign(y) * (exp(abs(y)) - 1)
-  }
-  else
-  {
+  } else {
     y <- sign(y) * ((abs(y)*lambda + 1)^(1/lambda) - 1) - 1
   }
+  
+  return(y = y)
 }
 
 
@@ -201,11 +200,12 @@ Bick_dok_std <- function(y, lambda) {
 
 # Back transformation: Bick-Doksum
 Bick_dok_back <- function(y, lambda = lambda) {
-  if (y > 0) {
+  if (all(y > 0)) {
     y <- (lambda * y + 1)^(1 / lambda) 
   } else {
     y <- ((-1) * (lambda * y + 1))^(1 / lambda) 
   }
+  return(y = y)
 }
 
 # The Manly transformation ----------------------------------------------------------------------
@@ -239,12 +239,11 @@ Manly_std <- function(y, lambda) {
 Manly_back <- function(y, lambda = lambda) {
   lambda_absolute <- abs(lambda)
   if (lambda_absolute <= 1e-12) {  #case lambda=0
-    y <- 1 / y  
+    y <- y  
   } else {
     y <- log(lambda * y + 1) / lambda
   }
-  return(y = yt)
-
+  return(y = y)
 }
 
 # The dual transformation ----------------------------------------------------------------------
@@ -292,6 +291,8 @@ Dual_back <- function(y, lambda = lambda) {
   {
     y <- (lambda * y + sqrt(lambda^2 * y^2 + 1))^(1/lambda)
   }
+  
+  return(y = y)
 }
 
 # The Yeo-Johnson transformation ----------------------------------------------------------------------
@@ -333,16 +334,19 @@ Yeo_john_std <- function(y, lambda) {
 
 # Back transformation: Yeo-Johnson
 Yeo_john_back <- function(y, lambda = lambda) {
+
   lambda_absolute <- abs(lambda)
-  if (y >= 0 && lambda != 0) {
+  if (all(y >= 0) && lambda != 0) {
     ((y * lambda + 1)^(1 / lambda)) - 1
-  } else if (y >= 0 && lambda!=0) {
+  } else if (all(y >= 0) && lambda_absolute <= 1e-12) {
     exp(y) - 1
-  } else if (y < 0 && lambda != 2) {
+  } else if (all(y < 0) && lambda != 2) {
     (-1) * ((y * (lambda - 2) + 1)^(1/(2 - lambda)) - 1)
-  } else if (y < 0 && lambda_absolute <= 1e-12) {
+  } else if (all(y < 0) && lambda_absolute == 2) {
     (-1) * (exp(-y) - 1)
   }
+  
+  return(y = y)
 }
 
 ###################################### Neue Transformationen #######################################
@@ -440,7 +444,7 @@ neg_log_std <- function(y) {
 }
 
 # Back transformation: neg_log
-neg_log_back <- function(y, lambda = lambda) {
+neg_log_back <- function(y) {
     y <- sign(y) * (exp(abs(y)) - 1)
 
     return(y)
@@ -479,7 +483,7 @@ Log_shift_std <- function(y) {
 }
 
 # Standardized transformation: log
-Log_shift_std <- function(y) {
+Log_shift_back <- function(y) {
   y <- box_cox_shift_back(y, lambda = 0)
   return(y)
 }

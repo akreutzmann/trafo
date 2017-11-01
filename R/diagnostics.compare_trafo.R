@@ -4,10 +4,10 @@
 #' diagnostics to check model assumptions. Two models are compared where
 #' the dependent variable is transformed by different transformations.
 #' 
-#' @param object an object of type \code{compare_trafo}
+#' @param object an object of type \code{trafo_compare}
 #' @param ... additional arguments that are not used in this method
-#' @return An object of class \code{diagnostics.compare_trafo}. The method 
-#' \code{\link{print.diagnostics.compare_trafo}} can be used for this class.    
+#' @return An object of class \code{diagnostics.trafo_compare}. The method 
+#' \code{\link{print.diagnostics.trafo_compare}} can be used for this class.    
 #' @examples
 #' # Load data
 #' data("cars", package = "datasets")
@@ -22,7 +22,7 @@
 #' bc_trafo <- boxcox(object = lm_cars, method = "skew", plotit = FALSE)
 #' 
 #' # Compare transformed models
-#' compare <- compare_trafo(object = lm_cars, trafos = list(bd_trafo, bc_trafo))
+#' compare <- trafo_compare(object = lm_cars, trafos = list(bd_trafo, bc_trafo))
 #' 
 #' # Get diagnostics
 #' diagnostics(compare)
@@ -30,7 +30,7 @@
 #' @importFrom lmtest bptest
 #' @export
 
-diagnostics.compare_trafo <- function(object, ...) {
+diagnostics.trafo_compare <- function(object, ...) {
 
   
   formula <- NULL
@@ -68,7 +68,7 @@ diagnostics.compare_trafo <- function(object, ...) {
                        norm_ranef = diagnose$norm_ranef, 
                        hetero = diagnose$hetero)
 
-  class(diagnose_out) <- "diagnostics.compare_trafo"
+  class(diagnose_out) <- "diagnostics.trafo_compare"
   
   return(diagnose_out)
 }
@@ -79,11 +79,11 @@ diagnostics.compare_trafo <- function(object, ...) {
 #' 
 #' Prints diagnostics of two trafo objects.
 #' 
-#' @param x an object of type \code{diagnostics.compare_trafo}
+#' @param x an object of type \code{diagnostics.trafo_compare}
 #' @param ... additional arguments that are not used in this method
 #' @export
 
-print.diagnostics.compare_trafo <- function(x, ...) {
+print.diagnostics.trafo_compare <- function(x, ...) {
   # 
   cat("Diagnostics of two transformed models \n")
   cat("\n")

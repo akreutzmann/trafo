@@ -11,10 +11,10 @@ assumptions(object, method = "ml", std = TRUE, ...)
 
 \item{method}{a character string. Different estimation methods can be used 
 for the estimation of the optimal transformation parameter: 
-(i) Maximum likelihood approach ("ml"), (ii) Skewness minimization ("skew"),  
-(iii) Divergence minimization by Kolmogorov-Smirnoff ("div.ks"), 
-by Cramer-von-Mises ("div.cvm") or by Kullback-Leibler ("div.kl"). Defaults
-to "ml".}
+(i) Maximum likelihood approach ("ml"), (ii) Skewness minimization ("skew"),
+(iii) Kurtosis optimization ("kurt"), (iv) Divergence minimization by 
+Kolmogorov-Smirnoff ("div.ks"), by Cramer-von-Mises ("div.cvm") or by 
+Kullback-Leibler ("div.kl"). Defaults to "ml".}
 
 \item{std}{logical. If \code{TRUE}, the transformed model is returned based 
 on the standardized transformation. Defaults to \code{TRUE}.}

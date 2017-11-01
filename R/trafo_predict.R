@@ -4,7 +4,7 @@
 #' predicted values are back-transformed corresponding to the transformation 
 #' used in the model. Note that the back-transformation can induce a bias.
 #' 
-#' @param object an object of type \code{trafo_mod}.
+#' @param object an object of type \code{trafo_lm}.
 #' @param newdata an optional data frame in which to look for variables with 
 #' which to predict. If omitted, the fitted values are used. 
 #' @param se.fit a switch indicating if standard errors are required.
@@ -40,6 +40,8 @@
 #' # Get predictions in the back-transformed scale
 #' trafo_predict(trafo_cars)
 #' @importFrom stats .checkMFClasses delete.response na.pass napredict qt terms
+#' cor
+#' @importFrom graphics strwidth text
 #' @export
 
 
@@ -51,8 +53,17 @@ trafo_predict <- function(object, newdata, se.fit = FALSE, scale = NULL, df = In
                      pred.var = res.var/weights, weights = 1, ...) 
 {
   
+  # Get the information from object of type trafo_lm
+  lambda_opt <- object$lambdahat
+  std <- object$std
+  trafo <- object$trafo
+  shift <- with_shift(y = object$orig_mod$model[, paste0(formula(object$orig_mod)[2])], shift = 0)
   
+  
+  # Overwrite object with transformed model
   object <- object$trafo_mod
+  
+  
   
   tt <- terms(object)
   if (!inherits(object, "lm")) 
@@ -102,6 +113,7 @@ trafo_predict <- function(object, newdata, se.fit = FALSE, scale = NULL, df = In
   beta <- object$coefficients
   # Get predictions
   predictor <- drop(X[, piv, drop = FALSE] %*% beta[piv])
+  
   
   # If an offset is set it is added to the prediction
   if (!is.null(offset)) {
@@ -279,9 +291,26 @@ trafo_predict <- function(object, newdata, se.fit = FALSE, scale = NULL, df = In
   #   list(fit = predictor, se.fit = se, lwr = lwr, upr = upr, 
   #        df = df, residual.scale = sqrt(res.var))
   # } else 
-  if (se.fit) 
+  
+
+  
+  
+  
+  if (se.fit) {
+    predictor_back <- back_transformed(predictor = predictor[, "fit"], 
+                                       trafo = trafo, lambda = lambda_opt, 
+                                       shift = shift)
+    
+    predictor <- cbind(predictor, fit_backtrans = predictor_back)
     list(fit = predictor, se.fit = se, df = df, residual.scale = sqrt(res.var))
-  else predictor
+  } else {
+    predictor_back <- back_transformed(predictor = predictor, 
+                                       trafo = trafo, lambda = lambda_opt, 
+                                       shift = shift)
+    
+    predictor <- cbind(predictor, fit_backtrans = predictor_back)
+    predictor
+  }
 }
 
 

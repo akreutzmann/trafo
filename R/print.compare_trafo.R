@@ -1,10 +1,10 @@
-#' Prints object of type compare_trafo
+#' Prints object of type trafo_compare
 #' 
-#' @param x an object of type compare_trafo.
+#' @param x an object of type trafo_compare.
 #' @param ... other parameters that can be passed to the function.
 #' @export
 
-print.compare_trafo <- function(x, ...){
+print.trafo_compare <- function(x, ...){
   cat("Applied transformations \n")
 
   if(x$param[[1]] == "oneparam" && x$param[[2]] == "oneparam") {

@@ -10,10 +10,10 @@
 #' for the transformation parameter. Defaults to "estim".
 #' @param method a character string. Different estimation methods can be used 
 #' for the estimation of the optimal transformation parameter: 
-#' (i) Maximum likelihood approach ("ml"), (ii) Skewness minimization ("skew"),  
-#' (iii) Divergence minimization by Kolmogorov-Smirnoff ("div.ks"), 
-#' by Cramer-von-Mises ("div.cvm") or by Kullback-Leibler ("div.kl"). Defaults
-#' to "ml".
+#' (i) Maximum likelihood approach ("ml"), (ii) Skewness minimization ("skew"),
+#' (iii) Kurtosis optimization ("kurt"), (iv) Divergence minimization by 
+#' Kolmogorov-Smirnoff ("div.ks"), by Cramer-von-Mises ("div.cvm") or by 
+#' Kullback-Leibler ("div.kl"). Defaults to "ml".
 #' @param lambdarange a numeric vector with two elements defining an interval 
 #' that is used for the estimation of the optimal transformation parameter.
 #' Defaults to \code{NULL}. In this case the lambdarange is set to the range 
@@ -51,7 +51,7 @@ logshiftopt <- function(object, lambda ="estim", method = "ml",
     upper <- diff(span)
     
     lambdarange <- c(lower,upper)
-    warning(paste0("The default lambdarange for the Log shift opt transformation is calculated dependent on the data range. The lower value is set to ", lambdarange[1], " and the upper value to ", lambdarange[2], "\n"))
+    cat(paste0("The default lambdarange for the Log shift opt transformation is calculated dependent on the data range. The lower value is set to ", lambdarange[1], " and the upper value to ", lambdarange[2], "\n"))
     cat("\n")
   }
   oneparam(object = object, trafo = trafo, lambda = lambda, method = method, 
