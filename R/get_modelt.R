@@ -12,7 +12,6 @@ get_modelt <- function(object, trans_mod, std) {
   
   if (inherits(object, "lm")) {
     if (std == FALSE) {
-      
       data <- object$model 
       transformed_dependent <- paste0(as.character(formula(object$terms)[2]), "t")
       formula <- as.formula(paste(transformed_dependent, "~", as.character(formula(object$terms)[3])))
@@ -38,6 +37,8 @@ get_modelt <- function(object, trans_mod, std) {
     
     
   } else if (inherits(object, "lme")) {
+    
+    lme <- NULL
   
     if (std == FALSE) {
       formula <- formula(object)

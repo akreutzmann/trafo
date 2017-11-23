@@ -7,7 +7,7 @@
 diagnostics_internal(modOne, modTwo)
 }
 \description{
-The function is called in diagnostics.trafo_mod and 
-diagnostics.compare_trafo.
+The function is called in diagnostics.trafo_lm and 
+diagnostics.trafo_compare.
 }
 \keyword{internal}

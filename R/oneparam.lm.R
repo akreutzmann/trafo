@@ -11,9 +11,10 @@
 #' transformation parameter. Defaults to "estim".
 #' @param method a character string. Different estimation methods can be used 
 #' for the estimation of the optimal transformation parameter: 
-#' (i) Maximum likelihood approach ("ml"), (ii) Skewness minimization ("skew"),  
-#' (iii) Divergence minimization by Kolmogorov-Smirnoff ("div.ks"), 
-#' by Cramer-von-Mises ("div.cvm") or by Kullback-Leibler ("div.kl").
+#' (i) Maximum likelihood approach ("ml"), (ii) Skewness minimization ("skew"),
+#' (iii) Kurtosis optimization ("kurt"), (iv) Divergence minimization by 
+#' Kolmogorov-Smirnoff ("div.ks"), by Cramer-von-Mises ("div.cvm") or by 
+#' Kullback-Leibler ("div.kl"). Defaults to "ml".
 #' @param lambdarange a numeric vector with two elements defining an interval 
 #' that is used for the estimation of the optimal transformation parameter. 
 #' Defaults to \code{c(-2, 2)}.
@@ -27,6 +28,26 @@
 
 oneparam.lm <- function(object, trafo, lambda = "estim", method = "ml", 
                           lambdarange, plotit = TRUE, custom_trafo = NULL, ...) {
+  
+
+  if (is.null(lambdarange) && trafo %in% c("boxcox", "boxcoxshift", "manly", 
+                                           "modulus", "yeojohnson", "gpower")) {
+    lambdarange <- c(-2,2)
+  } else if (is.null(lambdarange) && trafo == "bickeldoksum") {
+    lambdarange <- c(1e-11, 2)
+  } else if (is.null(lambdarange) && trafo == "dual") {
+    lambdarange <- c(0,2)
+  } else if (is.null(lambdarange) && trafo %in% c("logshiftopt", "sqrtshift")) {
+    span <- range(object$model[, paste0(formula(object)[2])])
+    if ((span[1] + 1) <= 1) {
+      lower = abs(span[1]) + 1
+    } else {
+      lower <- -span[1] + 1
+    }
+    upper <- diff(span)
+    
+    lambdarange <- c(lower,upper)
+  }
 
  
   check_oneparam(trafo = trafo, lambda = lambda, method = method, 
@@ -55,8 +76,9 @@ oneparam.lm <- function(object, trafo, lambda = "estim", method = "ml",
   # Get the optimal transformation parameter
   if (lambda == "estim") {
     optim <- est_lm(y = y, x = x, trafo = trafo, method = method, 
-                         lambdarange = lambdarange, custom_func = custom_func, 
-                         custom_func_std = custom_func_std) 
+                    lambdarange = lambdarange, 
+                    custom_func = custom_func, 
+                    custom_func_std = custom_func_std) 
     
     lambdaoptim <- optim$lambdaoptim
     measoptim <- optim$measoptim

@@ -3,14 +3,14 @@
 #' For the two transformed models a range of plots is returned in order to check
 #' model assumptions graphically.  
 #' 
-#' @param x an object of type \code{compare_trafo}
+#' @param x an object of type \code{trafo_compare}
 #' @param ... additional arguments that are not used in this method
 #' @importFrom pryr %<a-%
 #' @importFrom grDevices dev.flush dev.hold
 #' @importFrom graphics abline par plot
 #' @export
 
-plot.compare_trafo <- function(x, ...) {
+plot.trafo_compare <- function(x, ...) {
   
   residFit_One <- NULL
   residFit_Two <- NULL
@@ -29,6 +29,7 @@ plot.compare_trafo <- function(x, ...) {
   cooks_One <- NULL
   cooks_Two <- NULL
   
+  ranef <- NULL
 
   
   if (inherits(x$trafoOne, "lm")) {

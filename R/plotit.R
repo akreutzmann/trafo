@@ -6,12 +6,12 @@
 #' @param measoptim measure at the optimal transformation parameter.
 #' @param y dependent variable.
 #' @param x matrix of regressors
-#' @param method a character string. In order to determine the optimal parameter
-#' for the transformation five different estimation methods can be chosen
-#' (i) Maximum-Likelihood ("ml"); (ii) skewness minimization ("skew");
-#' (iii) minimization of Kolmogorov-Smirnoff divergence  ("div.ks");
-#' (iv) minimization of Craemer von Mises divergence ("div.cvm"); (v)
-#' minimization of Kullback Leibner divergence  ("div.kl"). In case of no and
+#' @param method a character string. Different estimation methods can be used 
+#' for the estimation of the optimal transformation parameter: 
+#' (i) Maximum likelihood approach ("ml"), (ii) Skewness minimization ("skew"),
+#' (iii) Kurtosis optimization ("kurt"), (iv) Divergence minimization by 
+#' Kolmogorov-Smirnoff ("div.ks"), by Cramer-von-Mises ("div.cvm") or by 
+#' Kullback-Leibler ("div.kl"). Defaults to "ml". In case of no and
 #' log transformation "NA" can be selected since no optimization is neccessary
 #' for these two transformation types.
 #' @param trafo a character string that selects the transformation.
@@ -22,7 +22,24 @@ plot_trafolm <- function(lambdarange, lambdaoptim, measoptim,
                          y, x, trafo, method, custom_func, 
                          custom_func_std) {
   
-  lambdavector <- seq(lambdarange[1], lambdarange[2], 0.025)
+  
+  if (diff(range(lambdarange)) <= 1000) {
+    tol <- 0.025
+  } else if (diff(range(lambdarange)) > 1000 && diff(range(lambdarange)) <= 2000) {
+    tol <- 1
+  } else if (diff(range(lambdarange)) > 2000 && diff(range(lambdarange)) <= 5000) {
+    tol <- 1.5
+  } else if (diff(range(lambdarange)) > 5000 && diff(range(lambdarange)) <= 10000) {
+    tol <- 2
+  } else if (diff(range(lambdarange)) > 10000 && diff(range(lambdarange)) <= 50000) {
+    tol <- 5
+  } else if (diff(range(lambdarange)) > 50000 && diff(range(lambdarange)) <= 100000) {
+    tol <- 10
+  } else if (diff(range(lambdarange)) > 100000) {
+    tol <- 100
+  }
+  
+  lambdavector <- seq(lambdarange[1], lambdarange[2], tol)
   l <- length(lambdavector)
   lambdavector[l + 1]  <- lambdaoptim
   lambdavector <- sort(lambdavector)

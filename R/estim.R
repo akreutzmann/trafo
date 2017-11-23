@@ -5,12 +5,12 @@
 #' @param lambda transformation parameter
 #' @param y vector of response variables
 #' @param x matrix of regressors
-#' @param method a character string. In order to determine the optimal parameter
-#' for the transformation five different estimation methods can be chosen
-#' (i) Maximum-Likelihood ("ml"); (ii) skewness minimization ("skew");
-#' (iii) minimization of Kolmogorov-Smirnoff divergence  ("div.ks");
-#' (iv) minimization of Craemer von Mises divergence ("div.cvm"); (v)
-#' minimization of Kullback Leibner divergence  ("div.kl"). In case of no and
+#' @param method a character string. Different estimation methods can be used 
+#' for the estimation of the optimal transformation parameter: 
+#' (i) Maximum likelihood approach ("ml"), (ii) Skewness minimization ("skew"),
+#' (iii) Kurtosis optimization ("kurt"), (iv) Divergence minimization by 
+#' Kolmogorov-Smirnoff ("div.ks"), by Cramer-von-Mises ("div.cvm") or by 
+#' Kullback-Leibler ("div.kl"). Defaults to "ml". In case of no and
 #' log transformation "NA" can be selected since no optimization is neccessary
 #' for these two transformation types.
 #' @param trafo a character string that selects the transformation.
@@ -74,6 +74,8 @@ estim_lm <- function(lambda, y, x, method, trafo, custom_func, custom_func_std){
     
     optimization <- if (method == "skew") {
       skewness_min(res = res)
+    } else if (method == "kurt") {
+      kurtosis_min(res = res)
     } else if (method == "div.ks") {
       divergence_min_KS(res = res)
     } else if (method == "div.cvm") {
@@ -120,6 +122,8 @@ estim_lm <- function(lambda, y, x, method, trafo, custom_func, custom_func_std){
 
 estim_lme <- function(lambda, y, formula, data, rand_eff, method, trafo, 
                       custom_func, custom_func_std){
+  
+  lme <- NULL
   
   # Find the optimal lambda depending on method
   optimization <- if (method == "reml") {

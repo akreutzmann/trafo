@@ -6,24 +6,27 @@
 #'
 #' @param object an object of type lm. 
 #' @param lambda either a character named "estim" if the optimal transformation
-#' parameter should be estimated or a numeric value determining a given 
-#' transformation parameter. Defaults to "estim".
+#' parameter should be estimated or a numeric value determining a given value 
+#' for the transformation parameter. Defaults to "estim".
 #' @param method a character string. Different estimation methods can be used 
 #' for the estimation of the optimal transformation parameter: 
-#' (i) Maximum likelihood approach ("ml"), (ii) Skewness minimization ("skew"),  
-#' (iii) Divergence minimization by Kolmogorov-Smirnoff ("div.ks"), 
-#' by Cramer-von-Mises ("div.cvm") or by Kullback-Leibler ("div.kl"). Defaults
-#' to "ml".
+#' (i) Maximum likelihood approach ("ml"), (ii) Skewness minimization ("skew"),
+#' (iii) Kurtosis optimization ("kurt"), (iv) Divergence minimization by 
+#' Kolmogorov-Smirnoff ("div.ks"), by Cramer-von-Mises ("div.cvm") or by 
+#' Kullback-Leibler ("div.kl"). Defaults to "ml".
 #' @param lambdarange a numeric vector with two elements defining an interval 
 #' that is used for the estimation of the optimal transformation parameter.
 #' The Dual transformation is not defined for negative values of 
 #' lambda. Defaults to \code{c(0, 2)}.
 #' @param plotit logical. If TRUE, a plot that illustrates the optimal 
 #' transformation parameter or the given transformation parameter is returned.
-#' @return an object of class \code{trafo}.
+#' Defaults to \code{TRUE}.
+#' @return An object of class \code{trafo}. Methods such as 
+#' \code{\link{as.data.frame.trafo}} and \code{\link{print.trafo}} can 
+#' be used for this class.    
 #' @references
 #' Yang Z (2006). A modified family of power transformations. Economics Letters, 
-#' Vol. 92, 14-19.
+#' 92(1), 14-19.
 #' @examples
 #' # Load data
 #' data("cars", package = "datasets")

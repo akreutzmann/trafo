@@ -1,12 +1,13 @@
 #' Diagnostics for two differently transformed models
 #'
 #' Returns information about the applied transformations and selected 
-#' diagnostics to check model assumptions. Two differently transformed models
-#' are compared.
+#' diagnostics to check model assumptions. Two models are compared where
+#' the dependent variable is transformed by different transformations.
 #' 
-#' @param object an object of type \code{compare_trafo}
+#' @param object an object of type \code{trafo_compare}
 #' @param ... additional arguments that are not used in this method
-#' @return an object of class \code{diagnostics.compare_trafo}
+#' @return An object of class \code{diagnostics.trafo_compare}. The method 
+#' \code{\link{print.diagnostics.trafo_compare}} can be used for this class.    
 #' @examples
 #' # Load data
 #' data("cars", package = "datasets")
@@ -21,8 +22,7 @@
 #' bc_trafo <- boxcox(object = lm_cars, method = "skew", plotit = FALSE)
 #' 
 #' # Compare transformed models
-#' compare <- compare_trafo(object = lm_cars, trafos = list(bd_trafo, bc_trafo), 
-#' std = FALSE)
+#' compare <- trafo_compare(object = lm_cars, trafos = list(bd_trafo, bc_trafo))
 #' 
 #' # Get diagnostics
 #' diagnostics(compare)
@@ -30,7 +30,8 @@
 #' @importFrom lmtest bptest
 #' @export
 
-diagnostics.compare_trafo <- function(object, ...) {
+diagnostics.trafo_compare <- function(object, ...) {
+
   
   formula <- NULL
   
@@ -44,6 +45,18 @@ diagnostics.compare_trafo <- function(object, ...) {
   modTwo <- object$trafoTwo
   modTwo$name <- trafos[[2]]
   
+  
+  if (modOne$name == modTwo$name && method[[1]] != method[[2]]) {
+    modOne$name <- paste0(modOne$name, "_", method[[1]])
+    modTwo$name <- paste0(modTwo$name, "_", method[[2]])
+  } else if (modOne$name == modTwo$name && method[[1]] != method[[2]]) {
+    modOne$name <- paste0(modOne$name, "1")
+    modTwo$name <- paste0(modOne$name, "2")
+    
+    warning("The same transformation and estimation method is used.")
+  }
+  
+  
   diagnose <- diagnostics_internal(modOne = modOne, modTwo = modTwo)
   
   diagnose_out <- list(trafos = trafos, 
@@ -55,22 +68,22 @@ diagnostics.compare_trafo <- function(object, ...) {
                        norm_ranef = diagnose$norm_ranef, 
                        hetero = diagnose$hetero)
 
-  class(diagnose_out) <- "diagnostics.compare_trafo"
+  class(diagnose_out) <- "diagnostics.trafo_compare"
   
   return(diagnose_out)
 }
 
 
 
-#' Print diagnostics trafo
-#'
-#' prints objects to be shown in the summary function for objects of 
-#' type \code{trafo_mod}
-#' @param x an object of type \code{diagnostics.trafo_mod}
+#' Prints diagnostics of two trafo objects
+#' 
+#' Prints diagnostics of two trafo objects.
+#' 
+#' @param x an object of type \code{diagnostics.trafo_compare}
 #' @param ... additional arguments that are not used in this method
 #' @export
 
-print.diagnostics.compare_trafo <- function(x, ...) {
+print.diagnostics.trafo_compare <- function(x, ...) {
   # 
   cat("Diagnostics of two transformed models \n")
   cat("\n")

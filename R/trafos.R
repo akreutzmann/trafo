@@ -3,7 +3,6 @@
 # Transformation: Box Cox
 
 box_cox <- function(y, lambda = lambda) {
-
   lambda_cases <- function(y, lambda = lambda) {
     lambda_absolute <- abs(lambda)
     if (lambda_absolute <= 1e-12) {  #case lambda=0
@@ -36,10 +35,36 @@ box_cox_std <- function(y, lambda) {
   return(y)
 }
 
+# Back transformation: Box Cox
+box_cox_back <- function(y, lambda) {
+  
+  lambda_cases_back <- function(y, lambda = lambda){
+    if (abs(lambda) <= 1e-12) {   #case lambda=0
+      y <-  exp(y) 
+    } else {
+      y <- (lambda * y + 1)^(1 / lambda) 
+    }
+    return(y = y)
+  }
+  y <- lambda_cases_back(y = y, lambda = lambda)
+  
+  return(y = y)
+} #  End box_cox_back
+
 
 
 
 #  Transformation: Box Cox shift
+
+with_shift <- function(y, shift) {
+  min <- min(y)
+  if (min <= 0) {
+    shift <- shift + abs(min(y)) + 1
+  } else {
+    shift <- shift
+  }
+  return(shift)
+}
 
 box_cox_shift <- function(y, lambda = lambda, shift = 0) {
   with_shift <- function(y, shift) {
@@ -92,7 +117,7 @@ box_cox_shift_std <- function(y, lambda) {
 }
 
 
-# Back transformation: Box Cox
+# Back transformation: Box Cox shift
 box_cox_shift_back <- function(y, lambda, shift = 0) {
 
   lambda_cases_back <- function(y, lambda = lambda, shift){
@@ -137,14 +162,13 @@ modul_std <- function(y, lambda) {
 # Back transformation: Modulus
 modul_back <- function(y, lambda = lambda) {
   lambda_absolute <- abs(lambda)
-  if(lambda_absolute <= 1e-12)
-  {
+  if (lambda_absolute <= 1e-12) {
     y <- sign(y) * (exp(abs(y)) - 1)
-  }
-  else
-  {
+  } else {
     y <- sign(y) * ((abs(y)*lambda + 1)^(1/lambda) - 1) - 1
   }
+  
+  return(y = y)
 }
 
 
@@ -158,7 +182,7 @@ Bick_dok <-  function(y, lambda = lambda) {
     yt <- sign(y)*(u^lambda - 1)/lambda
   }
   else{
-    stop("lambda must be positive for the Bick-Doksum transformation")
+    stop("lambda must be positive for the Bickel-Doksum transformation")
   }
   return(y = yt)
 }
@@ -176,7 +200,12 @@ Bick_dok_std <- function(y, lambda) {
 
 # Back transformation: Bick-Doksum
 Bick_dok_back <- function(y, lambda = lambda) {
-
+  if (all(y > 0)) {
+    y <- (lambda * y + 1)^(1 / lambda) 
+  } else {
+    y <- ((-1) * (lambda * y + 1))^(1 / lambda) 
+  }
+  return(y = y)
 }
 
 # The Manly transformation ----------------------------------------------------------------------
@@ -208,7 +237,13 @@ Manly_std <- function(y, lambda) {
 
 # Back transformation: Manly
 Manly_back <- function(y, lambda = lambda) {
-
+  lambda_absolute <- abs(lambda)
+  if (lambda_absolute <= 1e-12) {  #case lambda=0
+    y <- y  
+  } else {
+    y <- log(lambda * y + 1) / lambda
+  }
+  return(y = y)
 }
 
 # The dual transformation ----------------------------------------------------------------------
@@ -256,6 +291,8 @@ Dual_back <- function(y, lambda = lambda) {
   {
     y <- (lambda * y + sqrt(lambda^2 * y^2 + 1))^(1/lambda)
   }
+  
+  return(y = y)
 }
 
 # The Yeo-Johnson transformation ----------------------------------------------------------------------
@@ -298,6 +335,18 @@ Yeo_john_std <- function(y, lambda) {
 # Back transformation: Yeo-Johnson
 Yeo_john_back <- function(y, lambda = lambda) {
 
+  lambda_absolute <- abs(lambda)
+  if (all(y >= 0) && lambda != 0) {
+    ((y * lambda + 1)^(1 / lambda)) - 1
+  } else if (all(y >= 0) && lambda_absolute <= 1e-12) {
+    exp(y) - 1
+  } else if (all(y < 0) && lambda != 2) {
+    (-1) * ((y * (lambda - 2) + 1)^(1/(2 - lambda)) - 1)
+  } else if (all(y < 0) && lambda_absolute == 2) {
+    (-1) * (exp(-y) - 1)
+  }
+  
+  return(y = y)
 }
 
 ###################################### Neue Transformationen #######################################
@@ -395,7 +444,7 @@ neg_log_std <- function(y) {
 }
 
 # Back transformation: neg_log
-neg_log_back <- function(y, lambda = lambda) {
+neg_log_back <- function(y) {
     y <- sign(y) * (exp(abs(y)) - 1)
 
     return(y)
@@ -413,6 +462,14 @@ Log_std <- function(y) {
   return(y)
 }
 
+
+# Standardized transformation: log
+Log_back <- function(y) {
+  y <- box_cox_back(y, lambda = 0)
+  return(y)
+}
+
+
 # Transformation: log
 Log_shift <- function(y) {
   y <- box_cox_shift(y, lambda = 0)
@@ -422,6 +479,12 @@ Log_shift <- function(y) {
 # Standardized transformation: log
 Log_shift_std <- function(y) {
   y <- box_cox_shift_std(y, lambda = 0)
+  return(y)
+}
+
+# Standardized transformation: log
+Log_shift_back <- function(y) {
+  y <- box_cox_shift_back(y, lambda = 0)
   return(y)
 }
 
@@ -440,9 +503,9 @@ Reciprocal_std  <- function(y) {
 }
 
 # Back transformation: Reciprocal
-#Reciprocal_back <- function(y) {
-#    box_cox_back(y, lambda = -1)
-#}
+Reciprocal_back <- function(y) {
+    box_cox_back(y, lambda = -1)
+}
 
 
 

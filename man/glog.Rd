@@ -10,12 +10,13 @@ glog(object)
 \item{object}{an object of type lm.}
 }
 \value{
-an object of class \code{trafo}.
+An object of class \code{trafo}. Methods such as 
+\code{\link{as.data.frame.trafo}} and \code{\link{print.trafo}} can 
+be used for this class.
 }
 \description{
 The function transforms the dependent variable of a linear model using the 
-Glog transformation. The transformation parameter can either be 
-estimated using different estimation methods or given.
+Glog transformation.
 }
 \examples{
 # Load data

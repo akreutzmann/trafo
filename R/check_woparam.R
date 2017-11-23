@@ -1,6 +1,6 @@
 check_woparam <- function(trafo, custom_trafo) {
   
-  if (!(trafo %in% c("log", "neglog", "reciprocal", "glog", "custom"))) {
+  if (!(trafo %in% c("log", "logshift", "neglog", "reciprocal", "glog", "custom"))) {
     stop(paste0(trafo, " is not a supported transformation. 
                 Please provide valid variable name for trafo."))
   } 

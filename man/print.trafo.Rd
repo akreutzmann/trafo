@@ -2,7 +2,7 @@
 % Please edit documentation in R/print.trafo.R
 \name{print.trafo}
 \alias{print.trafo}
-\title{Print object of type trafo}
+\title{Prints object of type trafo}
 \usage{
 \method{print}{trafo}(x, ...)
 }
@@ -12,5 +12,5 @@
 \item{...}{other parameters that can be passed to the function.}
 }
 \description{
-Print object of type trafo
+Prints object of type trafo
 }

@@ -13,9 +13,10 @@ est_lm(y, x, method, lambdarange, trafo, custom_func, custom_func_std, ...)
 
 \item{method}{a character string. Different estimation methods can be used 
 for the estimation of the optimal transformation parameter: 
-(i) Maximum likelihood approach ("ml"), (ii) Skewness minimization ("skew"),  
-(iii) Divergence minimization by Kolmogorov-Smirnoff ("div.ks"), 
-by Cramer-von-Mises ("div.cvm") or by Kullback-Leibler ("div.kl").}
+(i) Maximum likelihood approach ("ml"), (ii) Skewness minimization ("skew"),
+(iii) Kurtosis optimization ("kurt"), (iv) Divergence minimization by 
+Kolmogorov-Smirnoff ("div.ks"), by Cramer-von-Mises ("div.cvm") or by 
+Kullback-Leibler ("div.kl"). Defaults to "ml".}
 
 \item{lambdarange}{range for the estimation parameter expr(lambda) - default c(-2, 2)}
 }

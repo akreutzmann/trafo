@@ -1,14 +1,21 @@
-#' Compares transformed linear models
+#' Compares linear models with transformed dependent variable
 #'
-#' Function \code{compare_trafo} compares linear models with transformed 
-#' dependent variable. 
+#' Function \code{trafo_compare} compares linear models where the dependent 
+#' variable is transformed by different transformations. 
 #'
 #' @param object an object of type lm
-#' @param trafos a list of \code{trafo} objects based on the same model given 
-#' in object.
+#' @param trafos a list of two \code{trafo} objects based on the same model 
+#' given in object.
 #' @param std logical. If TRUE, the transformed models are returned based on the 
-#' standardized transformation.
-#' @return an object of class \code{compare_trafo}.
+#' standardized transformation. Defaults to \code{TRUE}.
+#' @return An object of class \code{trafo_compare}. Methods such as 
+#' \code{\link{diagnostics.trafo_compare}}, \code{\link{print.trafo_compare}},
+#' \code{\link{plot.trafo_compare}} and \code{\link{summary.trafo_compare}} can 
+#' be used for this class.  
+#'  @seealso \code{\link{bickeldoksum}}, \code{\link{boxcox}}, \code{\link{dual}}, 
+#' \code{\link{glog}}, \code{\link{gpower}}, \code{\link{log}}, 
+#' \code{\link{logshiftopt}}, \code{\link{manly}}, \code{\link{modulus}}, 
+#' \code{\link{neglog}}, \code{\link{sqrtshift}}, \code{\link{yeojohnson}}   
 #' @examples
 #' # Load data
 #' data("cars", package = "datasets")
@@ -23,11 +30,10 @@
 #' bc_trafo <- boxcox(object = lm_cars, method = "skew", plotit = FALSE)
 #' 
 #' # Compare transformed models
-#' compare_trafo(object = lm_cars, trafos = list(bd_trafo, bc_trafo), 
-#' std = FALSE)
+#' trafo_compare(object = lm_cars, trafos = list(bd_trafo, bc_trafo))
 #' @export
 
-compare_trafo <- function(object, trafos, std = FALSE) {
+trafo_compare <- function(object, trafos, std = TRUE) {
   
   check_compare_trafo(object = object, trafos = trafos, std = std)
   
@@ -56,7 +62,7 @@ compare_trafo <- function(object, trafos, std = FALSE) {
                       std = std, 
                       param = c(paramOne, paramTwo))
   
-  class(compare_out) <- "compare_trafo"
+  class(compare_out) <- "trafo_compare"
   
   return(compare_out)
   

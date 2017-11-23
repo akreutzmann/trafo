@@ -1,12 +1,13 @@
 #' Diagnostics for an untransformed and a transformed model
 #'
 #' Returns information about the applied transformation and selected diagnostics 
-#' to check model assumptions. The untransformed and the transformed model are 
-#' compared.
+#' to check model assumptions. The return helps to compare the untransformed and 
+#' the transformed model with regard to model assumptions.
 #' 
-#' @param object an object of type \code{trafo_mod}
+#' @param object an object of type \code{trafo_lm}
 #' @param ... additional arguments that are not used in this method
-#' @return an object of class \code{diagnostics.trafo_mod}
+#' @return An object of class \code{diagnostics.trafo_lm}. The method 
+#' \code{\link{print.diagnostics.trafo_lm}} can be used for this class. 
 #' @examples
 #' # Load data
 #' data("cars", package = "datasets")
@@ -24,7 +25,7 @@
 #' @importFrom lmtest bptest
 #' @export
 
-diagnostics.trafo_mod <- function(object, ...) {
+diagnostics.trafo_lm <- function(object, ...) {
   
   formula <- NULL
   
@@ -52,22 +53,22 @@ diagnostics.trafo_mod <- function(object, ...) {
                        norm_ranef = diagnose$norm_ranef, 
                        hetero = diagnose$hetero)
 
-  class(diagnose_out) <- "diagnostics.trafo_mod"
+  class(diagnose_out) <- "diagnostics.trafo_lm"
   
   return(diagnose_out)
 }
 
 
 
-#' Print diagnostics trafo
+#' Prints diagnostics of an untransformed and transformed model
 #'
-#' prints objects to be shown in the summary function for objects of 
-#' type \code{trafo_mod}
-#' @param x an object of type \code{diagnostics.trafo_mod}
+#' Prints diagnostics of an untransformed and transformed model.
+#' 
+#' @param x an object of type \code{diagnostics.trafo_lm}
 #' @param ... additional arguments that are not used in this method
 #' @export
 
-print.diagnostics.trafo_mod <- function(x, ...) {
+print.diagnostics.trafo_lm <- function(x, ...) {
   # 
   cat("Diagnostics: Untransformed vs transformed model \n")
   cat("\n")

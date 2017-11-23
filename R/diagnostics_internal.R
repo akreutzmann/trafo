@@ -1,7 +1,7 @@
 #' Internal diagnostic functions
 #'
-#' The function is called in diagnostics.trafo_mod and 
-#' diagnostics.compare_trafo.
+#' The function is called in diagnostics.trafo_lm and 
+#' diagnostics.trafo_compare.
 #' @keywords internal
 
 
@@ -69,6 +69,8 @@ diagnostics_internal <- function(modOne, modTwo) {
     
     
   } else if (inherits(modOne, "lme")) {
+    
+    ranef <- NULL
     
     resid_One <- residuals(modOne, level = 0, type = "pearson")
     resid_Two <- residuals(modTwo, level = 0, type = "pearson")
