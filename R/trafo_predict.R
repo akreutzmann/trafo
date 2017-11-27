@@ -53,11 +53,15 @@ trafo_predict <- function(object, newdata, se.fit = FALSE, scale = NULL, df = In
                      pred.var = res.var/weights, weights = 1, ...) 
 {
   
+  
+  check_trafo_predict(object = object, trafo = object$trafo)
+  
   # Get the information from object of type trafo_lm
   lambda_opt <- object$lambdahat
   std <- object$std
   trafo <- object$trafo
   shift <- with_shift(y = object$orig_mod$model[, paste0(formula(object$orig_mod)[2])], shift = 0)
+  
   
   
   # Overwrite object with transformed model
