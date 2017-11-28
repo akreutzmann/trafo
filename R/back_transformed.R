@@ -1,5 +1,6 @@
 back_transformed <- function(predictor, trafo, lambda, shift) {
-  
+
+    
  predictor <- if (trafo == "boxcoxshift") {
     box_cox_shift_back(y = predictor, lambda = lambda, shift = shift)
   } else if (trafo == "boxcox") {
