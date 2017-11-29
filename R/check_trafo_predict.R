@@ -4,12 +4,4 @@ check_trafo_predict <- function(object, trafo) {
     stop(paste0("object is of class", class(object), " but it needs to be of 
                 class trafo_lm." ))
   }
-  
-  if(trafo == "glog" | trafo == "gpower") {
-    
-    stop(paste0("For the transformations glog and gpower no back-transformation 
-                is defined so far." ))
-    }
-  
-  
-  }
+}

@@ -121,6 +121,10 @@ plot.trafo_compare <- function(x, ...) {
     residFit_Two
     cat("Press [enter] to continue")
     line <- readline()
+    scaleLoc_One
+    scaleLoc_Two
+    cat("Press [enter] to continue")
+    line <- readline()
     # Linearity
     yFit_One
     abline(lm(as.numeric(y_One) ~ as.numeric(fitted_One)),col = "red",lwd = 1.5)
@@ -143,10 +147,6 @@ plot.trafo_compare <- function(x, ...) {
     par(mfrow = c(1, 2))
     cooks_One
     cooks_Two
-    cat("Press [enter] to continue")
-    line <- readline()
-    scaleLoc_One
-    scaleLoc_Two
     cat("Press [enter] to continue")
     line <- readline()
     residLev_One
