@@ -88,9 +88,9 @@ print.summary.trafo_lm <- function(x, ...) {
   print(x$trafo_sum)
   cat("\n")
   if (x$std == TRUE) {
-    cat("Note that the standard errors are missing due to the lack of methods 
-      for correct standard errors in transformed models using standardized
-        transformation. \n")
+    #cat("Note that the standard errors are missing due to the lack of methods 
+    #  for correct standard errors in transformed models using standardized
+    #    transformation. \n")
   }
   
   invisible(x)

@@ -102,7 +102,7 @@ plot(custom2)
 
 # Try comparison
 
-compare_lm <- compare_trafo(lm_cars, trafos = list(bd_trafo, log_trafo))
+compare_lm <- trafo_compare(lm_cars, trafos = list(bd_trafo, log_trafo))
 
 print(compare_lm)
 summary(compare_lm)
