@@ -147,12 +147,20 @@ modul <- function(y, lambda = lambda) {
   return(y = yt)
 }
 
+
 # Standardized transformation: Modulus
 
 modul_std <- function(y, lambda) {
   u <- abs(y) + 1L
-  yt <- modul(y, lambda)
-  zt <- yt/exp(mean(sign(y)*(lambda - 1L)*log(u)))
+  # yt <- modul(y, lambda)
+  # zt <- yt/exp(mean(sign(y)*(lambda - 1L)*log(u)))
+  
+  if (lambda_absolute <= 1e-12) {  #case lambda=0
+    zt <-  sign(y) * log(u) * geometric.mean(u) 
+  } else {
+    zt <- sign(y)*(u^lambda - 1L)/lambda * (1/geometric.mean(u)^(lambda - 1))
+  }
+  
 
   y <- zt
 
@@ -165,7 +173,7 @@ modul_back <- function(y, lambda = lambda) {
   if (lambda_absolute <= 1e-12) {
     y <- sign(y) * (exp(abs(y)) - 1)
   } else {
-    y <- sign(y) * ((abs(y)*lambda + 1)^(1/lambda) - 1) - 1
+    y <- sign(y) * ((abs(y)*lambda + 1)^(1/lambda) - 1)
   }
   
   return(y = y)
@@ -177,9 +185,9 @@ modul_back <- function(y, lambda = lambda) {
 #  Transformation: Bick-Doksum
 
 Bick_dok <-  function(y, lambda = lambda) {
-  u <- abs(y) + 1
+  
   if (lambda > 1e-12){
-    yt <- sign(y)*(u^lambda - 1)/lambda
+    yt <- (abs(y)^lambda * sign(y) - 1)/lambda
   }
   else{
     stop("lambda must be positive for the Bickel-Doksum transformation")
@@ -190,9 +198,9 @@ Bick_dok <-  function(y, lambda = lambda) {
 # Standardized transformation: Bick-Doksum
 
 Bick_dok_std <- function(y, lambda) {
-  u <- abs(y) + 1L
+
   yt <- Bick_dok(y, lambda)
-  zt <- yt/exp(mean(sign(y)*(lambda-1)*log(u)))
+  zt <- yt * (1 / geometric.mean(abs(y)^(lambda - 1)))
   y <- zt
   return(y)
 }
@@ -229,7 +237,7 @@ Manly_std <- function(y, lambda) {
   if (lambda_absolute <= 1e-12) {  #case lambda=0
     zt <-  y
   } else {
-    zt <- yt/exp((mean(lambda*y)))
+    zt <- yt/exp(lambda*geometric.mean(y))
   }
   y <- zt
   return(y)
@@ -265,14 +273,12 @@ Dual <-  function(y, lambda = lambda) {
 
 Dual_std <- function(y, lambda) {
   yt <- Dual(y, lambda)
-  #zt <- yt/exp((mean(log((y^(lambda-1) + y^(-lambda-1))/2))))
-  #zt <- yt/geometric.mean(yt/2)
   
-  gm <- geometric.mean(yt)
   zt <- if (abs(lambda) > 1e-12) {
-    zt <- yt / (gm/2)
+    geo <- geometric.mean(y^(lambda -1) + y^(-lambda -1))
+    zt <- yt * 2 / geo
   } else {
-    zt <- gm * log(yt)
+    zt <- geometric.mean(y) * log(y)
   }
   
   y <- zt
@@ -298,7 +304,7 @@ Dual_back <- function(y, lambda = lambda) {
 # The Yeo-Johnson transformation ----------------------------------------------------------------------
 
 # Transformation: Yeo-Johnson
-Yeo_john <-  function(y, lambda = lambda) {
+Yeo_john_lily <-  function(y, lambda = lambda) {
   n <- length(y)
   u <- abs(y) + 1L
   yt <- rep(NA, n)
@@ -319,15 +325,59 @@ Yeo_john <-  function(y, lambda = lambda) {
   return(y = yt)
 }
 
+
+Yeo_john <-  function(y, lambda = lambda) {
+  negativos <- which(y < 0)
+  
+  if(any(!negativos)) {
+    if(abs(lambda) <= 1e-12) {
+      y[!negativos] <- log(y[!negativos] + 1)
+    } else {
+      y[!negativos] <- ((y[!negativos] + 1)^lambda - 1)/lambda
+    }
+  } else if (any(negativos)) {
+    if(abs(lambda - 2) <= 1e-12) {
+      y[negativos] <- -log(-y[negativos] + 1)
+    } else {
+      y[negativos] <- ((-y[negativos] + 1)^(2-lambda) - 1)/(2-lambda)
+    }
+  }
+  return(y = y)
+}
+
 # Standardized transformation: Yeo-Johnson
 
-Yeo_john_std <- function(y, lambda) {
+Yeo_john_std_lily <- function(y, lambda) {
   u <- abs(y) + 1L
   yt <- Yeo_john(y, lambda)
   zt <- yt/exp(mean(sign(y)*(lambda-1)*log(u)))
 
   y <- zt
 
+  return(y)
+}
+
+Yeo_john_std <- function(y, lambda) {
+  negativos <- which(y < 0)
+  
+  if(any(!negativos)) {
+    if(abs(lambda) <= 1e-12){
+      gm <- geometric.mean(y[!negativos] + 1)
+      y[!negativos] <- gm * log(y[!negativos] + 1)
+    } else {
+      gm <- geometric.mean(y[!negativos] + 1)
+      y[!negativos] <- ((y[!negativos] + 1)^lambda - 1)/(lambda*gm^(lambda - 1)) 
+    }
+  } else if(any(negativos)) {
+    if(abs(lambda - 2) <= 1e-12) {
+      gm <- geometric.mean(1 - y[negativos])
+      y[negativos] <- log(-y[negativos] + 1) * gm
+    } else {
+      gm <- geometric.mean(1 - y[negativos])
+      y[negativos] <- (-((-y[negativos] + 1)^(2 - lambda) - 1)/(2 - lambda))*gm^(lambda - 1)
+    }
+  }
+  y <- zt
   return(y)
 }
 
@@ -372,7 +422,7 @@ log_shift_opt <- function(y, lambda = lambda) {
   lambda <- with_shift(y = y, lambda = lambda )
 
   log_trafo <- function(y, lambda = lambda) {
-      y <- log(y + lambda)
+    y <- log(y + lambda)
     return(y)
   }
   y <- log_trafo(y = y, lambda = lambda)
@@ -436,16 +486,15 @@ neg_log <- function(y) {
 
 neg_log_std <- function(y) {
   u <- abs(y) + 1L
-  yt <- neg_log(y)
-  zt <- yt/exp(mean(sign(y)*log(u)))
-
+  zt <- sign(y) * log(u) * geometric.mean(u)
   y <- zt
   return(y)
 }
 
 # Back transformation: neg_log
 neg_log_back <- function(y) {
-    y <- sign(y) * (exp(abs(y)) - 1)
+    
+  y <- sign(y) * (exp(abs(y)) - 1)
 
     return(y)
 }
@@ -491,20 +540,20 @@ Log_shift_back <- function(y) {
 
 # Transformation: Reciprocal
 Reciprocal <- function(y)  {#lambda is fixed
-    y <- box_cox(y, lambda = -1)
+    y <- 1/y
     return(y)
 }
 
 # Standardized transformation: Reciprocal
 
 Reciprocal_std  <- function(y) {
-   y <- box_cox_std(y, lambda = -1)
+   y <- (-1/y) * geometric.mean(y^2)
    return(y)
 }
 
 # Back transformation: Reciprocal
 Reciprocal_back <- function(y) {
-    box_cox_back(y, lambda = -1)
+  y <- 1/y  
 }
 
 
@@ -561,7 +610,7 @@ sqrt_shift_std <- function(y, lambda) {
 
   sqrt_trafo_std <- function(y, lambda = lambda) {
     gm <- geometric.mean(y + lambda)
-    y <- gm * sqrt(y + lambda)
+    y <- (gm * sqrt(y + lambda)) / 2
     return(y)
   }
   y <- sqrt_trafo_std(y = y, lambda = lambda)
@@ -587,6 +636,7 @@ gPower <-  function(y, lambda = lambda) {
   lambda_absolute <- abs(lambda)
   if (lambda_absolute <= 1e-12) {  #case lambda=0
     yt <-  log(y + sqrt(y^2 + 1))
+    
   } else if (lambda_absolute > 1e-12) {
     yt <- ((y + sqrt(y^2 + 1))^lambda - 1)/lambda
   }
@@ -596,8 +646,12 @@ gPower <-  function(y, lambda = lambda) {
 # Standardized transformation: Gpower
 
 gPower_std <- function(y, lambda) {
-  yt <- gPower(y = y, lambda = lambda)
-  zt <- yt/exp((mean( lambda*(log(y + sqrt(y^2))) - log(y^2 + 1)/2 )))
+  if (lambda_absolute <= 1e-12) {  #case lambda=0
+    zt <-  log(y + sqrt(y^2 + 1)) * geometric.mean(1 + y * (y^2 + 1)^(-1/2))
+    
+  } else if (lambda_absolute > 1e-12) {
+    zt <- (((y + sqrt(y^2 + 1))^lambda - 1)/lambda) / geometric.mean(1 + y * (y^2 + 1)^(-1/2))^(lambda - 1)
+  }
 
   y <- zt
 
@@ -606,6 +660,16 @@ gPower_std <- function(y, lambda) {
 
 # Back transformation: Gpower
 gPower_back <- function(y, lambda = lambda) {
+  
+  lambda_absolute <- abs(lambda)
+  if (lambda_absolute <= 1e-12) {  #case lambda=0
+    yt <- (-(1 - exp(y^2))) / (2 * exp(y))
+    
+  } else if (lambda_absolute > 1e-12) {
+    A <- (y * lambda + 1)^(1 / lambda)
+    yt <- (-(1 - A^2)) / (2*A)
+  }
+  return(y = yt)
 
 }
 
@@ -620,9 +684,17 @@ g_log <- function(y) {
 }
 
 
+
 g_log_std <- function(y) {
   
-  yt <-  log(y + sqrt(y^2 + 1))
+  yt <-  log(y + sqrt(y^2 + 1)) * geometric.mean(1 + y * (y^2 + 1)^(-1/2))
+  
+  return(y = yt)
+}
+
+g_log_back <- function(y) {
+  
+  yt <- (-(1 - exp(y^2))) / (2 * exp(y))
   
   return(y = yt)
 }
