@@ -422,7 +422,7 @@ log_shift_opt <- function(y, lambda = lambda) {
   lambda <- with_shift(y = y, lambda = lambda )
 
   log_trafo <- function(y, lambda = lambda) {
-      y <- log(y + lambda)
+    y <- log(y + lambda)
     return(y)
   }
   y <- log_trafo(y = y, lambda = lambda)
@@ -486,16 +486,15 @@ neg_log <- function(y) {
 
 neg_log_std <- function(y) {
   u <- abs(y) + 1L
-  yt <- neg_log(y)
-  zt <- yt/exp(mean(sign(y)*log(u)))
-
+  zt <- sign(y) * log(u) * geometric.mean(u)
   y <- zt
   return(y)
 }
 
 # Back transformation: neg_log
 neg_log_back <- function(y) {
-    y <- sign(y) * (exp(abs(y)) - 1)
+    
+  y <- sign(y) * (exp(abs(y)) - 1)
 
     return(y)
 }
@@ -541,20 +540,20 @@ Log_shift_back <- function(y) {
 
 # Transformation: Reciprocal
 Reciprocal <- function(y)  {#lambda is fixed
-    y <- box_cox(y, lambda = -1)
+    y <- 1/y
     return(y)
 }
 
 # Standardized transformation: Reciprocal
 
 Reciprocal_std  <- function(y) {
-   y <- box_cox_std(y, lambda = -1)
+   y <- (-1/y) * geometric.mean(y^2)
    return(y)
 }
 
 # Back transformation: Reciprocal
 Reciprocal_back <- function(y) {
-    box_cox_back(y, lambda = -1)
+  y <- 1/y  
 }
 
 
@@ -611,7 +610,7 @@ sqrt_shift_std <- function(y, lambda) {
 
   sqrt_trafo_std <- function(y, lambda = lambda) {
     gm <- geometric.mean(y + lambda)
-    y <- gm * sqrt(y + lambda)
+    y <- (gm * sqrt(y + lambda)) / 2
     return(y)
   }
   y <- sqrt_trafo_std(y = y, lambda = lambda)
@@ -647,8 +646,12 @@ gPower <-  function(y, lambda = lambda) {
 # Standardized transformation: Gpower
 
 gPower_std <- function(y, lambda) {
-  yt <- gPower(y = y, lambda = lambda)
-  zt <- yt/exp((mean( lambda*(log(y + sqrt(y^2))) - log(y^2 + 1)/2 )))
+  if (lambda_absolute <= 1e-12) {  #case lambda=0
+    zt <-  log(y + sqrt(y^2 + 1)) * geometric.mean(1 + y * (y^2 + 1)^(-1/2))
+    
+  } else if (lambda_absolute > 1e-12) {
+    zt <- (((y + sqrt(y^2 + 1))^lambda - 1)/lambda) / geometric.mean(1 + y * (y^2 + 1)^(-1/2))^(lambda - 1)
+  }
 
   y <- zt
 
@@ -663,13 +666,9 @@ gPower_back <- function(y, lambda = lambda) {
     yt <- (-(1 - exp(y^2))) / (2 * exp(y))
     
   } else if (lambda_absolute > 1e-12) {
-    A <- (y^lambda + 1)^(1 / lambda)
+    A <- (y * lambda + 1)^(1 / lambda)
     yt <- (-(1 - A^2)) / (2*A)
   }
-  
-  
-  
-  
   return(y = yt)
 
 }
@@ -688,7 +687,7 @@ g_log <- function(y) {
 
 g_log_std <- function(y) {
   
-  yt <-  log(y + sqrt(y^2 + 1))
+  yt <-  log(y + sqrt(y^2 + 1)) * geometric.mean(1 + y * (y^2 + 1)^(-1/2))
   
   return(y = yt)
 }
