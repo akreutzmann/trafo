@@ -154,7 +154,7 @@ modul_std <- function(y, lambda) {
   u <- abs(y) + 1L
   # yt <- modul(y, lambda)
   # zt <- yt/exp(mean(sign(y)*(lambda - 1L)*log(u)))
-  
+  lambda_absolute <- abs(lambda)
   if (lambda_absolute <= 1e-12) {  #case lambda=0
     zt <-  sign(y) * log(u) * geometric.mean(u) 
   } else {
@@ -327,29 +327,32 @@ Yeo_john_lily <-  function(y, lambda = lambda) {
 
 
 Yeo_john <-  function(y, lambda = lambda) {
+  n <- length(y)
+  yt <- rep(NA, n)
   negativos <- which(y < 0)
+  positivos <- which(y >= 0)
   
-  if(any(!negativos)) {
     if(abs(lambda) <= 1e-12) {
-      y[!negativos] <- log(y[!negativos] + 1)
+      yt[positivos] <- log(y[positivos] + 1)
     } else {
-      y[!negativos] <- ((y[!negativos] + 1)^lambda - 1)/lambda
+      yt[positivos] <- ((y[positivos] + 1)^lambda - 1)/lambda
     }
-  } else if (any(negativos)) {
+  
+
     if(abs(lambda - 2) <= 1e-12) {
-      y[negativos] <- -log(-y[negativos] + 1)
+      yt[negativos] <- -log(-y[negativos] + 1)
     } else {
-      y[negativos] <- ((-y[negativos] + 1)^(2-lambda) - 1)/(2-lambda)
+      yt[negativos] <- ((-y[negativos] + 1)^(2-lambda) - 1)/(2-lambda)
     }
-  }
-  return(y = y)
+  
+  return(y = yt)
 }
 
 # Standardized transformation: Yeo-Johnson
 
 Yeo_john_std_lily <- function(y, lambda) {
   u <- abs(y) + 1L
-  yt <- Yeo_john(y, lambda)
+  yt <- Yeo_john_lily(y, lambda)
   zt <- yt/exp(mean(sign(y)*(lambda-1)*log(u)))
 
   y <- zt
@@ -358,25 +361,26 @@ Yeo_john_std_lily <- function(y, lambda) {
 }
 
 Yeo_john_std <- function(y, lambda) {
+  n <- length(y)
+  zt <- rep(NA, n)
   negativos <- which(y < 0)
+  positivos <- which(y >= 0)
   
-  if(any(!negativos)) {
+
     if(abs(lambda) <= 1e-12){
-      gm <- geometric.mean(y[!negativos] + 1)
-      y[!negativos] <- gm * log(y[!negativos] + 1)
+      gm <- geometric.mean(y[positivos] + 1)
+      zt[positivos] <- gm * log(y[positivos] + 1)
     } else {
-      gm <- geometric.mean(y[!negativos] + 1)
-      y[!negativos] <- ((y[!negativos] + 1)^lambda - 1)/(lambda*gm^(lambda - 1)) 
-    }
-  } else if(any(negativos)) {
+      gm <- geometric.mean(y[positivos] + 1)
+      zt[positivos] <- ((y[positivos] + 1)^lambda - 1)/(lambda*gm^(lambda - 1)) 
+}
     if(abs(lambda - 2) <= 1e-12) {
       gm <- geometric.mean(1 - y[negativos])
-      y[negativos] <- log(-y[negativos] + 1) * gm
+      zt[negativos] <- log(-y[negativos] + 1) * gm
     } else {
       gm <- geometric.mean(1 - y[negativos])
-      y[negativos] <- (-((-y[negativos] + 1)^(2 - lambda) - 1)/(2 - lambda))*gm^(lambda - 1)
+      zt[negativos] <- (-((-y[negativos] + 1)^(2 - lambda) - 1)/(2 - lambda))*gm^(lambda - 1)
     }
-  }
   y <- zt
   return(y)
 }
@@ -386,7 +390,7 @@ Yeo_john_std <- function(y, lambda) {
 Yeo_john_back <- function(y, lambda = lambda) {
 
   lambda_absolute <- abs(lambda)
-  if (all(y >= 0) && lambda != 0) {
+  yt <- if (all(y >= 0) && lambda != 0) {
     ((y * lambda + 1)^(1 / lambda)) - 1
   } else if (all(y >= 0) && lambda_absolute <= 1e-12) {
     exp(y) - 1
@@ -396,7 +400,7 @@ Yeo_john_back <- function(y, lambda = lambda) {
     (-1) * (exp(-y) - 1)
   }
   
-  return(y = y)
+  return(y = yt)
 }
 
 ###################################### Neue Transformationen #######################################
@@ -646,6 +650,7 @@ gPower <-  function(y, lambda = lambda) {
 # Standardized transformation: Gpower
 
 gPower_std <- function(y, lambda) {
+  lambda_absolute <- abs(lambda)
   if (lambda_absolute <= 1e-12) {  #case lambda=0
     zt <-  log(y + sqrt(y^2 + 1)) * geometric.mean(1 + y * (y^2 + 1)^(-1/2))
     

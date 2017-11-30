@@ -142,6 +142,10 @@ plot.trafo_lm <- function(x, ...) {
     residFit_trafo
     cat("Press [enter] to continue")
     line <- readline()
+    scaleLoc_orig
+    scaleLoc_trafo
+    cat("Press [enter] to continue")
+    line <- readline()
     # Linearity
     yFit_orig
     abline(lm(as.numeric(y_orig) ~ as.numeric(fitted_orig)),col = "red",lwd = 1.5)
@@ -164,10 +168,6 @@ plot.trafo_lm <- function(x, ...) {
     par(mfrow = c(1, 2))
     cooks_orig
     cooks_trafo
-    cat("Press [enter] to continue")
-    line <- readline()
-    scaleLoc_orig
-    scaleLoc_trafo
     cat("Press [enter] to continue")
     line <- readline()
     residLev_orig

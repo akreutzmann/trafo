@@ -59,7 +59,7 @@ print.summary.trafo_compare <- function(x, ...) {
   print(x$trafoTwo_sum)
   cat("\n")
   if (x$std == TRUE) {
-    cat("Note that the standard errors can be biased. \n")
+    #cat("Note that the standard errors can be biased. \n")
   }
   invisible(x)
 }
