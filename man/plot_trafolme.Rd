@@ -29,7 +29,7 @@ that is used for the estimation of the optimal transformation parameter.}
 for the estimation of the optimal transformation parameter: 
 (i) Restricted maximum likelihood approach ("reml"), 
 (ii) Skewness minimization ("skew") and pooled skewness minimization ("pskew"), 
-(iii) Divergence minimization by Kolmogorov-Smirnoff ("div.ks"), 
+(iii) Divergence minimization by Kolmogorov-Smirnov ("div.ks"), 
 by Cramer-von-Mises ("div.cvm") or by Kullback-Leibler ("div.kl").}
 }
 \description{

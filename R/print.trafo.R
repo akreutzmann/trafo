@@ -46,7 +46,7 @@ print.trafo <- function(x, ...){
 #' base package as.data.frame() methods use optional only for column names 
 #' treatment, basically with the meaning of 
 #' data.frame(*, check.names = !optional)
-#' @param std logical. If TRUE, the data is transformed by the standardized 
+#' @param std logical. If \code{TRUE}, the data is transformed by the standardized 
 #' transformation. Defaults to \code{TRUE}.
 #' @param ... other parameters that can be passed to the function.
 #' @return A data frame with the original variables and the transformed variable.
@@ -62,7 +62,7 @@ print.trafo <- function(x, ...){
 #' lm_cars <- lm(dist ~ speed, data = cars)
 #' 
 #' # Transform dependent variable using divergence minimization following
-#' # Kolmogorov-Smirnof
+#' # Kolmogorov-Smirnov
 #' logshiftopt_trafo <- logshiftopt(object = lm_cars, method = "div.ks", 
 #' plotit = FALSE)
 #' 

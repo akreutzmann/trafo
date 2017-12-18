@@ -15,17 +15,20 @@
 #' for the estimation of the optimal transformation parameter: 
 #' (i) Maximum likelihood approach ("ml"), (ii) Skewness minimization ("skew"),
 #' (iii) Kurtosis optimization ("kurt"), (iv) Divergence minimization by 
-#' Kolmogorov-Smirnoff ("div.ks"), by Cramer-von-Mises ("div.cvm") or by 
+#' Kolmogorov-Smirnov ("div.ks"), by Cramer-von-Mises ("div.cvm") or by 
 #' Kullback-Leibler ("div.kl"). Defaults to "ml".
 #' @param lambdarange a numeric vector with two elements defining an interval 
 #' that is used for the estimation of the optimal transformation parameter. 
 #' Defaults to \code{c(-2, 2)}.
-#' @param plotit logical. If TRUE, a plot that illustrates the optimal 
+#' @param plotit logical. If \code{TRUE}, a plot that illustrates the optimal 
 #' transformation parameter or the given transformation parameter is returned.
 #' Defaults to \code{TRUE}.
 #' @return An object of class \code{trafo}. Methods such as 
 #' \code{\link{as.data.frame.trafo}} and \code{\link{print.trafo}} can 
 #' be used for this class.
+#' @references 
+#' Box GEP, Cox DR (1964). An Analysis of Transformations. Journal of the Royal 
+#' Statistical Society B, 26(2), 211-252.
 #' @examples
 #' # Load data
 #' data("cars", package = "datasets")

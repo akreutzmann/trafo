@@ -18,7 +18,7 @@ for the transformation parameter. Defaults to "estim".}
 for the estimation of the optimal transformation parameter: 
 (i) Maximum likelihood approach ("ml"), (ii) Skewness minimization ("skew"),
 (iii) Kurtosis optimization ("kurt"), (iv) Divergence minimization by 
-Kolmogorov-Smirnoff ("div.ks"), by Cramer-von-Mises ("div.cvm") or by 
+Kolmogorov-Smirnov ("div.ks"), by Cramer-von-Mises ("div.cvm") or by 
 Kullback-Leibler ("div.kl"). Defaults to "ml".}
 
 \item{lambdarange}{a numeric vector with two elements defining an interval 
@@ -26,7 +26,7 @@ that is used for the estimation of the optimal transformation parameter.
 The Bickel-Doksum transformation is only defined for positive values of 
 lambda. Defaults to \code{c(1e-11, 2)}.}
 
-\item{plotit}{logical. If TRUE, a plot that illustrates the optimal 
+\item{plotit}{logical. If \code{TRUE}, a plot that illustrates the optimal 
 transformation parameter or the given transformation parameter is returned.
 Defaults to \code{TRUE}.}
 }
@@ -52,5 +52,5 @@ bickeldoksum(object = lm_cars, plotit = FALSE)
 }
 \references{
 Bickel PJ, Doksum KA (1981). An analysis of transformations revisited. 
-Journal of the American Statistical Association, Vol. 76, 296-311.
+Journal of the American Statistical Association, 76, 296-311.
 }

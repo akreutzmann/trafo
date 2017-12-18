@@ -30,3 +30,7 @@ lm_cars <- lm(dist ~ speed, data = cars)
 # Transform dependent variable 
 logtrafo(object = lm_cars)
 }
+\references{
+Box GEP, Cox DR (1964). An Analysis of Transformations. Journal of the Royal 
+Statistical Society B, 26(2), 211-252.
+}

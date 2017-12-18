@@ -23,7 +23,7 @@ regression variables.}
 \item{method}{a character string. In order to determine the optimal parameter
 for the transformation five different estimation methods can be chosen
 (i) Maximum-Likelihood ("ml"); (ii) skewness minimization ("skew");
-(iii) minimization of Kolmogorov-Smirnoff divergence  ("div.ks");
+(iii) minimization of Kolmogorov-Smirnov divergence  ("div.ks");
 (iv) minimization of Craemer von Mises divergence ("div.cvm"); (v)
 minimization of Kullback Leibner divergence  ("div.kl"). In case of no and
 log transformation "NA" can be selected since no optimization is neccessary
@@ -37,7 +37,7 @@ transformation.}
 }
 \value{
 Depending on the selected \code{method} the return is a log
-likelihood, a skewness, a pooled skewness or a Kolmogorov-Smirnoff, Craemer
+likelihood, a skewness, a pooled skewness or a Kolmogorov-Smirnov, Craemer
 von Mises or Kullback Leibner divergence.
 }
 \description{

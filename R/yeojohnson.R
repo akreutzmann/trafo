@@ -12,12 +12,12 @@
 #' for the estimation of the optimal transformation parameter: 
 #' (i) Maximum likelihood approach ("ml"), (ii) Skewness minimization ("skew"),
 #' (iii) Kurtosis optimization ("kurt"), (iv) Divergence minimization by 
-#' Kolmogorov-Smirnoff ("div.ks"), by Cramer-von-Mises ("div.cvm") or by 
+#' Kolmogorov-Smirnov ("div.ks"), by Cramer-von-Mises ("div.cvm") or by 
 #' Kullback-Leibler ("div.kl"). Defaults to "ml".
 #' @param lambdarange a numeric vector with two elements defining an interval 
 #' that is used for the estimation of the optimal transformation parameter. 
 #' Defaults to \code{c(-2, 2)}.
-#' @param plotit logical. If TRUE, a plot that illustrates the optimal 
+#' @param plotit logical. If \code{TRUE}, a plot that illustrates the optimal 
 #' transformation parameter or the given transformation parameter is returned.
 #' Defaults to \code{TRUE}.
 #' @return An object of class \code{trafo}. Methods such as 
@@ -25,7 +25,7 @@
 #' be used for this class.
 #' @references
 #' Yeo IK, Johnson RA (2000). A new family of power transformations to improve 
-#' normality or symmetry. Biometrika, Vol.87, 954-959.
+#' normality or symmetry. Biometrika, 87, 954-959.
 #' @examples
 #' # Load data
 #' data("cars", package = "datasets")

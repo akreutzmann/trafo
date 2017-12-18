@@ -17,7 +17,7 @@ estim_lm(lambda, y, x, method, trafo, custom_func, custom_func_std)
 for the estimation of the optimal transformation parameter: 
 (i) Maximum likelihood approach ("ml"), (ii) Skewness minimization ("skew"),
 (iii) Kurtosis optimization ("kurt"), (iv) Divergence minimization by 
-Kolmogorov-Smirnoff ("div.ks"), by Cramer-von-Mises ("div.cvm") or by 
+Kolmogorov-Smirnov ("div.ks"), by Cramer-von-Mises ("div.cvm") or by 
 Kullback-Leibler ("div.kl"). Defaults to "ml". In case of no and
 log transformation "NA" can be selected since no optimization is neccessary
 for these two transformation types.}
@@ -31,7 +31,7 @@ transformation.}
 }
 \value{
 Depending on the selected \code{method} the return is a log
-likelihood, a skewness, a pooled skewness or a Kolmogorov-Smirnoff, Craemer
+likelihood, a skewness, a pooled skewness or a Kolmogorov-Smirnov, Craemer
 von Mises or Kullback Leibner divergence.
 }
 \description{

@@ -16,7 +16,7 @@ est_lme(y, x, formula, data, rand_eff, method = method,
 for the estimation of the optimal transformation parameter: 
 (i) Restricted maximum likelihood approach ("reml"), 
 (ii) Skewness minimization ("skew") and pooled skewness minimization ("pskew"), 
-(iii) Divergence minimization by Kolmogorov-Smirnoff ("div.ks"), 
+(iii) Divergence minimization by Kolmogorov-Smirnov ("div.ks"), 
 by Cramer-von-Mises ("div.cvm") or by Kullback-Leibler ("div.kl").}
 
 \item{lambdarange}{range for the estimation parameter expr(lambda) - default c(-2, 2)}

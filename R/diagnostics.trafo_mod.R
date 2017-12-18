@@ -60,9 +60,9 @@ diagnostics.trafo_lm <- function(object, ...) {
 
 
 
-#' Prints diagnostics of an untransformed and transformed model
+#' Prints diagnostics of an untransformed and a transformed model
 #'
-#' Prints diagnostics of an untransformed and transformed model.
+#' Prints diagnostics of an untransformed and a transformed model.
 #' 
 #' @param x an object of type \code{diagnostics.trafo_lm}
 #' @param ... additional arguments that are not used in this method

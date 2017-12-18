@@ -2,7 +2,7 @@
 % Please edit documentation in R/estims.R
 \name{divergence_min_KS}
 \alias{divergence_min_KS}
-\title{Divergence minimization by Kolmogorov Smirnoff}
+\title{Divergence minimization by Kolmogorov Smirnov}
 \usage{
 divergence_min_KS(res = res)
 }
@@ -14,6 +14,6 @@ explanatory variables x}
 differences of supremum
 }
 \description{
-Divergence minimization by Kolmogorov Smirnoff
+Divergence minimization by Kolmogorov Smirnov
 }
 \keyword{internal}

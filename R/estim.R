@@ -9,7 +9,7 @@
 #' for the estimation of the optimal transformation parameter: 
 #' (i) Maximum likelihood approach ("ml"), (ii) Skewness minimization ("skew"),
 #' (iii) Kurtosis optimization ("kurt"), (iv) Divergence minimization by 
-#' Kolmogorov-Smirnoff ("div.ks"), by Cramer-von-Mises ("div.cvm") or by 
+#' Kolmogorov-Smirnov ("div.ks"), by Cramer-von-Mises ("div.cvm") or by 
 #' Kullback-Leibler ("div.kl"). Defaults to "ml". In case of no and
 #' log transformation "NA" can be selected since no optimization is neccessary
 #' for these two transformation types.
@@ -18,7 +18,7 @@
 #' @param custom_func_std a function that determines a customized standard
 #' transformation.
 #' @return Depending on the selected \code{method} the return is a log
-#' likelihood, a skewness, a pooled skewness or a Kolmogorov-Smirnoff, Craemer
+#' likelihood, a skewness, a pooled skewness or a Kolmogorov-Smirnov, Craemer
 #' von Mises or Kullback Leibner divergence.
 #' @keywords internal
 
@@ -105,7 +105,7 @@ estim_lm <- function(lambda, y, x, method, trafo, custom_func, custom_func_std){
 #' @param method a character string. In order to determine the optimal parameter
 #' for the transformation five different estimation methods can be chosen
 #' (i) Maximum-Likelihood ("ml"); (ii) skewness minimization ("skew");
-#' (iii) minimization of Kolmogorov-Smirnoff divergence  ("div.ks");
+#' (iii) minimization of Kolmogorov-Smirnov divergence  ("div.ks");
 #' (iv) minimization of Craemer von Mises divergence ("div.cvm"); (v)
 #' minimization of Kullback Leibner divergence  ("div.kl"). In case of no and
 #' log transformation "NA" can be selected since no optimization is neccessary
@@ -115,7 +115,7 @@ estim_lm <- function(lambda, y, x, method, trafo, custom_func, custom_func_std){
 #' @param custom_func_std a function that determines a customized standard
 #' transformation.
 #' @return Depending on the selected \code{method} the return is a log
-#' likelihood, a skewness, a pooled skewness or a Kolmogorov-Smirnoff, Craemer
+#' likelihood, a skewness, a pooled skewness or a Kolmogorov-Smirnov, Craemer
 #' von Mises or Kullback Leibner divergence.
 #' @keywords internal
 
