@@ -7,6 +7,10 @@
 #' @return An object of class \code{trafo}. Methods such as 
 #' \code{\link{as.data.frame.trafo}} and \code{\link{print.trafo}} can 
 #' be used for this class.    
+#' @references 
+#' Durbin BP, Hardin JS, Hawkins DM, Rocke DM (2002). A Variance-stabilizing 
+#' Transformation for Gene-expression Microarray Data. Bioinformatics, 18, 
+#' 105-110.
 #' @examples
 #' # Load data
 #' data("cars", package = "datasets")

@@ -12,7 +12,7 @@
 #' \code{\link{diagnostics.trafo_compare}}, \code{\link{print.trafo_compare}},
 #' \code{\link{plot.trafo_compare}} and \code{\link{summary.trafo_compare}} can 
 #' be used for this class.  
-#'  @seealso \code{\link{bickeldoksum}}, \code{\link{boxcox}}, \code{\link{dual}}, 
+#' @seealso \code{\link{bickeldoksum}}, \code{\link{boxcox}}, \code{\link{dual}}, 
 #' \code{\link{glog}}, \code{\link{gpower}}, \code{\link{log}}, 
 #' \code{\link{logshiftopt}}, \code{\link{manly}}, \code{\link{modulus}}, 
 #' \code{\link{neglog}}, \code{\link{sqrtshift}}, \code{\link{yeojohnson}}   

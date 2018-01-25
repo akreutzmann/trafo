@@ -25,7 +25,7 @@ that is used for the estimation of the optimal transformation parameter.}
 for the estimation of the optimal transformation parameter: 
 (i) Maximum likelihood approach ("ml"), (ii) Skewness minimization ("skew"),
 (iii) Kurtosis optimization ("kurt"), (iv) Divergence minimization by 
-Kolmogorov-Smirnoff ("div.ks"), by Cramer-von-Mises ("div.cvm") or by 
+Kolmogorov-Smirnov ("div.ks"), by Cramer-von-Mises ("div.cvm") or by 
 Kullback-Leibler ("div.kl"). Defaults to "ml". In case of no and
 log transformation "NA" can be selected since no optimization is neccessary
 for these two transformation types.}

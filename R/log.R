@@ -9,6 +9,9 @@
 #' @return An object of class \code{trafo}. Methods such as 
 #' \code{\link{as.data.frame.trafo}} and \code{\link{print.trafo}} can 
 #' be used for this class.
+#' @references 
+#' Box GEP, Cox DR (1964). An Analysis of Transformations. Journal of the Royal 
+#' Statistical Society B, 26(2), 211-252.
 #' @examples
 #' # Load data
 #' data("cars", package = "datasets")

@@ -18,14 +18,14 @@ for the transformation parameter. Defaults to "estim".}
 for the estimation of the optimal transformation parameter: 
 (i) Maximum likelihood approach ("ml"), (ii) Skewness minimization ("skew"),
 (iii) Kurtosis optimization ("kurt"), (iv) Divergence minimization by 
-Kolmogorov-Smirnoff ("div.ks"), by Cramer-von-Mises ("div.cvm") or by 
+Kolmogorov-Smirnov ("div.ks"), by Cramer-von-Mises ("div.cvm") or by 
 Kullback-Leibler ("div.kl"). Defaults to "ml".}
 
 \item{lambdarange}{a numeric vector with two elements defining an interval 
 that is used for the estimation of the optimal transformation parameter. 
 Defaults to \code{c(-2, 2)}.}
 
-\item{plotit}{logical. If TRUE, a plot that illustrates the optimal 
+\item{plotit}{logical. If \code{TRUE}, a plot that illustrates the optimal 
 transformation parameter or the given transformation parameter is returned.
 Defaults to \code{TRUE}.}
 }
@@ -49,4 +49,9 @@ lm_cars <- lm(dist ~ speed, data = cars)
 # Transform dependent variable using divergence minimization following 
 # Kullback-Leibler
 gpower(object = lm_cars, method = "div.kl", plotit = FALSE)
+}
+\references{
+Kelmansky DM, Martinez EJ, Leiva V (2013). A New Variance Stabilizing 
+Transformation for Gene Expression Data Analysis. Statistical applications in 
+genetics and molecular biology, 12(6), 653-666.
 }

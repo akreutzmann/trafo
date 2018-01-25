@@ -19,7 +19,7 @@ base package as.data.frame() methods use optional only for column names
 treatment, basically with the meaning of 
 data.frame(*, check.names = !optional)}
 
-\item{std}{logical. If TRUE, the data is transformed by the standardized 
+\item{std}{logical. If \code{TRUE}, the data is transformed by the standardized 
 transformation. Defaults to \code{TRUE}.}
 
 \item{...}{other parameters that can be passed to the function.}
@@ -41,7 +41,7 @@ data("cars", package = "datasets")
 lm_cars <- lm(dist ~ speed, data = cars)
 
 # Transform dependent variable using divergence minimization following
-# Kolmogorov-Smirnof
+# Kolmogorov-Smirnov
 logshiftopt_trafo <- logshiftopt(object = lm_cars, method = "div.ks", 
 plotit = FALSE)
 

@@ -7,7 +7,7 @@
 #' for the estimation of the optimal transformation parameter: 
 #' (i) Maximum likelihood approach ("ml"), (ii) Skewness minimization ("skew"),
 #' (iii) Kurtosis optimization ("kurt"), (iv) Divergence minimization by 
-#' Kolmogorov-Smirnoff ("div.ks"), by Cramer-von-Mises ("div.cvm") or by 
+#' Kolmogorov-Smirnov ("div.ks"), by Cramer-von-Mises ("div.cvm") or by 
 #' Kullback-Leibler ("div.kl"). Defaults to "ml".
 #' @return modelt An object of type \code{lm} employing the transformed vector \code{yt} as the response variable
 #' @keywords internal
@@ -68,7 +68,7 @@ est_lm <- function(y, x , method, lambdarange, trafo, custom_func,
 #' for the estimation of the optimal transformation parameter: 
 #' (i) Restricted maximum likelihood approach ("reml"), 
 #' (ii) Skewness minimization ("skew") and pooled skewness minimization ("pskew"), 
-#' (iii) Divergence minimization by Kolmogorov-Smirnoff ("div.ks"), 
+#' (iii) Divergence minimization by Kolmogorov-Smirnov ("div.ks"), 
 #' by Cramer-von-Mises ("div.cvm") or by Kullback-Leibler ("div.kl").
 #' @return modelt An object of type \code{lm} employing the transformed vector \code{yt} as the response variable
 #' @keywords internal

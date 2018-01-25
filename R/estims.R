@@ -187,7 +187,7 @@ kurtosis_min <- function(res = res) {
 }
 
 
-#' Divergence minimization by Kolmogorov Smirnoff
+#' Divergence minimization by Kolmogorov Smirnov
 #' 
 #' @param res residuals from a linear model with response variable yt and 
 #' explanatory variables x

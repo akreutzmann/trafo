@@ -2,7 +2,7 @@
 % Please edit documentation in R/diagnostics.trafo_mod.R
 \name{print.diagnostics.trafo_lm}
 \alias{print.diagnostics.trafo_lm}
-\title{Prints diagnostics of an untransformed and transformed model}
+\title{Prints diagnostics of an untransformed and a transformed model}
 \usage{
 \method{print}{diagnostics.trafo_lm}(x, ...)
 }
@@ -12,5 +12,5 @@
 \item{...}{additional arguments that are not used in this method}
 }
 \description{
-Prints diagnostics of an untransformed and transformed model.
+Prints diagnostics of an untransformed and a transformed model.
 }

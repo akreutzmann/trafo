@@ -12,14 +12,14 @@
 #' for the estimation of the optimal transformation parameter: 
 #' (i) Maximum likelihood approach ("ml"), (ii) Skewness minimization ("skew"),
 #' (iii) Kurtosis optimization ("kurt"), (iv) Divergence minimization by 
-#' Kolmogorov-Smirnoff ("div.ks"), by Cramer-von-Mises ("div.cvm") or by 
+#' Kolmogorov-Smirnov ("div.ks"), by Cramer-von-Mises ("div.cvm") or by 
 #' Kullback-Leibler ("div.kl"). Defaults to "ml".
 #' @param lambdarange a numeric vector with two elements defining an interval 
 #' that is used for the estimation of the optimal transformation parameter.
 #' Defaults to \code{NULL}. In this case the lambdarange is set to the range 
 #' of the data. In case the lowest value is negative the absolute value of the
 #' lowest value plus 1 is the lower bound for the range. 
-#' @param plotit logical. If TRUE, a plot that illustrates the optimal 
+#' @param plotit logical. If \code{TRUE}, a plot that illustrates the optimal 
 #' transformation parameter or the given transformation parameter is returned.
 #' Defaults to \code{TRUE}.
 #' @return An object of class \code{trafo}. Methods such as 

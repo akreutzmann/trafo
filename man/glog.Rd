@@ -28,3 +28,8 @@ lm_cars <- lm(dist ~ speed, data = cars)
 # Transform dependent variable 
 glog(object = lm_cars)
 }
+\references{
+Durbin BP, Hardin JS, Hawkins DM, Rocke DM (2002). A Variance-stabilizing 
+Transformation for Gene-expression Microarray Data. Bioinformatics, 18, 
+105-110.
+}
