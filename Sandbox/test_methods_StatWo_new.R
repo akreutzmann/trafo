@@ -6,7 +6,8 @@ lm_cars <- lm(dist ~ speed, data = cars)
 
 
 # One parameter transformations
-bd_trafo <- bickeldoksum(object = lm_cars, lambdarange = c(1e-11, 2), plotit = FALSE)
+bd_trafo <- bickeldoksum(object = lm_cars, method = "kurt", 
+                         lambdarange = c(1e-11, 2), plotit = TRUE)
 
 print(bd_trafo)
 as.data.frame(bd_trafo)
