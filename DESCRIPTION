@@ -23,3 +23,4 @@ Imports: FNN,
     graphics,
     grDevices,
     lmtest
+Suggests: testthat

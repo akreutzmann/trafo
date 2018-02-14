@@ -142,7 +142,7 @@ Bick_dok_back(-3, 3)
 # A
 y1 <- c(1, 2)
 Bick_dok_std(y1, 3)
-# 0 0.388
+# 0.000000 1.166667
 y2 <- c(-1, -2)
 Bick_dok_std(y2, 3)
 # -0.33 -1.5
@@ -351,7 +351,7 @@ sqrt_shift_back(2.236068, 3)
 sqrt_shift_back(1, 6)
 
 # Standardized transformation
-sqrt_shift_std(2, 3)
+sqrt_shift_std(y1, 3)
 
 
 # Glog #########################################################################
@@ -401,7 +401,7 @@ log_shift_opt_back(0, 3)
 # Standardized transformation
 
 # A
-log_shift_opt_std(2, 3)
+log_shift_opt_std(y1, 3)
 # 8.047
 log_shift_opt_std(-2, 3)
 # 0
