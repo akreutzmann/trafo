@@ -192,7 +192,7 @@ Manly_std(y2, 3)
 # -28.51181 -29.93133
 
 # B 
-Manly_std(2, 0)
+Manly_std(y1, 0)
 # 2
 Manly_std(-2, 0)
 # -2
