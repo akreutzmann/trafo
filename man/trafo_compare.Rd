@@ -12,8 +12,8 @@ trafo_compare(object, trafos, std = TRUE)
 \item{trafos}{a list of two \code{trafo} objects based on the same model 
 given in object.}
 
-\item{std}{logical. If TRUE, the transformed models are returned based on the 
-standardized transformation. Defaults to \code{TRUE}.}
+\item{std}{logical. If \code{TRUE}, the transformed models are returned 
+based on the standardized transformation. Defaults to \code{TRUE}.}
 }
 \value{
 An object of class \code{trafo_compare}. Methods such as 

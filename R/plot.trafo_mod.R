@@ -9,8 +9,11 @@
 #' @importFrom pryr %<a-%
 #' @importFrom grDevices dev.flush dev.hold
 #' @importFrom graphics abline par plot hist mtext pairs panel.smooth
-#' @importFrom stats cooks.distance formula predict qqline qqnorm
+#' @importFrom graphics strwidth text
+#' @importFrom stats cooks.distance formula predict qqline qqnorm cor
 #' @export
+
+
 
 plot.trafo_lm <- function(x, ...) {
   
