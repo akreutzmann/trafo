@@ -6,8 +6,8 @@
 #' @param object an object of type lm
 #' @param trafos a list of two \code{trafo} objects based on the same model 
 #' given in object.
-#' @param std logical. If TRUE, the transformed models are returned based on the 
-#' standardized transformation. Defaults to \code{TRUE}.
+#' @param std logical. If \code{TRUE}, the transformed models are returned 
+#' based on the standardized transformation. Defaults to \code{TRUE}.
 #' @return An object of class \code{trafo_compare}. Methods such as 
 #' \code{\link{diagnostics.trafo_compare}}, \code{\link{print.trafo_compare}},
 #' \code{\link{plot.trafo_compare}} and \code{\link{summary.trafo_compare}} can 
