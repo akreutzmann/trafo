@@ -668,7 +668,7 @@ g_log <- function(y) {
 # Standardized transformation
 g_log_std <- function(y) {
   
-  yt <-  log(y + sqrt(y^2 + 1)) * sqrt(geometric.mean(1 + y))
+  yt <-  log(y + sqrt(y^2 + 1)) * sqrt(geometric.mean(1 + y^2))
   
   return(y = yt)
 }
