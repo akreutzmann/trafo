@@ -360,7 +360,7 @@ sqrt_shift_std(y1, 3)
 g_log(2)
 
 # Back-transformation
-g_log_back(2)
+g_log_back(1.443635)
 
 # Standardized transformation
 y1 <- c(1, 2)
