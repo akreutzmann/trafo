@@ -628,7 +628,7 @@ gPower <-  function(y, lambda = lambda) {
 gPower_std <- function(y, lambda) {
   lambda_absolute <- abs(lambda)
   if (lambda_absolute <= 1e-12) {  #case lambda=0
-    zt <-  log(y + sqrt(y^2 + 1)) * sqrt(geometric.mean(1 + y))
+    zt <-  log(y + sqrt(y^2 + 1)) * sqrt(geometric.mean(1 + y^2))
     
   } else if (lambda_absolute > 1e-12) {
     zt <- (((y + sqrt(y^2 + 1))^lambda - 1)/lambda) / geometric.mean((y + sqrt(y^2 + 1))^(lambda - 1) * (1 + (y/sqrt(y^2 +1))))
