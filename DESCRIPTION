@@ -9,7 +9,7 @@ Description: Estimation, selection and comparison of several families of
  compare linear models with untransformed and transformed dependent variable 
  as well as linear models where the dependent variable is transformed with 
  different transformations. Furthermore, the package employs maximum likelihood 
- approaches, skewness and divergence minimization to estimate the optimal 
+ approaches, moments optimization and divergence minimization to estimate the optimal 
  transformation parameter.
 Depends:
     R (>= 3.2.4)
