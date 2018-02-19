@@ -24,8 +24,8 @@
 #' that is used for the estimation of the optimal transformation parameter. 
 #' Defaults to \code{NULL} which means that the default value of the chosen 
 #' transformation is used.
-#' @param std logical. If TRUE, the transformed model is returned based on the 
-#' standardized transformation. Defaults to \code{TRUE}.
+#' @param std logical. If \code{TRUE}, the transformed model is returned based 
+#' on the standardized/scaled transformation. Defaults to \code{FALSE}.
 #' @param custom_trafo a list. The list has two elements where the first element 
 #' is a function specifying the desired transformation and the second element is 
 #' a function specifying the corresponding standardized transformation. 
@@ -54,7 +54,7 @@
 #' @export
 
 trafo_lm <- function(object, trafo = "boxcox", lambda = "estim", method = "ml", 
-                     lambdarange = NULL, std = TRUE, 
+                     lambdarange = NULL, std = FALSE, 
                      custom_trafo = NULL) {
  
   check_trafomod_lm(object = object, trafo = trafo, std = std, 

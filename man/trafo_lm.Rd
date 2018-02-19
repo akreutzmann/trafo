@@ -5,7 +5,7 @@
 \title{Fits transformed linear models}
 \usage{
 trafo_lm(object, trafo = "boxcox", lambda = "estim", method = "ml",
-  lambdarange = NULL, std = TRUE, custom_trafo = NULL)
+  lambdarange = NULL, std = FALSE, custom_trafo = NULL)
 }
 \arguments{
 \item{object}{an object of type \code{lm}.}
@@ -33,8 +33,8 @@ that is used for the estimation of the optimal transformation parameter.
 Defaults to \code{NULL} which means that the default value of the chosen 
 transformation is used.}
 
-\item{std}{logical. If TRUE, the transformed model is returned based on the 
-standardized transformation. Defaults to \code{TRUE}.}
+\item{std}{logical. If \code{TRUE}, the transformed model is returned based 
+on the standardized/scaled transformation. Defaults to \code{FALSE}.}
 
 \item{custom_trafo}{a list. The list has two elements where the first element 
 is a function specifying the desired transformation and the second element is 

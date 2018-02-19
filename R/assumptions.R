@@ -12,7 +12,7 @@
 #' Kolmogorov-Smirnov ("div.ks"), by Cramer-von-Mises ("div.cvm") or by 
 #' Kullback-Leibler ("div.kl"). Defaults to "ml".
 #' @param std logical. If \code{TRUE}, the transformed model is returned based 
-#' on the standardized transformation. Defaults to \code{TRUE}.
+#' on the standardized/scaled transformation. Defaults to \code{FALSE}.
 #' @param ... other parameters that can be passed to the function, e.g. other 
 #' lambdaranges. For the default values that are used for the lambdaranges see 
 #' the documentation for the provided transformations. 
@@ -34,7 +34,7 @@
 #' @importFrom lmtest bptest
 #' @export
 
-assumptions <- function(object, method = "ml", std = TRUE, ...){
+assumptions <- function(object, method = "ml", std = FALSE, ...){
   
 
   check_assumptions(object = object, method = method, std = std)

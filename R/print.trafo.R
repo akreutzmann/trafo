@@ -46,8 +46,8 @@ print.trafo <- function(x, ...){
 #' base package as.data.frame() methods use optional only for column names 
 #' treatment, basically with the meaning of 
 #' data.frame(*, check.names = !optional)
-#' @param std logical. If \code{TRUE}, the data is transformed by the standardized 
-#' transformation. Defaults to \code{TRUE}.
+#' @param std logical. If \code{TRUE}, the data is transformed by the 
+#' standardized/scaled transformation. Defaults to \code{FALSE}.
 #' @param ... other parameters that can be passed to the function.
 #' @return A data frame with the original variables and the transformed variable.
 #' @seealso \code{\link{bickeldoksum}}, \code{\link{boxcox}}, \code{\link{dual}}, 
@@ -71,7 +71,7 @@ print.trafo <- function(x, ...){
 #' @export
 
 as.data.frame.trafo <- function(x, row.names = NULL, optional = FALSE, 
-                                std = TRUE, ...) {
+                                std = FALSE, ...) {
   
   formula <- NULL
   
@@ -80,7 +80,7 @@ as.data.frame.trafo <- function(x, row.names = NULL, optional = FALSE,
     transformed_dependent <- paste0(as.character(formula(x$object$terms)[2]), "t")
     
     if (std == TRUE) {
-      data[, transformed_dependent] <- x$yt
+      data[, transformed_dependent] <- x$zt
     
     } else if (std == FALSE) {
       data[, transformed_dependent] <- x$yt

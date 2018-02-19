@@ -4,7 +4,7 @@
 \alias{trafo_compare}
 \title{Compares linear models with transformed dependent variable}
 \usage{
-trafo_compare(object, trafos, std = TRUE)
+trafo_compare(object, trafos, std = FALSE)
 }
 \arguments{
 \item{object}{an object of type lm}
@@ -13,7 +13,7 @@ trafo_compare(object, trafos, std = TRUE)
 given in object.}
 
 \item{std}{logical. If \code{TRUE}, the transformed models are returned 
-based on the standardized transformation. Defaults to \code{TRUE}.}
+based on the standardized/scaled transformation. Defaults to \code{FALSE}.}
 }
 \value{
 An object of class \code{trafo_compare}. Methods such as 

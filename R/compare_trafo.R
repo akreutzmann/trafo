@@ -7,7 +7,7 @@
 #' @param trafos a list of two \code{trafo} objects based on the same model 
 #' given in object.
 #' @param std logical. If \code{TRUE}, the transformed models are returned 
-#' based on the standardized transformation. Defaults to \code{TRUE}.
+#' based on the standardized/scaled transformation. Defaults to \code{FALSE}.
 #' @return An object of class \code{trafo_compare}. Methods such as 
 #' \code{\link{diagnostics.trafo_compare}}, \code{\link{print.trafo_compare}},
 #' \code{\link{plot.trafo_compare}} and \code{\link{summary.trafo_compare}} can 
@@ -33,7 +33,7 @@
 #' trafo_compare(object = lm_cars, trafos = list(bd_trafo, bc_trafo))
 #' @export
 
-trafo_compare <- function(object, trafos, std = TRUE) {
+trafo_compare <- function(object, trafos, std = FALSE) {
   
   check_compare_trafo(object = object, trafos = trafos, std = std)
   

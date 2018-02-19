@@ -5,7 +5,7 @@
 \title{Data frame with transformed variables}
 \usage{
 \method{as.data.frame}{trafo}(x, row.names = NULL, optional = FALSE,
-  std = TRUE, ...)
+  std = FALSE, ...)
 }
 \arguments{
 \item{x}{an object of type \code{trafo}.}
@@ -19,8 +19,8 @@ base package as.data.frame() methods use optional only for column names
 treatment, basically with the meaning of 
 data.frame(*, check.names = !optional)}
 
-\item{std}{logical. If \code{TRUE}, the data is transformed by the standardized 
-transformation. Defaults to \code{TRUE}.}
+\item{std}{logical. If \code{TRUE}, the data is transformed by the 
+standardized/scaled transformation. Defaults to \code{FALSE}.}
 
 \item{...}{other parameters that can be passed to the function.}
 }
