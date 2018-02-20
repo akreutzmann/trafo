@@ -14,8 +14,13 @@
 #' @param std logical. If \code{TRUE}, the transformed model is returned based 
 #' on the standardized/scaled transformation. Defaults to \code{FALSE}.
 #' @param ... other parameters that can be passed to the function, e.g. other 
-#' lambdaranges. For the default values that are used for the lambdaranges see 
-#' the documentation for the provided transformations. 
+#' lambdaranges. Self-defined lambdaranges are given to the function as an 
+#' argument that is the combination of the name of the transformation and lr and 
+#' the range needs to be a numeric vector of length 2. For instance, changing the 
+#' lambdarange for the Manly transformation would mean to add an argument 
+#' \code{manly_lr = manly_lr = c(0.000005,0.00005)}. For the default values that 
+#' are used for the lambdaranges see the documentation for the provided 
+#' transformations. 
 #' @return A table with tests for normality and homoscedasticity. Furthermore, 
 #' scatterplots are returned to check the linearity assumption.
 #' @seealso \code{\link{bickeldoksum}}, \code{\link{boxcox}}, \code{\link{dual}}, 
@@ -30,6 +35,7 @@
 #' lm_cars <- lm(dist ~ speed, data = cars)
 #' 
 #' assumptions(lm_cars)
+#' assumptions(lm_cars, method = "skew", manly_lr = c(0.000005,0.00005))
 #' @importFrom moments skewness kurtosis
 #' @importFrom lmtest bptest
 #' @export
