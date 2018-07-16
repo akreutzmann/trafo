@@ -1,7 +1,10 @@
 Package: trafo
 Title: Package for estimation, comparison and selection of transformations
-Version: 0.0.0.9000
-Authors@R: person("Lily", "Medina", email = "lilymiru@gmail.com", role = c("aut", "cre"))
+Version: 1.0.0
+Authors@R: c(person("Lily", "Medina", email = "lilymiru@gmail.com", role = "aut"),
+    person("Piedad", "Castro", role="aut", email = "p25castro@gmail.com"),
+    person("Ann-Kristin", "Kreutzmann", role=c("aut", "cre"), email="ann-kristin.kreutzmann@fu-berlin.de"),
+    person("Natalia", "Rojas-Perilla", role="aut", email = "natalia.rojas@fu-berlin.de"))
 Description: Estimation, selection and comparison of several families of
  transformations. The families of transformations included in the package are 
  the following: Bickel-Docksum, Box-Cox, Dual, Glog, Gpower, Log, Log-shift opt,
