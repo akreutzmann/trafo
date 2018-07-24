@@ -1,5 +1,5 @@
 Package: trafo
-Title: Package for estimation, comparison and selection of transformations
+Title: Estimation, Comparison and Selection of Transformations
 Version: 1.0.0
 Date: 2018-07-16
 Authors@R: c(person("Lily", "Medina", email = "lilymiru@gmail.com", role = "aut"),
@@ -8,8 +8,14 @@ Authors@R: c(person("Lily", "Medina", email = "lilymiru@gmail.com", role = "aut"
     person("Natalia", "Rojas-Perilla", role="aut", email = "natalia.rojas@fu-berlin.de"))
 Description: Estimation, selection and comparison of several families of
  transformations. The families of transformations included in the package are 
- the following: Bickel-Docksum, Box-Cox, Dual, Glog, Gpower, Log, Log-shift opt,
- Manly, Modulus, Neglog, Reciprocal and Yeo-Johnson. The package simplifies to 
+ the following: Bickel-Docksum (Bickel and Doksum 1981 <doi:10.2307/2287831>), 
+ Box-Cox, Dual (Yang 2006 <doi:10.1016/j.econlet.2006.01.011>), 
+ Glog (Durbin et al. 2002 <doi:10.1093/bioinformatics/18.suppl_1.S105>), 
+ Gpower (Kelmansky et al. 2013 <doi:10.1515/sagmb-2012-0030>), 
+ Log, Log-shift opt (Feng et al. 2016 <doi:10.1002/sta4.104>),
+ Manly, Modulus (John and Draper 1980 <doi:10.2307/2986305>), 
+ Neglog (Whittaker et al. 2005 <doi:10.1111/j.1467-9876.2005.00520.x>), 
+ Reciprocal and Yeo-Johnson. The package simplifies to 
  compare linear models with untransformed and transformed dependent variable 
  as well as linear models where the dependent variable is transformed with 
  different transformations. Furthermore, the package employs maximum likelihood 
