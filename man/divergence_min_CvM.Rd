@@ -2,7 +2,7 @@
 % Please edit documentation in R/estims.R
 \name{divergence_min_CvM}
 \alias{divergence_min_CvM}
-\title{Divergence minimization by Craemer von Mises}
+\title{Divergence minimization by Cramer von Mises}
 \usage{
 divergence_min_CvM(res = res)
 }
@@ -14,6 +14,6 @@ explanatory variables x}
 sum of squared differences
 }
 \description{
-Divergence minimization by Craemer von Mises
+Divergence minimization by Cramer von Mises
 }
 \keyword{internal}

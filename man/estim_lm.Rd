@@ -19,19 +19,19 @@ for the estimation of the optimal transformation parameter:
 (iii) Kurtosis optimization ("kurt"), (iv) Divergence minimization by 
 Kolmogorov-Smirnov ("div.ks"), by Cramer-von-Mises ("div.cvm") or by 
 Kullback-Leibler ("div.kl"). Defaults to "ml". In case of no and
-log transformation "NA" can be selected since no optimization is neccessary
+log transformation "NA" can be selected since no optimization is necessary
 for these two transformation types.}
 
 \item{trafo}{a character string that selects the transformation.}
 
+\item{custom_func}{a function that determines a customized transformation.}
+
 \item{custom_func_std}{a function that determines a customized standard
 transformation.}
-
-\item{custum_func}{a function that determines a customized transformation.}
 }
 \value{
 Depending on the selected \code{method} the return is a log
-likelihood, a skewness, a pooled skewness or a Kolmogorov-Smirnov, Craemer
+likelihood, a skewness, a pooled skewness or a Kolmogorov-Smirnov, Cramer
 von Mises or Kullback Leibner divergence.
 }
 \description{

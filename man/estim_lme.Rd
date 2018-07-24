@@ -15,7 +15,7 @@ estim_lme(lambda, y, formula, data, rand_eff, method, trafo, custom_func,
 \item{formula}{a formula object that contains the dependent and the explanatory
 measures}
 
-\item{data}{the data.frame that is given to functio nlme and that contains the 
+\item{data}{the data.frame that is given to function nlme and that contains the 
 regression variables.}
 
 \item{rand_eff}{the random effect extracted from the lme object.}
@@ -26,18 +26,19 @@ for the transformation five different estimation methods can be chosen
 (iii) minimization of Kolmogorov-Smirnov divergence  ("div.ks");
 (iv) minimization of Craemer von Mises divergence ("div.cvm"); (v)
 minimization of Kullback Leibner divergence  ("div.kl"). In case of no and
-log transformation "NA" can be selected since no optimization is neccessary
+log transformation "NA" can be selected since no optimization is necessary
 for these two transformation types.}
 
-\item{trafo}{a character string that selects the transformation.
-#' @param custum_func a function that determines a customized transformation.}
+\item{trafo}{a character string that selects the transformation.}
+
+\item{custom_func}{a function that determines a customized transformation.}
 
 \item{custom_func_std}{a function that determines a customized standard
 transformation.}
 }
 \value{
 Depending on the selected \code{method} the return is a log
-likelihood, a skewness, a pooled skewness or a Kolmogorov-Smirnov, Craemer
+likelihood, a skewness, a pooled skewness or a Kolmogorov-Smirnov, Cramer
 von Mises or Kullback Leibner divergence.
 }
 \description{
