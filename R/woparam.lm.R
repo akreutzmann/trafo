@@ -6,7 +6,7 @@
 #' @param object an object of type lm. 
 #' @param trafo character that determines the transformation.
 #' @param custom_trafo a function that specifies a transformation without 
-#' paramater that needs to be estimated or given.
+#' parameter that needs to be estimated or given.
 #' @param ... other parameters that can be passed to the function.
 #' @return an object of class \code{trafo}.
 #' @keywords internal

@@ -24,7 +24,7 @@ regression variables.}
 for the transformation five different estimation methods can be chosen
 (i) Maximum-Likelihood ("ml"); (ii) skewness minimization ("skew");
 (iii) minimization of Kolmogorov-Smirnov divergence  ("div.ks");
-(iv) minimization of Craemer von Mises divergence ("div.cvm"); (v)
+(iv) minimization of Cramer von Mises divergence ("div.cvm"); (v)
 minimization of Kullback Leibner divergence  ("div.kl"). In case of no and
 log transformation "NA" can be selected since no optimization is necessary
 for these two transformation types.}

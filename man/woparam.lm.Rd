@@ -12,7 +12,7 @@
 \item{trafo}{character that determines the transformation.}
 
 \item{custom_trafo}{a function that specifies a transformation without 
-paramater that needs to be estimated or given.}
+parameter that needs to be estimated or given.}
 
 \item{...}{other parameters that can be passed to the function.}
 }
