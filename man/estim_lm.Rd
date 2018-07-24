@@ -32,7 +32,7 @@ transformation.}
 \value{
 Depending on the selected \code{method} the return is a log
 likelihood, a skewness, a pooled skewness or a Kolmogorov-Smirnov, Cramer
-von Mises or Kullback Leibner divergence.
+von Mises or Kullback Leibler divergence.
 }
 \description{
 Wrapper function for estimation methods - linear models
