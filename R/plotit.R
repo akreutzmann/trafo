@@ -12,7 +12,7 @@
 #' (iii) Kurtosis optimization ("kurt"), (iv) Divergence minimization by 
 #' Kolmogorov-Smirnov ("div.ks"), by Cramer-von-Mises ("div.cvm") or by 
 #' Kullback-Leibler ("div.kl"). Defaults to "ml". In case of no and
-#' log transformation "NA" can be selected since no optimization is neccessary
+#' log transformation "NA" can be selected since no optimization is necessary
 #' for these two transformation types.
 #' @param trafo a character string that selects the transformation.
 #' @keywords internal

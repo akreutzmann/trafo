@@ -207,7 +207,7 @@ divergence_min_KS <- function(res = res) {
 }
 
 
-#' Divergence minimization by Craemer von Mises 
+#' Divergence minimization by Cramer von Mises 
 #' 
 #' @param res residuals from a linear model with response variable yt and 
 #' explanatory variables x
