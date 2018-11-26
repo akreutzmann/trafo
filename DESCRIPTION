@@ -1,7 +1,7 @@
 Package: trafo
 Title: Estimation, Comparison and Selection of Transformations
 Version: 1.0.1
-Date: 2018-07-16
+Date: 2018-11-26
 Authors@R: c(person("Lily", "Medina", email = "lilymiru@gmail.com", role = "aut"),
     person("Piedad", "Castro", role="aut", email = "p25castro@gmail.com"),
     person("Ann-Kristin", "Kreutzmann", role=c("aut", "cre"), email="ann-kristin.kreutzmann@fu-berlin.de"),
@@ -11,7 +11,7 @@ Description: Estimation, selection and comparison of several families of
  the following: Bickel-Doksum (Bickel and Doksum 1981 <doi:10.2307/2287831>), 
  Box-Cox, Dual (Yang 2006 <doi:10.1016/j.econlet.2006.01.011>), 
  Glog (Durbin et al. 2002 <doi:10.1093/bioinformatics/18.suppl_1.S105>), 
- gpower, 
+ gpower (Kelmansky et al. 2013 <doi:10.1515/sagmb-2012-0030>), 
  Log, Log-shift opt (Feng et al. 2016 <doi:10.1002/sta4.104>),
  Manly, modulus (John and Draper 1980 <doi:10.2307/2986305>), 
  Neglog (Whittaker et al. 2005 <doi:10.1111/j.1467-9876.2005.00520.x>), 
@@ -26,7 +26,7 @@ Depends:
 License: GPL-2
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1
 Imports: FNN,
     moments,
     pryr,
