@@ -6,6 +6,8 @@
 #' 
 #' @param x an object of type \code{trafo_lm}
 #' @param ... additional arguments that are not used in this method
+#' @references 
+#' 
 #' @importFrom pryr %<a-%
 #' @importFrom grDevices dev.flush dev.hold
 #' @importFrom graphics abline par plot hist mtext pairs panel.smooth
