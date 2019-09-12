@@ -5,10 +5,15 @@
 \title{Plot for regression models with untransformed and transformed dependent 
 variable}
 \usage{
-\method{plot}{trafo_lm}(x, ...)
+\method{plot}{trafo_lm}(x, which = "all", ...)
 }
 \arguments{
 \item{x}{an object of type \code{trafo_lm}}
+
+\item{which}{one element character that determines the return of plots. For 
+single plot returns the possible values are: "qqplot", "hist", "residVsFitted", 
+"residVsObs", "scatter", "cooks", "scaleLoc", "residLev". The default is set 
+to "all".}
 
 \item{...}{additional arguments that are not used in this method}
 }
