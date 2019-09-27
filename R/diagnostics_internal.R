@@ -2,6 +2,7 @@
 #'
 #' The function is called in diagnostics.trafo_lm and 
 #' diagnostics.trafo_compare.
+#' @importFrom nortest ad.test
 #' @keywords internal
 
 
@@ -25,14 +26,18 @@ diagnostics_internal <- function(modOne, modTwo) {
       shapiroEst_Two <- shapiro.test(resid_Two)$statistic[[1]]
       shapiroP_Two <- shapiro.test(resid_Two)$p.value[[1]]
     } else {
+      #warning("Number of domains exceeds 5000 or is lower then 3 and thus the
+      #        Shapiro-Wilk test is not applicable for residuals.")
+      
       warning("Number of domains exceeds 5000 or is lower then 3 and thus the
-              Shapiro-Wilk test is not applicable for residuals.")
+              Shapiro-Wilk test is not applicable for residuals. Instead, 
+              the results of the Anderson-Darling test is used.")
       
-      shapiroEst_One <- NA
-      shapiroP_One <- NA
+      shapiroEst_One <- ad.test(resid_One)$statistic[[1]]
+      shapiroP_One <- ad.test(resid_One)$p.value[[1]]
       
-      shapiroEst_Two <- NA
-      shapiroP_Two <- NA
+      shapiroEst_Two <- ad.test(resid_Two)$statistic[[1]]
+      shapiroP_Two <- ad.test(resid_Two)$p.value[[1]]
     }
     
     skewness_One <- skewness(resid_One)
