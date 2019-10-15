@@ -42,6 +42,8 @@
 
 assumptions <- function(object, method = "ml", std = FALSE, ...){
   
+  resid_One <- NULL
+  resid_Two <- NULL
 
   check_assumptions(object = object, method = method, std = std)
 
@@ -313,13 +315,14 @@ assumptions <- function(object, method = "ml", std = FALSE, ...){
       shapiroP[[transform]] <- shapiro.test(resid[[transform]])$p.value[[1]]
     } else {
       warning("Number of domains exceeds 5000 or is lower then 3 and thus the
-              Shapiro-Wilk test is not applicable for residuals.")
+              Shapiro-Wilk test is not applicable for residuals. Instead, 
+              the results of the Anderson-Darling test is used.")
       
-      shapiroEst_orig <- NA
-      shapiroP_orig <- NA
+      shapiroEst_One <- ad.test(resid_One)$statistic[[1]]
+      shapiroP_One <- ad.test(resid_One)$p.value[[1]]
       
-      shapiroEst[[transform]] <- NA
-      shapiroP[[transform]] <- NA
+      shapiroEst_Two <- ad.test(resid_Two)$statistic[[1]]
+      shapiroP_Two <- ad.test(resid_Two)$p.value[[1]]
     }
     
     skewness_orig <- skewness(resid_orig)

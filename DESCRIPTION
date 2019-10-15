@@ -34,7 +34,8 @@ Imports: FNN,
     pryr,
     graphics,
     grDevices,
-    lmtest
+    lmtest,
+    nortest
 Suggests: testthat,
     R.rsp
 VignetteBuilder: R.rsp
