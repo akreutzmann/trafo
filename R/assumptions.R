@@ -313,16 +313,17 @@ assumptions <- function(object, method = "ml", std = FALSE, ...){
       
       shapiroEst[[transform]] <- shapiro.test(resid[[transform]])$statistic[[1]]
       shapiroP[[transform]] <- shapiro.test(resid[[transform]])$p.value[[1]]
+      namesNorm <- c("Skewness", "Kurtosis", "Shapiro_W", "Shapiro_p")
     } else {
-      warning("Number of domains exceeds 5000 or is lower then 3 and thus the
+      warning_AD <- "Number of domains exceeds 5000 or is lower then 3 and thus the
               Shapiro-Wilk test is not applicable for residuals. Instead, 
-              the results of the Anderson-Darling test is used.")
+              the results of the Anderson-Darling test is used."
       
-      shapiroEst_One <- ad.test(resid_One)$statistic[[1]]
-      shapiroP_One <- ad.test(resid_One)$p.value[[1]]
+      shapiroEst_orig <- ad.test(resid_orig)$statistic[[1]]
+      shapiroP_orig <- ad.test(resid_orig)$p.value[[1]]
       
-      shapiroEst_Two <- ad.test(resid_Two)$statistic[[1]]
-      shapiroP_Two <- ad.test(resid_Two)$p.value[[1]]
+      shapiroEst[[transform]] <- ad.test(resid[[transform]])$statistic[[1]]
+      shapiroP[[transform]] <- ad.test(resid[[transform]])$p.value[[1]]
     }
     
     skewness_orig <- skewness(resid_orig)
@@ -384,5 +385,6 @@ assumptions <- function(object, method = "ml", std = FALSE, ...){
           main = transform, 
           lower.panel = panel.smooth, upper.panel = panel.cor) 
   }
+  warning(warning_AD)
  
 }
