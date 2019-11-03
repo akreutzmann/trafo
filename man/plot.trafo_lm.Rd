@@ -21,3 +21,11 @@ to "all".}
 For the untransformed and transformed model a range of plots is returned in 
 order to check model assumptions graphically.
 }
+\references{
+for panel.cor function used in scatter plot:
+Smith, C.A., Want, E.J, O'Maille, G.,Abagyan,R. and Siuzdak, G. (2006).
+XCMS: Processing mass spectrometry data for metabolite profiling
+using nonlinear peak alignment, matching and identification. 
+Analytical Chemistry, 78, 779-787. 
+also: https://github.com/sneumann/xcms/blame/master/R/functions-xcmsSet.R#L654
+}

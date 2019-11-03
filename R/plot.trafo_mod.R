@@ -10,6 +10,13 @@
 #' "residVsObs", "scatter", "cooks", "scaleLoc", "residLev". The default is set 
 #' to "all".
 #' @param ... additional arguments that are not used in this method
+#' @references 
+#' for panel.cor function used in scatter plot:
+#' Smith, C.A., Want, E.J, O'Maille, G.,Abagyan,R. and Siuzdak, G. (2006).
+#' XCMS: Processing mass spectrometry data for metabolite profiling
+#' using nonlinear peak alignment, matching and identification. 
+#' Analytical Chemistry, 78, 779-787. 
+#' also: https://github.com/sneumann/xcms/blame/master/R/functions-xcmsSet.R#L654 
 #' @importFrom pryr %<a-%
 #' @importFrom grDevices dev.flush dev.hold
 #' @importFrom graphics abline par plot hist mtext pairs panel.smooth

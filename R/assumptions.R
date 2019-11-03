@@ -385,6 +385,7 @@ assumptions <- function(object, method = "ml", std = FALSE, ...){
           main = transform, 
           lower.panel = panel.smooth, upper.panel = panel.cor) 
   }
-  warning(warning_AD)
- 
+  if (!(length(resid[[transform]]) > 3 & length(resid[[transform]]) < 5000)) {
+    warning(warning_AD)
+  }
 }
