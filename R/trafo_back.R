@@ -1,7 +1,7 @@
 #' Back-transforms vectors with used transformation in trafo_lm
 #'
 #' The function transforms vectors as the prediction or confidence intervals 
-#' back to the original scale of the used transformation in trafo_lm.
+#' naively back to the original scale of the used transformation in trafo_lm.
 #' 
 #' @param object an object of type \code{trafo_lm}.
 #' @param prediction the return of the predict.lm method. 

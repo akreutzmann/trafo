@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Diagnostics for two differently transformed models</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for diagnostics.trafo_compare {trafo}"><tr><td>diagnostics.trafo_compare {trafo}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Diagnostics for two differently transformed models</h2>
+
+<h3>Description</h3>
+
+<p>Returns information about the applied transformations and selected 
+diagnostics to check model assumptions. Two models are compared where
+the dependent variable is transformed by different transformations.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S3 method for class 'trafo_compare'
+diagnostics(object, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>an object of type <code>trafo_compare</code></p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>additional arguments that are not used in this method</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>An object of class <code>diagnostics.trafo_compare</code>. The method 
+<code><a href="print.diagnostics.trafo_compare.html">print.diagnostics.trafo_compare</a></code> can be used for this class.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# Load data
+data("cars", package = "datasets")
+
+# Fit linear model
+lm_cars &lt;- lm(dist ~ speed, data = cars)
+
+# Transform with Bickel-Doksum transformation
+bd_trafo &lt;- bickeldoksum(object = lm_cars, plotit = FALSE)
+
+# Transform with Box-Cox transformation
+bc_trafo &lt;- boxcox(object = lm_cars, method = "skew", plotit = FALSE)
+
+# Compare transformed models
+compare &lt;- trafo_compare(object = lm_cars, trafos = list(bd_trafo, bc_trafo))
+
+# Get diagnostics
+diagnostics(compare)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>trafo</em> version 1.0.2 <a href="00Index.html">Index</a>]</div>
+</body></html>

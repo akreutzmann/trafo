@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Transformations without parameter for linear models</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for woparam.lm {trafo}"><tr><td>woparam.lm {trafo}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Transformations without parameter for linear models</h2>
+
+<h3>Description</h3>
+
+<p>The function transforms the dependent variable of a linear model using 
+different transformations without parameter.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S3 method for class 'lm'
+woparam(object, trafo, custom_trafo = NULL, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>an object of type lm.</p>
+</td></tr>
+<tr valign="top"><td><code>trafo</code></td>
+<td>
+<p>character that determines the transformation.</p>
+</td></tr>
+<tr valign="top"><td><code>custom_trafo</code></td>
+<td>
+<p>a function that specifies a transformation without 
+parameter that needs to be estimated or given.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>other parameters that can be passed to the function.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>an object of class <code>trafo</code>.
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>trafo</em> version 1.0.2 <a href="00Index.html">Index</a>]</div>
+</body></html>

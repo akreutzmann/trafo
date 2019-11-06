@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Fits transformed linear models</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for trafo_lm {trafo}"><tr><td>trafo_lm {trafo}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Fits transformed linear models</h2>
+
+<h3>Description</h3>
+
+<p>Function <code>trafo_lm</code> fits linear models with transformed dependent 
+variable. The main return are two <code>lm</code> objects where one is the 
+untransformed linear model and the other one the transformed linear model.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+trafo_lm(object, trafo = "boxcox", lambda = "estim", method = "ml",
+  lambdarange = NULL, std = FALSE, custom_trafo = NULL)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>an object of type <code>lm</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>trafo</code></td>
+<td>
+<p>a character string. Different transformations can be used 
+for transforming the dependent variable in a linear model: 
+(i)  &quot;bickeldoksum&quot;, (ii) &quot;boxcox&quot;, (iii) &quot;dual&quot;, 
+(iv) &quot;glog&quot;, (v) &quot;gpower&quot;, (vi) &quot;log&quot;, (vii) &quot;logshiftopt&quot;, (viii) &quot;manly&quot;, 
+(ix) &quot;modulus&quot;, (x) &quot;neglog&quot;, (xi) &quot;reciprocal&quot;, (xii) &quot;yeojohnson&quot;.
+Defaults to &quot;boxcox&quot;.</p>
+</td></tr>
+<tr valign="top"><td><code>lambda</code></td>
+<td>
+<p>either a character named &quot;estim&quot; if the optimal transformation
+parameter should be estimated or a numeric value determining a given value 
+for the transformation parameter. Defaults to &quot;estim&quot;.</p>
+</td></tr>
+<tr valign="top"><td><code>method</code></td>
+<td>
+<p>a character string. Different estimation methods can be used 
+for the estimation of the optimal transformation parameter: 
+(i) Maximum likelihood approach (&quot;ml&quot;), (ii) Skewness minimization (&quot;skew&quot;),
+(iii) Kurtosis optimization (&quot;kurt&quot;), (iv) Divergence minimization by 
+Kolmogorov-Smirnov (&quot;div.ks&quot;), by Cramer-von-Mises (&quot;div.cvm&quot;) or by 
+Kullback-Leibler (&quot;div.kl&quot;). Defaults to &quot;ml&quot;.</p>
+</td></tr>
+<tr valign="top"><td><code>lambdarange</code></td>
+<td>
+<p>a numeric vector with two elements defining an interval 
+that is used for the estimation of the optimal transformation parameter. 
+Defaults to <code>NULL</code> which means that the default value of the chosen 
+transformation is used.</p>
+</td></tr>
+<tr valign="top"><td><code>std</code></td>
+<td>
+<p>logical. If <code>TRUE</code>, the transformed model is returned based 
+on the standardized/scaled transformation. Defaults to <code>FALSE</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>custom_trafo</code></td>
+<td>
+<p>a list. The list has two elements where the first element 
+is a function specifying the desired transformation and the second element is 
+a function specifying the corresponding standardized transformation. 
+Defaults to <code>NULL</code>.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>An object of class <code>trafo_lm</code>. Methods such as 
+<code><a href="diagnostics.trafo_lm.html">diagnostics.trafo_lm</a></code>, <code><a href="print.trafo_lm.html">print.trafo_lm</a></code>,
+<code><a href="plot.trafo_lm.html">plot.trafo_lm</a></code> and <code><a href="summary.trafo_lm.html">summary.trafo_lm</a></code> can 
+be used for this class.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="bickeldoksum.html">bickeldoksum</a></code>, <code><a href="boxcox.html">boxcox</a></code>, <code><a href="dual.html">dual</a></code>, 
+<code><a href="glog.html">glog</a></code>, <code><a href="gpower.html">gpower</a></code>, <code><a href="../../base/html/Log.html">log</a></code>, 
+<code><a href="logshiftopt.html">logshiftopt</a></code>, <code><a href="manly.html">manly</a></code>, <code><a href="modulus.html">modulus</a></code>, 
+<code><a href="neglog.html">neglog</a></code>, <code><a href="sqrtshift.html">sqrtshift</a></code>, <code><a href="yeojohnson.html">yeojohnson</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# Load data
+data("cars", package = "datasets")
+
+# Fit linear model
+lm_cars &lt;- lm(dist ~ speed, data = cars)
+
+# Compare untransformed and transformed model
+trafo_lm(object = lm_cars, trafo = "bickeldoksum", method = "skew", 
+lambdarange = c(1e-11, 2))
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>trafo</em> version 1.0.2 <a href="00Index.html">Index</a>]</div>
+</body></html>

@@ -1,30 +1,33 @@
-# Setup
+# Platform
 
-## Platform
-
-|setting  |value                        |
+|field    |value                        |
 |:--------|:----------------------------|
-|version  |R version 3.4.4 (2018-03-15) |
+|version  |R version 3.6.0 (2019-04-26) |
+|os       |Windows >= 8 x64             |
 |system   |x86_64, mingw32              |
-|ui       |RStudio (1.1.456)            |
+|ui       |RStudio                      |
 |language |(EN)                         |
 |collate  |German_Germany.1252          |
-|tz       |Europe/Berlin                |
-|date     |2018-11-26                   |
+|ctype    |German_Germany.1252          |
+|tz       |America/New_York             |
+|date     |2019-11-05                   |
 
-## Packages
+# Dependencies
 
-|package  |*  |version |date       |source                       |
-|:--------|:--|:-------|:----------|:----------------------------|
-|FNN      |   |1.1.2.1 |2018-08-10 |CRAN (R 3.4.4)               |
-|R.rsp    |   |0.43.0  |2018-08-26 |CRAN (R 3.4.4)               |
-|testthat |   |2.0.1   |2018-10-13 |CRAN (R 3.4.4)               |
-|trafo    |*  |1.0.0   |2018-11-26 |local (akreutzmann/trafo@NA) |
+|package  |old    |new    |<U+0394>  |
+|:--------|:------|:------|:--|
+|trafo    |1.0.1  |1.0.2  |*  |
+|FNN      |1.1.3  |1.1.3  |   |
+|glue     |1.3.1  |1.3.1  |   |
+|lmtest   |0.9-37 |0.9-37 |   |
+|magrittr |1.5    |1.5    |   |
+|moments  |0.14   |0.14   |   |
+|nortest  |NA     |1.0-4  |*  |
+|pryr     |0.1.4  |0.1.4  |   |
+|Rcpp     |1.0.2  |1.0.2  |   |
+|stringi  |1.4.3  |1.4.3  |   |
+|stringr  |1.4.0  |1.4.0  |   |
+|zoo      |1.8-6  |1.8-6  |   |
 
-# Check results
-
-0 packages
-
-
-
+# Revdeps
 

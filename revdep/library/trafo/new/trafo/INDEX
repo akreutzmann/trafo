@@ -1,0 +1,49 @@
+as.data.frame.trafo     Data frame with transformed variables
+assumptions             First check of assumptions to find suitable
+                        transformations
+bickeldoksum            Bickel-Doksum transformation for linear models
+boxcox                  Box-Cox transformation for linear models
+diagnostics             Diagnostics for fitted models
+diagnostics.trafo_compare
+                        Diagnostics for two differently transformed
+                        models
+diagnostics.trafo_lm    Diagnostics for an untransformed and a
+                        transformed model
+dual                    Dual transformation for linear models
+glog                    Glog transformation for linear models
+gpower                  Gpower transformation for linear models
+logshiftopt             Log shift opt transformation for linear models
+logtrafo                Log transformation for linear models
+manly                   Manly transformation for linear models
+modulus                 Modulus transformation for linear models
+neglog                  Neg log transformation for linear models
+plot.trafo_compare      Plots for linear models with transformed
+                        dependent variable
+plot.trafo_lm           Plot for regression models with untransformed
+                        and transformed dependent variable
+print.diagnostics.trafo_compare
+                        Prints diagnostics of two trafo objects
+print.diagnostics.trafo_lm
+                        Prints diagnostics of an untransformed and a
+                        transformed model
+print.summary.trafo_compare
+                        Prints summary of trafo_compare objects
+print.summary.trafo_lm
+                        Print summary trafo
+print.trafo             Prints object of type trafo
+print.trafo_compare     Prints object of type trafo_compare
+print.trafo_lm          Prints object of type trafo_lm
+reciprocal              Reciprocal transformation for linear models
+sqrtshift               Square-root shift transformation for linear
+                        models
+summary.trafo_compare   Summary for two differently transformed models
+summary.trafo_lm        Summary for linear models with untransformed
+                        and transformed dependent variable
+trafo                   An R package supporting the selection of a
+                        suitable transformation
+trafo_back              Back-transforms vectors with used
+                        transformation in trafo_lm
+trafo_compare           Compares linear models with transformed
+                        dependent variable
+trafo_lm                Fits transformed linear models
+yeojohnson              Yeo-Johnson transformation for linear models

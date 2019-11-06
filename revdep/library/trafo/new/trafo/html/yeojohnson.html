@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Yeo-Johnson transformation for linear models</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for yeojohnson {trafo}"><tr><td>yeojohnson {trafo}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Yeo-Johnson transformation for linear models</h2>
+
+<h3>Description</h3>
+
+<p>The function transforms the dependent variable of a linear model using the 
+Yeo-Johnson transformation. The transformation parameter can either be 
+estimated using different estimation methods or given.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+yeojohnson(object, lambda = "estim", method = "ml",
+  lambdarange = c(-2, 2), plotit = TRUE)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>an object of type lm.</p>
+</td></tr>
+<tr valign="top"><td><code>lambda</code></td>
+<td>
+<p>either a character named &quot;estim&quot; if the optimal transformation
+parameter should be estimated or a numeric value determining a given value 
+for the transformation parameter. Defaults to &quot;estim&quot;.</p>
+</td></tr>
+<tr valign="top"><td><code>method</code></td>
+<td>
+<p>a character string. Different estimation methods can be used 
+for the estimation of the optimal transformation parameter: 
+(i) Maximum likelihood approach (&quot;ml&quot;), (ii) Skewness minimization (&quot;skew&quot;),
+(iii) Kurtosis optimization (&quot;kurt&quot;), (iv) Divergence minimization by 
+Kolmogorov-Smirnov (&quot;div.ks&quot;), by Cramer-von-Mises (&quot;div.cvm&quot;) or by 
+Kullback-Leibler (&quot;div.kl&quot;). Defaults to &quot;ml&quot;.</p>
+</td></tr>
+<tr valign="top"><td><code>lambdarange</code></td>
+<td>
+<p>a numeric vector with two elements defining an interval 
+that is used for the estimation of the optimal transformation parameter. 
+Defaults to <code>c(-2, 2)</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>plotit</code></td>
+<td>
+<p>logical. If <code>TRUE</code>, a plot that illustrates the optimal 
+transformation parameter or the given transformation parameter is returned.
+Defaults to <code>TRUE</code>.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>An object of class <code>trafo</code>. Methods such as 
+<code><a href="as.data.frame.trafo.html">as.data.frame.trafo</a></code> and <code><a href="print.trafo.html">print.trafo</a></code> can 
+be used for this class.
+</p>
+
+
+<h3>References</h3>
+
+<p>Yeo IK, Johnson RA (2000). A new family of power transformations to improve 
+normality or symmetry. Biometrika, 87, 954-959.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# Load data
+data("cars", package = "datasets")
+
+# Fit linear model
+lm_cars &lt;- lm(dist ~ speed, data = cars)
+
+# Transform dependent variable using a maximum likelihood approach
+yeojohnson(object = lm_cars, plotit = FALSE)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>trafo</em> version 1.0.2 <a href="00Index.html">Index</a>]</div>
+</body></html>
