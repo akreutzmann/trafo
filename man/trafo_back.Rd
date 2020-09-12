@@ -16,7 +16,7 @@ The backtransformed prediction.
 }
 \description{
 The function transforms vectors as the prediction or confidence intervals 
-back to the original scale of the used transformation in trafo_lm.
+naively back to the original scale of the used transformation in trafo_lm.
 }
 \examples{
 # Load data
