@@ -1,3 +1,7 @@
+# trafo 1.0.3
+
+* Change maintainer
+
 # trafo 1.0.2
 
 * The plot function has an additional argument which to choose specific plots. 

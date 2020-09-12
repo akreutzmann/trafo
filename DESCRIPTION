@@ -1,6 +1,6 @@
 Package: trafo
 Title: Estimation, Comparison and Selection of Transformations
-Version: 1.0.2
+Version: 1.0.3
 Date: 2019-11-05
 Authors@R: c(person("Lily", "Medina", email = "lily.medina@berkeley.edu", role = c("aut", "cre")),
     person("Piedad", "Castro", role="aut", email = "p25castro@gmail.com"),
